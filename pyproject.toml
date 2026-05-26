@@ -1,0 +1,45 @@
+[project]
+name = "probes-nlas-cyber"
+version = "0.0.1"
+description = "Linear probes and natural-language activations (NLAs) for cyber-vulnerability classification on Gemma 3"
+requires-python = ">=3.10"
+readme = "README.md"
+
+# Use `uv pip install -e .` (or `uv sync`) to set up the env.
+dependencies = [
+    # Model + hidden-state extraction
+    "transformers>=4.45",
+    "torch>=2.4",
+    "accelerate>=0.34",
+
+    # Probe training
+    "scikit-learn>=1.5",
+    "numpy>=1.26",
+
+    # Datasets + artifact store (HF replaces local data/ for this repo)
+    "datasets>=2.20",
+    "huggingface_hub>=0.24",
+
+    # Experiment tracking + artifact provenance
+    "wandb>=0.17",
+
+    # AST-based live-code mask for the `tokens_code` eval level
+    "tree-sitter>=0.21",
+    "tree-sitter-python>=0.21",
+    "tree-sitter-c>=0.21",
+    "tree-sitter-cpp>=0.22",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=5",
+    "ruff>=0.6",
+]
+
+[tool.setuptools.packages.find]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

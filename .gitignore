@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+.env.local
+
+# Data and artifacts — fetch from HF, don't commit
+data/*.npz
+data/*.jsonl
+data/activations*/
+data/repo_benchmark*/
+data/eval/
+
+# wandb local state
+wandb/
+
+# notebook scratch outputs
+*.ipynb_checkpoints/
+
+# OS
+.DS_Store
