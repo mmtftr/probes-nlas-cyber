@@ -1,7 +1,36 @@
+[ai-generated]
+
 # Agent guide
 
 This repo is a mech-interp research project. Probes + NLAs on Gemma 3.
 Read `README.md` for what's in `src/` and `scripts/`.
+
+## Writing style
+
+Human-facing docs are concise. The user has the context — no hand-holding,
+no restating, no follow-up suggestions. Bullets over paragraphs. Skip prose
+that carries no new information.
+
+Agent-facing sections can be verbose (disambiguation, exact commands,
+assumptions worth stating). Mark them with `## For agents` inside an
+otherwise-concise doc. Plans illustrate this: `Goal` and `Steps` are tight
+for the human; optional `## For agents` holds the detailed playbook.
+
+## Marking AI-generated content
+
+Disclose AI authorship inline. Conventions:
+
+- **New file written entirely by an agent**: literal `[ai-generated]` on the
+  first line (markdown) or `# [ai-generated]` (Python). Stays visible — it's
+  a provenance disclosure, not a hidden tag.
+- **Section inside a mixed-authorship file**: prefix the section heading
+  with `[ai-generated]`, e.g. `## [ai-generated] Method`.
+- **Carried-over code from prior projects** keeps its original provenance
+  (no tag added retroactively). The carry-over event itself is logged in
+  `claude-project-log.md`.
+- The running session log is `claude-project-log.md`. Append, don't rewrite.
+
+Human authorship is the default — mark only AI work.
 
 ## Plans group experiments
 
@@ -59,3 +88,20 @@ Date-stamp the file.
 Recurring mech-interp lessons accumulate in `docs/guides/<topic>.md`.
 Read the existing guides before designing a new experiment. Keep entries
 short, factual, and citation-backed.
+
+## Papers
+
+Markdown summaries / notes of relevant papers live in `docs/papers/`.
+One file per paper. Treat these as agent-readable reference material —
+grep them when designing experiments to cite literature.
+
+## Archiving
+
+Anything superseded or shelved moves to an `archive/` subdir rather than
+being deleted:
+
+- `decisions/archive/`     — ADRs explicitly replaced by a newer one
+- `plans/archive/`         — plans that are done or abandoned
+- `plans/<slug>/archive/`  — individual experiments within an active plan
+
+Archiving preserves history without cluttering the active workspace.

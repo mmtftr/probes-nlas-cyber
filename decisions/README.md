@@ -1,3 +1,5 @@
+[ai-generated]
+
 # Decisions
 
 ADRs for changes that affect future experiments. One file per decision:
@@ -13,4 +15,5 @@ Each ADR has three sections:
 - **Consequences** — what downstream work this enables, breaks, or invalidates.
 
 Date-stamp the file. Don't edit past ADRs after they land — supersede them
-with a new ADR that references the old one.
+with a new ADR that references the old one. Move explicitly-superseded
+ADRs into `decisions/archive/`.

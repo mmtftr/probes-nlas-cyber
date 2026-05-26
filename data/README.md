@@ -1,3 +1,5 @@
+[ai-generated]
+
 # `data/` — local scratch / cache
 
 This directory is **not** the source of truth — wandb + HF Hub are.

@@ -1,3 +1,5 @@
+[ai-generated]
+
 # Guides
 
 Recurring mech-interp lessons learned in this repo. Agents read these
