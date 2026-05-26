@@ -5,12 +5,11 @@ __pycache__/
 .env
 .env.local
 
-# Data and artifacts — fetch from HF, don't commit
-data/*.npz
-data/*.jsonl
-data/activations*/
-data/repo_benchmark*/
-data/eval/
+# data/ is local scratch / cache. Track only the README scaffold;
+# payloads (npz, jsonl, parquet, png, ...) never get committed.
+data/**/*
+!data/**/
+!data/**/README.md
 
 # wandb local state
 wandb/

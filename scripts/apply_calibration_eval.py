@@ -29,7 +29,7 @@ from sklearn.model_selection import train_test_split
 
 # Local import so the eval uses the same primitive as the streaming server.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from src.calibration import apply_platt  # noqa: E402
+from src.probes.calibration import apply_platt  # noqa: E402
 
 from scripts.calibrate_probe import expected_calibration_error  # noqa: E402
 

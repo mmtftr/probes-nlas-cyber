@@ -18,7 +18,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from src.train_probe_spanmax import train_one_layer  # type: ignore
+from src.training.train_probe_spanmax import train_one_layer  # type: ignore
 
 
 def pair_group_key(row: dict) -> str:

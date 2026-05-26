@@ -18,12 +18,15 @@ for cyber-vulnerability classification.
 
 ```
 src/
-  extract_activations.py       # example-level hidden states → .npz
-  extract_token_activations.py # token-level hidden states + offsets + spans
-  train_probe.py               # baseline linear probe (last-token)
-  train_probe_spanmax.py       # span-max loss (Obeso/Arditi 2025) — primary
-  calibration.py               # threshold/temperature fitting
-  eval/                        # split definitions, metrics, protocols, AST mask
+  data/
+    extract_activations.py       # example-level hidden states → .npz
+    extract_token_activations.py # token-level hidden states + offsets + spans
+  probes/
+    calibration.py               # post-hoc Platt / temperature fitting
+  training/
+    train_probe.py               # baseline linear probe (last-token)
+    train_probe_spanmax.py       # span-max loss (Obeso/Arditi 2025) — primary
+  eval/                          # split definitions, metrics, protocols, AST mask
 scripts/
   build_dataset_sven.py        # SVEN dataset builder (primary)
   build_dataset_v2.py          # earlier dataset variant (kept for reference)
@@ -45,7 +48,10 @@ notebooks/
   remote/kaggle_train_probe_sven_weak.ipynb
 tests/
 configs/                       # wandb sweep / run configs (empty for now)
-data/                          # local scratch only — .gitignored
+plans/                         # goal-directed experiment groups (see CLAUDE.md)
+decisions/                     # ADRs for cross-experiment choices
+docs/guides/                   # accumulated mech-interp lessons
+data/                          # local scratch (datasets/ models/ probes/ plots/) — payloads .gitignored
 ```
 
 ## Setup
