@@ -1,3 +1,5 @@
+[ai-generated]
+
 # probes-nlas-cyber
 
 Mech-interp research on linear probes and natural-language activations (NLAs)

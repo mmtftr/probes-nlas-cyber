@@ -1,3 +1,5 @@
+[ai-generated]
+
 # Plans
 
 A plan is a goal-directed group of experiments. Layout:
@@ -20,3 +22,9 @@ plans/<plan-slug>/
 Each experiment dir has its own `EXPERIMENT.md` with the five-field
 briefing (Aim / Inputs / Outputs / Result format / Interpretation hints —
 see `CLAUDE.md`).
+
+Shelved or abandoned work moves to `archive/`:
+
+- `plans/archive/<plan-slug>/`         — whole plan archived
+- `plans/<plan-slug>/archive/<NN>-<exp-slug>/`  — single experiment archived
+  inside an otherwise-active plan
