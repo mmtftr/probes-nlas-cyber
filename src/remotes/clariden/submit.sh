@@ -52,6 +52,11 @@ srun -lu --mpi=pmi2 --environment=alps3 --cpus-per-task \$SLURM_CPUS_PER_TASK ba
 $(printf "%b" "$LAUNCH")    wait
 '
 EOF
+    # debug-qos caps jobs (MaxSubmitPU=2, MaxJobsPU=1) -> drip-feed chunks,
+    # blocking until a queue slot frees, so we never hit QOSMaxSubmitJobPerUser.
+    while [ "$(squeue -u "$USER" -h -o '%j' 2>/dev/null | grep -c 'probe-sweep')" -ge "${MAXQ:-2}" ]; do
+        sleep 30
+    done
     JID=$(sbatch --parsable "$SB")
     echo "[submit] chunk $chunk -> job $JID  models: ${GROUP[*]}" >&2
 done
