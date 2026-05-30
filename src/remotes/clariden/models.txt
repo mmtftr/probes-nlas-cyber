@@ -1,26 +1,47 @@
 # [ai-generated]
 # Cross-model probe sweep roster. One HF model id per line; `#` comments ignored.
-# Second column = axis the model isolates (for the writeup). VERIFY-ID = confirm
-# the exact HF repo id before relying on it (2026 releases, ids may differ).
-# GATED = needs HF_TOKEN (accept license on HF first).
-# All dense <=32B (or small-total MoE) so full weights fit one 96GB GH200 in bf16.
-# Giant MoEs (DeepSeek V4, Kimi K2.6, GLM-5.1, Llama-4, Qwen3-Coder-Next-80B)
-# are excluded: weights don't fit a single GPU.
+# Col2 = axis isolated (writeup). GATED = needs HF_TOKEN + accepted license.
+# All dense <=33B or small-total MoE -> full weights fit one 96GB GH200 in bf16
+# (verified via HF safetensors totals). Giant MoEs (DeepSeek V4, Kimi, GLM-5.1,
+# Llama-4, Qwen3-Coder-Next-80B) excluded: don't fit one GPU.
+#
+# UNGATED models are listed first so the sweep makes progress before the token
+# is placed. Caveats handled in the extractor before the relevant rows run:
+#   [bf16]  StarCoder2 ships F32 on the Hub -> must load torch_dtype=bfloat16.
+#   [mm]    Multimodal config -> load the text path (not the full VLM).
+#   [tx]    2026 arch (gemma4 / qwen3_5 / MoE-coder) -> needs recent transformers;
+#           verify output_hidden_states exposes every layer (Qwen3.6 has
+#           linear-attention/Gated-DeltaNet layers).
 
-google/gemma-3-1b-it                          size            GATED
-google/gemma-3-4b-it                          size            GATED
-google/gemma-3-12b-it                         size            GATED
-google/gemma-3-27b-it                         size            GATED
-google/gemma-3-12b-pt                         posttrain-base  GATED
-Qwen/Qwen3-8B                                 family-general
-meta-llama/Llama-3.1-8B-Instruct              family-general  GATED
-mistralai/Mistral-7B-Instruct-v0.3            family-general  GATED
+# --- ungated: code-specialized ---
 Qwen/Qwen2.5-Coder-7B-Instruct                code
-Qwen/Qwen2.5-Coder-32B-Instruct               code
 deepseek-ai/deepseek-coder-6.7b-instruct      code
-bigcode/starcoder2-15b                        code            GATED
 infly/OpenCoder-8B-Instruct                   code
+Qwen/Qwen2.5-Coder-32B-Instruct               code-large
+Qwen/Qwen3-Coder-30B-A3B-Instruct             code-moe          # [tx]
+mistralai/Devstral-Small-2507                 code-modern
+bigcode/starcoder2-15b                        code              # [bf16] license may gate
+
+# --- ungated: general families + size axis ---
+Qwen/Qwen3-8B                                 family-general
+Qwen/Qwen3-14B                                size
+Qwen/Qwen3-32B                                size
+mistralai/Mistral-7B-Instruct-v0.3            family-general
+mistralai/Mistral-Small-3.2-24B-Instruct-2506 family-modern
+allenai/OLMo-2-1124-13B-Instruct              fully-open
+
+# --- ungated: distinct post-training ---
 microsoft/phi-4                               posttrain-synth
 deepseek-ai/DeepSeek-R1-Distill-Qwen-7B       posttrain-reason
-google/gemma-4-26b-a4b-it                      newest-gen      VERIFY-ID GATED
-Qwen/Qwen3.6-27B                              newest-gen      VERIFY-ID
+
+# --- ungated: newest-gen (2026) ---
+google/gemma-4-26B-A4B-it                      newest-moe        # [mm][tx]
+Qwen/Qwen3.6-27B                              newest-dense      # [mm][tx]
+
+# --- gated: home family (size + post-training axes) ---
+google/gemma-3-1b-it                          size              GATED
+google/gemma-3-4b-it                          size              GATED  # [mm]
+google/gemma-3-12b-it                         size              GATED  # [mm]
+google/gemma-3-27b-it                         size              GATED  # [mm]
+google/gemma-3-12b-pt                         posttrain-base    GATED  # [mm]
+meta-llama/Llama-3.1-8B-Instruct              family-general    GATED

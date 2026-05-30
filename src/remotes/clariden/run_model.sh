@@ -9,7 +9,7 @@ set -uo pipefail
 MODEL_ID="$1"; GPU_ID="${2:-0}"
 export CUDA_VISIBLE_DEVICES="$GPU_ID"
 
-SLUG="$(echo "$MODEL_ID" | tr '/' '_' | tr -c 'A-Za-z0-9._-' '_')"
+SLUG="$(printf '%s' "$MODEL_ID" | tr '/' '_' | tr -c 'A-Za-z0-9._-' '_')"
 OUT="$RUNS/$SLUG"
 ACTS="$OUT/token_activations"
 LOG="$OUT/run.log"

@@ -47,7 +47,7 @@ while [ $i -lt ${#MODELS[@]} ]; do
 #SBATCH --no-requeue
 set -euo pipefail
 export WORK=$WORK REPO=$REPO
-srun -lu --environment=alps3 --cpus-per-task \$SLURM_CPUS_PER_TASK bash -c '
+srun -lu --mpi=pmi2 --environment=alps3 --cpus-per-task \$SLURM_CPUS_PER_TASK bash -c '
     source \$REPO/src/remotes/clariden/env.sh
 $(printf "%b" "$LAUNCH")    wait
 '
