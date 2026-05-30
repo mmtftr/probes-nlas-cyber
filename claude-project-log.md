@@ -72,3 +72,31 @@ Narrowed project scope with the user.
   tunnel vision; classifier-property audit for over/under-detection.
 - Added fenced **Agent notes** cross-linking each to existing baselines/splits/
   metrics and the open §8 decisions; no new decisions forced.
+
+---
+
+## 2026-05-31 — Clariden cross-model sweep launched (overnight, GH200)
+
+8 h GH200 window on CSCS Clariden (account `lsaie-ss26`, partition `debug`,
+4× GH200/node, 90 node-min/job). Method-generalization sweep per
+`plans/cross-model-probe-generalization/`.
+
+- **Orchestrator** `src/remotes/clariden/` (env.sh / run_model.sh / train_eval.py /
+  submit.sh / models.txt / overnight.sh). Single-node jobs, 4 models/GPU packed,
+  idempotent (DONE markers), deps installed once into shared `.python_deps`
+  (transformers 4.57.1 + matched hub/tokenizers; login node is py3.6 so install
+  must be in-container).
+- **Roster** 23 models (dense ≤33B + small MoE), all confirmed to fit one GH200;
+  HF token validated, all gated (Gemma-3 family + Llama-3.1) reachable.
+- **Smoke (validated end-to-end):** deepseek-coder-6.7b ex-AUC 0.705 / tok 0.851
+  (best layer frac 0.97); Qwen2.5-Coder-7B 0.694 / 0.820 (0.96); Qwen3-8B 0.711 /
+  0.845 (**frac 0.50, mid-net**). Probe beats regex (0.53) / length (0.58).
+  Early signal: best-layer fraction varies by family → motivates the layer sweep.
+- **Teammate fixes folded in:** submit.sh `pmi2`; extractor `dtype`/`torch_dtype`
+  fallback; `scripts/build_dataset_sven_canonical.py` (1560 rows, 780/780);
+  slug `printf` fix.
+- **Unattended:** `overnight.sh` (nohup on login node) waits out the smoke job,
+  submits the full roster, and re-submits gaps (≤2 attempts/model). gemma-4 /
+  qwen3.6 (2026 archs) may exceed transformers 4.57 → expected MISS, capped.
+- Results: `~/scratch/probes/runs/<slug>/metrics.json`; progress in
+  `~/scratch/probes/overnight.log`. NOT yet logged to wandb (TODO).
