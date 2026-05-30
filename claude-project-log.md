@@ -100,3 +100,10 @@ Narrowed project scope with the user.
   qwen3.6 (2026 archs) may exceed transformers 4.57 → expected MISS, capped.
 - Results: `~/scratch/probes/runs/<slug>/metrics.json`; progress in
   `~/scratch/probes/overnight.log`. NOT yet logged to wandb (TODO).
+- **QOS gotcha (fixed):** `debug-qos` rejects a 2nd queued job
+  (`QOSMaxSubmitJobPerUserLimit`; nominal MaxSubmitPU=2 but races → effective 1).
+  `submit.sh` now drip-feeds at `MAXQ=1` (submit only when 0 of our jobs queued)
+  → strictly sequential, ~30 min/chunk for big models. Verified: 0 QOS errors
+  across 4 consecutive submissions; 18/23 done within ~1 h of the fix.
+- Slug fix changed run-dir names → two early-smoke models have stale `_`-suffixed
+  dirs (`*_/`) alongside clean ones; harmless, dedupe at collection.
