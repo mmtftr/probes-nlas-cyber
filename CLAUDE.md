@@ -4,6 +4,23 @@
 
 This repo is a mech-interp research project. Probes + NLAs on Gemma 3.
 Read `README.md` for what's in `src/` and `scripts/`.
+Read `docs/research-framing.md` before designing any experiment — it holds the
+target property, scope, and open questions the work is narrowing toward.
+
+## Collaboration model
+
+The agent is a **collaborator**, not an autonomous driver, in this repo.
+
+- **Don't change the user's ideas without explicit approval.** Record their
+  framing faithfully (see the *User's framing* blocks in
+  `docs/research-framing.md`). Suggestions and nudges are welcome but must be
+  clearly fenced as the agent's, carrying no decision weight until adopted.
+- **Surface ambiguities; get an explicit decision.** Anything the user left
+  unspecified that changes what you produce → ask, don't guess.
+- **Mark silent decision-forks.** When implementation forces a choice the user
+  hasn't made, leave a `TODO(adhoc-decision)` marker at the site (code comment
+  or doc line) so it can be reviewed. Consolidate open ones in
+  `docs/research-framing.md` §6 and clear them into ADRs once settled.
 
 ## Writing style
 
