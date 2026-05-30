@@ -104,9 +104,16 @@ def extract(
         dtype = torch.float32
 
     t0 = time.time()
-    model = AutoModelForCausalLM.from_pretrained(
-        model_id, dtype=dtype, attn_implementation="eager"
-    )
+    # transformers <5 takes `torch_dtype`; >=5 renamed it to `dtype`. Try the
+    # new kwarg first, fall back to the legacy one (we pin 4.46.x on the cluster).
+    try:
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id, dtype=dtype, attn_implementation="eager"
+        )
+    except TypeError:
+        model = AutoModelForCausalLM.from_pretrained(
+            model_id, torch_dtype=dtype, attn_implementation="eager"
+        )
     model.to(device).eval()
     print(f"[token-extract] loaded in {time.time()-t0:.1f}s", file=sys.stderr)
 
