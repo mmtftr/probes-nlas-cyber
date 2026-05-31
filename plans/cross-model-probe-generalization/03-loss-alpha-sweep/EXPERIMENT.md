@@ -2,6 +2,12 @@
 
 # 03 — Span-max loss sweep: negative-inclusive variant × α
 
+> ⚠️ **Archived dataset.** Results below were produced on the flawed
+> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
+> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
+> to `../archive/old-dataset/03-loss-alpha/`. Scripts are correct as-is;
+> **to be re-run on the SVEN before/after dataset** (`../REBUILD-PLAN.md`).
+
 Step 3 of `../PLAN.md`. Exps 01–02 fixed the loss (paper-faithful span-max,
 α=10) and swept layers. This sweeps the **loss** itself on the best layers from
 the exp-02 variance study, with error bars over 5 group-clean splits.

@@ -230,7 +230,10 @@ wrong or useless, grouped by kind):
 ## 8. Decisions still owed by the user (consolidated `TODO(adhoc-decision)`)
 
 - Is complication §2.3 (intent-to-exploit) in scope for this repo? (§2)
-- Canonical contrast structure for datasets: SVEN pairs vs. synthesized. (§2/Q2)
+- ~~Canonical contrast structure for datasets: SVEN pairs vs. synthesized.~~
+  **Resolved → `decisions/0002`**: SVEN **before/after full-function** pairs
+  (positive = `func_src_before`, negative = `func_src_after`). Replaces the
+  earlier completion-truncation dataset (archived).
 - Layer policy: sweep-then-select vs. fixed a-priori layer. (Q3)
 - Headline metric: AUC vs. recall@fixed-FPR. (Q4)
 - Probe family: stay linear vs. adopt Openia-style small MLP / layer-concat. (Q3)
