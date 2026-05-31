@@ -38,6 +38,11 @@ REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO))
 
 from src.training.train_probe_spanmax import MLPProbe, train_one_layer  # noqa: E402
+from src.eval.honest_scoring import (  # noqa: E402
+    honest_token_aucs,
+    load_dataset_rows,
+    load_offsets_npz,
+)
 from sklearn.metrics import roc_auc_score  # noqa: E402
 
 
@@ -123,6 +128,9 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--acts-dir", required=True)
     ap.add_argument("--dataset", required=True)
+    ap.add_argument("--offsets", default=None,
+                    help="Per-row char offsets npz (offsets_row_NNNN keys) for the "
+                         "honest live-code token AUC. Defaults to <acts-dir>/offsets.npz.")
     ap.add_argument("--out", required=True)
     ap.add_argument("--feature-sets", required=True,
                     help="';'-separated layer groups, each ','-separated, e.g. '19;17,19,22;9,19,26,61'")
@@ -149,6 +157,11 @@ def main() -> None:
     json.loads((acts / "meta.json").read_text())  # presence check (mirrors exp-02)
     y = np.load(acts / "y.npy")
     eids = np.load(acts / "example_ids.npy")
+
+    # Load offsets + dataset rows once for the honest live-code token AUC.
+    offsets_path = Path(args.offsets) if args.offsets else (acts / "offsets.npz")
+    offsets_by_eid = load_offsets_npz(offsets_path)
+    dataset_rows_by_eid = load_dataset_rows(Path(args.dataset))
 
     # Group key per example id, from the dataset rows (eid == row index).
     rows = [json.loads(l) for l in Path(args.dataset).open()]
@@ -206,13 +219,19 @@ def main() -> None:
             tok_y, te_eids = y[te], eids[te]
             tok_auc = (float(roc_auc_score(tok_y, tok_p))
                        if len(np.unique(tok_y)) > 1 else float("nan"))
+            # Honest live-code-only token AUC alongside the inflated all-token AUC.
+            honest = honest_token_aucs(
+                tok_p, tok_y, te_eids, offsets_by_eid, dataset_rows_by_eid,
+            )
             ex_ids, ex_p = te_mod.example_scores(tok_p, te_eids)
             ex_y = np.array([int(y[(eids == e)].max() > 0) for e in ex_ids])
             ex_auc = (float(roc_auc_score(ex_y, ex_p))
                       if len(np.unique(ex_y)) > 1 else float("nan"))
             rec = {**_meta(layers, arch, seed), "in_dim": int(Xtr_c.shape[1]),
                    "test_ex_auc": ex_auc, "test_tok_auc": tok_auc,
-                   "val_ex_auc": float(r["ex_auc"])}
+                   "val_ex_auc": float(r["ex_auc"]),
+                   "tokens_code_auc": honest["tokens_code_auc"],
+                   "dropped_fraction": honest["dropped_fraction"]}
             dst.write_text(json.dumps(rec))
             print(f"[richer] {tag}  ex={ex_auc:.3f} tok={tok_auc:.3f}", file=sys.stderr)
         except Exception as e:  # noqa: BLE001 -- record + continue, never abort the sweep
