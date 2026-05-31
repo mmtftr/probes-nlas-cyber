@@ -107,3 +107,29 @@ Narrowed project scope with the user.
   across 4 consecutive submissions; 18/23 done within ~1 h of the fix.
 - Slug fix changed run-dir names → two early-smoke models have stale `_`-suffixed
   dirs (`*_/`) alongside clean ones; harmless, dedupe at collection.
+
+## 2026-05-31 — cross-model sweep: recover 2/5 failures, drop 3, bump to transformers 5.9.0
+
+Diagnosed the 5 overnight `EXTRACT_FAILED` models and drove the sweep to its final
+state (20/23). See `decisions/0001-cross-model-roster-drops.md`.
+
+- **Stack bump**: `env.sh` now installs transformers 5.9.0 / tokenizers 0.22.2 /
+  hub 1.17.0 into a fresh `.python_deps5` (4.57.1 tree at `.python_deps` kept as
+  rollback; `$TF_STACK` overrides). Verified `gemma4`/`qwen3_5`/`mistral3` ∈
+  `CONFIG_MAPPING` before pinning, and re-loaded a DONE model (gemma-3-1b) through
+  the new loaders end-to-end.
+- **Xet fix**: hub 1.17's Xet path calls `download_files(request_headers=)` which
+  the image's `hf_xet` rejects → every fresh download died. Set
+  `HF_HUB_DISABLE_XET=1` (classic HTTPS). This was the single root cause of all 5
+  failures *re-failing* on first 5.9.0 attempt.
+- **Extractor** (`src/data/extract_token_activations.py`): `trust_remote_code=True`
+  + `AutoProcessor`-tokenizer fallback (now re-raises the original error instead of
+  masking) + `AutoModelForImageTextToText` fallback for VLM wrappers (engaged for
+  Mistral-Small-3.2).
+- **Recovered**: gemma-4-26B-A4B (ex-AUC 0.702 / tok-AUC 0.840, best layer 15/30)
+  and Qwen3.6-27B (0.701 / 0.855, best layer 32/64) — both beat baselines on the
+  shared split, the two archs that strictly needed >=5.9.0.
+- **Dropped (3)**: OpenCoder-8B (slow `INFLMTokenizer`, no offset_mapping);
+  Devstral-2507 + Mistral-Small-3.2 (Tekken→151000-vocab vs 131072 embeddings →
+  OOB CUDA assert; no clean offset-preserving fix on 5.9.0). User-confirmed both
+  drop decisions rather than ship approximate offsets.

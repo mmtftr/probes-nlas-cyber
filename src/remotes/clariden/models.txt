@@ -16,10 +16,19 @@
 # --- ungated: code-specialized ---
 Qwen/Qwen2.5-Coder-7B-Instruct                code
 deepseek-ai/deepseek-coder-6.7b-instruct      code
-infly/OpenCoder-8B-Instruct                   code
+# DROPPED: infly/OpenCoder-8B-Instruct          code   # only ships a custom slow
+#   INFLMTokenizer (SentencePiece, no fast variant / no tokenizer.json) that does
+#   not return offset_mapping. The span-aware extractor needs char->token offsets,
+#   so this model can't be probed with the current recipe. Code axis already
+#   covered by Qwen2.5-Coder-7B/32B, deepseek-coder, Qwen3-Coder-30B, starcoder2.
 Qwen/Qwen2.5-Coder-32B-Instruct               code-large
 Qwen/Qwen3-Coder-30B-A3B-Instruct             code-moe          # [tx]
-mistralai/Devstral-Small-2507                 code-modern
+# DROPPED: mistralai/Devstral-Small-2507        code-modern  # Tekken tokenizer:
+#   transformers 5.9.0 converts tekken.json to a 151000-token vocab but the model
+#   has only 131072 embeddings -> real code maps to ids ~149k -> embedding OOB /
+#   CUDA device-side assert on the first forward. Official tokenizer is
+#   mistral-common, which 5.9.0 doesn't expose as MistralCommonTokenizer and which
+#   yields no char offsets (same offset wall as OpenCoder). See decisions log.
 bigcode/starcoder2-15b                        code              # [bf16] license may gate
 
 # --- ungated: general families + size axis ---
@@ -27,7 +36,10 @@ Qwen/Qwen3-8B                                 family-general
 Qwen/Qwen3-14B                                size
 Qwen/Qwen3-32B                                size
 mistralai/Mistral-7B-Instruct-v0.3            family-general
-mistralai/Mistral-Small-3.2-24B-Instruct-2506 family-modern
+# DROPPED: mistralai/Mistral-Small-3.2-24B-Instruct-2506 family-modern  # same
+#   Tekken vocab mismatch as Devstral (151000 tok vs 131072 embeddings -> OOB).
+#   Tokenizer/VLM loaders work (AutoModelForImageTextToText fallback engages),
+#   but the forward asserts on out-of-range ids. See decisions log.
 allenai/OLMo-2-1124-13B-Instruct              fully-open
 
 # --- ungated: distinct post-training ---
@@ -35,8 +47,11 @@ microsoft/phi-4                               posttrain-synth
 deepseek-ai/DeepSeek-R1-Distill-Qwen-7B       posttrain-reason
 
 # --- ungated: newest-gen (2026) ---
+# CONFIRMED working on the transformers 5.9.0 stack (archs gemma4 / qwen3_5 are
+# registered; gemma-4 loads via the AutoModelForImageTextToText fallback). Both
+# DONE with probes beating baselines. They need >=5.9.0 (4.57.1 lacked the archs).
 google/gemma-4-26B-A4B-it                      newest-moe        # [mm][tx]
-Qwen/Qwen3.6-27B                              newest-dense      # [mm][tx]
+Qwen/Qwen3.6-27B                              newest-dense      # [tx]
 
 # --- gated: home family (size + post-training axes) ---
 google/gemma-3-1b-it                          size              GATED
