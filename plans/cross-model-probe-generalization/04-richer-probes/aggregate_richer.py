@@ -45,6 +45,8 @@ def main() -> None:
     for (fs, arch), cs in sorted(by_key.items()):
         ex_m, ex_s, n = _ms([c.get("test_ex_auc") for c in cs])
         tok_m, tok_s, _ = _ms([c.get("test_tok_auc") for c in cs])
+        # Honest live-code-only token AUC (present only on runs that recorded it).
+        code_m, code_s, _ = _ms([c.get("tokens_code_auc") for c in cs])
         in_dim = next((c.get("in_dim") for c in cs if c.get("in_dim") is not None), None)
         layers = next((c.get("layers") for c in cs if c.get("layers") is not None),
                       [int(x) for x in fs.split(",") if x.strip()])
@@ -52,6 +54,7 @@ def main() -> None:
             "feature_set": fs, "arch": arch, "layers": layers, "in_dim": in_dim,
             "ex_auc_mean": ex_m, "ex_auc_std": ex_s, "n": n,
             "tok_auc_mean": tok_m, "tok_auc_std": tok_s,
+            "tokens_code_auc_mean": code_m, "tokens_code_auc_std": code_s,
             "ex_auc_per_seed": [(c.get("seed"), c.get("test_ex_auc"))
                                 for c in sorted(cs, key=lambda c: c.get("seed", 0))],
         })
