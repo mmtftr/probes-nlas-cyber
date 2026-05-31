@@ -1,22 +1,24 @@
 #!/bin/bash
 # [ai-generated]
-# Submit the full per-layer sweep for Gemma-3-27B as ONE single-node debug job:
-#   phase 1: extract all 62 layers to float16 memmaps on scratch (1 GPU)
-#   phase 2: train one span-max probe per layer, 62 layers fanned across 4 GPUs
+# Submit the full per-layer sweep for one model as ONE single-node debug job:
+#   phase 1: extract ALL layers to float32 memmaps on scratch (1 GPU)
+#   phase 2: train one span-max probe per layer, fanned across 4 GPUs
 #   phase 3: aggregate per-layer JSONs + baselines -> metrics_layersweep.json
 # Idempotent / resumable: extract skips if DONE_EXTRACT exists; training skips
 # any layer_{NN}.json already written. Re-submit to continue after a timeout.
-#   ./submit_layersweep.sh            (run on the clariden login node)
+#   MODEL=Qwen/Qwen2.5-Coder-32B-Instruct ./submit_layersweep.sh   (login node)
+#   ./submit_layersweep.sh            (defaults to google/gemma-3-27b-it)
 set -euo pipefail
 
 WORK=${WORK:-$HOME/scratch/probes}
 REPO=${REPO:-$WORK/repo}
 ACCOUNT=${SBATCH_ACCOUNT:-lsaie-ss26}
 WALLTIME=${1:-01:30:00}
-MODEL=google/gemma-3-27b-it
+MODEL=${MODEL:-google/gemma-3-27b-it}
+SLUG=$(printf '%s' "$MODEL" | tr '/' '_' | tr -c 'A-Za-z0-9._-' '_')
 
 EXP="$REPO/plans/cross-model-probe-generalization/02-layer-sweep-gemma3-27b"
-RUN="$WORK/runs/layersweep_gemma3-27b"
+RUN="$WORK/runs/layersweep_$SLUG"
 ACTS="$RUN/acts"; LAYERDIR="$RUN/layers"; FINAL="$RUN/metrics_layersweep.json"
 mkdir -p "$RUN" "$WORK/logs"
 SB="$RUN/layersweep.sbatch"
@@ -25,7 +27,7 @@ cat > "$SB" <<EOF
 #!/bin/bash
 #SBATCH --account=$ACCOUNT
 #SBATCH --partition=debug
-#SBATCH --job-name=layersweep-g3-27b
+#SBATCH --job-name=layersweep-$SLUG
 #SBATCH --output=$WORK/logs/%x-%j.log
 #SBATCH --error=$WORK/logs/%x-%j.log
 #SBATCH --nodes=1
