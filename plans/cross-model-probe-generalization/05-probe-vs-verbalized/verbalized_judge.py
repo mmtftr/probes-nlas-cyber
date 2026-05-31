@@ -98,7 +98,7 @@ def main() -> None:
     ap.add_argument("--pairs", required=True, help="dataset.jsonl")
     ap.add_argument("--out", required=True,
                     help="OUTPUT DIRECTORY; shard files verbalized_scores.gpu{id}.json land here")
-    ap.add_argument("--max-length", type=int, default=1024)
+    ap.add_argument("--max-length", type=int, default=2048)
     ap.add_argument("--n-gpus", type=int, default=1)
     ap.add_argument("--gpu-id", type=int, default=0)
     args = ap.parse_args()

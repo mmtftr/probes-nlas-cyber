@@ -51,7 +51,7 @@ srun -lu --mpi=pmi2 --environment=alps3 --cpus-per-task \$SLURM_CPUS_PER_TASK ba
 
     echo "[variance] phase 1: extract all layers (idempotent)"
     CUDA_VISIBLE_DEVICES=0 numactl --membind=0 python \$EXP/extract_all_layers.py \
-        --model $MODEL --pairs \$DATA --out \$ACTS --max-length 1024
+        --model $MODEL --pairs \$DATA --out \$ACTS --max-length 2048
 
     echo "[variance] phase 2: K-split retrain per layer across 4 GPUs (seeds=\$SEEDS)"
     for g in 0 1 2 3; do

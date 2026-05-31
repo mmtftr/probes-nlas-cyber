@@ -133,3 +133,124 @@ state (20/23). See `decisions/0001-cross-model-roster-drops.md`.
   Devstral-2507 + Mistral-Small-3.2 (Tekken→151000-vocab vs 131072 embeddings →
   OOB CUDA assert; no clean offset-preserving fix on 5.9.0). User-confirmed both
   drop decisions rather than ship approximate offsets.
+
+---
+
+## 2026-05-31 — training-logic walkthrough notebook
+
+- Added `notebooks/walkthrough/walkthrough_training_logic.{py,ipynb}` — a
+  stage-by-stage visual trace of the span-max probe training. Authored as a
+  jupytext percent `.py` (reviewable source) + executed `.ipynb` (8 embedded
+  plots). `[ai-generated]`.
+- **Faithfulness by import, not re-implementation.** Every stage imports the
+  real functions: `token_data.{parse_spans,char_spans_to_token_spans,
+  token_labels_array}`, `train_probe_spanmax.{LinearProbe,soft_labels_triangular,
+  span_max_loss,train_one_layer,_group_by_example,_example_label}`, and the
+  `pair_group_key` group split. Two in-notebook assertions enforce it:
+  reconstructed per-token labels == on-disk `y`; manual loss decomposition ==
+  `span_max_loss` at omega ∈ {0,.25,.5,.75,1}.
+- **Stages:** (1) tokens split & labeled, (2) outer group-clean + inner 90/10
+  split, (3) probe logits `w·h+b`→sigmoid, (4) loss anatomy (weighted-BCE token
+  term + max-pool span term + omega anneal + soft labels), (5) real
+  `train_one_layer` loop with loss/AUC/omega curves + before/after, (6) max-pool
+  example score + token/example ROC.
+- **Data:** uses the staged `notebooks/walkthrough/data/` sample (Gemma-3-1B
+  layer-13 acts, 150 examples, + dataset.jsonl/offsets/spans/split_meta).
+  Notebook flags AUCs as sample-scale, not the production figure.
+- Built with `uvx jupytext` + `jupyter nbconvert --execute` (matplotlib/
+  nbconvert added at runtime via `uv run --with`).
+
+---
+
+## 2026-05-31 — Step 2: full per-layer sweep, Gemma-3-27B
+
+- New self-contained experiment `plans/cross-model-probe-generalization/02-layer-sweep-gemma3-27b/`
+  (extract_all_layers / train_all_layers / aggregate_layersweep / submit_layersweep.sh).
+  Streams all 62 layers to per-layer memmaps, trains the span-max probe per layer
+  across 4 GPUs (resumable), aggregates AUC-vs-depth. Reuses the canonical
+  loaders/loss/split so logic matches the overnight run.
+- First attempt crashed: float16 saturates Gemma-3's massive mid-layer activations
+  (>65504) to inf -> NaN training. Fixed to float32 (551GB scratch) + per-layer
+  try/except. Job 2438307: 62/62 layers, ~16 min.
+- **Validated:** layers 15/31/46/61 reproduce the overnight 4-layer metrics exactly.
+- **Finding:** best ex-AUC = layer 27 (frac 0.44, 0.695); token-AUC peaks L26 (0.855).
+  The coarse {n/4,n/2,3n/4,n-1} grid missed it — its 3n/4 pick (L46=0.564) is a dead
+  zone near baseline. Mid-depth (~0.4) > late for this model. Bears on Q3/layer-policy
+  ADR (n=1, needs a 2nd model). See EXPERIMENT.md Results + auc_vs_depth.png.
+- Activations left on scratch at runs/layersweep_gemma3-27b/acts (551GB) — delete when
+  no longer needed for re-analysis.
+
+- **Walkthrough follow-up:** added a Stage-5 cell showing the trained probe on
+  the SVEN-paired *correct* twin of the demo example (same `pair_group_key`,
+  label 0). Found generically, not hardcoded. Contrast on layer-13 sample:
+  vulnerable eid 38 max p=1.00 (fires in span) vs. fixed eid 435 max p=0.15
+  (quiet). Notebook now has 9 embedded plots; re-executed clean.
+
+- **Walkthrough Stage 7 (bad examples):** added a failure-case stage — ranks all
+  sample examples by max-pooled score, plots the 2 weakest positives + 2
+  strongest negatives, prints their source text. Surfaced a real finding on the
+  layer-13 sample: at THR=0.5 the max-pool example score gives 0/75 false
+  negatives but 71/75 false positives — concrete instance of the over-detection
+  failure mode (research-framing §6) and the operating-point question (Q4).
+  Notebook now 10 plots, re-executed clean. (Trained-on-sample caveat noted in
+  the cell.)
+
+- **Walkthrough Stage 8 (calibrated operating point):** traced gemmaforge's
+  calibration threshold to `data/probe_spanmax_f1.json` in the original repo —
+  0.929082, an F1-max threshold on Platt-calibrated (T≈1.794, a≈-0.269) probe
+  scores, derived by sweeping 0.01–0.99 on the heldout repo benchmark
+  (precision 0.49 / recall 0.35). Added a stage that reproduces the *procedure*
+  on the layer-13 sample probe via the repo's own `apply_platt` + a logistic
+  Platt fit + F1-sweep. Result (sample, trained-on): T=7.03/a=12.79,
+  F1-max=0.290, P=0.57/R=0.93; FP drops 71→52 vs raw 0.5. Notebook stresses the
+  threshold is not comparable across probes (different calibrated axes) — only
+  the procedure transfers. Now 11 plots, re-executed clean.
+
+---
+
+## 2026-05-31 — paper import: Yu et al. MoC (arXiv:2507.09508)
+
+- Added `docs/papers/yu2025-moc-secure-code.md`. *A Mixture of Linear
+  Corrections Generates Secure Code* (Yu, Mangal, Zhuo, Fredrikson, Păsăreanu).
+- **Closest paper to our actual setup:** linear vulnerability probe on last-token
+  hidden states, trained on **SVEN** (same dataset as `build_dataset_sven.py`),
+  with **line-change token spans** as supervision — parallels our span-max
+  token labels.
+- Headline we care about: probe ≫ prompting (QC-7B 79% vs 49%) — direct support
+  for research-framing §7 mitigation #4 (ask-the-LLM-directly baseline). Also:
+  their "bug-prone ≈ vulnerable" overlap corroborates failure mode §6
+  (probe may track low code quality, not pure vulnerability). Late-layer best;
+  Python CWEs easier than C; model-specific transfer.
+- Two `TODO(adhoc-decision)` noted in the file: per-CWE probe/layer selection
+  vs pooling (Q3), and whether MoC-style *steering* (vs detection) is in scope.
+
+---
+
+## 2026-05-31 — dataset rebuild: SVEN before/after contrast (builder + cap decision)
+
+- New builder `scripts/build_dataset_before_after.py` ([ai-generated]) replaces
+  the completion-truncation builders. positive=full `func_src_before`,
+  negative=full `func_src_after`. Token labels (positives) = diff'd vulnerable
+  lines in `before`, three-tier: (1) `char_changes.deleted` spans, text-verified
+  vs `before[cs:ce]` (drops ~25 stale-offset spans), expanded to whole lines;
+  (2) fallback `line_changes.deleted`; (3) purely-additive fixes (91 pairs) →
+  the `before` line at the common-prefix/suffix divergence point. Every positive
+  gets ≥1 span by construction.
+- **Why the non-empty guarantee matters:** both trainers derive the example
+  label from token spans (`ex_y = y[eids==e].max()>0`), NOT the `label` field.
+  An empty-span or token-truncated positive silently flips to negative.
+- **Length-cap decision (user):** full functions reach 114k chars (~28k tok);
+  extractor truncates at `max_length`, dropping past-cap vulnerable lines. Chose
+  **6000-char cap ↔ extractor `max_length` 2048** (was 1024). Drops whole pairs
+  over the cap so both models share an identical, un-truncated row set. Bumped
+  1024→2048 in submit_layersweep/variance/verbalized, run_model.sh,
+  extract_all_layers.py, extract_token_activations.py, verbalized_judge.py.
+- **Additive-fix labeling (user):** insertion-point line (vs CWE-regex / whole-func).
+- Built local `data/dataset.jsonl`: 715 pairs / 1430 rows, balanced. Dropped 84
+  pairs (len>6000) + 4 (before==after). Fresh `sven_split_meta.json` (seed=42,
+  20%): 704 groups, 141 held out (old 767-group split retired).
+- Validation green: schema 0 failures; SVEN-after==#pos (715); 0 empty-span
+  positives; 0 spanned negatives; verbatim vs SVEN. **Length confound gone:**
+  pos-longer 27% / neg-longer 70% / equal 3% (was pos-longer 100%).
+- **Blocked on extraction:** CSCS SSH cert expired (`Permission denied
+  (publickey)` from ela.cscs.ch). Needs user to re-sign before deploy/extract.

@@ -22,7 +22,7 @@ MODEL=${MODEL:-google/gemma-3-27b-it}
 LAYER=${LAYER:-19}
 ALPHA=${ALPHA:-1.0}
 SEEDS=${SEEDS:-42,43,44,45,46}
-MAXLEN=${MAXLEN:-1024}
+MAXLEN=${MAXLEN:-2048}
 SLUG=$(printf '%s' "$MODEL" | tr '/' '_' | tr -c 'A-Za-z0-9._-' '_')
 
 EXP="$REPO/plans/cross-model-probe-generalization/05-probe-vs-verbalized"

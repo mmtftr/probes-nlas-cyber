@@ -24,7 +24,7 @@ PYBIN="$(command -v python || command -v python3)"
 # 1) Extract per-token hidden states (auto-selects {n/4,n/2,3n/4,n-1} layers).
 "$PYBIN" "$REPO/src/data/extract_token_activations.py" \
     --model "$MODEL_ID" --pairs "$DATA/dataset.jsonl" \
-    --out "$ACTS" --max-length 1024 >>"$LOG" 2>&1 || { echo "EXTRACT_FAILED" >"$OUT/FAILED"; exit 1; }
+    --out "$ACTS" --max-length 2048 >>"$LOG" 2>&1 || { echo "EXTRACT_FAILED" >"$OUT/FAILED"; exit 1; }
 
 # 2) Train span-max probe per layer + eval vs baselines on the held-out SVEN split.
 "$PYBIN" "$REPO/src/remotes/clariden/train_eval.py" \
