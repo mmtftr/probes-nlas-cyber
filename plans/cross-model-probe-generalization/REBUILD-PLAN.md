@@ -2,6 +2,15 @@
 
 # REBUILD PLAN — switch to SVEN before/after dataset, re-run 02–05
 
+> **STATUS: COMPLETE (2026-06-01, commits 3209974 / 624d48b / 3f4a091).** Dataset
+> rebuilt + deployed; both models re-extracted at `max_length 2048`; 02–05 re-run
+> on 4-node debug jobs; new best layers L20 (gemma) / L43 (qwen); fresh Results +
+> old-vs-new comparison in each `EXPERIMENT.md`; metrics JSONs committed in-repo.
+> **Remaining optional:** plots (generatable locally from the committed metrics);
+> exp-02 per-layer variance band (needs re-extraction — cluster `runs/` was
+> deleted). Headline: old example-AUCs were confound-inflated (length baseline
+> 0.58→0.49); example-level signal weak (~0.57–0.66), token-level persists (~0.76).
+
 Decision: `decisions/0002-dataset-before-after-contrast.md`. Old (flawed)
 results: `archive/old-dataset/` (+ its README explains the problem).
 
