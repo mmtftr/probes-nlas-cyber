@@ -254,3 +254,45 @@ state (20/23). See `decisions/0001-cross-model-roster-drops.md`.
   pos-longer 27% / neg-longer 70% / equal 3% (was pos-longer 100%).
 - **Blocked on extraction:** CSCS SSH cert expired (`Permission denied
   (publickey)` from ela.cscs.ch). Needs user to re-sign before deploy/extract.
+
+### caveat (extraction): residual gemma truncation
+- gemma-3-27b: 9/1430 examples hit the 2048-token cap (longest C funcs tokenize
+  denser than Qwen, on which the 6000-char cap was calibrated). 1 positive
+  (eid 737 `avcodec_align_dimensions2`, span at ~75% of a 5218-char func) loses
+  its only vulnerable-line tokens → silently treated as negative. 714/715 gemma
+  positives retain labels. Immaterial to AUC (<=1 example, possibly in train).
+  Qwen: cap calibrated on it → expect 0 truncations. Documented, not re-extracted.
+
+## 2026-05-31 — before/after rebuild: exp 02–05 results (4-node accelerated)
+
+All four re-run on the SVEN before/after dataset, both models. Ran 4-node debug
+jobs (each model's grid split across 2 nodes / 8 GPUs) inside the 1.5 node-hour
+cap; launchers in `plans/cross-model-probe-generalization/orchestration/`.
+
+**Headline: the old example-AUCs were substantially confound-inflated.** Length
+baseline 0.58 → 0.49 (≈chance); best example-AUC drops ~0.08–0.12 across exps.
+Token-level vulnerable-line signal persists (~0.69–0.77). New best layers:
+gemma L20, qwen L43 (old were 27/52) — used downstream.
+
+- **02 sweep:** gemma L20 ex0.573/tok0.756; qwen L43 ex0.614/tok0.766 (single-seed).
+- **03 loss×α (5-seed, robust):** gemma L20 base α1 0.644±0.005; qwen L49 neg_incl α1
+  0.642±0.032. **α>1 no longer helps**; neg_incl ≈ base.
+- **04 richer:** gemma best = linear single-L20 (0.644); qwen best = linear concat
+  (0.662). **Reverses old finding: MLP hurts both** (old gain was the confound);
+  **concat helps only Qwen** (was only Gemma).
+- **05 probe vs verbalized:** gemma probe 0.644 > verbalized 0.554 (Δ+0.091, gap
+  *widens*); qwen probe 0.601 ≈ verbalized 0.632 (Δ−0.031, within seed noise) —
+  **probe's edge over self-report is now model-dependent** (held for both before).
+
+### Infra notes (hard-won)
+- 4-node concurrency: each model's grid sharded across 2 nodes via logical
+  `--n-gpus 8 --gpu-id` (decoupled from CUDA device). Validated with a 2-node
+  canary (concurrent, 4 GPUs each).
+- **exp-04 OOM root cause:** `numactl --membind=$gpu` pins each worker to its GPU's
+  NUMA node (~115 GB of 460 GB); the multi-layer concat (~59 GB, transiently 2x)
+  blows that. Fix = `--interleave=all` (full-node RAM) + 2 workers/node. NOT a
+  GPU-memory issue. Fixed in submit_richer.sh too.
+- Stale-cell trap: lossalpha/richer/verbalized run dirs held OLD-dataset cells
+  (old layers); aggregators glob `cell_*.json` → must wipe before re-running.
+- exp-05 `length_baseline` was a hardcoded 0.575 (old set); corrected to 0.49.
+- All metrics snapshotted locally at /tmp/probes_snapshot (acts NOT pulled).

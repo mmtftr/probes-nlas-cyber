@@ -2,13 +2,30 @@
 
 # 05 — Probe vs. the model's own verbalized judgment
 
-> ⚠️ **Archived dataset.** Results below were produced on the flawed
-> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
-> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
-> to `../archive/old-dataset/05-verbalized/`. The truncation directly confounded
-> this experiment (the model was asked yes/no about an incomplete prefix).
-> Scripts are correct as-is; **re-run on the SVEN before/after dataset**
-> (`../REBUILD-PLAN.md`) — the prefix confound largely disappears there.
+> **Rebuilt on the SVEN before/after dataset (2026-05-31).** Now the model judges
+> a *complete* function (not a truncated prefix), so the introspection comparison
+> is clean. New numbers below; old results **superseded**, archived at
+> `../archive/old-dataset/05-verbalized/` (ADR `decisions/0002-...`).
+
+## Results — before/after rebuild (2026-05-31)
+
+Probe (span-max at the new best layer, 5 seeds, max-pooled) vs the model's own
+P("yes, vulnerable?") over the full function. Heldout 1430 examples scored.
+
+| model | layer | probe AUC | verbalized AUC | Δ (probe−verb) | (old Δ) |
+|---|---|---|---|---|---|
+| gemma-3-27b | L20 | 0.644±0.005 | 0.554±0.010 | **+0.091** | +0.059 |
+| qwen2.5-coder-32b | L43 | 0.601±0.057 | 0.632±0.015 | **−0.031** | +0.058 |
+
+**The probe's advantage is now model-dependent.** Old: probe beat verbalized for
+*both* (~+0.06). New: gemma's internal probe still beats its self-report (gap
+*widens* to +0.09 — a genuine introspection gap), but **qwen's verbalized
+self-report ≈/slightly beats its probe** (−0.03, within the probe's 0.057 seed
+std) — the probe edge vanishes for the Coder model on clean data. Both probe and
+verbalized are weak in absolute terms (~0.55–0.64). Spearman(probe, P_yes) ~0.46–0.50.
+(Note: the `length_baseline` field in the metrics JSON shows a stale hardcoded
+0.575; the true new-dataset length baseline is ~0.49 — constant fixed in
+`compare_probe_vs_verbalized.py`.)
 
 Step 5 of `../PLAN.md`. The anti-tunnel-vision check from research-framing §7.4
 ("just ask the LLM") and the §6 "white-box ≥ probes?" failure mode: before

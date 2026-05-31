@@ -37,7 +37,8 @@ from src.training.train_probe_spanmax import train_one_layer  # noqa: E402
 from sklearn.metrics import roc_auc_score  # noqa: E402
 from scipy.stats import spearmanr  # noqa: E402
 
-LENGTH_BASELINE = 0.575  # SVEN length-baseline example-AUC (exp 02/03 reference)
+LENGTH_BASELINE = 0.49  # SVEN before/after length-baseline example-AUC (new exp-02:
+# ~0.49 ≈ chance, confound removed). Was 0.575 on the old completion-truncation set.
 
 
 def _load_train_eval():

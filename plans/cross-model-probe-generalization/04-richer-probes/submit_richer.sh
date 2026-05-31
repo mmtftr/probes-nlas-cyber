@@ -56,8 +56,14 @@ srun -lu --mpi=pmi2 --environment=alps3 --cpus-per-task \$SLURM_CPUS_PER_TASK ba
     EXP=$EXP; ACTS=$ACTS; CELLS=$CELLS; FINAL=$FINAL
 
     echo "[richer] phase 1: cell grid across 4 GPUs (feature_sets=$FEATURESETS archs=$ARCHS alpha=$ALPHA seeds=$SEEDS)"
+    # --interleave=all (NOT --membind): a multi-layer concat feature-set is a big
+    # host array (~59 GB on the before/after set, transiently ~2x during
+    # np.concatenate). --membind pins a worker to its GPU's NUMA node (~115 GB of
+    # the 460 GB), so the concat OOM-kills. Interleave spreads it across all NUMA
+    # nodes. If 4 concurrent concats still OOM, use the OOM-safe 2-worker 4-node
+    # driver in ../orchestration/ (run_4node.sh 4 <wt> 2).
     for g in 0 1 2 3; do
-        CUDA_VISIBLE_DEVICES=\$g numactl --membind=\$g python \$EXP/richer_probe_sweep.py \
+        CUDA_VISIBLE_DEVICES=\$g numactl --interleave=all python \$EXP/richer_probe_sweep.py \
             --acts-dir \$ACTS --dataset \$DATA --out \$CELLS \
             --feature-sets "$FEATURESETS" --archs "$ARCHS" --seeds $SEEDS \
             --epochs 30 --alpha $ALPHA --n-gpus 4 --gpu-id \$g &

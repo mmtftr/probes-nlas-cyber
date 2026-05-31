@@ -2,11 +2,24 @@
 
 # 04 — Richer probes: MLP head & layer-concat features
 
-> ⚠️ **Archived dataset.** Results below were produced on the flawed
-> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
-> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
-> to `../archive/old-dataset/04-richer/`. Scripts are correct as-is;
-> **to be re-run on the SVEN before/after dataset** (`../REBUILD-PLAN.md`).
+> **Rebuilt on the SVEN before/after dataset (2026-05-31).** New numbers below;
+> old completion-truncation results are **superseded**, archived at
+> `../archive/old-dataset/04-richer/` (ADR `decisions/0002-...`).
+
+## Results — before/after rebuild (2026-05-31)
+
+Grid = 3 feature-sets (concat-top4 / single-best / ±2-neighborhood) × {linear,
+mlp256, mlp512} × 5 seeds, 45 cells/model.
+
+| model | best | ex-AUC | linear vs MLP | single vs concat |
+|---|---|---|---|---|
+| gemma-3-27b | **linear, single L20** | 0.644±0.005 | linear 0.644 > mlp 0.612 | single 0.644 > concat 0.590 |
+| qwen2.5-coder-32b | **linear, concat L20,43,45,49** | 0.662±0.042 | linear 0.662 > mlp 0.589 | concat 0.662 > single 0.601 |
+
+**The old finding reverses.** Old: "MLP head helps both (+0.02–0.04); concat helps
+only Gemma." New: **MLP hurts both** (extra capacity overfits once the confound is
+gone — the old MLP gain was fitting the confound), and **concat helps only Qwen**
+(Gemma is best with a single mid layer). Best ex-AUC ~0.64–0.66, vs old ~0.76.
 
 Step 4 of `../PLAN.md`. Exps 01–03 fixed the probe family (linear head on a
 single layer) and tuned its loss (paper-faithful span-max, α=1, neg_incl off).

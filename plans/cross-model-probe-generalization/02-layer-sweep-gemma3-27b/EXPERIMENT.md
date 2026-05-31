@@ -2,11 +2,31 @@
 
 # 02 — Fine-grained layer sweep, Gemma-3-27B
 
-> ⚠️ **Archived dataset.** Results below were produced on the flawed
-> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
-> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
-> to `../archive/old-dataset/02-layer-sweep/`. Scripts are correct as-is;
-> **to be re-run on the SVEN before/after dataset** (`../REBUILD-PLAN.md`).
+> **Rebuilt on the SVEN before/after dataset (2026-05-31).** New numbers in
+> *Results — before/after rebuild* immediately below; the old
+> completion-truncation results further down are **superseded** and archived at
+> `../archive/old-dataset/02-layer-sweep/` (ADR `decisions/0002-...`).
+
+## Results — before/after rebuild (2026-05-31)
+
+**Headline: removing the confound collapses example-level signal.** The
+length-baseline AUC drops 0.58 → **0.49 (≈ chance)** — the old positive-is-longer
+confound is gone — and best example-AUC falls ~0.10–0.12. The probe still
+localizes vulnerable *lines* (tok-AUC ~0.76) but barely tells a whole vulnerable
+function from its fixed version (the two differ by only a few lines).
+
+| model | new best layer | ex-AUC | tok-AUC | (old best) |
+|---|---|---|---|---|
+| gemma-3-27b | **L20** (frac 0.33) | 0.573 | 0.756 | L27, ex 0.695 / tok 0.83 |
+| qwen2.5-coder-32b | **L43** (frac 0.68) | 0.614 | 0.766 | L52, ex 0.716 / tok 0.83 |
+
+New baselines (both models): random 0.45 · **length 0.49** · regex 0.50 (old
+length 0.58). The single-seed sweep above is used only for layer *ranking*; the
+robust 5-seed re-fit at these layers (exp-03, base/α=1) gives ex-AUC
+gemma 0.644±0.005, qwen 0.642±0.032 — still well under the old ~0.72–0.75.
+Downstream exps 03–05 use the **new** best layers (20, 43), not the old (27, 52).
+Extraction: `max_length` 1024→2048, 6000-char pair cap (ADR 0002); 9/1430 gemma
+examples still truncate (1 positive label-flip, immaterial).
 
 Step 2 of `../PLAN.md`. The overnight cross-model run only captured 4 layers per
 model (`{n/4, n/2, 3n/4, n−1}`). This sweeps **all 62 layers** of one model to get
