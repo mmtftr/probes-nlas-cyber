@@ -13,8 +13,13 @@ L = (1−ω)·Σ_T w_i·BCE(y_i, p_i)  +  ω·Σ_spans BCE(1, max_{i∈span} p_i
 - `w_i = α` for in-span tokens else 1 (**α** up-weights the rare positive tokens).
 - **ω** annealed linearly 0→1 over steps: start as token classification, end
   optimizing the per-example max-pool (the eval metric).
-- Defaults that work: α=10, AdamW lr=1e-3, 30 epochs, batch_examples=8, hard
-  labels (`label_window=0`). Internal val split seed=7 for epoch selection.
+- Defaults: AdamW lr=1e-3, 30 epochs, batch_examples=8, hard labels
+  (`label_window=0`), internal val split seed=7 for epoch selection.
+- **α: use ~1, not the old default 10** (exp 03). example-AUC is monotone-
+  decreasing in α for both Gemma and Qwen at every layer tested; α 10→1 buys
+  +0.012–0.033 AUC. Up-weighting the rare in-span tokens over-fits the few
+  annotated positions and hurts the example-level max-pool. The α=1 boundary is
+  the swept minimum — α<1 untested, possibly better still.
 
 ## Eval metric
 - Token-AUC (all held-out tokens) **and** example-AUC (per-example score =
@@ -27,7 +32,10 @@ L = (1−ω)·Σ_T w_i·BCE(y_i, p_i)  +  ω·Σ_spans BCE(1, max_{i∈span} p_i
   the per-token BCE, which ω anneals away). `span_max_loss_neg_incl` adds
   `BCE(0, max-over-all-tokens p)` for negatives — a direct surrogate for the
   example-level max-pool. Enable via `train_one_layer(..., neg_incl=True)`.
-  Whether it beats baseline by >1 std is the exp-03 question.
+  **Verdict (exp 03): no-op.** Δ(neg_incl − base) ∈ [−0.017, +0.011] over all
+  (layer, α) cells of both models, every one within split noise. Keep it off —
+  once ω→1 the positive span term + surviving per-token BCE already hold clean
+  code's max down, so the explicit negative term is redundant.
 
 ## Layer selection — does NOT generalize across models (exp 02)
 - Optimal depth fraction is model-specific: Gemma-3-27B peaks early-mid
