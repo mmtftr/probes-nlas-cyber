@@ -46,7 +46,7 @@ def main() -> None:
     ap.add_argument("--model", required=True)
     ap.add_argument("--pairs", required=True)
     ap.add_argument("--out", required=True)
-    ap.add_argument("--max-length", type=int, default=1024)
+    ap.add_argument("--max-length", type=int, default=2048)
     args = ap.parse_args()
 
     out = Path(args.out)

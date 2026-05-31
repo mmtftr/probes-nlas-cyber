@@ -153,7 +153,7 @@ def extract(
     jsonl_path: Path,
     out_dir: Path,
     layer_indices: list[int] | None = None,
-    max_length: int = 1024,
+    max_length: int = 2048,
 ) -> None:
     device = _device()
     print(f"[token-extract] device={device}  model={model_id}", file=sys.stderr)
@@ -292,7 +292,7 @@ def main() -> None:
     ap.add_argument("--model", default="google/gemma-4-E2B-it")
     ap.add_argument("--pairs", default="data/dataset.jsonl")
     ap.add_argument("--out", default="data/token_activations")
-    ap.add_argument("--max-length", type=int, default=1024)
+    ap.add_argument("--max-length", type=int, default=2048)
     args = ap.parse_args()
     extract(args.model, Path(args.pairs), Path(args.out), max_length=args.max_length)
 
