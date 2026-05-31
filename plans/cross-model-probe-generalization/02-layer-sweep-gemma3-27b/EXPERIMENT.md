@@ -122,3 +122,43 @@ recomputed per seed for matching bands. Scripts: `splits_variance.py`,
 
 **Result format** — `auc_vs_layer_variance.png` (one panel/model: ex- + tok-AUC
 mean curves with ±1 std bands + baseline lines); `metrics_variance_*.json`.
+
+### Results (2026-05-31, jobs 2440451 Gemma / 2440986 Qwen)
+
+`auc_vs_layer_variance.png`; `metrics_variance_gemma3-27b.json`,
+`metrics_variance_qwen25coder32b.json`. All 62/64 layers × 5 seeds done.
+
+**Sanity tie-in passes bit-exact:** seed=42's per-layer value reproduces the
+single-split sweep — Gemma L27 = 0.695, Qwen L52 = 0.716, identical to the
+earlier `metrics_layersweep.json`. So this pipeline is the canonical one re-run.
+
+| | Gemma-3-27B | Qwen2.5-Coder-32B |
+|---|---|---|
+| best **mean** ex-AUC | **L19 (frac 0.31), 0.708 ± 0.018** | **L41 (frac 0.65), 0.716 ± 0.010** |
+| peak region (mean ≥ best−1σ) | L19 only (sharp) | **L34–L43 (broad plateau)** |
+| mean ex-AUC σ across layers | **0.024** (max 0.049 @ L20) | 0.016 (max 0.031) |
+| tok-AUC peak | L61 0.837 / L26 0.831 (bimodal) | L43 0.841 |
+
+**Findings.**
+- **The single-split "best layers" were split-lucky.** Gemma L27 read 0.695 on
+  seed 42 but averages **0.663** over 5 splits; Qwen L52 read 0.716 but averages
+  **0.703**. Both single-split argmaxes sat at the high end of their own spread —
+  exactly the optimism repeated splits expose. The mean-best layers move (Gemma
+  27→19, Qwen 52→41).
+- **Gemma is genuinely noisier than Qwen** (mean σ 0.024 vs 0.016; worst layer
+  0.049 vs 0.031). Its example-AUC curve has wide bands; Qwen's is tight.
+- **Gemma is bimodal in depth:** a strong early-mid region (L10–26, ex ≈ 0.67–0.71,
+  tok ≈ 0.82–0.83) **and** a sharp final-layer recovery (L61: ex 0.688, tok 0.837),
+  with a real dead zone at **L40–55** (ex ≈ 0.57–0.59, ~length baseline). The coarse
+  grid's 3n/4 = L46 lands squarely in that dead zone — confirmed across all 5 splits,
+  not a one-split artifact.
+- **Qwen is unimodal-late:** a broad statistically-flat plateau L34–43 (frac 0.53–0.67).
+  Any layer in that band is within 1σ of the best, so layer choice there is forgiving.
+
+**Bottom line (strengthens the n=2 Q3 conclusion).** The "optimal depth fraction
+does NOT generalize" result survives resampling and is sharper for it: Gemma's
+usable signal is **early-mid + last layer** with a mid-late dead zone, Qwen's is a
+**broad late-middle plateau**. A fixed fraction still can't serve both. And because
+Gemma's peak is both shifty (σ ≈ 0.02 layer-to-layer) and narrow, **val-select the
+layer per model on the actual training split** — a single held-out split can over-
+or under-rate a layer by ~0.02–0.05 AUC.
