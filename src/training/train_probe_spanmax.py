@@ -125,6 +125,7 @@ def span_max_loss(
     omega: float,
     alpha: float = 10.0,
     y_soft: torch.Tensor | None = None,
+    neg_incl: bool = False,
 ) -> torch.Tensor:
     """Per-example contribution to L_probe.
 
@@ -140,6 +141,10 @@ def span_max_loss(
                 labels with a triangular tail (#26) let the probe also fire
                 on context tokens near the annotated diff range without being
                 punished by hard-0 BCE.
+        neg_incl: if True, NEGATIVE examples also contribute a span term
+                BCE(y_s=0, max_i p_i) over ALL their tokens — see
+                `span_max_loss_neg_incl`. Default False = paper-faithful span-max
+                (negatives shaped only by the per-token term).
 
     Returns:
         Scalar loss contribution (NOT yet averaged; caller sums then averages).
@@ -166,10 +171,40 @@ def span_max_loss(
             span_term = nn.functional.binary_cross_entropy_with_logits(
                 max_logit, y_s, reduction="sum"
             )
+    elif neg_incl and logits.numel() > 0:
+        # Negative example: push its SINGLE highest-scoring token toward 0. This
+        # directly optimizes the example-level score we evaluate on (example prob
+        # = max_i sigmoid(logit_i)). Baseline span-max leaves this term at 0 and
+        # shapes negatives only through the per-token BCE.
+        max_logit = logits.max()
+        y_s = logits.new_tensor(0.0)
+        span_term = nn.functional.binary_cross_entropy_with_logits(
+            max_logit, y_s, reduction="sum"
+        )
     else:
         span_term = logits.new_tensor(0.0)
 
     return (1.0 - omega) * token_term + omega * span_term
+
+
+def span_max_loss_neg_incl(
+    logits: torch.Tensor,
+    y_tok: torch.Tensor,
+    is_positive: bool,
+    omega: float,
+    alpha: float = 10.0,
+    y_soft: torch.Tensor | None = None,
+) -> torch.Tensor:
+    """Negative-inclusive span-max: like `span_max_loss` but negative examples
+    also contribute BCE(y_s=0, max_i p_i) over all their tokens.
+
+    Rationale: the eval metric is the per-example max token sigmoid, so a clean
+    example is penalised exactly by its highest false-alarm token. The baseline
+    span term is one-sided (positives only), pulling the in-span max up but never
+    explicitly pushing clean code's max down — which the per-token BCE does only
+    weakly once ω anneals the token term away. This restores the symmetry."""
+    return span_max_loss(logits, y_tok, is_positive, omega,
+                          alpha=alpha, y_soft=y_soft, neg_incl=True)
 
 
 # -------- training --------
@@ -186,8 +221,13 @@ def train_one_layer(
     device: str = "cpu",
     verbose: bool = True,
     label_window: int = 0,
+    alpha: float = 10.0,
+    neg_incl: bool = False,
 ) -> dict:
-    """Train one LinearProbe with the span-max loss and return metrics + (w, b)."""
+    """Train one LinearProbe with the span-max loss and return metrics + (w, b).
+
+    alpha: in-span up-weight for the per-token BCE term (loss sweep knob).
+    neg_incl: use the negative-inclusive span term (`span_max_loss_neg_incl`)."""
     torch.manual_seed(seed)
     np.random.seed(seed)
 
@@ -246,7 +286,8 @@ def train_one_layer(
             for eid in batch:
                 Xi, yi, yi_soft, is_pos = cache[eid]
                 logits = probe(Xi)
-                contrib = span_max_loss(logits, yi, is_pos, omega=omega, y_soft=yi_soft)
+                contrib = span_max_loss(logits, yi, is_pos, omega=omega, y_soft=yi_soft,
+                                        alpha=alpha, neg_incl=neg_incl)
                 loss_accum = loss_accum + contrib
                 n_tok_total += yi.shape[0]
             # Average per token so the scale is comparable across batches.
