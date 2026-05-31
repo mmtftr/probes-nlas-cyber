@@ -95,10 +95,13 @@ def main() -> None:
     hidden = hs0[-1].shape[-1]
     print(f"[extract-all] n_layers={n_layers} hidden={hidden}", file=sys.stderr)
 
-    # ---- allocate per-layer memmaps on disk (float16) ----
+    # ---- allocate per-layer memmaps on disk (float32) ----
+    # float32, NOT float16: Gemma-3 has "massive activations" (>65504) in mid
+    # layers that saturate to inf in f16 -> NaN training. The coarse extractor
+    # also stores float32. 551 GB on scratch (535 TB free) is fine.
     mmaps = [
         np.lib.format.open_memmap(
-            out / f"layer_{li:02d}.npy", mode="w+", dtype=np.float16, shape=(total, hidden)
+            out / f"layer_{li:02d}.npy", mode="w+", dtype=np.float32, shape=(total, hidden)
         )
         for li in range(n_layers)
     ]
@@ -117,7 +120,7 @@ def main() -> None:
             ids_t = torch.tensor([ids], dtype=torch.long, device=device)
             hs = model(ids_t, output_hidden_states=True, use_cache=False).hidden_states
             for li in range(n_layers):
-                h = hs[li + 1][0].to(torch.float16).cpu().numpy()  # (n, hidden)
+                h = hs[li + 1][0].float().cpu().numpy()  # (n, hidden) float32
                 mmaps[li][s : s + n] = h
             # labels (identical mapping to the coarse extractor)
             tok_spans = char_spans_to_token_spans(parse_spans(row), offsets)
