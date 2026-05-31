@@ -48,7 +48,10 @@ PYBIN="$(command -v python || command -v python3)"
 # shadowed. Override the whole set via $TF_STACK to test another version.
 # NOTE: no '<' / '>' in specifiers — DEPS is expanded unquoted inside the nested
 # `bash -c`, so range operators would be parsed as shell redirections. '==' only.
-DEPS="${TF_STACK:-transformers==5.9.0 huggingface_hub==1.17.0 tokenizers==0.22.2 safetensors==0.7.0 regex accelerate sentencepiece hf_transfer scikit-learn}"
+# tree-sitter + the py/c/cpp grammars are REQUIRED for the `tokens_code` live-code
+# mask (src/eval/code_mask.py); without them code_only_mask silently keeps all
+# tokens and tokens_code degenerates to the inflated `tokens` metric. (exp-06.)
+DEPS="${TF_STACK:-transformers==5.9.0 huggingface_hub==1.17.0 tokenizers==0.22.2 safetensors==0.7.0 regex accelerate sentencepiece hf_transfer scikit-learn tree-sitter tree-sitter-python tree-sitter-c tree-sitter-cpp}"
 # torch, numpy already in the NGC image — installed --no-deps to avoid clobbering.
 if [ ! -f "$PYTHON_DEPS_DIR/.deps_ok" ]; then
     mkdir -p "$PYTHON_DEPS_DIR"
