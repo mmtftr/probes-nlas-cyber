@@ -81,6 +81,45 @@ L41) — same code path, same canonical split, same α/loss.
   heads; logits come from `r["probe"](Xte)`. Linear cells go through the same
   path, so the sanity tie-in still holds bit-for-bit.
 
-## Results
+## Results (2026-05-31, jobs 2441849 Gemma / 2441932 Qwen)
 
-_(pending run)_
+`richer_probe_sweep.png`; `metrics_richer_gemma.json`, `metrics_richer_qwen.json`.
+All 45 cells/model. Sanity tie-in holds: (single-best-layer, linear) reproduces
+exp-03's (base, α=1) at that layer — Gemma L19 = 0.720, Qwen L41 = 0.737.
+
+| config | Gemma Δ vs linear@L19 (0.720) | Qwen Δ vs linear@L41 (0.737) |
+|---|---|---|
+| single best layer + **mlp512** | +0.020 (0.740±0.006) | **+0.020 (0.758±0.014)** |
+| single + mlp256 | +0.015 | +0.013 |
+| wide-concat + **mlp512** | **+0.043 (0.763±0.009)** | +0.013 (0.750±0.020) |
+| wide-concat + linear | **−0.026** | +0.003 |
+| ±2 neighbour-concat + linear | **−0.041** | −0.002 |
+
+**Finding 1 — a non-linear (MLP) head helps both models** (+0.013 to +0.043), with
+tight cross-split variance (Gemma best ±0.009). So the linear single-layer probe
+is **not** at the activation ceiling — there is extractable non-linear structure.
+mlp512 ≥ mlp256 throughout.
+
+**Finding 2 — layer-concat helps only models whose signal is spread across depth,
+and only with an MLP.** For Gemma, concatenating {9,19,26,61} lifts the MLP to the
+best result (+0.043) but *hurts* a linear head (−0.026 to −0.041 — too many
+correlated dims to fit linearly). For Qwen, concat does nothing (single-layer
+mlp512 0.758 ≥ concat mlp512 0.750; linear concat ≈ 0). This mirrors exp-02
+exactly: Gemma's vuln signal is **bimodal/distributed** across depth (early-mid +
+last), so gathering layers adds complementary information; Qwen's is a **tight
+single-depth plateau**, so concat only adds noise/params.
+
+**Probe-family verdict (§8 open decision):** **adopt an MLP head** (mlp512) — it's a
+consistent, low-variance win on both models. **Layer-concat is per-model**: worth
+it where exp-02 showed a distributed signal (Gemma), not where it's concentrated
+(Qwen), and only paired with a non-linear head. So the recipe generalizes as
+"MLP head, single best layer by default; add cross-layer concat when the depth
+profile is distributed."
+
+**Caveat (flagged, not acted on):** the MLP has ~10–100× the params of the linear
+head, so part of the +Δ could be fitting SVEN's distribution rather than a better
+vulnerability representation. The ±0.009 cross-split variance argues it's real
+signal, but the clean confirmation is an **OOD / confound check** (eval the MLP
+probe on a different-distribution vuln set; rewrite-secure-to-ugly test) — the
+anti-overfit experiments from the research-framing §6/§7 list. Recommend running
+one before committing the MLP head into an ADR.
