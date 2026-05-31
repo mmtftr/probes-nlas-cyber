@@ -237,6 +237,8 @@ def train_one_layer(
     alpha: float = 10.0,
     neg_incl: bool = False,
     probe_factory: "Callable[[int], nn.Module] | None" = None,
+    mask_negatives: str = "none",
+    code_mask: "np.ndarray | None" = None,
 ) -> dict:
     """Train one probe with the span-max loss and return metrics + (w, b).
 
@@ -244,9 +246,41 @@ def train_one_layer(
     neg_incl: use the negative-inclusive span term (`span_max_loss_neg_incl`).
     probe_factory: optional callable (hidden_dim) -> nn.Module to build a custom
         probe head (e.g. MLPProbe). Defaults to LinearProbe. Non-linear heads
-        return w=None, b=None; the trained module is always in the "probe" key."""
+        return w=None, b=None; the trained module is always in the "probe" key.
+    mask_negatives: ADDITIVE train-time negative filter. "none" (default) is the
+        original behavior — every out-of-span token is a negative. "code_only"
+        EXCLUDES tokens that are NOT live-code AND not positive (`~code_mask &
+        (y==0)`) from the loss entirely — they are neither positive nor
+        negative, not down-weighted. See `src/eval/code_mask.py` for the
+        motivation (trivial comment/signature negatives inflate the easy win).
+    code_mask: (n_tokens,) bool array aligned to X/y/example_ids, True = live
+        code. Required when mask_negatives=="code_only"; ignored otherwise. The
+        EVAL split (internal 10% val) is scored on the SAME filtered tokens so
+        train and val see a consistent negative set.
+
+    Immutability: input X/y/example_ids/code_mask are never mutated; filtered
+    copies are built when mask_negatives=="code_only"."""
     torch.manual_seed(seed)
     np.random.seed(seed)
+
+    if mask_negatives not in ("none", "code_only"):
+        raise ValueError(
+            f"mask_negatives must be 'none' or 'code_only', got {mask_negatives!r}"
+        )
+    if mask_negatives == "code_only":
+        if code_mask is None:
+            raise ValueError("mask_negatives='code_only' requires code_mask")
+        code_mask = np.asarray(code_mask, dtype=bool)
+        if code_mask.shape[0] != X.shape[0]:
+            raise ValueError(
+                f"code_mask length {code_mask.shape[0]} != n_tokens {X.shape[0]}"
+            )
+        # Keep a token iff it is live-code OR positive. Drop ~code & negative.
+        keep = code_mask | (np.asarray(y) != 0)
+        # Build fresh filtered arrays (no in-place mutation of inputs).
+        X = X[keep]
+        y = np.asarray(y)[keep]
+        example_ids = np.asarray(example_ids)[keep]
 
     groups = _group_by_example(X, y, example_ids)
     all_eids = sorted(groups.keys())
