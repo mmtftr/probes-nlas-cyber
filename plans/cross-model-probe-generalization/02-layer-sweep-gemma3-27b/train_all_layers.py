@@ -73,29 +73,43 @@ def main() -> None:
         dst = out / f"layer_{li:02d}.json"
         if dst.exists():
             continue
-        Xmm = np.load(acts / f"layer_{li:02d}.npy", mmap_mode="r")
-        Xtr = np.asarray(Xmm[tr], dtype=np.float32)
-        ytr, etr = y[tr], eids[tr]
-        if len(np.unique(ytr)) < 2 or te.sum() == 0:
-            dst.write_text(json.dumps({"layer": li, "skipped": "degenerate labels"}))
-            continue
-        r = train_one_layer(Xtr, ytr, etr, epochs=args.epochs, device=device, verbose=False)
-        w, b = np.asarray(r["w"], np.float32), float(r["b"])
+        # Isolate per-layer failures: a single diverging layer (NaN weights,
+        # non-finite activations) must not kill the worker and abort the rest.
+        try:
+            Xmm = np.load(acts / f"layer_{li:02d}.npy", mmap_mode="r")
+            Xtr = np.asarray(Xmm[tr], dtype=np.float32)
+            ytr, etr = y[tr], eids[tr]
+            if len(np.unique(ytr)) < 2 or te.sum() == 0:
+                dst.write_text(json.dumps({"layer": li, "skipped": "degenerate labels"}))
+                continue
+            if not np.isfinite(Xtr).all():
+                dst.write_text(json.dumps({"layer": li, "error": "non-finite activations"}))
+                print(f"[train-all] layer {li:02d} SKIP non-finite activations", file=sys.stderr)
+                continue
+            r = train_one_layer(Xtr, ytr, etr, epochs=args.epochs, device=device, verbose=False)
+            w, b = np.asarray(r["w"], np.float32), float(r["b"])
+            if not (np.isfinite(w).all() and np.isfinite(b)):
+                dst.write_text(json.dumps({"layer": li, "error": "diverged (NaN probe weights)"}))
+                print(f"[train-all] layer {li:02d} SKIP diverged", file=sys.stderr)
+                continue
 
-        Xte = np.asarray(Xmm[te], dtype=np.float32)
-        tok_p = 1.0 / (1.0 + np.exp(-(Xte @ w + b)))
-        tok_y, te_eids = y[te], eids[te]
-        tok_auc = (float(roc_auc_score(tok_y, tok_p))
-                   if len(np.unique(tok_y)) > 1 else float("nan"))
-        ex_ids, ex_p = te_mod.example_scores(tok_p, te_eids)
-        ex_y = np.array([int(y[(eids == e)].max() > 0) for e in ex_ids])
-        ex_auc = (float(roc_auc_score(ex_y, ex_p))
-                  if len(np.unique(ex_y)) > 1 else float("nan"))
-        rec = {"layer": li, "layer_frac": li / (n_layers - 1),
-               "test_ex_auc": ex_auc, "test_tok_auc": tok_auc,
-               "val_ex_auc": float(r["ex_auc"]), "n_test_ex": int(len(ex_ids))}
-        dst.write_text(json.dumps(rec))
-        print(f"[train-all] layer {li:02d}  ex_auc={ex_auc:.3f} tok_auc={tok_auc:.3f}", file=sys.stderr)
+            Xte = np.asarray(Xmm[te], dtype=np.float32)
+            tok_p = 1.0 / (1.0 + np.exp(-(Xte @ w + b)))
+            tok_y, te_eids = y[te], eids[te]
+            tok_auc = (float(roc_auc_score(tok_y, tok_p))
+                       if len(np.unique(tok_y)) > 1 else float("nan"))
+            ex_ids, ex_p = te_mod.example_scores(tok_p, te_eids)
+            ex_y = np.array([int(y[(eids == e)].max() > 0) for e in ex_ids])
+            ex_auc = (float(roc_auc_score(ex_y, ex_p))
+                      if len(np.unique(ex_y)) > 1 else float("nan"))
+            rec = {"layer": li, "layer_frac": li / (n_layers - 1),
+                   "test_ex_auc": ex_auc, "test_tok_auc": tok_auc,
+                   "val_ex_auc": float(r["ex_auc"]), "n_test_ex": int(len(ex_ids))}
+            dst.write_text(json.dumps(rec))
+            print(f"[train-all] layer {li:02d}  ex_auc={ex_auc:.3f} tok_auc={tok_auc:.3f}", file=sys.stderr)
+        except Exception as e:  # noqa: BLE001 — record + continue, never abort the sweep
+            dst.write_text(json.dumps({"layer": li, "error": f"{type(e).__name__}: {str(e)[:200]}"}))
+            print(f"[train-all] layer {li:02d} ERROR {type(e).__name__}: {str(e)[:120]}", file=sys.stderr)
 
 
 if __name__ == "__main__":
