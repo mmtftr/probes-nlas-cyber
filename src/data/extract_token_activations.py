@@ -83,6 +83,63 @@ def _row_label(row: dict) -> int:
     return int(bool(row.get("is_completion_vulnerable")))
 
 
+def _load_tokenizer(model_id: str):
+    """Load a fast tokenizer robustly across model families.
+
+    Bare `AutoTokenizer.from_pretrained` fails for two roster cases:
+      - custom-code repos (OpenCoder) that need `trust_remote_code=True`;
+        without it the loader hits an interactive `input()` that EOFs in batch.
+      - VLM configs whose config type isn't in `TOKENIZER_MAPPING`
+        (Mistral3 -> `KeyError`, Tekken-based Devstral -> sentencepiece
+        `TypeError`). Those route through `AutoProcessor`, whose `.tokenizer`
+        is the fast tokenizer we want (it still serves `return_offsets_mapping`).
+    """
+    from transformers import AutoTokenizer
+
+    try:
+        return AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
+    except Exception as tok_err:  # noqa: BLE001 — fall back, re-raise if no tokenizer
+        from transformers import AutoProcessor
+
+        proc = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
+        tok = getattr(proc, "tokenizer", None)
+        if tok is None:
+            raise tok_err
+        print(f"[token-extract] tokenizer via AutoProcessor fallback ({type(proc).__name__})", file=sys.stderr)
+        return tok
+
+
+def _load_model(model_id: str, dtype):
+    """Load a causal LM, falling back to the VLM wrapper's text decoder.
+
+    `transformers` <5 takes `torch_dtype`; >=5 renamed it to `dtype` — try the
+    new kwarg first, fall back to the legacy one. VLM wrappers (Mistral3,
+    gemma-4) aren't registered under `AutoModelForCausalLM`; load them via
+    `AutoModelForImageTextToText` and let the layer-walk below find the text
+    decoder. A text-only forward (input_ids, no pixel_values) still returns the
+    decoder's `hidden_states`.
+    """
+    from transformers import AutoModelForCausalLM
+
+    def _from(cls):
+        try:
+            return cls.from_pretrained(
+                model_id, dtype=dtype, attn_implementation="eager", trust_remote_code=True
+            )
+        except TypeError:
+            return cls.from_pretrained(
+                model_id, torch_dtype=dtype, attn_implementation="eager", trust_remote_code=True
+            )
+
+    try:
+        return _from(AutoModelForCausalLM)
+    except (ValueError, KeyError):
+        from transformers import AutoModelForImageTextToText
+
+        print("[token-extract] CausalLM mapping missing -> AutoModelForImageTextToText", file=sys.stderr)
+        return _from(AutoModelForImageTextToText)
+
+
 def extract(
     model_id: str,
     jsonl_path: Path,
@@ -90,12 +147,10 @@ def extract(
     layer_indices: list[int] | None = None,
     max_length: int = 1024,
 ) -> None:
-    from transformers import AutoModelForCausalLM, AutoTokenizer
-
     device = _device()
     print(f"[token-extract] device={device}  model={model_id}", file=sys.stderr)
 
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    tokenizer = _load_tokenizer(model_id)
     if device == "cuda":
         dtype = torch.bfloat16
     elif device == "mps":
@@ -104,16 +159,7 @@ def extract(
         dtype = torch.float32
 
     t0 = time.time()
-    # transformers <5 takes `torch_dtype`; >=5 renamed it to `dtype`. Try the
-    # new kwarg first, fall back to the legacy one (we pin 4.46.x on the cluster).
-    try:
-        model = AutoModelForCausalLM.from_pretrained(
-            model_id, dtype=dtype, attn_implementation="eager"
-        )
-    except TypeError:
-        model = AutoModelForCausalLM.from_pretrained(
-            model_id, torch_dtype=dtype, attn_implementation="eager"
-        )
+    model = _load_model(model_id, dtype)
     model.to(device).eval()
     print(f"[token-extract] loaded in {time.time()-t0:.1f}s", file=sys.stderr)
 
