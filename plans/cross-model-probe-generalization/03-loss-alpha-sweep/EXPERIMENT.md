@@ -2,11 +2,24 @@
 
 # 03 — Span-max loss sweep: negative-inclusive variant × α
 
-> ⚠️ **Archived dataset.** Results below were produced on the flawed
-> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
-> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
-> to `../archive/old-dataset/03-loss-alpha/`. Scripts are correct as-is;
-> **to be re-run on the SVEN before/after dataset** (`../REBUILD-PLAN.md`).
+> **Rebuilt on the SVEN before/after dataset (2026-05-31).** New numbers below;
+> old completion-truncation results are **superseded**, archived at
+> `../archive/old-dataset/03-loss-alpha/` (ADR `decisions/0002-...`).
+
+## Results — before/after rebuild (2026-05-31)
+
+Grid = new best layers × α{1,5,10,20,50} × {base, neg_incl} × 5 seeds, 200 cells/model.
+
+| model | best cell | ex-AUC | tok-AUC | (old best) |
+|---|---|---|---|---|
+| gemma-3-27b | L20 base α1 | **0.644±0.005** | 0.685 | L19 neg_incl α1, 0.723 |
+| qwen2.5-coder-32b | L49 neg_incl α1 | **0.642±0.032** | 0.734 | L41 neg_incl α1, 0.746 |
+
+Takeaways: **α=1 is best — upweighting the span term (α>1) does not help** (it
+helped marginally on the old confounded data); `neg_incl` ≈ `base` (≤0.005). Best
+ex-AUC ~0.64 both models, down ~0.08–0.10 from old. These 5-seed means are the
+trustworthy example-AUC for the new dataset (exp-02's single-seed sweep read low
+for gemma, 0.573, by seed luck).
 
 Step 3 of `../PLAN.md`. Exps 01–02 fixed the loss (paper-faithful span-max,
 α=10) and swept layers. This sweeps the **loss** itself on the best layers from
