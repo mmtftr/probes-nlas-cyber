@@ -30,6 +30,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from typing import Callable
 
 import numpy as np
 import torch
@@ -50,6 +51,18 @@ class LinearProbe(nn.Module):
     def forward(self, X: torch.Tensor) -> torch.Tensor:
         # X: (n_tokens, hidden_dim) -> (n_tokens,)
         return self.linear(X).squeeze(-1)
+
+
+class MLPProbe(nn.Module):
+    """Two-layer MLP head: in_dim -> hidden -> 1 logit per token."""
+    def __init__(self, in_dim: int, hidden: int = 256, dropout: float = 0.0):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(in_dim, hidden), nn.ReLU(),
+            nn.Dropout(dropout), nn.Linear(hidden, 1),
+        )
+    def forward(self, X: torch.Tensor) -> torch.Tensor:  # (n_tokens, in_dim) -> (n_tokens,)
+        return self.net(X).squeeze(-1)
 
 
 # -------- data --------
@@ -223,11 +236,15 @@ def train_one_layer(
     label_window: int = 0,
     alpha: float = 10.0,
     neg_incl: bool = False,
+    probe_factory: "Callable[[int], nn.Module] | None" = None,
 ) -> dict:
-    """Train one LinearProbe with the span-max loss and return metrics + (w, b).
+    """Train one probe with the span-max loss and return metrics + (w, b).
 
     alpha: in-span up-weight for the per-token BCE term (loss sweep knob).
-    neg_incl: use the negative-inclusive span term (`span_max_loss_neg_incl`)."""
+    neg_incl: use the negative-inclusive span term (`span_max_loss_neg_incl`).
+    probe_factory: optional callable (hidden_dim) -> nn.Module to build a custom
+        probe head (e.g. MLPProbe). Defaults to LinearProbe. Non-linear heads
+        return w=None, b=None; the trained module is always in the "probe" key."""
     torch.manual_seed(seed)
     np.random.seed(seed)
 
@@ -244,7 +261,7 @@ def train_one_layer(
         eids_tr, eids_te = train_test_split(all_eids, test_size=0.1, random_state=seed)
 
     hidden_dim = X.shape[1]
-    probe = LinearProbe(hidden_dim).to(device)
+    probe = (probe_factory(hidden_dim) if probe_factory is not None else LinearProbe(hidden_dim)).to(device)
     opt = torch.optim.AdamW(probe.parameters(), lr=lr, weight_decay=weight_decay)
 
     total_steps = max(1, epochs * ((len(eids_tr) + batch_examples - 1) // batch_examples))
@@ -350,11 +367,16 @@ def train_one_layer(
     if best_state is not None:
         probe.load_state_dict(best_state)
 
-    w = probe.linear.weight.detach().to("cpu").numpy().astype(np.float32).reshape(-1)
-    b = float(probe.linear.bias.detach().to("cpu").numpy().reshape(-1)[0])
+    if isinstance(probe, LinearProbe):
+        w = probe.linear.weight.detach().to("cpu").numpy().astype(np.float32).reshape(-1)
+        b = float(probe.linear.bias.detach().to("cpu").numpy().reshape(-1)[0])
+    else:
+        w = None
+        b = None
     return {
         "w": w,
         "b": b,
+        "probe": probe.to("cpu"),
         "tok_auc": best_eval_token_auc,
         "ex_auc": best_eval_example_auc,
         "n_train_examples": len(eids_tr),
