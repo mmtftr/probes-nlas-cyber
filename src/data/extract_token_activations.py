@@ -99,10 +99,18 @@ def _load_tokenizer(model_id: str):
     try:
         return AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
     except Exception as tok_err:  # noqa: BLE001 — fall back, re-raise if no tokenizer
-        from transformers import AutoProcessor
+        # Last resort for VLM repos that only expose the tokenizer through a
+        # processor. If that path also fails, re-raise the ORIGINAL tokenizer
+        # error — the processor's failure (e.g. a missing image processor) would
+        # otherwise mask the real cause.
+        tok = None
+        try:
+            from transformers import AutoProcessor
 
-        proc = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
-        tok = getattr(proc, "tokenizer", None)
+            proc = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
+            tok = getattr(proc, "tokenizer", None)
+        except Exception:  # noqa: BLE001
+            tok = None
         if tok is None:
             raise tok_err
         print(f"[token-extract] tokenizer via AutoProcessor fallback ({type(proc).__name__})", file=sys.stderr)
