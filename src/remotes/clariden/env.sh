@@ -16,6 +16,11 @@ export PYTHON_DEPS_DIR=${PYTHON_DEPS_DIR:-$WORK/.python_deps5}
 export UV_CACHE_DIR=${UV_CACHE_DIR:-$WORK/.uv_cache}
 export HF_HOME=${HF_HOME:-$WORK/hf_cache}
 export HF_HUB_ENABLE_HF_TRANSFER=1
+# huggingface_hub 1.17's Xet downloader calls download_files(request_headers=)
+# which the image's older hf_xet doesn't accept -> every fresh download dies
+# with `unexpected keyword argument 'request_headers'`. We install --no-deps so
+# we can't pull a matching hf_xet; disable Xet to use classic HTTPS downloads.
+export HF_HUB_DISABLE_XET=1
 export TRITON_CACHE_DIR=/tmp/probes-${SLURM_JOB_ID:-0}/triton
 export TORCHINDUCTOR_CACHE_DIR=/tmp/probes-${SLURM_JOB_ID:-0}/inductor
 mkdir -p "$TRITON_CACHE_DIR" "$TORCHINDUCTOR_CACHE_DIR" "$HF_HOME"
