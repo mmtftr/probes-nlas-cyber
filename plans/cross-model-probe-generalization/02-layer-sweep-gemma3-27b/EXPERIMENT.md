@@ -38,5 +38,32 @@ pipeline diverged from the canonical one.
   `baselines.all_baselines`) so the logic is identical to the overnight sweep.
 - Run on the login node: `cd ~/scratch/probes && bash repo/plans/.../submit_layersweep.sh`.
   Re-submit to resume after a 90-min timeout (extract + finished layers are skipped).
-- Memmaps are ~275 GB on scratch; delete `runs/layersweep_gemma3-27b/acts/` when the
-  curve is collected (the per-layer JSONs + metrics_layersweep.json are the keepers).
+- Memmaps are ~551 GB (float32) on scratch; delete `runs/layersweep_gemma3-27b/acts/`
+  when the curve is collected (per-layer JSONs + metrics_layersweep.json are the keepers).
+
+## Results (2026-05-31, job 2438307)
+
+All 62 layers swept. Artifacts: `metrics_layersweep.json`, `auc_vs_depth.png`,
+`overnight_gemma3-27b_4layer.json` (the coarse run, for comparison).
+
+**Pipeline validated:** layers 15/31/46/61 reproduce the overnight 4-layer
+`metrics.json` *exactly* (ex/tok: 0.657/0.815, 0.617/0.813, 0.564/0.747,
+0.677/0.838) → this sweep is bit-identical to the canonical pipeline.
+
+**Finding — the coarse grid missed the peak.**
+- True best **example-AUC = layer 27 (frac 0.44), 0.695**; near-tie layer 22.
+  token-AUC peaks at **layer 26, 0.855** — a clean mid-depth peak (~0.42).
+- The coarse `{15,31,46,61}` picks scored 0.657 / 0.617 / **0.564** / 0.677.
+  Its 3n/4 point (L46) lands in a dead zone barely above the length baseline
+  (0.58); by ex-AUC it would pick the last layer (L61, 0.677), missing the real
+  mid peak by +0.02 AUC and ~19 layers.
+- Shape: token-AUC rises smoothly to ~L26 then declines steadily into late
+  layers; example-AUC is noisier (~0.66 early-mid, sharp drop after L32 toward
+  the length baseline, then a final-layer uptick at L61). **Not** a flat plateau.
+
+**Interpretation (Q3 / layer-policy `TODO(adhoc-decision)`):** for Gemma-3-27B
+the vuln signal is strongest at **mid-depth (~0.4)**, not late, and the coarse
+4-point grid is actively suboptimal here (its 3n/4 pick is near-useless). This
+argues for per-model val-selection or a mid-depth fraction rather than a fixed
+late layer — pending a second model to confirm the fraction generalizes. Does
+not settle the ADR alone (n=1 model).

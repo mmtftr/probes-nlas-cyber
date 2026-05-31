@@ -1,0 +1,46 @@
+{
+  "model": "google/gemma-3-27b-it",
+  "n_layers_total": null,
+  "hidden_size": null,
+  "best_layer": 61,
+  "best_layer_frac": null,
+  "best_test_ex_auc": 0.6772736438798145,
+  "best_test_tok_auc": 0.8378995790644295,
+  "baseline_auc": {
+    "random": 0.4641483736580676,
+    "length": 0.5750680980612082,
+    "regex": 0.5314653100464668
+  },
+  "n_train_ex": 1244,
+  "n_test_ex": 316,
+  "layers": [
+    {
+      "layer": 15,
+      "test_ex_auc": 0.656785642266586,
+      "test_tok_auc": 0.8148863214734163,
+      "val_ex_auc": 0.7426242236024845,
+      "n_test_ex": 316
+    },
+    {
+      "layer": 31,
+      "test_ex_auc": 0.6173018753781004,
+      "test_tok_auc": 0.8126298842519875,
+      "val_ex_auc": 0.7054865424430641,
+      "n_test_ex": 316
+    },
+    {
+      "layer": 46,
+      "test_ex_auc": 0.5639040129058278,
+      "test_tok_auc": 0.7469578605431492,
+      "val_ex_auc": 0.5798395445134575,
+      "n_test_ex": 316
+    },
+    {
+      "layer": 61,
+      "test_ex_auc": 0.6772736438798145,
+      "test_tok_auc": 0.8378995790644295,
+      "val_ex_auc": 0.7458592132505176,
+      "n_test_ex": 316
+    }
+  ]
+}
