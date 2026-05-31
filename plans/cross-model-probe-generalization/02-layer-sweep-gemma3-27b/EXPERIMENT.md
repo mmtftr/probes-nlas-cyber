@@ -92,3 +92,33 @@ do not hard-code a depth fraction. The `{n/4,n/2,3n/4,n−1}` grid is a defensib
 cheap proxy but can miss the peak (Gemma) — widen it or val-select when the layer
 matters. This closes the layer-policy `TODO(adhoc-decision)` toward per-model
 selection (pending the user's ADR sign-off).
+
+## Variance across dataset splits (2026-05-31)
+
+**Aim** — the single-split curves above could be noisy; how much of the
+AUC-vs-layer shape (and the "Gemma-mid vs Qwen-late" contrast) survives
+resampling the dataset split? Re-draw both curves with mean ± 1 std error bands.
+
+**Method** — reuse the cached per-layer activation memmaps (split-independent)
+and retrain the span-max probe under **K=5 group-clean SVEN splits**
+(seeds 42–46, each 20% held out at the pair-group level). Per (layer, seed):
+held-out example- + token-AUC. Aggregate → per-layer mean/std; baselines
+recomputed per seed for matching bands. Scripts: `splits_variance.py`,
+`aggregate_variance.py`, `submit_variance.sh`, `plot_variance.py`.
+
+**Decisions made (autonomous run):**
+- *Vary only the outer test split, not the internal val seed.* `train_one_layer`'s
+  90/10 epoch-selection split stays at seed=7 — that's part of the training recipe,
+  not a dataset split; varying it would conflate procedure noise with the
+  split noise the user asked about.
+- *K=5 seeds (42–46), frac=0.2.* Cheap (linear probes on cached acts; ~45 min/model
+  across 4 GPUs) yet enough for a std estimate; resumable so a 90-min timeout just
+  resubmits. seed=42 reproduces the canonical persisted split bit-for-bit, so its
+  per-seed value must equal the single-split sweep (built-in sanity tie-in).
+- *Gemma re-extracted* (its memmaps had been cleaned from scratch; Qwen's 64 were
+  still cached and reused for free via `DONE_EXTRACT`).
+- *Outputs kept separate* (`layers_var/`, `metrics_variance.json`) so the
+  single-split sweep artifacts are untouched.
+
+**Result format** — `auc_vs_layer_variance.png` (one panel/model: ex- + tok-AUC
+mean curves with ±1 std bands + baseline lines); `metrics_variance_*.json`.
