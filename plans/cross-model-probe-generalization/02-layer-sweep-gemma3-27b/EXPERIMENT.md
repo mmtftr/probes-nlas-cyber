@@ -2,6 +2,12 @@
 
 # 02 — Fine-grained layer sweep, Gemma-3-27B
 
+> ⚠️ **Archived dataset.** Results below were produced on the flawed
+> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
+> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
+> to `../archive/old-dataset/02-layer-sweep/`. Scripts are correct as-is;
+> **to be re-run on the SVEN before/after dataset** (`../REBUILD-PLAN.md`).
+
 Step 2 of `../PLAN.md`. The overnight cross-model run only captured 4 layers per
 model (`{n/4, n/2, 3n/4, n−1}`). This sweeps **all 62 layers** of one model to get
 the full AUC-vs-depth curve.

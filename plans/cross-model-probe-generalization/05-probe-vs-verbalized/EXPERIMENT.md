@@ -2,6 +2,14 @@
 
 # 05 — Probe vs. the model's own verbalized judgment
 
+> ⚠️ **Archived dataset.** Results below were produced on the flawed
+> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
+> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
+> to `../archive/old-dataset/05-verbalized/`. The truncation directly confounded
+> this experiment (the model was asked yes/no about an incomplete prefix).
+> Scripts are correct as-is; **re-run on the SVEN before/after dataset**
+> (`../REBUILD-PLAN.md`) — the prefix confound largely disappears there.
+
 Step 5 of `../PLAN.md`. The anti-tunnel-vision check from research-framing §7.4
 ("just ask the LLM") and the §6 "white-box ≥ probes?" failure mode: before
 claiming a trained span-max probe is worth anything, show it beats the cheapest

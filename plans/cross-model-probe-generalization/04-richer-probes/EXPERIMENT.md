@@ -2,6 +2,12 @@
 
 # 04 — Richer probes: MLP head & layer-concat features
 
+> ⚠️ **Archived dataset.** Results below were produced on the flawed
+> completion-truncation `dataset.jsonl` — see `../archive/old-dataset/README.md`
+> and `decisions/0002-dataset-before-after-contrast.md`. Result artifacts moved
+> to `../archive/old-dataset/04-richer/`. Scripts are correct as-is;
+> **to be re-run on the SVEN before/after dataset** (`../REBUILD-PLAN.md`).
+
 Step 4 of `../PLAN.md`. Exps 01–03 fixed the probe family (linear head on a
 single layer) and tuned its loss (paper-faithful span-max, α=1, neg_incl off).
 This asks whether a **richer probe** — a non-linear MLP head and/or
