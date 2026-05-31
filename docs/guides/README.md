@@ -8,7 +8,16 @@ before designing a new experiment.
 One file per topic: `docs/guides/<topic>.md`. Keep entries short, factual,
 and citation-backed. If a guide grows past ~1 page, split it.
 
-Suggested topics as they come up:
+## Existing guides
+
+- [the cluster-cluster](the cluster-cluster.md) — HPC access: container, scheduler
+  (1-job limit), sequential orchestration, dependency isolation.
+- [probe-activation-extraction](probe-activation-extraction.md) — float32 acts,
+  streaming memmaps, tokenizer-offset requirement, group-clean splits.
+- [span-max-loss-tuning](span-max-loss-tuning.md) — the loss, α/ω, neg_incl
+  variant, per-model layer selection, repeated-split variance.
+
+## Suggested topics as they come up:
 
 - Layer selection for probe training
 - Span-max loss tuning (ω schedule, α weight)
