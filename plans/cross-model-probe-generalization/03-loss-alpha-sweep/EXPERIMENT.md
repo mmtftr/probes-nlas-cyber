@@ -63,6 +63,45 @@ single-split value at that layer (same code path, same canonical split).
   scales the per-token BCE term (the span term is unweighted), so the base-vs-
   neg_incl contrast is a clean factorial on the span term.
 
-## Results
+## Results (2026-05-31, jobs 2441540 Gemma / 2441612 Qwen)
 
-_(pending run)_
+`loss_alpha_sweep.png`; `metrics_loss_alpha_gemma.json`, `metrics_loss_alpha_qwen.json`.
+All 200 cells/model done. **Sanity tie-in passes:** (base, α=10, seed=42) at
+Gemma L19 = 0.683, identical to exp-02's single-split L19 seed-42 value.
+
+**Finding 1 — neg_incl is a no-op.** The negative-inclusive span term never moves
+example-AUC beyond split noise: Δ(neg_incl − base) ranges [−0.017, +0.011] across
+all (layer, α) cells of both models, every cell within ±1 std (~0.01–0.02). The
+bands overlap everywhere in the plot. → **Do not adopt; keep paper-faithful
+span-max.** Likely because once ω→1 the positive span term already shapes the
+decision boundary, and clean code's max is held down by the surviving per-token
+BCE; an explicit negative max term is redundant.
+
+**Finding 2 — α=1 dominates; the default α=10 was suboptimal.** example-AUC is
+**monotone-decreasing in α** at every layer of both models:
+
+| layer | α=1 | α=10 (old default) | α=50 |
+|---|---|---|---|
+| Gemma L19 | **0.720** | 0.708 | 0.659 |
+| Gemma L26 | **0.688** | 0.655 | 0.593 |
+| Qwen L34 | **0.731** | 0.707 | 0.703 |
+| Qwen L41 | **0.737** | 0.716 | 0.694 |
+
+Dropping α 10→1 buys **+0.012 to +0.033 AUC** (more for Qwen, and most for the
+token-peak layer Gemma L26: +0.033). Up-weighting the rare in-span tokens hurts —
+it over-fits the probe to the few annotated positions at the expense of the
+example-level max-pool we actually score on.
+
+**Best cells:** Gemma L19 @ α=1 (0.720±0.020, base); Qwen L41 @ α=1 (0.737±0.012
+base / 0.746±0.012 neg_incl — the neg_incl edge is within noise). Both beat their
+exp-02 α=10 numbers (0.708 / 0.716).
+
+**Open question — α=1 is the swept boundary.** The curve is still falling toward
+α=1, so the optimum may be **α<1** (down-weight in-span tokens below context) or
+even α→0 (drop in-span weighting entirely). Not yet tested; flagged for a cheap
+follow-up at α ∈ {0.1, 0.3, 0.5} on the top layers. `TODO(adhoc-decision)`:
+ratify α=1 (or lower) as the new default into an ADR before the next sweep.
+
+**Cross-model:** both findings hold for Gemma AND Qwen — unlike the layer policy
+(exp 02), the loss knobs generalize: neg_incl off, α low. So α is a shared
+default, the layer is per-model.
