@@ -1,0 +1,46 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "n_layers_total": 64,
+  "hidden_size": 5120,
+  "best_layer": 48,
+  "best_layer_frac": 0.75,
+  "best_test_ex_auc": 0.7072298356307519,
+  "best_test_tok_auc": 0.8238206031033113,
+  "baseline_auc": {
+    "random": 0.4641483736580676,
+    "length": 0.5750680980612082,
+    "regex": 0.5314653100464668
+  },
+  "n_train_ex": 1244,
+  "n_test_ex": 316,
+  "layers": [
+    {
+      "layer": 16,
+      "test_ex_auc": 0.6676244825784672,
+      "test_tok_auc": 0.7946973433194842,
+      "val_ex_auc": 0.6556870818322182,
+      "n_test_ex": 316
+    },
+    {
+      "layer": 32,
+      "test_ex_auc": 0.6701965197122532,
+      "test_tok_auc": 0.8131091492628546,
+      "val_ex_auc": 0.6773031394750385,
+      "n_test_ex": 316
+    },
+    {
+      "layer": 48,
+      "test_ex_auc": 0.7072298356307519,
+      "test_tok_auc": 0.8238206031033113,
+      "val_ex_auc": 0.7310859495625321,
+      "n_test_ex": 316
+    },
+    {
+      "layer": 63,
+      "test_ex_auc": 0.6863923160390628,
+      "test_tok_auc": 0.7990538346476131,
+      "val_ex_auc": 0.6363870303654143,
+      "n_test_ex": 316
+    }
+  ]
+}
