@@ -63,7 +63,32 @@ All 62 layers swept. Artifacts: `metrics_layersweep.json`, `auc_vs_depth.png`,
 
 **Interpretation (Q3 / layer-policy `TODO(adhoc-decision)`):** for Gemma-3-27B
 the vuln signal is strongest at **mid-depth (~0.4)**, not late, and the coarse
-4-point grid is actively suboptimal here (its 3n/4 pick is near-useless). This
-argues for per-model val-selection or a mid-depth fraction rather than a fixed
-late layer — pending a second model to confirm the fraction generalizes. Does
-not settle the ADR alone (n=1 model).
+4-point grid is actively suboptimal here (its 3n/4 pick is near-useless).
+
+## Second model — Qwen2.5-Coder-32B (job 2438423)
+
+Same sweep, all 64 layers. Sanity check passes exactly (L16/32/48/63 reproduce
+the overnight metrics: 0.668/0.795, 0.670/0.813, 0.707/0.824, 0.686/0.799).
+
+- Best **example-AUC = layer 52 (frac 0.83), 0.716**; plateau L48–52. token-AUC
+  peaks **layer 45 (frac 0.71), 0.849**.
+- Coarse `{16,32,48,63}` picks: 0.668 / 0.670 / **0.707** / 0.686 — here the 3n/4
+  pick (L48) nearly nails it (gap 0.009 to the true L52). So the grid was *fine*
+  for Qwen but *bad* for Gemma — its adequacy itself varies by model.
+
+## Cross-model conclusion (resolves Q3 / layer-policy ADR, n=2)
+
+**The optimal depth fraction does NOT generalize.** See `auc_vs_depth_compare.png`:
+the two models have nearly opposite example-AUC profiles —
+
+| model | peak ex-AUC | depth fraction | late-layer behaviour |
+|---|---|---|---|
+| Gemma-3-27B | layer 27, 0.695 | **~0.44 (mid)** | collapses to the length baseline |
+| Qwen2.5-Coder-32B | layer 52, 0.716 | **~0.83 (late)** | best region |
+
+A single fixed fraction (mid *or* late) would badly hurt one of the two
+(Gemma's signal dies where Qwen's peaks). ⇒ **val-select the layer per model**;
+do not hard-code a depth fraction. The `{n/4,n/2,3n/4,n−1}` grid is a defensible
+cheap proxy but can miss the peak (Gemma) — widen it or val-select when the layer
+matters. This closes the layer-policy `TODO(adhoc-decision)` toward per-model
+selection (pending the user's ADR sign-off).
