@@ -10,7 +10,9 @@ WORK=${WORK:-$HOME/scratch/probes}
 export REPO=${REPO:-$WORK/repo}
 export DATA=${DATA:-$WORK/data}
 export RUNS=${RUNS:-$WORK/runs}
-export PYTHON_DEPS_DIR=${PYTHON_DEPS_DIR:-$WORK/.python_deps}
+# Bumped to a v5 stack (see DEPS below). New dir so the prior 4.57.1 tree at
+# $WORK/.python_deps stays intact as a rollback; v5 installs fresh here.
+export PYTHON_DEPS_DIR=${PYTHON_DEPS_DIR:-$WORK/.python_deps5}
 export UV_CACHE_DIR=${UV_CACHE_DIR:-$WORK/.uv_cache}
 export HF_HOME=${HF_HOME:-$WORK/hf_cache}
 export HF_HUB_ENABLE_HF_TRANSFER=1
@@ -33,12 +35,15 @@ PYBIN="$(command -v python || command -v python3)"
 # `is_offline_mode` import error) — the fix is to install a new transformers AND
 # a matching new hub together (NOT to downgrade transformers, which then can't
 # load gemma-3/qwen3/etc.). Because $PYTHON_DEPS_DIR is first on PYTHONPATH our
-# pinned hub shadows the image's old one. 4.57.x supports the `dtype=` kwarg and
-# every model in the roster except the two 2026 archs (gemma-4/qwen3.6 — they
-# need an even newer transformers; treated as best-effort).
+# pinned hub shadows the image's old one. 5.9.0 is the first stack that
+# registers the 2026 archs we were missing: gemma4, qwen3_5 (Qwen3.6) and the
+# mistral3 VLM tokenizer route — verified `in CONFIG_MAPPING` before pinning.
+# The quartet (transformers/tokenizers/hub/safetensors) is the exact set uv
+# resolved together, installed --no-deps so the image's torch+numpy are never
+# shadowed. Override the whole set via $TF_STACK to test another version.
 # NOTE: no '<' / '>' in specifiers — DEPS is expanded unquoted inside the nested
 # `bash -c`, so range operators would be parsed as shell redirections. '==' only.
-DEPS="transformers==4.57.1 huggingface_hub==0.35.3 tokenizers==0.22.1 safetensors==0.7.0 regex accelerate sentencepiece hf_transfer scikit-learn"
+DEPS="${TF_STACK:-transformers==5.9.0 huggingface_hub==1.17.0 tokenizers==0.22.2 safetensors==0.7.0 regex accelerate sentencepiece hf_transfer scikit-learn}"
 # torch, numpy already in the NGC image — installed --no-deps to avoid clobbering.
 if [ ! -f "$PYTHON_DEPS_DIR/.deps_ok" ]; then
     mkdir -p "$PYTHON_DEPS_DIR"
