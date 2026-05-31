@@ -146,20 +146,31 @@ def main() -> None:
                                         truncation=True, max_length=args.max_length)
             code_trunc = tokenizer.decode(code_ids)
             content = build_content(code_trunc)
-            input_ids = tokenizer.apply_chat_template(
+            # transformers 5.9.0's apply_chat_template returns a BatchEncoding
+            # (dict-like: input_ids + attention_mask), NOT a bare tensor. Indexing
+            # a BatchEncoding with [0] yields a tokenizers.Encoding, so force the
+            # dict form and feed the model via **enc. Stay robust to versions that
+            # return a bare tensor.
+            enc = tokenizer.apply_chat_template(
                 [{"role": "user", "content": content}],
-                add_generation_prompt=True, return_tensors="pt",
-            ).to(device)
+                add_generation_prompt=True, return_tensors="pt", return_dict=True,
+            )
+            if torch.is_tensor(enc):
+                enc = {"input_ids": enc}
+            enc = {k: v.to(device) for k, v in dict(enc).items()}
+            input_ids = enc["input_ids"]
 
             if not printed_template:
                 rendered = tokenizer.decode(input_ids[0].tolist())
+                print(f"[verbalized] enc keys={list(enc.keys())} input_ids.shape={tuple(input_ids.shape)}",
+                      file=sys.stderr)
                 print("[verbalized] ===== first rendered chat template (decoded) =====",
                       file=sys.stderr)
                 print(rendered, file=sys.stderr)
                 print("[verbalized] ===== end template =====", file=sys.stderr)
                 printed_template = True
 
-            out = model(input_ids, use_cache=False)
+            out = model(**enc, use_cache=False)
             logits_last = out.logits[0, -1, :]
             p_yes = p_yes_from_logits(logits_last, yes_ids, no_ids)
             results.append({"eid": int(eid), "p_yes": float(p_yes), "label": _row_label(row)})
