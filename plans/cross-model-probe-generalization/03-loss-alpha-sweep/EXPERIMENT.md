@@ -102,6 +102,17 @@ even α→0 (drop in-span weighting entirely). Not yet tested; flagged for a che
 follow-up at α ∈ {0.1, 0.3, 0.5} on the top layers. `TODO(adhoc-decision)`:
 ratify α=1 (or lower) as the new default into an ADR before the next sweep.
 
-**Cross-model:** both findings hold for Gemma AND Qwen — unlike the layer policy
+**Finding 3 — token-AUC is the opposite, and flat.** Unlike example-AUC,
+token-AUC is ~α-insensitive (varies ≤0.02 over α=1→50, mostly within ~0.015–0.03
+std) and where there's a trend it *rises* with α (Qwen L34: 0.807→0.834; L41:
+0.814→0.835). neg_incl is again a no-op (Δ ∈ [−0.009, +0.008]). Mechanistically
+clean: α up-weights in-span tokens in the *per-token* BCE (the localization
+objective), so high α helps token-AUC slightly but hurts the example max-pool by
+over-focusing on the few annotated positions. **α is an example-vs-token
+trade-off knob, not a free win.** We keep α=1 because example-AUC is the headline
+and its α-effect (+0.01–0.03) dwarfs the token-AUC cost (≤0.015, mostly noise) —
+though Qwen's token-AUC at α=1 is noisier across splits (std ~0.03 vs ~0.015).
+
+**Cross-model:** findings 1–3 hold for Gemma AND Qwen — unlike the layer policy
 (exp 02), the loss knobs generalize: neg_incl off, α low. So α is a shared
 default, the layer is per-model.

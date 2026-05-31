@@ -20,6 +20,10 @@ L = (1−ω)·Σ_T w_i·BCE(y_i, p_i)  +  ω·Σ_spans BCE(1, max_{i∈span} p_i
   +0.012–0.033 AUC. Up-weighting the rare in-span tokens over-fits the few
   annotated positions and hurts the example-level max-pool. The α=1 boundary is
   the swept minimum — α<1 untested, possibly better still.
+  - **α is an example-vs-token trade-off, not a free win:** token-AUC is ~flat
+    in α (≤0.02, within noise) and if anything *rises* with α — high α aids
+    per-token localization but costs the example max-pool. Keep α=1 because
+    example-AUC is the headline and its α-effect is larger; token-AUC barely moves.
 
 ## Eval metric
 - Token-AUC (all held-out tokens) **and** example-AUC (per-example score =
