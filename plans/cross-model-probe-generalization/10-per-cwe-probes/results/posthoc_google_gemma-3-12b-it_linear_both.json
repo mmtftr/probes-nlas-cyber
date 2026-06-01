@@ -1,0 +1,69 @@
+{
+  "model": "google/gemma-3-12b-it",
+  "layer": 15,
+  "spec_head": "linear",
+  "spec_set": "both",
+  "ref_mlp": "mlp512",
+  "min_train_pos": 10,
+  "n_specialists": 11,
+  "specialists": [
+    "family:memory",
+    "family:injection",
+    "cwe:CWE-089",
+    "cwe:CWE-125",
+    "cwe:CWE-078",
+    "cwe:CWE-476",
+    "cwe:CWE-416",
+    "cwe:CWE-787",
+    "cwe:CWE-022",
+    "cwe:CWE-079",
+    "cwe:CWE-190"
+  ],
+  "specialist_solo_tokens_code": {
+    "family:memory": 0.42741565217492106,
+    "family:injection": 0.7659250895874312,
+    "cwe:CWE-089": 0.703085031759068,
+    "cwe:CWE-125": 0.5169680497713669,
+    "cwe:CWE-078": 0.6092066810097667,
+    "cwe:CWE-476": 0.41038040153440214,
+    "cwe:CWE-416": 0.4058932560340175,
+    "cwe:CWE-787": 0.42752808706269485,
+    "cwe:CWE-022": 0.5363904254244516,
+    "cwe:CWE-079": 0.5462281882978192,
+    "cwe:CWE-190": 0.4336513472835571
+  },
+  "reference": {
+    "general_linear": 0.771205963925942,
+    "general_mlp": 0.8047344946269912
+  },
+  "combiners": {
+    "max": {
+      "overall": 0.757817093533848,
+      "by_lang": {
+        "python": 0.8170611140892768,
+        "c": 0.6347842362495526,
+        "cpp": 0.7075335023542195
+      }
+    },
+    "mean": {
+      "overall": 0.7572392733385165,
+      "by_lang": {
+        "python": 0.8149515477566289,
+        "c": 0.6363440681715996,
+        "cpp": 0.7069882525235028
+      }
+    },
+    "learned": {
+      "overall": 0.7714197002884707,
+      "by_lang": {
+        "python": 0.8446921591856689,
+        "c": 0.5466058815716974,
+        "cpp": 0.7060296363951309
+      },
+      "backend": "sklearn"
+    }
+  },
+  "n_test_tokens": 124426,
+  "n_val_tokens": 95154,
+  "n_fit_tokens": 470568
+}

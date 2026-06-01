@@ -1,97 +1,97 @@
 {
-  "model": "Qwen/Qwen3.6-27B",
-  "layer": 30,
+  "model": "google/gemma-3-12b-it",
+  "layer": 15,
   "head": "linear",
-  "val_tokens_code_auc": 0.7717220431302619,
-  "val_tokens_auc": 0.7732801998745634,
+  "val_tokens_code_auc": 0.7546482990384707,
+  "val_tokens_auc": 0.757568979691193,
   "overall": {
-    "tokens_code_auc": 0.7865969675725719,
-    "tokens_auc": 0.7776380187924972,
-    "n_pos_code": 4144,
-    "n_total_code": 76052,
+    "tokens_code_auc": 0.7712059690102726,
+    "tokens_auc": 0.7614618692569819,
+    "n_pos_code": 4743,
+    "n_total_code": 87679,
     "n_examples": 292
   },
   "by_lang": {
     "python": {
-      "tokens_code_auc": 0.818962087586657,
-      "tokens_auc": 0.7955811032702169,
-      "n_pos_code": 2757,
-      "n_total_code": 25164,
+      "tokens_code_auc": 0.8087457101842441,
+      "tokens_auc": 0.7908209411699612,
+      "n_pos_code": 3168,
+      "n_total_code": 29284,
       "n_examples": 166
     },
     "c": {
-      "tokens_code_auc": 0.6284761334592093,
-      "tokens_auc": 0.6459002708121189,
-      "n_pos_code": 1268,
-      "n_total_code": 45793,
+      "tokens_code_auc": 0.6214225537888045,
+      "tokens_auc": 0.6346083935769955,
+      "n_pos_code": 1443,
+      "n_total_code": 52490,
       "n_examples": 108
     },
     "cpp": {
-      "tokens_code_auc": 0.6590373287578698,
-      "tokens_auc": 0.66299902786779,
-      "n_pos_code": 119,
-      "n_total_code": 5095,
+      "tokens_code_auc": 0.6733487656751125,
+      "tokens_auc": 0.6580164136038975,
+      "n_pos_code": 132,
+      "n_total_code": 5905,
       "n_examples": 18
     }
   },
   "by_cwe": {
     "CWE-089": {
-      "tokens_code_auc": 0.9352472811602528,
-      "tokens_auc": 0.9405132590540809,
-      "n_pos_code": 1564,
-      "n_total_code": 44162,
+      "tokens_code_auc": 0.9136453095835394,
+      "tokens_auc": 0.9184172651024464,
+      "n_pos_code": 1736,
+      "n_total_code": 50882,
       "n_examples": 190,
       "n_pos_examples": 44
     },
     "CWE-125": {
-      "tokens_code_auc": 0.5393802952545602,
-      "tokens_auc": 0.5510883239474145,
-      "n_pos_code": 402,
-      "n_total_code": 48610,
+      "tokens_code_auc": 0.6161757075953345,
+      "tokens_auc": 0.6138151274699938,
+      "n_pos_code": 446,
+      "n_total_code": 55891,
       "n_examples": 165,
       "n_pos_examples": 19
     },
     "CWE-078": {
-      "tokens_code_auc": 0.883633264806361,
-      "tokens_auc": 0.8818513487326943,
-      "n_pos_code": 704,
-      "n_total_code": 42802,
+      "tokens_code_auc": 0.8492229890964424,
+      "tokens_auc": 0.8571317799927098,
+      "n_pos_code": 823,
+      "n_total_code": 49359,
       "n_examples": 165,
       "n_pos_examples": 19
     },
     "CWE-476": {
-      "tokens_code_auc": 0.5372066142263462,
-      "tokens_auc": 0.58738837242273,
-      "n_pos_code": 312,
-      "n_total_code": 44631,
+      "tokens_code_auc": 0.492287546276448,
+      "tokens_auc": 0.5345760210024963,
+      "n_pos_code": 362,
+      "n_total_code": 51587,
       "n_examples": 162,
       "n_pos_examples": 16
     },
     "CWE-022": {
-      "tokens_code_auc": 0.8420888215128882,
-      "tokens_auc": 0.7957793280595699,
-      "n_pos_code": 267,
-      "n_total_code": 41306,
+      "tokens_code_auc": 0.7857506992022976,
+      "tokens_auc": 0.7581153053876987,
+      "n_pos_code": 334,
+      "n_total_code": 47612,
       "n_examples": 161,
       "n_pos_examples": 15
     },
     "CWE-416": {
-      "tokens_code_auc": 0.40798828743830906,
-      "tokens_auc": 0.4535105533651136,
-      "n_pos_code": 321,
-      "n_total_code": 42757,
+      "tokens_code_auc": 0.5050340354945257,
+      "tokens_auc": 0.5334053989932935,
+      "n_pos_code": 389,
+      "n_total_code": 49395,
       "n_examples": 160,
       "n_pos_examples": 14
     },
     "CWE-079": {
-      "tokens_code_auc": 0.7197587719182654,
-      "tokens_auc": 0.638940689059332,
-      "n_pos_code": 286,
-      "n_total_code": 40087,
+      "tokens_code_auc": 0.6497270157152203,
+      "tokens_auc": 0.5732022290879629,
+      "n_pos_code": 342,
+      "n_total_code": 46265,
       "n_examples": 156,
       "n_pos_examples": 10
     }
   },
-  "test_ex_auc": 0.5729968099080502,
+  "test_ex_auc": 0.5357243385250516,
   "n_test_ex": 292
 }

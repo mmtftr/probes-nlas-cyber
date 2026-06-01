@@ -1,0 +1,27 @@
+{
+  "model": "google/gemma-3-4b-it",
+  "layer": 7,
+  "head": "linear",
+  "neg_pool": "all",
+  "cwe_arg": "memory",
+  "min_trust_pos": 10,
+  "n_neg_fit_all": 482,
+  "n_neg_test_all": 146,
+  "by_cwe": {
+    "memory": {
+      "family": "memory",
+      "n_train_pos": 187,
+      "n_test_pos": 54,
+      "n_neg_fit": 482,
+      "n_neg_test": 146,
+      "trust": true,
+      "neg_pool_note": null,
+      "general_tokens_code_auc": 0.5260733322140663,
+      "specialized_tokens_code_auc": 0.6312906370903535,
+      "delta_spec_minus_gen": 0.10521730487628722,
+      "n_pos_code_eval": 1286,
+      "n_total_code_eval": 70251,
+      "n_spec_fit_tokens": 383229
+    }
+  }
+}
