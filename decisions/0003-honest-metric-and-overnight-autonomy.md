@@ -101,7 +101,10 @@ Findings (all sweeps complete):
   post-training.
 - **Sweep 4 (exp-07): train-time masking delta≈0** → probe never leaned on trivial
   negatives.
-- **Sweep 5: α / MLP gains were inflated-metric artifacts** (honest lift ~+0.004).
+- **Sweep 5: MLP and α gains are GENUINE on tokens_code** (corrected — earlier
+  "+0.004 artifact" was a bad cross-experiment comparison). `tokens_code` ≈ `tokens`
+  per cell, but linear→MLP = +0.035…+0.064 (Qwen), α≈10 = +0.045 (gemma-27b). The
+  linear span-max probe is not at ceiling → motivates exp-09.
 - **Sweep 6 (THE headline qualifier): the aggregate is Python/injection-class only.**
   By language: python ≈0.81, **C ≈0.59 (near-chance)**. By CWE: SQLi 0.92, cmd-inj
   0.82, path-traversal 0.78 vs OOB-read 0.56, NULL-deref 0.55, **UAF 0.52**. The
