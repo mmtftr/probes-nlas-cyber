@@ -141,10 +141,16 @@ def _load_model(model_id: str, dtype):
 
     try:
         return _from(AutoModelForCausalLM)
-    except (ValueError, KeyError):
+    except (ValueError, KeyError, OSError):
+        # ValueError/KeyError = arch not registered under CausalLM; OSError = the
+        # CausalLM checkpoint-shard index references shards the VLM checkpoint
+        # doesn't have (e.g. Qwen3.6-27B's `model-000NN-of-00015.safetensors`).
+        # Both mean "this isn't a plain CausalLM" -> use the VLM text-decoder path.
+        # (Without OSError here, concurrent loads of Qwen3.6 fail nondeterministically
+        # depending on a remote-code arch-registration race.)
         from transformers import AutoModelForImageTextToText
 
-        print("[token-extract] CausalLM mapping missing -> AutoModelForImageTextToText", file=sys.stderr)
+        print("[token-extract] CausalLM load failed -> AutoModelForImageTextToText", file=sys.stderr)
         return _from(AutoModelForImageTextToText)
 
 
