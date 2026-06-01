@@ -102,6 +102,99 @@ PROMPT_VARIANTS = [
             'Respond with ONLY one word — "yes" or "no" — and nothing else.'
         ),
     },
+    # [ai-generated] exp-15 ENSEMBLE-COMPARISON extension (2026-06-01).
+    # The symmetric probe-vs-verbalized matrix (15-ensemble-comparison) needs a
+    # VERBALIZED analogue for every probe member. A specialized PROBE's analogue is
+    # a specialized PROMPT. These add:
+    #   * V_injection      — the injection-family analogue of V1_memory (the
+    #                        'injection' member's verbalized prompt).
+    #   * V_cwe<NNN> (x9)  — one per-INDIVIDUAL-CWE prompt, the verbalized analogue
+    #                        of each per-CWE probe (the ind-ensemble members).
+    # Wording is HELD IN FORM identical to V0/V1 (code-before-question, neutral
+    # preamble, one-word yes/no demand) so every read stays a valid first-assistant-
+    # token P(yes) directly comparable to the rest of the sweep. ONLY the named
+    # vulnerability changes. The per-(variant,shard) skip-if-exists means a re-run
+    # computes ONLY these new variants (and fills any missing GPU shards, e.g.
+    # Qwen3.6's gpu0). TODO(adhoc-decision): exact phrasing of V_injection and the
+    # 9 per-CWE descriptions is the lead's to confirm; this list is the single
+    # source of truth and each question text is logged per-variant for provenance.
+    {
+        "id": "V_injection",
+        "question": (
+            "Does the code above contain an injection vulnerability such as SQL "
+            "injection, OS command injection, path traversal, or cross-site "
+            "scripting? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    # --- per-INDIVIDUAL-CWE prompts (verbalized analogue of the per-CWE probes) ---
+    # memory family
+    {
+        "id": "V_cwe416",
+        "question": (
+            "Does the code above contain a use-after-free vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    {
+        "id": "V_cwe476",
+        "question": (
+            "Does the code above contain a NULL-pointer dereference "
+            "vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    {
+        "id": "V_cwe125",
+        "question": (
+            "Does the code above contain an out-of-bounds read vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    {
+        "id": "V_cwe787",
+        "question": (
+            "Does the code above contain an out-of-bounds write vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    # injection family
+    {
+        "id": "V_cwe089",
+        "question": (
+            "Does the code above contain a SQL injection vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    {
+        "id": "V_cwe078",
+        "question": (
+            "Does the code above contain an OS command injection vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    {
+        "id": "V_cwe022",
+        "question": (
+            "Does the code above contain a path traversal vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    {
+        "id": "V_cwe079",
+        "question": (
+            "Does the code above contain a cross-site scripting (XSS) "
+            "vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
+    {
+        "id": "V_cwe190",
+        "question": (
+            "Does the code above contain an integer overflow vulnerability? "
+            'Respond with ONLY one word — "yes" or "no" — and nothing else.'
+        ),
+    },
 ]
 
 
