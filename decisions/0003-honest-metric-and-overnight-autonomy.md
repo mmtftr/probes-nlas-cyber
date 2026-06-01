@@ -93,11 +93,21 @@ hold-out). 06 was re-run on the cached activations (retrain only; no
 re-extraction). This is the deployable layer-selection rule going forward, and
 the layers it picks feed sweep-5 (03/04) and exp-07.
 
-First-run findings that already hold (metric-level, selection-independent):
+Findings (all sweeps complete):
 - **`tokens_code` does not collapse** — ≈ `tokens` (slightly higher) on all 8.
-- **Oracle tokens_code ~0.78–0.80** across 1B–32B, base and instruct.
-- **Q5: pt ≈ it** at oracle → vuln direction is a *pretraining* feature, not
-  installed by post-training.
+- **~0.75–0.79** across 1B–32B, base and instruct (val_tokens_code-selected,
+  near-oracle).
+- **Q5: pt ≈ it** → vuln direction is a *pretraining* feature, not installed by
+  post-training.
+- **Sweep 4 (exp-07): train-time masking delta≈0** → probe never leaned on trivial
+  negatives.
+- **Sweep 5: α / MLP gains were inflated-metric artifacts** (honest lift ~+0.004).
+- **Sweep 6 (THE headline qualifier): the aggregate is Python/injection-class only.**
+  By language: python ≈0.81, **C ≈0.59 (near-chance)**. By CWE: SQLi 0.92, cmd-inj
+  0.82, path-traversal 0.78 vs OOB-read 0.56, NULL-deref 0.55, **UAF 0.52**. The
+  probe detects injection-style (data-flow/taint) vulns, NOT memory-safety bugs —
+  a large blind spot for any monitor built on it (framing §6 dataset/per-language
+  failure mode confirmed).
 
 ## Open (for user review)
 - `-pt` roster used = 1b+4b+12b (27b-pt skipped). Confirm/trim.
