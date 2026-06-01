@@ -14,6 +14,17 @@
 
 ---
 
+## Probes catch sleeper agents
+
+**What we learn:**
+- Random directions can also get really good AUC (95%), and simple question/answer pairs that have correct answers also yield good probes.
+- Between-class/within-class variation comparison for layers yield 
+
+**What we can adapt:**
+- Use random directions as a baseline
+- Write some simple vulnerability pairs -> SQL injection etc. Could generate a dataset with different pairs, + different preambles for context generalization.
+ 
+
 ## Ribeiro et al. 2025 — On LLMs' Internal Representation of Code Correctness
 
 - arXiv:2512.07404 · deep note: `papers/ribeiro2025-internal-rep-code-correctness.md`

@@ -18,5 +18,12 @@ wandb/
 # notebook scratch outputs
 *.ipynb_checkpoints/
 
+# notebook sample payloads (binaries stay local; small JSON scaffold is tracked)
+notebooks/**/data/*.npz
+notebooks/**/data/*.npy
+notebooks/**/data/*.jsonl
+notebooks/**/data/*.parquet
+notebooks/**/data/*.pt
+
 # OS
 .DS_Store

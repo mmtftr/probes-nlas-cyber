@@ -180,18 +180,22 @@ last layer, test still fine).
 (12b: 0.771 vs 0.767; 4b: 0.767 vs 0.769; 1b: 0.769 vs 0.750). It's a *pretraining*
 feature, not installed by instruct/RLHF.
 
-**Sweep-5 — 03/04 on the honest metric (anchors).** The old fancier-probe "wins"
-were artifacts of the inflated metric:
-- exp-03 (loss×α): α and `neg_incl` barely move tokens_code (best ≈ 0.772 Qwen /
-  0.748 gemma-27b). Old "high-α lifts tok_auc" was on inflated `tokens`.
-- exp-04 (richer): Qwen mlp512 0.792 vs linear 0.788 = **+0.004** (old inflated lift
-  was +0.07). gemma-27b exp-04 OOM'd (3-layer concat × mlp512 on 27B exceeds node RAM
-  even with NUMA interleave) — re-run at NWORKERS=2 if the cell is wanted.
+**Sweep-5 — 03/04 on the honest metric (anchors).** CORRECTION (2026-06-01, after
+review): an earlier draft called these "inflated-metric artifacts (+0.004)" — that
+was a **bad comparison** (exp-04 MLP vs exp-06 *linear*, different recipe). The
+within-experiment truth: `tokens_code` ≈ `tokens` in every cell (metric swap barely
+matters), BUT the MLP and α gains are **genuine on tokens_code**:
+- exp-04 (richer): linear→MLP is a real jump — Qwen single-layer (fset `25`)
+  0.756→**0.791** (+0.035); 3-layer concat (`23,25,27`) 0.721→**0.785** (+0.064).
+  gemma-27b exp-04 OOM'd (3-layer concat × mlp512 exceeds node RAM at 4 workers) —
+  re-run at NWORKERS=2 to confirm; old inflated run showed the same pattern.
+- exp-03 (loss×α): α genuinely helps, optimum ~α=10 — gemma-27b 0.703(α1)→**0.748**
+  (α10) = +0.045; Qwen 0.756→**0.770** = +0.014. `neg_incl` ≈ `base`.
 
-**Takeaway:** the simple linear span-max probe at a val_tokens_code-selected mid
-layer is ~as good as the fancier variants once measured honestly; the vuln-belief
-signal (~0.78 tokens_code) is real and robust across model family, scale, and
-post-training.
+**Takeaway:** `tokens_code` doesn't collapse and the signal is real/robust across
+family, scale, and post-training — BUT the linear span-max probe is **not at
+ceiling**: MLP and α≈10 each buy ~0.04–0.06 over a plain α=1 linear probe. Recovering
+that MLP gain *interpretably* is the point of exp-09.
 
 ### Sweep 6 — per-language / per-CWE breakdown (best layer, 8 models)
 
