@@ -1,0 +1,148 @@
+{
+  "model": "Qwen/Qwen3-32B",
+  "layer": 27,
+  "scale_def": "proj_std",
+  "scale_def_long": "std over code tokens of (h . d_hat) at layer L (== hidden_states[L+1]); a steer of alpha*scale*d_hat moves the residual alpha std along d_hat",
+  "scale_token_pop": "live_code",
+  "degrade_thresh": 0.05,
+  "intervention": "additive along unit d_hat, ALL token positions, on decoder layer L output[0]",
+  "alpha_grid": [
+    -64.0,
+    -16.0,
+    -4.0,
+    -1.0,
+    0.0,
+    1.0,
+    4.0,
+    16.0,
+    64.0
+  ],
+  "directions": {
+    "memory": {
+      "kind": "probe",
+      "family": "memory",
+      "scale": 3.102427405849491,
+      "raw_w_norm": 0.7711731195449829,
+      "n_fit_pos": 187,
+      "n_fit_neg": 482,
+      "scale_token_pop": "live_code"
+    },
+    "injection": {
+      "kind": "probe",
+      "family": "injection",
+      "scale": 2.7818401070914383,
+      "raw_w_norm": 0.7343468070030212,
+      "n_fit_pos": 295,
+      "n_fit_neg": 482,
+      "scale_token_pop": "live_code"
+    },
+    "random_0": {
+      "kind": "random",
+      "seed": 0,
+      "scale": 4.456043065303441,
+      "scale_token_pop": "live_code"
+    },
+    "random_1": {
+      "kind": "random",
+      "seed": 1,
+      "scale": 1.8244710181291746,
+      "scale_token_pop": "live_code"
+    }
+  },
+  "by_direction": {
+    "memory": {
+      "by_subset": {
+        "memory_pos": {
+          "p_yes": [
+            0.5010740106368483,
+            0.5896904628646797,
+            0.6202204265389607,
+            0.625295725955629,
+            0.6318475566583016,
+            0.6306065108333055,
+            0.6428464081874634,
+            0.6735219479606609,
+            0.35537776928175585
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "injection_pos": {
+          "p_yes": [
+            0.7566526816272426,
+            0.7983413464331997,
+            0.8112039205560503,
+            0.8199510779295208,
+            0.820888285134193,
+            0.8232508400849274,
+            0.8294608826194253,
+            0.8387495179178606,
+            0.5912765424908125
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "negative": {
+          "p_yes": [
+            0.6189839695130095,
+            0.6849686575233191,
+            0.6850466696191929,
+            0.6889959068001466,
+            0.6924034846523885,
+            0.6968893599376008,
+            0.7011957248825388,
+            0.7321570917275769,
+            0.5286341798732268
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      "n_per_subset": {
+        "memory_pos": 40,
+        "injection_pos": 40,
+        "negative": 40
+      }
+    }
+  },
+  "n_per_subset": {
+    "memory_pos": 40,
+    "injection_pos": 40,
+    "negative": 40
+  },
+  "selfcheck": {
+    "tol": 0.0001,
+    "max_abs_diff": 0.0,
+    "ok": true,
+    "n_checked": 3,
+    "worst": null
+  },
+  "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else."
+}

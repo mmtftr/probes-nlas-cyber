@@ -48,7 +48,26 @@ memory-safety when the PROMPT redirects it (exp-14), and the representation *is*
 (family/memory probe). But you recover the judgment by **changing the question**, not by
 additively pushing the probe direction in activation space.
 
-(Wide-grid α∈{±64,±16,±4,±1,0} sweep was launched to map effect-vs-degradation and confirm
-"flat until the model breaks, no clean causal window"; cluster access ended before it
-finished — see job 2453175. The ±4 result above stands as the finding.)
-Plot: `data/plots/cross-model/fig10_steering.png`. Data: `results/steer_v2/steer_13_*.json`.
+## Wide-grid confirmation (α ∈ {±64,±16,±4,±1,0} std, memory direction, 3 models)
+
+Pulled before cluster access ended (memory direction complete for Qwen2.5-Coder, Qwen3-32B,
+gemma; data `results/steer_wide/`). The model stays non-degraded throughout (still answers
+yes/no even at ±64):
+
+| model | memory-pos: −64 / 0 / +16 / +64 | negative: −64 / 0 / +16 / +64 |
+|---|---|---|
+| Qwen2.5-Coder | 0.04 / 0.08 / 0.10 / 0.30 | 0.35 / 0.33 / 0.36 / **0.64** |
+| Qwen3-32B | 0.50 / 0.63 / 0.67 / 0.36 | 0.62 / 0.69 / 0.73 / 0.53 |
+| gemma-3-27b | 0.81 / 0.95 / 0.97 / 0.63 | 0.91 / 0.95 / 0.95 / 0.70 |
+
+- **Flat across ±16 std** — no effect at any in-distribution magnitude.
+- **At ±64 std the shift is GLOBAL, not memory-specific**: Qwen2.5-Coder +64 raises
+  memory-pos by +0.22 but negatives by **+0.31 (more)**; Qwen3-32B/gemma destabilise
+  *downward* at +64 on both subsets. There is **no magnitude at which the memory direction
+  specifically lifts memory-positives**. This is the airtight version of the conclusion:
+  v1's apparent "effect" was exactly this non-specific extreme-magnitude shift.
+
+Plot: `data/plots/cross-model/fig10_steering.png`. Data: `results/steer_v2/` (±4, all 4
+directions) + `results/steer_wide/` (±64, memory direction). (The wide-grid injection/random
+directions were still computing when cluster access ended — job 2453175; the memory-direction
+curve above is the decisive one.)
