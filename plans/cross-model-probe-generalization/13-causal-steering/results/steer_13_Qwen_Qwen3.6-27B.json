@@ -1,0 +1,54 @@
+{
+  "model": "Qwen/Qwen3.6-27B",
+  "layer": 30,
+  "scale": 63.14555141161691,
+  "scale_def": "median over tokens of L2 norm of layer-L hidden state (== hidden_states[L+1], the probe's training tensor)",
+  "raw_w_norm": 1.2305479049682617,
+  "intervention": "additive along unit w_hat, ALL token positions, on decoder layer L output[0]",
+  "alpha_grid": [
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0
+  ],
+  "by_subset": {
+    "memory_pos": [
+      0.40662205884886965,
+      0.07584777457795759,
+      0.3436169773122469,
+      0.48520188515398405,
+      0.47948064922454403
+    ],
+    "injection_pos": [
+      0.4727649134953458,
+      0.4681092938989087,
+      0.7669492288387071,
+      0.6798532123831154,
+      0.5813750026021699
+    ],
+    "negative": [
+      0.42890059637665434,
+      0.13989372332643973,
+      0.404177186678773,
+      0.4733380015338581,
+      0.5988860114400698
+    ]
+  },
+  "n_per_subset": {
+    "memory_pos": 40,
+    "injection_pos": 40,
+    "negative": 40
+  },
+  "n_fit_pos": 187,
+  "n_fit_neg": 482,
+  "baseline_pyes_alpha0_selfcheck": {
+    "tol": 0.0001,
+    "max_abs_diff": 0.0,
+    "ok": true,
+    "n_checked": 3,
+    "worst": null
+  },
+  "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+  "direction_path": "/data/probes/runs/steer_13_Qwen_Qwen3.6-27B.json.dir.pt"
+}

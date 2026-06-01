@@ -1,0 +1,130 @@
+{
+  "model": "google/gemma-3-27b-it",
+  "layer": 19,
+  "head": "linear",
+  "sampler": "family_balanced",
+  "oversample_k": 2,
+  "sampler_info": {
+    "n_inj_fit_examples": 295,
+    "n_mem_fit_examples": 187,
+    "max_oversample_k": 8,
+    "oversample_k": 2,
+    "n_mem_eids_duplicated": 187,
+    "n_synthetic_copies_per_eid": 1,
+    "n_fit_tokens_before": 470568,
+    "n_fit_tokens_after": 614312,
+    "synthetic_eid_offset_C": 1430
+  },
+  "val_tokens_code_auc": 0.701302097848713,
+  "val_tokens_auc": 0.704671057662289,
+  "overall": {
+    "tokens_code_auc": 0.7185906704241091,
+    "tokens_auc": 0.706561277610039,
+    "n_pos_code": 4743,
+    "n_total_code": 87679,
+    "n_examples": 292
+  },
+  "by_lang": {
+    "python": {
+      "tokens_code_auc": 0.8120812196091718,
+      "tokens_auc": 0.7926990378653873,
+      "n_pos_code": 3168,
+      "n_total_code": 29284,
+      "n_examples": 166
+    },
+    "c": {
+      "tokens_code_auc": 0.5553368051653945,
+      "tokens_auc": 0.5704444404029667,
+      "n_pos_code": 1443,
+      "n_total_code": 52490,
+      "n_examples": 108
+    },
+    "cpp": {
+      "tokens_code_auc": 0.70074838983985,
+      "tokens_auc": 0.6816451313666441,
+      "n_pos_code": 132,
+      "n_total_code": 5905,
+      "n_examples": 18
+    }
+  },
+  "by_cwe": {
+    "CWE-089": {
+      "tokens_code_auc": 0.8446453970685671,
+      "tokens_auc": 0.8424840263657198,
+      "n_pos_code": 1736,
+      "n_total_code": 50882,
+      "n_examples": 190,
+      "n_pos_examples": 44
+    },
+    "CWE-125": {
+      "tokens_code_auc": 0.6003915122933202,
+      "tokens_auc": 0.5886093610672783,
+      "n_pos_code": 446,
+      "n_total_code": 55891,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-078": {
+      "tokens_code_auc": 0.7528890506997499,
+      "tokens_auc": 0.7614356599083353,
+      "n_pos_code": 823,
+      "n_total_code": 49359,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-476": {
+      "tokens_code_auc": 0.5610191469224982,
+      "tokens_auc": 0.5949490110402746,
+      "n_pos_code": 362,
+      "n_total_code": 51587,
+      "n_examples": 162,
+      "n_pos_examples": 16
+    },
+    "CWE-022": {
+      "tokens_code_auc": 0.78588831052308,
+      "tokens_auc": 0.738340461841192,
+      "n_pos_code": 334,
+      "n_total_code": 47612,
+      "n_examples": 161,
+      "n_pos_examples": 15
+    },
+    "CWE-416": {
+      "tokens_code_auc": 0.5534537925003045,
+      "tokens_auc": 0.5836422168933585,
+      "n_pos_code": 389,
+      "n_total_code": 49395,
+      "n_examples": 160,
+      "n_pos_examples": 14
+    },
+    "CWE-079": {
+      "tokens_code_auc": 0.5142710917193833,
+      "tokens_auc": 0.47663631317114313,
+      "n_pos_code": 342,
+      "n_total_code": 46265,
+      "n_examples": 156,
+      "n_pos_examples": 10
+    }
+  },
+  "by_family": {
+    "memory": {
+      "tokens_code_auc": 0.5724879942820411,
+      "tokens_auc": 0.5893050200069585,
+      "n_pos_code": 1286,
+      "n_total_code": 70251,
+      "n_examples": 200,
+      "n_pos_examples": 54,
+      "trust": true
+    },
+    "injection": {
+      "tokens_code_auc": 0.7707484093117074,
+      "tokens_auc": 0.7503220943122602,
+      "n_pos_code": 3457,
+      "n_total_code": 62009,
+      "n_examples": 238,
+      "n_pos_examples": 92,
+      "trust": true
+    }
+  },
+  "test_ex_auc": 0.5372724713829987,
+  "n_test_ex": 292
+}

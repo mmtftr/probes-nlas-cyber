@@ -1,0 +1,54 @@
+{
+  "model": "google/gemma-3-27b-it",
+  "layer": 19,
+  "scale": 8366.622939640558,
+  "scale_def": "median over tokens of L2 norm of layer-L hidden state (== hidden_states[L+1], the probe's training tensor)",
+  "raw_w_norm": 0.7953499555587769,
+  "intervention": "additive along unit w_hat, ALL token positions, on decoder layer L output[0]",
+  "alpha_grid": [
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0
+  ],
+  "by_subset": {
+    "memory_pos": [
+      0.4408875981696587,
+      0.9057828377266315,
+      0.9493196016324366,
+      0.03535775972748971,
+      0.02082677433867945
+    ],
+    "injection_pos": [
+      0.4795157447658845,
+      0.845487690891838,
+      0.9817222291366228,
+      0.020961257446485946,
+      0.007290058734344837
+    ],
+    "negative": [
+      0.4601539053226581,
+      0.8597875438200637,
+      0.950021661696271,
+      0.024453714653224403,
+      0.014328287651301924
+    ]
+  },
+  "n_per_subset": {
+    "memory_pos": 40,
+    "injection_pos": 40,
+    "negative": 40
+  },
+  "n_fit_pos": 187,
+  "n_fit_neg": 482,
+  "baseline_pyes_alpha0_selfcheck": {
+    "tol": 0.0001,
+    "max_abs_diff": 0.0,
+    "ok": true,
+    "n_checked": 3,
+    "worst": null
+  },
+  "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+  "direction_path": "/data/probes/runs/steer_13_google_gemma-3-27b-it.json.dir.pt"
+}

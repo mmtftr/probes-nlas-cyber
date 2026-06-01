@@ -1,0 +1,54 @@
+{
+  "model": "Qwen/Qwen3-32B",
+  "layer": 27,
+  "scale": 197.9984115867453,
+  "scale_def": "median over tokens of L2 norm of layer-L hidden state (== hidden_states[L+1], the probe's training tensor)",
+  "raw_w_norm": 0.7711731195449829,
+  "intervention": "additive along unit w_hat, ALL token positions, on decoder layer L output[0]",
+  "alpha_grid": [
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0
+  ],
+  "by_subset": {
+    "memory_pos": [
+      0.5022653534264971,
+      0.5453189858382246,
+      0.6318475566583016,
+      0.6444285612665938,
+      0.35540000672541294
+    ],
+    "injection_pos": [
+      0.7580409140009652,
+      0.8024189752249532,
+      0.820888285134193,
+      0.8422824803919197,
+      0.59113967963371
+    ],
+    "negative": [
+      0.6215457628113088,
+      0.7017092361505195,
+      0.6924034846523885,
+      0.7679647860622104,
+      0.5329137089139508
+    ]
+  },
+  "n_per_subset": {
+    "memory_pos": 40,
+    "injection_pos": 40,
+    "negative": 40
+  },
+  "n_fit_pos": 187,
+  "n_fit_neg": 482,
+  "baseline_pyes_alpha0_selfcheck": {
+    "tol": 0.0001,
+    "max_abs_diff": 0.0,
+    "ok": true,
+    "n_checked": 3,
+    "worst": null
+  },
+  "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+  "direction_path": "/data/probes/runs/steer_13_Qwen_Qwen3-32B.json.dir.pt"
+}

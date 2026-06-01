@@ -1,0 +1,130 @@
+{
+  "model": "Qwen/Qwen3-32B",
+  "layer": 27,
+  "head": "linear",
+  "sampler": "family_balanced",
+  "oversample_k": 2,
+  "sampler_info": {
+    "n_inj_fit_examples": 295,
+    "n_mem_fit_examples": 187,
+    "max_oversample_k": 8,
+    "oversample_k": 2,
+    "n_mem_eids_duplicated": 187,
+    "n_synthetic_copies_per_eid": 1,
+    "n_fit_tokens_before": 383206,
+    "n_fit_tokens_after": 500505,
+    "synthetic_eid_offset_C": 1430
+  },
+  "val_tokens_code_auc": 0.7566649403563744,
+  "val_tokens_auc": 0.7572514449569945,
+  "overall": {
+    "tokens_code_auc": 0.792316210409273,
+    "tokens_auc": 0.7741218731795675,
+    "n_pos_code": 4160,
+    "n_total_code": 76489,
+    "n_examples": 292
+  },
+  "by_lang": {
+    "python": {
+      "tokens_code_auc": 0.8461619524243498,
+      "tokens_auc": 0.8168307256501641,
+      "n_pos_code": 2767,
+      "n_total_code": 25242,
+      "n_examples": 166
+    },
+    "c": {
+      "tokens_code_auc": 0.6226800024143588,
+      "tokens_auc": 0.6311811428469751,
+      "n_pos_code": 1274,
+      "n_total_code": 46087,
+      "n_examples": 108
+    },
+    "cpp": {
+      "tokens_code_auc": 0.6853565469036256,
+      "tokens_auc": 0.6676517236107926,
+      "n_pos_code": 119,
+      "n_total_code": 5160,
+      "n_examples": 18
+    }
+  },
+  "by_cwe": {
+    "CWE-089": {
+      "tokens_code_auc": 0.9344372065111752,
+      "tokens_auc": 0.9311499156264335,
+      "n_pos_code": 1567,
+      "n_total_code": 44402,
+      "n_examples": 190,
+      "n_pos_examples": 44
+    },
+    "CWE-125": {
+      "tokens_code_auc": 0.5870719949385543,
+      "tokens_auc": 0.5708627148686731,
+      "n_pos_code": 405,
+      "n_total_code": 48876,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-078": {
+      "tokens_code_auc": 0.8781453575624983,
+      "tokens_auc": 0.8806832034123361,
+      "n_pos_code": 705,
+      "n_total_code": 43029,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-476": {
+      "tokens_code_auc": 0.6054917922768739,
+      "tokens_auc": 0.6447910926592595,
+      "n_pos_code": 313,
+      "n_total_code": 44896,
+      "n_examples": 162,
+      "n_pos_examples": 16
+    },
+    "CWE-022": {
+      "tokens_code_auc": 0.7584190484953075,
+      "tokens_auc": 0.7009938618560425,
+      "n_pos_code": 269,
+      "n_total_code": 41562,
+      "n_examples": 161,
+      "n_pos_examples": 15
+    },
+    "CWE-416": {
+      "tokens_code_auc": 0.5707231593121472,
+      "tokens_auc": 0.607938802489663,
+      "n_pos_code": 321,
+      "n_total_code": 43008,
+      "n_examples": 160,
+      "n_pos_examples": 14
+    },
+    "CWE-079": {
+      "tokens_code_auc": 0.691657776230722,
+      "tokens_auc": 0.5814972031882558,
+      "n_pos_code": 292,
+      "n_total_code": 40315,
+      "n_examples": 156,
+      "n_pos_examples": 10
+    }
+  },
+  "by_family": {
+    "memory": {
+      "tokens_code_auc": 0.5876581363399391,
+      "tokens_auc": 0.6037761035221859,
+      "n_pos_code": 1123,
+      "n_total_code": 61277,
+      "n_examples": 200,
+      "n_pos_examples": 54,
+      "trust": true
+    },
+    "injection": {
+      "tokens_code_auc": 0.859331386102994,
+      "tokens_auc": 0.8295531320670756,
+      "n_pos_code": 3037,
+      "n_total_code": 54122,
+      "n_examples": 238,
+      "n_pos_examples": 92,
+      "trust": true
+    }
+  },
+  "test_ex_auc": 0.5633092512666541,
+  "n_test_ex": 292
+}
