@@ -7,6 +7,24 @@ Read `README.md` for what's in `src/` and `scripts/`.
 Read `docs/research-framing.md` before designing any experiment — it holds the
 target property, scope, and open questions the work is narrowing toward.
 
+## Cluster (the cluster) — ALWAYS use the `debug` partition
+
+`debug` schedules **instantly**; `normal` queues for a long time — never use
+`normal` for our jobs. The `debug` budget is a **GPU-hour budget, not a
+walltime**: **1.5 GPU-hours per job** (`MaxTRESMinsPerJob=node=90`,
+`MaxTRESPerJob=node=4`, `MaxJobs=1` running / `MaxSubmit=2`). So:
+
+- **4 nodes × 22.5 min = 1.5 node-h** ← the standard "use all 4 nodes" shape.
+- 2 nodes × 45 min, or 1 node × 90 min, are the equivalents.
+- Only **one** debug job runs at a time → to use 4 nodes, submit ONE 4-node
+  allocation (one model/task per node), NOT four concurrent jobs.
+- Make every job **resumable** (per-unit output files, skip-if-exists) so a job
+  that hits the 22.5-min wall just gets resubmitted to continue.
+
+(Re-derived from `scontrol show partition debug` + `sacctmgr show qos scheduler`;
+see `docs/guides/the cluster-cluster.md`. Absolute paths in ssh — login shell starts
+in `$HOME`, not `~/scratch/probes`.)
+
 ## Collaboration model
 
 The agent is a **collaborator**, not an autonomous driver, in this repo.

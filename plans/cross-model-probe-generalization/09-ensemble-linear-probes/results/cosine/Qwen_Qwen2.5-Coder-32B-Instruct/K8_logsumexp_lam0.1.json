@@ -1,0 +1,103 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "layer": 25,
+  "K": 8,
+  "agg": "logsumexp",
+  "tau": 1.0,
+  "gate_mode": "per_token",
+  "div_lambda": 0.1,
+  "post_train_cos_abs_mean": 0.16628170013427734,
+  "val_tokens_code_auc": 0.7691391617440158,
+  "val_tokens_auc": 0.7714363156373771,
+  "overall": {
+    "tokens_code_auc": 0.7714620897618468,
+    "tokens_auc": 0.7627079601592326,
+    "n_pos_code": 4160,
+    "n_total_code": 76489,
+    "n_examples": 292
+  },
+  "by_lang": {
+    "python": {
+      "tokens_code_auc": 0.8093952442037954,
+      "tokens_auc": 0.7892526111628595,
+      "n_pos_code": 2767,
+      "n_total_code": 25242,
+      "n_examples": 166
+    },
+    "c": {
+      "tokens_code_auc": 0.5899074108099869,
+      "tokens_auc": 0.6064154441925464,
+      "n_pos_code": 1274,
+      "n_total_code": 46087,
+      "n_examples": 108
+    },
+    "cpp": {
+      "tokens_code_auc": 0.7059306960236982,
+      "tokens_auc": 0.6866018879461897,
+      "n_pos_code": 119,
+      "n_total_code": 5160,
+      "n_examples": 18
+    }
+  },
+  "by_cwe": {
+    "CWE-089": {
+      "tokens_code_auc": 0.9374783502001455,
+      "tokens_auc": 0.9377027518736877,
+      "n_pos_code": 1567,
+      "n_total_code": 44402,
+      "n_examples": 190,
+      "n_pos_examples": 44
+    },
+    "CWE-125": {
+      "tokens_code_auc": 0.5784058229039076,
+      "tokens_auc": 0.5840372400855658,
+      "n_pos_code": 405,
+      "n_total_code": 48876,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-078": {
+      "tokens_code_auc": 0.8632340787481376,
+      "tokens_auc": 0.8736482648102943,
+      "n_pos_code": 705,
+      "n_total_code": 43029,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-476": {
+      "tokens_code_auc": 0.5085408778070467,
+      "tokens_auc": 0.5429721921479428,
+      "n_pos_code": 313,
+      "n_total_code": 44896,
+      "n_examples": 162,
+      "n_pos_examples": 16
+    },
+    "CWE-022": {
+      "tokens_code_auc": 0.8307139917771421,
+      "tokens_auc": 0.7830234237843654,
+      "n_pos_code": 269,
+      "n_total_code": 41562,
+      "n_examples": 161,
+      "n_pos_examples": 15
+    },
+    "CWE-416": {
+      "tokens_code_auc": 0.4249943094437982,
+      "tokens_auc": 0.4538362546402845,
+      "n_pos_code": 321,
+      "n_total_code": 43008,
+      "n_examples": 160,
+      "n_pos_examples": 14
+    },
+    "CWE-079": {
+      "tokens_code_auc": 0.6829409562104529,
+      "tokens_auc": 0.6035161197300003,
+      "n_pos_code": 292,
+      "n_total_code": 40315,
+      "n_examples": 156,
+      "n_pos_examples": 10
+    }
+  },
+  "test_ex_auc": 0.5653030587352224,
+  "n_test_ex": 292,
+  "directions_path": "/data/probes/runs/ensemble_Qwen_Qwen2.5-Coder-32B-Instruct/cells_div/K8_logsumexp_lam0.1.dirs.pt"
+}
