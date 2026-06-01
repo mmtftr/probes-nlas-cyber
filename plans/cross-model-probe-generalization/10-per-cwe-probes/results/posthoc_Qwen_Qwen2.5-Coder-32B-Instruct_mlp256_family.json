@@ -1,0 +1,51 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "layer": 25,
+  "spec_head": "mlp256",
+  "spec_set": "family",
+  "ref_mlp": "mlp512",
+  "min_train_pos": 10,
+  "n_specialists": 2,
+  "specialists": [
+    "family:memory",
+    "family:injection"
+  ],
+  "specialist_solo_tokens_code": {
+    "family:memory": 0.3640928667164038,
+    "family:injection": 0.7811345154140747
+  },
+  "reference": {
+    "general_linear": 0.7879778296049993,
+    "general_mlp": 0.7867652148648749
+  },
+  "combiners": {
+    "max": {
+      "overall": 0.808483126847195,
+      "by_lang": {
+        "python": 0.8715517904687093,
+        "c": 0.6282902689183073,
+        "cpp": 0.7707087595998525
+      }
+    },
+    "mean": {
+      "overall": 0.8082467653149019,
+      "by_lang": {
+        "python": 0.8699794696190964,
+        "c": 0.6348939974912667,
+        "cpp": 0.7598882441292326
+      }
+    },
+    "learned": {
+      "overall": 0.8066725716198525,
+      "by_lang": {
+        "python": 0.8709082371972554,
+        "c": 0.6326154288249153,
+        "cpp": 0.7470656582410787
+      },
+      "backend": "sklearn"
+    }
+  },
+  "n_test_tokens": 100834,
+  "n_val_tokens": 77226,
+  "n_fit_tokens": 383206
+}

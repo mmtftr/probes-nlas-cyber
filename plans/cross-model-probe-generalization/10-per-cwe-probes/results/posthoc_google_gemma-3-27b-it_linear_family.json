@@ -1,0 +1,51 @@
+{
+  "model": "google/gemma-3-27b-it",
+  "layer": 19,
+  "spec_head": "linear",
+  "spec_set": "family",
+  "ref_mlp": "mlp512",
+  "min_train_pos": 10,
+  "n_specialists": 2,
+  "specialists": [
+    "family:memory",
+    "family:injection"
+  ],
+  "specialist_solo_tokens_code": {
+    "family:memory": 0.3755607254046369,
+    "family:injection": 0.7716710263785038
+  },
+  "reference": {
+    "general_linear": 0.7699563663761337,
+    "general_mlp": 0.8136565098112023
+  },
+  "combiners": {
+    "max": {
+      "overall": 0.7710284839252074,
+      "by_lang": {
+        "python": 0.8357266835725922,
+        "c": 0.6051449453706197,
+        "cpp": 0.729891369961524
+      }
+    },
+    "mean": {
+      "overall": 0.7671147530476545,
+      "by_lang": {
+        "python": 0.8343903888014778,
+        "c": 0.6056477839148711,
+        "cpp": 0.7300521235217234
+      }
+    },
+    "learned": {
+      "overall": 0.7827124498743468,
+      "by_lang": {
+        "python": 0.8376958687909112,
+        "c": 0.6049117684963083,
+        "cpp": 0.7211155378486056
+      },
+      "backend": "sklearn"
+    }
+  },
+  "n_test_tokens": 124426,
+  "n_val_tokens": 95154,
+  "n_fit_tokens": 470568
+}

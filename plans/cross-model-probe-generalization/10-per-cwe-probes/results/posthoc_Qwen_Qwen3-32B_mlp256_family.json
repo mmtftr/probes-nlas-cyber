@@ -1,0 +1,51 @@
+{
+  "model": "Qwen/Qwen3-32B",
+  "layer": 27,
+  "spec_head": "mlp256",
+  "spec_set": "family",
+  "ref_mlp": "mlp512",
+  "min_train_pos": 10,
+  "n_specialists": 2,
+  "specialists": [
+    "family:memory",
+    "family:injection"
+  ],
+  "specialist_solo_tokens_code": {
+    "family:memory": 0.3586041450418334,
+    "family:injection": 0.7863387913216
+  },
+  "reference": {
+    "general_linear": 0.8059952213549837,
+    "general_mlp": 0.7863267021313931
+  },
+  "combiners": {
+    "max": {
+      "overall": 0.8182655882255974,
+      "by_lang": {
+        "python": 0.8697669056048704,
+        "c": 0.6698894229258505,
+        "cpp": 0.7910728663613827
+      }
+    },
+    "mean": {
+      "overall": 0.8210294679121153,
+      "by_lang": {
+        "python": 0.870422848661706,
+        "c": 0.6786821450702467,
+        "cpp": 0.7777485126167109
+      }
+    },
+    "learned": {
+      "overall": 0.8200420893258051,
+      "by_lang": {
+        "python": 0.8704983531876763,
+        "c": 0.6780961761173179,
+        "cpp": 0.771825651506387
+      },
+      "backend": "sklearn"
+    }
+  },
+  "n_test_tokens": 100834,
+  "n_val_tokens": 77226,
+  "n_fit_tokens": 383206
+}
