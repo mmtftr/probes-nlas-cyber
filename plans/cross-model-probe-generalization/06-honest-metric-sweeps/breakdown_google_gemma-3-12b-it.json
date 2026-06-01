@@ -1,0 +1,92 @@
+{
+  "model": "google/gemma-3-12b-it",
+  "layer": 15,
+  "overall": {
+    "tokens_code_auc": 0.7626936682552758,
+    "tokens_auc": 0.7579353935759164,
+    "n_pos_code": 4743,
+    "n_total_code": 87679,
+    "n_examples": 292
+  },
+  "by_lang": {
+    "python": {
+      "tokens_code_auc": 0.7974810337735604,
+      "tokens_auc": 0.7863565820810992,
+      "n_pos_code": 3168,
+      "n_total_code": 29284,
+      "n_examples": 166
+    },
+    "c": {
+      "tokens_code_auc": 0.5905569393531468,
+      "tokens_auc": 0.6049178486190676,
+      "n_pos_code": 1443,
+      "n_total_code": 52490,
+      "n_examples": 108
+    },
+    "cpp": {
+      "tokens_code_auc": 0.7072795773428027,
+      "tokens_auc": 0.698018660422875,
+      "n_pos_code": 132,
+      "n_total_code": 5905,
+      "n_examples": 18
+    }
+  },
+  "by_cwe": {
+    "CWE-089": {
+      "tokens_code_auc": 0.9219843357729747,
+      "tokens_auc": 0.922252360672222,
+      "n_pos_code": 1736,
+      "n_total_code": 50882,
+      "n_examples": 190,
+      "n_pos_examples": 44
+    },
+    "CWE-125": {
+      "tokens_code_auc": 0.5692639293898895,
+      "tokens_auc": 0.5645738580527179,
+      "n_pos_code": 446,
+      "n_total_code": 55891,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-078": {
+      "tokens_code_auc": 0.7663683666253366,
+      "tokens_auc": 0.7736768818457236,
+      "n_pos_code": 823,
+      "n_total_code": 49359,
+      "n_examples": 165,
+      "n_pos_examples": 19
+    },
+    "CWE-476": {
+      "tokens_code_auc": 0.4927772070461537,
+      "tokens_auc": 0.5319350107299201,
+      "n_pos_code": 362,
+      "n_total_code": 51587,
+      "n_examples": 162,
+      "n_pos_examples": 16
+    },
+    "CWE-022": {
+      "tokens_code_auc": 0.7814243018679423,
+      "tokens_auc": 0.7602765308238653,
+      "n_pos_code": 334,
+      "n_total_code": 47612,
+      "n_examples": 161,
+      "n_pos_examples": 15
+    },
+    "CWE-416": {
+      "tokens_code_auc": 0.5190595989138101,
+      "tokens_auc": 0.5423355788931513,
+      "n_pos_code": 389,
+      "n_total_code": 49395,
+      "n_examples": 160,
+      "n_pos_examples": 14
+    },
+    "CWE-079": {
+      "tokens_code_auc": 0.7673755127608087,
+      "tokens_auc": 0.7343274909759093,
+      "n_pos_code": 342,
+      "n_total_code": 46265,
+      "n_examples": 156,
+      "n_pos_examples": 10
+    }
+  }
+}
