@@ -7,11 +7,15 @@ directives. Keeps everything else, including string literals (SQL
 injection lives there).
 
 Used today at eval time as the `code_only_all` aggregation level: same
-per-token AUC as `all`, but restricted to live-code tokens. The reason
-`all` AUC looks much higher than `span_max` AUC is that ~98% of tokens
-are trivially negative (comments, signatures, whitespace) — the probe
-just has to keep those at low probability and the AUC inflates. This
-mask removes that confound.
+per-token AUC as `all`, but restricted to live-code tokens. `all` AUC is
+inflated because the vuln span (`token_labels`) is a tiny fraction of any
+function, so the vast majority of tokens are negatives the probe just keeps
+low. NOTE: most of those easy negatives are *live code that isn't the vuln*,
+not comments/signatures — this mask only drops the latter (~15-30% of tokens
+on full-function SVEN, measured; an earlier "~98%" figure here was wrong, it
+conflated "non-vuln tokens" with "comments"). So this mask is a modest filter,
+not a dramatic one: it removes the comment/signature confound but leaves the
+live-code-but-not-vuln negatives, which is the harder, deployment-relevant case.
 
 NOTE (training-time use, future work): the same mask can drop trivial
 negatives from the training set fed into `src/train_probe_spanmax.py`.
