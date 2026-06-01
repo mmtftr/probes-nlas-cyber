@@ -83,6 +83,9 @@ def main() -> None:
     ap.add_argument("--gate-mode", default="per_token", choices=("per_token", "global"))
     ap.add_argument("--min-cwe-pos", type=int, default=10,
                     help="skip CWEs with fewer than this many positive test rows")
+    ap.add_argument("--div-lambda", type=float, default=0.0,
+                    help="weight on the EnsembleProbe direction-divergence penalty "
+                         "(mean cos^2 between directions). 0 = off (default).")
     args = ap.parse_args()
 
     out = Path(args.out)
@@ -131,8 +134,19 @@ def main() -> None:
 
     factory = make_factory(args.K, args.agg, tau=args.tau, gate_mode=args.gate_mode)
     r = train_one_layer(Xfit, y[fit], eids[fit], epochs=args.epochs, device=device,
-                        verbose=False, probe_factory=factory)
+                        verbose=False, probe_factory=factory,
+                        reg_penalty=(lambda m: m.divergence_penalty()) if args.div_lambda else None,
+                        reg_weight=args.div_lambda)
     probe = r["probe"].to(device).eval()
+
+    # Post-training direction diversity: mean off-diagonal |cosine| of the K
+    # directions (1.0 = collapsed, ~0 = orthogonal). Lets us confirm the
+    # divergence penalty actually orthogonalised the directions.
+    import torch.nn.functional as _F
+    _W = _F.normalize(probe.directions()["W"].float(), dim=1)
+    _C = (_W @ _W.t())
+    _K = _W.shape[0]
+    post_cos = float((_C.abs().sum() - _K) / (_K * (_K - 1))) if _K > 1 else 0.0
 
     def score(mask) -> np.ndarray:
         """Run the trained ensemble module on a token mask -> per-token sigmoid prob."""
@@ -191,6 +205,7 @@ def main() -> None:
     rec = {
         "model": args.model, "layer": args.best_layer,
         "K": args.K, "agg": args.agg, "tau": args.tau, "gate_mode": args.gate_mode,
+        "div_lambda": args.div_lambda, "post_train_cos_abs_mean": post_cos,
         "val_tokens_code_auc": val_h["tokens_code_auc"],
         "val_tokens_auc": val_h["tokens_auc"],
         "overall": overall,

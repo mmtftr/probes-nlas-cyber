@@ -239,6 +239,8 @@ def train_one_layer(
     probe_factory: "Callable[[int], nn.Module] | None" = None,
     mask_negatives: str = "none",
     code_mask: "np.ndarray | None" = None,
+    reg_penalty: "Callable[[nn.Module], torch.Tensor] | None" = None,
+    reg_weight: float = 0.0,
 ) -> dict:
     """Train one probe with the span-max loss and return metrics + (w, b).
 
@@ -343,6 +345,10 @@ def train_one_layer(
                 n_tok_total += yi.shape[0]
             # Average per token so the scale is comparable across batches.
             loss = loss_accum / max(1, n_tok_total)
+            # Optional probe-level regulariser (e.g. ensemble direction-divergence
+            # penalty). No-op when reg_penalty is None or reg_weight == 0.
+            if reg_penalty is not None and reg_weight:
+                loss = loss + reg_weight * reg_penalty(probe)
             loss.backward()
             opt.step()
             running += float(loss.detach())

@@ -116,6 +116,23 @@ class EnsembleProbe(nn.Module):
         weights = torch.softmax(gate_logits, dim=-1)  # (n, K), sums to 1 per token
         return (weights * logits_k).sum(dim=-1)
 
+    def divergence_penalty(self) -> torch.Tensor:
+        """Mean squared cosine similarity over distinct direction pairs.
+
+        Added (× lambda) to the training loss, this repels the K directions
+        toward mutual orthogonality — the lead's cosine-divergence idea. Uses
+        cos^2 (axis distance, sign-invariant) because a direction and its
+        negation aggregate differently under max/softmax_gate, so we repel by
+        axis, not signed vector. Normalised by the pair count so a given lambda
+        is comparable across K. Returns 0 when K == 1.
+        """
+        if self.K == 1:
+            return self.directions_linear.weight.new_zeros(())
+        W = nn.functional.normalize(self.directions_linear.weight, dim=1)  # (K, d)
+        C = W @ W.t()  # (K, K) cosine matrix
+        off = C - torch.diag(torch.diagonal(C))  # zero the diagonal
+        return (off ** 2).sum() / (self.K * (self.K - 1))  # mean cos^2 over i!=j
+
     # ---- inspection (no grad; returns plain tensors for saving) ----
 
     @torch.no_grad()
