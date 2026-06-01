@@ -1,23 +1,30 @@
 # [ai-generated]
-"""Honest per-layer span-max sweep: like exp-02's train_all_layers.py but ALSO
-records the honest `tokens_code_auc` (live-code-only token AUC) alongside the
-inflated all-token `tokens_auc` for the TEST tokens.
+"""Honest per-layer span-max sweep with tokens_code-based layer selection.
 
-Why a separate copy: exp-02's files are the archived inflated-metric record and
-must not change. This 06 copy keeps the exact same train/split/GPU-sharding /
-resumable logic, and augments each per-layer JSON with three honest fields:
-    tokens_auc        all-token TEST AUC (== exp-02's test_tok_auc, the inflated
-                      reference). Also written as `test_tok_auc` for backward
-                      compatibility with the aggregator.
-    tokens_code_auc   TEST AUC restricted to live-code tokens (tree-sitter mask
-                      via src/eval/honest_scoring.py).
-    dropped_fraction  1 - live_code_mask.mean() over the TEST tokens.
+Like exp-02's train_all_layers.py, but:
+  1. Records the honest `tokens_code_auc` (live-code-only token AUC) alongside
+     the inflated all-token `tokens_auc`, for BOTH a held-out selection-val
+     split and the test split.
+  2. Selection signal is `val_tokens_code_auc` (NOT val_ex_auc): the first 06
+     run showed val_ex_auc is near-chance on this data and selects near-random
+     layers. The layer is chosen (in the aggregator) by validation tokens_code.
 
-The mask needs per-row char offsets (offsets.npz in the acts dir) + the dataset
-rows (code + lang). See src/eval/honest_scoring.py and src/eval/code_mask.py.
+Splits (all group-aware via pair_group_key, no pair straddles a boundary):
+  - test  = the persisted seeded 20% group hold-out (load_or_make_split).
+  - val   = a further 15% of the TRAIN groups, held out for layer SELECTION
+            only (seed=42, deterministic, disjoint from test).
+  - fit   = the remaining train groups; the probe is trained on these.
 
-Resumable + GPU-shardable: writes one layer_{NN}.json per layer; skips any that
-exist. With --n-gpus G --gpu-id i, a worker handles layers where li % G == i.
+Per-layer JSON fields:
+    val_tokens_code_auc / val_tokens_auc   selection-val honest + inflated AUC.
+    tokens_code_auc / tokens_auc           TEST honest + inflated AUC (reported).
+    test_tok_auc                           backward-compat alias of TEST tokens_auc.
+    dropped_fraction                       1 - live_code_mask.mean() over TEST.
+    val_ex_auc / test_ex_auc               example-level (ride along; not used
+                                           for selection).
+
+The mask needs per-row char offsets (offsets.npz) + dataset rows (code + lang).
+Resumable + GPU-shardable: one layer_{NN}.json per layer; skips existing.
 """
 from __future__ import annotations
 import argparse
@@ -39,6 +46,11 @@ from src.eval.honest_scoring import (  # noqa: E402
 )
 from sklearn.metrics import roc_auc_score  # noqa: E402
 
+# Fraction of TRAIN groups held out for layer selection (val). seed fixed for
+# determinism + resumability across shards/re-runs.
+VAL_FRAC = 0.15
+VAL_SEED = 42
+
 
 def _load_train_eval():
     """Import the canonical train_eval module by path (no __init__ in its dir)."""
@@ -47,6 +59,10 @@ def _load_train_eval():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
+
+
+def _auc(yv, pv) -> float:
+    return float(roc_auc_score(yv, pv)) if len(np.unique(yv)) > 1 else float("nan")
 
 
 def main() -> None:
@@ -80,68 +96,85 @@ def main() -> None:
     y = np.load(acts / "y.npy")
     eids = np.load(acts / "example_ids.npy")
 
-    _rows, train_eids, test_eids = te_mod.load_or_make_split(
+    rows, train_eids, test_eids = te_mod.load_or_make_split(
         Path(args.dataset), Path(args.split)
     )
-    tr = np.fromiter((int(e) in train_eids for e in eids), bool, len(eids))
-    te = ~tr
+    # Carve a group-aware selection-val split from TRAIN (disjoint from test).
+    tr_eid_to_group = {e: te_mod.pair_group_key(rows[e]) for e in train_eids}
+    tr_groups = sorted(set(tr_eid_to_group.values()))
+    rng = np.random.default_rng(VAL_SEED)
+    rng.shuffle(tr_groups)
+    n_val = max(1, int(round(VAL_FRAC * len(tr_groups))))
+    val_groups = set(tr_groups[:n_val])
+    val_eids = {e for e, g in tr_eid_to_group.items() if g in val_groups}
+    fit_eids = train_eids - val_eids
+
+    fit = np.fromiter((int(e) in fit_eids for e in eids), bool, len(eids))
+    val = np.fromiter((int(e) in val_eids for e in eids), bool, len(eids))
+    te = np.fromiter((int(e) in test_eids for e in eids), bool, len(eids))
+    print(f"[train-all] gpu {args.gpu_id}/{args.n_gpus}  "
+          f"fit_tok={fit.sum()} val_tok={val.sum()} test_tok={te.sum()}", file=sys.stderr)
 
     my_layers = [li for li in range(n_layers) if li % args.n_gpus == args.gpu_id]
-    print(f"[train-all] gpu {args.gpu_id}/{args.n_gpus} handling {len(my_layers)} layers", file=sys.stderr)
 
     for li in my_layers:
         dst = out / f"layer_{li:02d}.json"
         if dst.exists():
             continue
-        # Isolate per-layer failures: a single diverging layer (NaN weights,
-        # non-finite activations) must not kill the worker and abort the rest.
+        # Isolate per-layer failures: one diverging layer must not abort the rest.
         try:
             Xmm = np.load(acts / f"layer_{li:02d}.npy", mmap_mode="r")
-            Xtr = np.asarray(Xmm[tr], dtype=np.float32)
-            ytr, etr = y[tr], eids[tr]
-            if len(np.unique(ytr)) < 2 or te.sum() == 0:
-                dst.write_text(json.dumps({"layer": li, "skipped": "degenerate labels"}))
+            Xfit = np.asarray(Xmm[fit], dtype=np.float32)
+            yfit, efit = y[fit], eids[fit]
+            if len(np.unique(yfit)) < 2 or te.sum() == 0 or val.sum() == 0:
+                dst.write_text(json.dumps({"layer": li, "skipped": "degenerate labels/splits"}))
                 continue
-            if not np.isfinite(Xtr).all():
+            if not np.isfinite(Xfit).all():
                 dst.write_text(json.dumps({"layer": li, "error": "non-finite activations"}))
                 print(f"[train-all] layer {li:02d} SKIP non-finite activations", file=sys.stderr)
                 continue
-            r = train_one_layer(Xtr, ytr, etr, epochs=args.epochs, device=device, verbose=False)
+            r = train_one_layer(Xfit, yfit, efit, epochs=args.epochs, device=device, verbose=False)
             w, b = np.asarray(r["w"], np.float32), float(r["b"])
             if not (np.isfinite(w).all() and np.isfinite(b)):
                 dst.write_text(json.dumps({"layer": li, "error": "diverged (NaN probe weights)"}))
                 print(f"[train-all] layer {li:02d} SKIP diverged", file=sys.stderr)
                 continue
 
-            Xte = np.asarray(Xmm[te], dtype=np.float32)
-            tok_p = 1.0 / (1.0 + np.exp(-(Xte @ w + b)))
+            def _score(mask):
+                X = np.asarray(Xmm[mask], dtype=np.float32)
+                return 1.0 / (1.0 + np.exp(-(X @ w + b)))
+
+            # selection-val honest AUC (the layer-selection signal)
+            val_p = _score(val)
+            val_h = honest_token_aucs(val_p, y[val], eids[val], offsets_by_eid, dataset_rows_by_eid)
+            # test honest AUC (reported)
+            tok_p = _score(te)
             tok_y, te_eids = y[te], eids[te]
-            tok_auc = (float(roc_auc_score(tok_y, tok_p))
-                       if len(np.unique(tok_y)) > 1 else float("nan"))
-            # Honest contrast over the TEST tokens.
-            honest = honest_token_aucs(
-                tok_p, tok_y, te_eids, offsets_by_eid, dataset_rows_by_eid,
-            )
+            test_h = honest_token_aucs(tok_p, tok_y, te_eids, offsets_by_eid, dataset_rows_by_eid)
             ex_ids, ex_p = te_mod.example_scores(tok_p, te_eids)
             ex_y = np.array([int(y[(eids == e)].max() > 0) for e in ex_ids])
-            ex_auc = (float(roc_auc_score(ex_y, ex_p))
-                      if len(np.unique(ex_y)) > 1 else float("nan"))
+
             rec = {"layer": li, "layer_frac": li / (n_layers - 1),
-                   "test_ex_auc": ex_auc,
-                   # `tokens_auc` is the new canonical name; `test_tok_auc` is
-                   # kept as a backward-compat alias for the aggregator.
-                   "tokens_auc": honest["tokens_auc"],
-                   "test_tok_auc": tok_auc,
-                   "tokens_code_auc": honest["tokens_code_auc"],
-                   "dropped_fraction": honest["dropped_fraction"],
-                   "n_pos_code": honest["n_pos_code"],
-                   "n_total_code": honest["n_total_code"],
-                   "val_ex_auc": float(r["ex_auc"]), "n_test_ex": int(len(ex_ids))}
+                   # selection signal
+                   "val_tokens_code_auc": val_h["tokens_code_auc"],
+                   "val_tokens_auc": val_h["tokens_auc"],
+                   # test (reported)
+                   "tokens_code_auc": test_h["tokens_code_auc"],
+                   "tokens_auc": test_h["tokens_auc"],
+                   "test_tok_auc": _auc(tok_y, tok_p),  # backward-compat alias
+                   "dropped_fraction": test_h["dropped_fraction"],
+                   "n_pos_code": test_h["n_pos_code"],
+                   "n_total_code": test_h["n_total_code"],
+                   # example-level rides along (not used for selection)
+                   "test_ex_auc": _auc(ex_y, ex_p),
+                   "val_ex_auc": float(r["ex_auc"]),
+                   "n_test_ex": int(len(ex_ids))}
             dst.write_text(json.dumps(rec))
-            print(f"[train-all] layer {li:02d}  ex_auc={ex_auc:.3f} "
-                  f"tokens_auc={honest['tokens_auc']:.3f} "
-                  f"tokens_code_auc={honest['tokens_code_auc']:.3f} "
-                  f"(dropped {honest['dropped_fraction']:.2f})", file=sys.stderr)
+            print(f"[train-all] layer {li:02d}  "
+                  f"val_tc={val_h['tokens_code_auc']:.3f}  "
+                  f"test_tc={test_h['tokens_code_auc']:.3f}  "
+                  f"test_tok={test_h['tokens_auc']:.3f} (dropped {test_h['dropped_fraction']:.2f})",
+                  file=sys.stderr)
         except Exception as e:  # noqa: BLE001 — record + continue, never abort the sweep
             dst.write_text(json.dumps({"layer": li, "error": f"{type(e).__name__}: {str(e)[:200]}"}))
             print(f"[train-all] layer {li:02d} ERROR {type(e).__name__}: {str(e)[:120]}", file=sys.stderr)
