@@ -192,3 +192,38 @@ were artifacts of the inflated metric:
 layer is ~as good as the fancier variants once measured honestly; the vuln-belief
 signal (~0.78 tokens_code) is real and robust across model family, scale, and
 post-training.
+
+### Sweep 6 — per-language / per-CWE breakdown (best layer, 8 models)
+
+**The ~0.78 aggregate is Python-dominated and hides a sharp split.**
+
+By language (`tokens_code`, mean over 8 models): **python ≈ 0.81**, **c ≈ 0.59
+(near-chance)**, cpp ≈ 0.50–0.75 (noisy, only 100 rows). The probe essentially
+works on Python and barely on C. The aggregate is carried by the 756 Python rows
+(vs 574 C). This is the dataset/per-language failure mode in framing §6 — the
+headline "robust ~0.78" must be qualified.
+
+By CWE (`tokens_code`, mean over models, positives-of-CWE vs all negatives):
+
+| CWE | type | tokens_code |
+|---|---|---|
+| CWE-089 | SQL injection | **0.924** |
+| CWE-078 | command injection | 0.824 |
+| CWE-022 | path traversal | 0.779 |
+| CWE-079 | XSS | 0.641 |
+| CWE-125 | out-of-bounds read | 0.559 |
+| CWE-476 | NULL deref | 0.549 |
+| CWE-416 | use-after-free | **0.521** |
+
+**Clean split: the probe detects injection-class vulns (SQLi/cmd-inj/path-traversal
+— string/dataflow patterns, mostly Python web code) and is at/near chance on
+memory-safety vulns (OOB-read / NULL-deref / UAF — C/C++ pointer bugs).** Language
+and CWE tell the same story: what reads as a "model's vulnerability belief" is
+really a belief about *injection-style* vulnerabilities, not memory safety.
+
+**Implication for the framing:** the base property (§1) is detected unevenly —
+strong where the vuln is a visible data-flow/taint pattern, weak where it's a
+temporal/pointer property with no local syntactic tell. Any AI-control monitor
+built on this probe would have a large blind spot on memory-safety bugs. Worth a
+follow-up: is C weak because the *signal* is absent in C activations, or because
+SVEN's C contrast pairs are harder/labelled differently?
