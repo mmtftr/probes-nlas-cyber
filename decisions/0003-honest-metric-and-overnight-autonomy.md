@@ -81,7 +81,26 @@ sentinel is busted once so they install. A smoke gate asserts
   subagent, cluster driving via the authenticated `clariden` tmux channel
   (`/tmp/ctmux.sh`); reconnect-on-drop is tolerated, loss-of-cert is the stop.
 
-## Open (for user review on return)
-- Confirm/trim the `-pt` roster (1b+4b+12b proposed).
-- Confirm `val_ex_auc`-based layer selection vs switching to a `val_tokens_code`
-  selection (needs extra val-token plumbing; deferred).
+## Update (2026-06-01, user awake) — layer selection switched to `val_tokens_code`
+
+The first 06 run (val_ex_auc selection) revealed val ex-AUC is near-chance
+(0.50–0.59) on this data, so it selected near-random early layers (4b-it→L0,
+12b-it→L2) that **badly undershoot** the oracle tokens_code layer (e.g. 12b-it:
+val-sel 0.734 @ L2 vs oracle 0.799 @ L16). Per user ("pick according to
+tokens_code auc"), selection now uses **`val_tokens_code_auc`** on a *leakage-free,
+group-aware 15% val split carved from train* (seed 42, disjoint from the test
+hold-out). 06 was re-run on the cached activations (retrain only; no
+re-extraction). This is the deployable layer-selection rule going forward, and
+the layers it picks feed sweep-5 (03/04) and exp-07.
+
+First-run findings that already hold (metric-level, selection-independent):
+- **`tokens_code` does not collapse** — ≈ `tokens` (slightly higher) on all 8.
+- **Oracle tokens_code ~0.78–0.80** across 1B–32B, base and instruct.
+- **Q5: pt ≈ it** at oracle → vuln direction is a *pretraining* feature, not
+  installed by post-training.
+
+## Open (for user review)
+- `-pt` roster used = 1b+4b+12b (27b-pt skipped). Confirm/trim.
+- The mask drops only ~30% of tokens on full-function SVEN (vs ~98% in the old
+  truncation framing) — so `tokens_code` is a modest filter here; revisit if the
+  threat model shifts back to streaming/truncated code.
