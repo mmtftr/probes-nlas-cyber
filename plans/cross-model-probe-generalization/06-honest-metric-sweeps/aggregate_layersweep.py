@@ -84,9 +84,11 @@ def main() -> None:
             except Exception as e:  # noqa: BLE001
                 base_auc[bl.name] = f"err:{e}"
 
-    # --- selection: by VALIDATION ex-AUC (no test leakage) ---
-    val_valid = [d for d in layers if _finite(d.get("val_ex_auc"))]
-    best = max(val_valid, key=lambda d: d["val_ex_auc"]) if val_valid else None
+    # --- selection: by VALIDATION tokens_code AUC (no test leakage) ---
+    # (val_ex_auc was near-chance on this data and selected near-random layers;
+    #  the honest token signal is the right selection target.)
+    val_valid = [d for d in layers if _finite(d.get("val_tokens_code_auc"))]
+    best = max(val_valid, key=lambda d: d["val_tokens_code_auc"]) if val_valid else None
 
     # --- oracle: argmax TEST tokens_code_auc (upper bound, not for deployment) ---
     tc_valid = [d for d in layers if _finite(d.get("tokens_code_auc"))]
@@ -101,6 +103,8 @@ def main() -> None:
         # val-selected (deployable) operating point
         "best_layer": best["layer"] if best else None,
         "best_layer_frac": best["layer_frac"] if best else None,
+        "selected_by": "val_tokens_code_auc",
+        "best_val_tokens_code_auc": best.get("val_tokens_code_auc") if best else None,
         "best_val_ex_auc": best.get("val_ex_auc") if best else None,
         "best_tokens_code_auc": best.get("tokens_code_auc") if best else None,
         "best_tokens_auc": best.get("tokens_auc", best.get("test_tok_auc")) if best else None,
