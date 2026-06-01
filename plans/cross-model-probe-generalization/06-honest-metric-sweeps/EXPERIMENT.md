@@ -141,3 +141,54 @@ Sweep 6 rider (best layer, per model): `tokens_code_auc` broken down by **langua
   committing the full roster.
 - **Provenance:** log `git rev-parse HEAD` per run (the cluster repo at `3209974`+);
   refuse on dirty tree.
+
+---
+
+## Results (2026-06-01)
+
+Run on the cluster, 1 node × 4 GPU per model, sequential (scheduler). Acts float32,
+all layers; probe = span-max linear; split = SVEN before/after seed-42 group hold-out.
+
+**Headline: `tokens_code` does NOT collapse.** On all 8 models the honest
+`tokens_code_auc` ≈ the inflated `tokens_auc` (consistently *slightly higher*).
+The mask drops only ~30% of tokens (token-level; ~15% char-level) on full-function
+SVEN — most "easy negatives" are live-code-not-vuln, not comments — so masking
+barely moves AUC. The signal is genuinely on live code.
+
+**Layer selection (sweep over `val_tokens_code`, not `val_ex_auc`).** val_ex_auc is
+near-chance here and selected near-random layers (undershot oracle by up to 0.065).
+Switched to **val_tokens_code** on a leakage-free 15% group-aware val split → now
+**within ≤0.025 of oracle on every model** (mostly <0.015). Resolves the layer-policy
+open item: val_tokens_code selection is reliable; no need to peek at test.
+
+| model | sel layer (frac) | test tokens_code | oracle |
+|---|---|---|---|
+| gemma-3-1b-it | L25 (1.00) | 0.769 | 0.772 |
+| gemma-3-1b-pt | L12 (.48) | 0.750 | 0.775 |
+| gemma-3-4b-it | L7 (.21) | 0.767 | 0.779 |
+| gemma-3-4b-pt | L33 (1.00) | 0.769 | 0.784 |
+| gemma-3-12b-it | L15 (.32) | 0.771 | 0.779 |
+| gemma-3-12b-pt | L13 (.28) | 0.767 | 0.778 |
+| gemma-3-27b-it | L19 (.31) | 0.770 | 0.770 |
+| Qwen2.5-Coder-32B | L25 (.40) | 0.788 | 0.800 |
+
+**Stable across scale (1B–32B) and post-training.** tokens_code ≈ 0.75–0.79
+everywhere; best layer clusters mid-network (~0.2–0.4; two models' val peaked at the
+last layer, test still fine).
+
+**Q5 — post-training does NOT install the vuln direction.** pt ≈ it at matched size
+(12b: 0.771 vs 0.767; 4b: 0.767 vs 0.769; 1b: 0.769 vs 0.750). It's a *pretraining*
+feature, not installed by instruct/RLHF.
+
+**Sweep-5 — 03/04 on the honest metric (anchors).** The old fancier-probe "wins"
+were artifacts of the inflated metric:
+- exp-03 (loss×α): α and `neg_incl` barely move tokens_code (best ≈ 0.772 Qwen /
+  0.748 gemma-27b). Old "high-α lifts tok_auc" was on inflated `tokens`.
+- exp-04 (richer): Qwen mlp512 0.792 vs linear 0.788 = **+0.004** (old inflated lift
+  was +0.07). gemma-27b exp-04 OOM'd (3-layer concat × mlp512 on 27B exceeds node RAM
+  even with NUMA interleave) — re-run at NWORKERS=2 if the cell is wanted.
+
+**Takeaway:** the simple linear span-max probe at a val_tokens_code-selected mid
+layer is ~as good as the fancier variants once measured honestly; the vuln-belief
+signal (~0.78 tokens_code) is real and robust across model family, scale, and
+post-training.

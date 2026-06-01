@@ -73,3 +73,27 @@ Paired (none vs code_only) per model, 5-seed mean ± std.
   its best layers are known. If the window has no slack, this can wait; it is the
   rescue path that only matters if 06 shows the gap.
 - Same cluster channel / qos / provenance rules as 06.
+
+---
+
+## Results (2026-06-01)
+
+Paired none vs code_only (exclude non-live-code negatives from the loss), 5 seeds,
+at each model's 06 val_tokens_code best layer. **delta (code_only − none) ≈ 0 on
+every model** (−0.013 … +0.002; slightly negative on average):
+
+| model | none | code_only | delta |
+|---|---|---|---|
+| gemma-3-1b-it | 0.756 | 0.747 | −0.009 |
+| gemma-3-1b-pt | 0.758 | 0.744 | −0.013 |
+| gemma-3-4b-it | 0.758 | 0.760 | +0.002 |
+| gemma-3-4b-pt | 0.754 | 0.751 | −0.003 |
+| gemma-3-12b-it | 0.762 | 0.759 | −0.004 |
+| gemma-3-12b-pt | 0.761 | 0.753 | −0.008 |
+| gemma-3-27b-it | 0.752 | 0.753 | +0.001 |
+| Qwen2.5-Coder-32B | 0.782 | 0.783 | +0.001 |
+
+**Conclusion:** training-time masking of trivial negatives does not help (slightly
+hurts, plausibly from less training signal). The probe was never leaning on
+comments/signatures — consistent with the mask dropping only ~30% of tokens and the
+06 finding that tokens_code ≈ tokens. The hypothesised rescue is unnecessary.
