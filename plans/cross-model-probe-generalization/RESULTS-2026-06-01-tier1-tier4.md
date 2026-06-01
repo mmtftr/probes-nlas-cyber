@@ -12,27 +12,29 @@ experiment's `results/`.
 
 ## ★ Tier-1 belief audit — memory-safety is REPRESENTED but not VERBALIZED (headline)
 
-For each model, MEMORY-family (CWE-416/476/125/787) vs INJECTION (CWE-089/078/079/022/190):
-- **probe** sides = `tokens_code` AUC (token-level, our metric): general probe vs pooled
-  family probe (exp-10 recipe).
-- **verbalized** = the model's own P("yes, vulnerable") — **necessarily EXAMPLE-level**
-  (one yes/no per function; there is no token-level verbalized score). 5 seeds.
+For each model, MEMORY-family (CWE-416/476/125/787) vs INJECTION (CWE-089/078/079/022/190).
+**All three judges are scored at the EXAMPLE level** (one score per function), 5 seeds — the
+apples-to-apples comparison, because the model's verbalized judgment is intrinsically one
+yes/no per function (no token-level form), so the probes are max-pooled to example scores.
+(`tokens_code` is token-level and has no verbalized counterpart, so it cannot be used for
+*this* comparison; the probes' token-level strength is the exp-10 / #7 result — general
+memory ≈0.52–0.59, family memory ≈0.66–0.73 `tokens_code`.)
 
-| model | MEM general / family (tokens_code) | MEM verbalized (ex) | INJ general / family | INJ verbalized |
-|---|---|---|---|---|
-| Qwen2.5-Coder | 0.519 / **0.662** | **0.388** | 0.880 / 0.891 | 0.750 |
-| Qwen3-32B | 0.585 / **0.685** | **0.486** | 0.878 / 0.893 | 0.731 |
-| Qwen3.6-27B | 0.534 / **0.727** | **0.545** | 0.869 / 0.891 | 0.789 |
-| gemma-3-27b | 0.561 / **0.665** | **0.392** | 0.840 / 0.875 | 0.680 |
+| model | MEM general / **family** / **verbalized** | INJ general / family / verbalized |
+|---|---|---|
+| Qwen2.5-Coder | 0.324 / **0.737** / **0.388** | 0.757 / 0.808 / 0.750 |
+| Qwen3-32B | 0.271 / **0.714** / **0.486** | 0.745 / 0.811 / 0.731 |
+| Qwen3.6-27B | 0.233 / **0.760** / **0.545** | 0.787 / 0.793 / 0.789 |
+| gemma-3-27b | 0.472 / **0.730** / **0.392** | 0.718 / 0.789 / 0.680 |
 
-**Finding.** Memory-safety vulnerability is linearly decodable from activations (family
-probe 0.66–0.73 `tokens_code`, recovering it from the weak general probe 0.52–0.59) — but
-the model's **own verbalized judgment is at/below chance (0.39–0.55)**, consistent across
-all 4 models. Injection is represented AND verbalized (all ≈0.68–0.89). ⇒ the model
-*represents* memory-vuln without *reporting* it: a white-box activation monitor catches
-what asking the model misses (charter §1 belief-vs-representation, §3 AI-control). Newer
-Qwen verbalizes memory slightly better (0.49–0.55 vs 0.39) — echoes exp-08's "newer Qwen
-partially closes the C gap" — but still far below its activations.
+**Finding.** On memory-safety the **family probe is the only judge that reads it** (example
+AUC 0.71–0.76); the **general probe (0.23–0.47) AND the model's own verbalized judgment
+(0.39–0.55) are both at/below chance**, consistent across all 4 models. Injection is
+represented AND verbalized (all three ≈0.68–0.81). ⇒ the model *represents* memory-vuln
+(a probe trained on it reads 0.74) without *reporting* it: a white-box activation monitor
+catches what asking the model misses (charter §1 belief-vs-representation, §3 AI-control).
+Newer Qwen verbalizes memory slightly better (0.49–0.55 vs 0.39) — echoes exp-08's "newer
+Qwen partially closes the C gap" — but still far below what its activations encode.
 
 Plot: `data/plots/cross-model/fig8_belief_audit.png` (regen `results/belief/make_belief_plot.py`).
 Qwen3 verbalized read verified valid: `enable_thinking=False` pre-fills a *closed empty*
