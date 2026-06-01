@@ -1,0 +1,27 @@
+{
+  "model": "Qwen/Qwen3.6-27B",
+  "layer": 30,
+  "head": "linear",
+  "neg_pool": "all",
+  "cwe_arg": "injection",
+  "min_trust_pos": 10,
+  "n_neg_fit_all": 482,
+  "n_neg_test_all": 146,
+  "by_cwe": {
+    "injection": {
+      "family": "injection",
+      "n_train_pos": 295,
+      "n_test_pos": 92,
+      "n_neg_fit": 482,
+      "n_neg_test": 146,
+      "trust": true,
+      "neg_pool_note": null,
+      "general_tokens_code_auc": 0.868574570896175,
+      "specialized_tokens_code_auc": 0.8910803208833646,
+      "delta_spec_minus_gen": 0.022505749987189683,
+      "n_pos_code_eval": 3025,
+      "n_total_code_eval": 53830,
+      "n_spec_fit_tokens": 289773
+    }
+  }
+}

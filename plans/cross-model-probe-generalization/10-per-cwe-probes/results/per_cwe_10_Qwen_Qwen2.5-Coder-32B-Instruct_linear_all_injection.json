@@ -1,0 +1,27 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "layer": 25,
+  "head": "linear",
+  "neg_pool": "all",
+  "cwe_arg": "injection",
+  "min_trust_pos": 10,
+  "n_neg_fit_all": 482,
+  "n_neg_test_all": 146,
+  "by_cwe": {
+    "injection": {
+      "family": "injection",
+      "n_train_pos": 295,
+      "n_test_pos": 92,
+      "n_neg_fit": 482,
+      "n_neg_test": 146,
+      "trust": true,
+      "neg_pool_note": null,
+      "general_tokens_code_auc": 0.8800116851867972,
+      "specialized_tokens_code_auc": 0.8906439192795881,
+      "delta_spec_minus_gen": 0.010632234092790904,
+      "n_pos_code_eval": 3037,
+      "n_total_code_eval": 54122,
+      "n_spec_fit_tokens": 265907
+    }
+  }
+}

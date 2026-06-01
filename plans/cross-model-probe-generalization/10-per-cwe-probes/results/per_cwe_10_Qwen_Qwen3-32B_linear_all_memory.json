@@ -1,0 +1,27 @@
+{
+  "model": "Qwen/Qwen3-32B",
+  "layer": 27,
+  "head": "linear",
+  "neg_pool": "all",
+  "cwe_arg": "memory",
+  "min_trust_pos": 10,
+  "n_neg_fit_all": 482,
+  "n_neg_test_all": 146,
+  "by_cwe": {
+    "memory": {
+      "family": "memory",
+      "n_train_pos": 187,
+      "n_test_pos": 54,
+      "n_neg_fit": 482,
+      "n_neg_test": 146,
+      "trust": true,
+      "neg_pool_note": null,
+      "general_tokens_code_auc": 0.5850134772812707,
+      "specialized_tokens_code_auc": 0.6847305110708575,
+      "delta_spec_minus_gen": 0.09971703378958674,
+      "n_pos_code_eval": 1123,
+      "n_total_code_eval": 61277,
+      "n_spec_fit_tokens": 312388
+    }
+  }
+}
