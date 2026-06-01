@@ -1,0 +1,330 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "combine": "max",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "min_trust_pos": 10,
+  "family_map": {
+    "CWE-089": "injection",
+    "CWE-078": "injection",
+    "CWE-022": "injection",
+    "CWE-079": "injection",
+    "CWE-190": "injection",
+    "CWE-125": "memory",
+    "CWE-476": "memory",
+    "CWE-416": "memory",
+    "CWE-787": "memory"
+  },
+  "probe_layer": 25,
+  "probe_alpha": 1.0,
+  "member_to_prompt": {
+    "general": "V0_generic",
+    "memory": "V1_memory",
+    "injection": "V_injection",
+    "ind-ensemble": "MAX over ['V_cwe416', 'V_cwe476', 'V_cwe125', 'V_cwe787', 'V_cwe089', 'V_cwe078', 'V_cwe022', 'V_cwe079', 'V_cwe190']",
+    "cat-ensemble": "MAX(V1_memory, V_injection)"
+  },
+  "probe_members_present": [
+    "general",
+    "memory",
+    "injection",
+    "cwe:CWE-416",
+    "cwe:CWE-476",
+    "cwe:CWE-125",
+    "cwe:CWE-787",
+    "cwe:CWE-089",
+    "cwe:CWE-078",
+    "cwe:CWE-022",
+    "cwe:CWE-079",
+    "cwe:CWE-190"
+  ],
+  "verbalized_cwes_present": [
+    "CWE-416",
+    "CWE-476",
+    "CWE-125",
+    "CWE-787",
+    "CWE-089",
+    "CWE-078",
+    "CWE-022",
+    "CWE-079",
+    "CWE-190"
+  ],
+  "missing_verbalized_single": [],
+  "missing_verbalized_cwe": [],
+  "ind_ensemble_members": {
+    "CWE-416": {
+      "family": "memory",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 12,
+      "low_n": false
+    },
+    "CWE-476": {
+      "family": "memory",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 16,
+      "low_n": false
+    },
+    "CWE-125": {
+      "family": "memory",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 21,
+      "low_n": false
+    },
+    "CWE-787": {
+      "family": "memory",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 8,
+      "low_n": true
+    },
+    "CWE-089": {
+      "family": "injection",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 35,
+      "low_n": false
+    },
+    "CWE-078": {
+      "family": "injection",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 19,
+      "low_n": false
+    },
+    "CWE-022": {
+      "family": "injection",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 9,
+      "low_n": true
+    },
+    "CWE-079": {
+      "family": "injection",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 10,
+      "low_n": false
+    },
+    "CWE-190": {
+      "family": "injection",
+      "probe_member_present": true,
+      "verbalized_prompt_present": true,
+      "probe_n_test_pos_median": 6,
+      "low_n": true
+    }
+  },
+  "matrix": {
+    "probe": {
+      "general": {
+        "memory": {
+          "auc_mean": 0.3242469279583304,
+          "auc_std": 0.06904397502110574,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.7566350240456426,
+          "auc_std": 0.023696314894523146,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.5819313065470623,
+          "auc_std": 0.013121589758927106,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "memory": {
+        "memory": {
+          "auc_mean": 0.7366296642341494,
+          "auc_std": 0.021277159665149543,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.3324084764168835,
+          "auc_std": 0.01761476436103424,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.4970851277830978,
+          "auc_std": 0.008772155443489742,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "injection": {
+        "memory": {
+          "auc_mean": 0.26601647942637696,
+          "auc_std": 0.027273150134778722,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.8081480127077129,
+          "auc_std": 0.014030799578525351,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.5872127218310773,
+          "auc_std": 0.021138412784776392,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "ind-ensemble": {
+        "memory": {
+          "auc_mean": 0.7556467407959595,
+          "auc_std": 0.01584331020341343,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.8218423777323002,
+          "auc_std": 0.040324737743090276,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.6263502396553722,
+          "auc_std": 0.04240915783793113,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "cat-ensemble": {
+        "memory": {
+          "auc_mean": 0.28740897560722567,
+          "auc_std": 0.03477751547003094,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.7978206656869606,
+          "auc_std": 0.015734397959436538,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.590002662551196,
+          "auc_std": 0.021110058997401017,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      }
+    },
+    "verbalized": {
+      "general": {
+        "memory": {
+          "auc_mean": 0.38802985163201387,
+          "auc_std": 0.024389375826174283,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.7501179287891605,
+          "auc_std": 0.02461282882937035,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.6032375466268414,
+          "auc_std": 0.013370475254706051,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "memory": {
+        "memory": {
+          "auc_mean": 0.6938499476584603,
+          "auc_std": 0.01959269292511307,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.48154167842578116,
+          "auc_std": 0.011664843130665847,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.5680906858066651,
+          "auc_std": 0.0073206147018792175,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "injection": {
+        "memory": {
+          "auc_mean": 0.2377584951172743,
+          "auc_std": 0.018451714964188935,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.8362069650160127,
+          "auc_std": 0.007907807380621358,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.5925981008337989,
+          "auc_std": 0.00912461700499771,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "ind-ensemble": {
+        "memory": {
+          "auc_mean": 0.703634560320815,
+          "auc_std": 0.022679900840518574,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.8408651858596269,
+          "auc_std": 0.017914521465402913,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.6957415318827561,
+          "auc_std": 0.01893591286361921,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      },
+      "cat-ensemble": {
+        "memory": {
+          "auc_mean": 0.5567857076625582,
+          "auc_std": 0.01321870320135675,
+          "n_pos_median": 59,
+          "trust": true
+        },
+        "injection": {
+          "auc_mean": 0.7582279069135509,
+          "auc_std": 0.016621187407821515,
+          "n_pos_median": 84,
+          "trust": true
+        },
+        "overall": {
+          "auc_mean": 0.6760732980655074,
+          "auc_std": 0.009681005594359453,
+          "n_pos_median": 142,
+          "trust": true
+        }
+      }
+    }
+  }
+}
