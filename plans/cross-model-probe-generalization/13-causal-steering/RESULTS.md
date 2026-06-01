@@ -67,7 +67,15 @@ yes/no even at ±64):
   specifically lifts memory-positives**. This is the airtight version of the conclusion:
   v1's apparent "effect" was exactly this non-specific extreme-magnitude shift.
 
+**Definitive verdict (full wide grid, all 4 directions incl. random controls; analyze_steer
+on the largest +α=64):** "causal but generic" on all 4 models — `Δmem(+64)` is non-trivial
+(Qwen2.5 +0.22, Qwen3.6 +0.11; Qwen3-32B/gemma −0.28/−0.32 = destabilise) but `mem−neg < 0`
+on ALL four (memory-positives move LESS than negatives) and `mem−random ≤ 0` on 3/4. So the
+extreme-α effect is a **generic global shift, never memory-specific**. Combined with the
+flat ±4–±16 region: the memory probe direction is **epiphenomenal for the verbalized
+judgment at fair magnitude, and only generically (non-specifically) perturbing at
+model-stressing magnitude.** Not a control knob for the memory belief.
+
 Plot: `data/plots/cross-model/fig10_steering.png`. Data: `results/steer_v2/` (±4, all 4
-directions) + `results/steer_wide/` (±64, memory direction). (The wide-grid injection/random
-directions were still computing when cluster access ended — job 2453175; the memory-direction
-curve above is the decisive one.)
+directions) + `results/steer_wide/` (±64, all 4 directions for 3 models; Qwen3.6 2/4 —
+cluster access ended). Verdict summary: `results/steer_wide/fig10_steering_summary.json`.

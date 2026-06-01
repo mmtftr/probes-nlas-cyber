@@ -1,0 +1,131 @@
+{
+  "models": {
+    "Qwen2.5-Coder-32B": {
+      "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+      "layer": 25,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "causal but generic",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 1.0,
+          "endpoint_delta_memorypos": 0.22291021069070968,
+          "max_pos_alpha_used": 64.0,
+          "n_nondegraded_alphas": 9
+        },
+        "ii_beats_negative": {
+          "alpha": 64.0,
+          "delta_memorypos": 0.22291021069070968,
+          "delta_negative": 0.306615832184184,
+          "memory_minus_negative": -0.0837056214934743
+        },
+        "iii_beats_random": {
+          "alpha": 64.0,
+          "delta_memorypos_memory_dir": 0.22291021069070968,
+          "delta_memorypos_random_mean": 0.27164236432924943,
+          "per_random": {
+            "random_0": 0.0006035482305736389,
+            "random_1": 0.5426811804279252
+          },
+          "memory_minus_random": -0.04873215363853975
+        }
+      },
+      "notes": []
+    },
+    "gemma-3-27b": {
+      "model": "google/gemma-3-27b-it",
+      "layer": 19,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "causal but generic",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 0.38333333333333336,
+          "endpoint_delta_memorypos": -0.3204784033081849,
+          "max_pos_alpha_used": 64.0,
+          "n_nondegraded_alphas": 9
+        },
+        "ii_beats_negative": {
+          "alpha": 64.0,
+          "delta_memorypos": -0.3204784033081849,
+          "delta_negative": -0.2509328539958706,
+          "memory_minus_negative": -0.06954554931231427
+        },
+        "iii_beats_random": {
+          "alpha": 16.0,
+          "delta_memorypos_memory_dir": 0.016155010665003244,
+          "delta_memorypos_random_mean": -0.16909805470649508,
+          "per_random": {
+            "random_0": -0.06838811428868807,
+            "random_1": -0.2698079951243021
+          },
+          "memory_minus_random": 0.18525306537149833
+        }
+      },
+      "notes": []
+    },
+    "Qwen3-32B": {
+      "model": "Qwen/Qwen3-32B",
+      "layer": 27,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "causal but generic",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 0.38333333333333336,
+          "endpoint_delta_memorypos": -0.27646978737654576,
+          "max_pos_alpha_used": 64.0,
+          "n_nondegraded_alphas": 9
+        },
+        "ii_beats_negative": {
+          "alpha": 64.0,
+          "delta_memorypos": -0.27646978737654576,
+          "delta_negative": -0.16376930477916174,
+          "memory_minus_negative": -0.11270048259738402
+        },
+        "iii_beats_random": {
+          "alpha": 64.0,
+          "delta_memorypos_memory_dir": -0.27646978737654576,
+          "delta_memorypos_random_mean": 0.06377615844692475,
+          "per_random": {
+            "random_0": -0.010234756453908367,
+            "random_1": 0.13778707334775786
+          },
+          "memory_minus_random": -0.3402459458234705
+        }
+      },
+      "notes": []
+    },
+    "Qwen3.6-27B": {
+      "model": "Qwen/Qwen3.6-27B",
+      "layer": 30,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "causal but generic",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 0.6166666666666666,
+          "endpoint_delta_memorypos": 0.11377984877994435,
+          "max_pos_alpha_used": 64.0,
+          "n_nondegraded_alphas": 9
+        },
+        "ii_beats_negative": {
+          "alpha": 64.0,
+          "delta_memorypos": 0.11377984877994435,
+          "delta_negative": 0.19979924527580128,
+          "memory_minus_negative": -0.08601939649585694
+        },
+        "iii_beats_random": null
+      },
+      "notes": []
+    }
+  },
+  "cutoffs": {
+    "SPEC_MIN_RISE": 0.05,
+    "SPEC_MARGIN": 0.05
+  }
+}
