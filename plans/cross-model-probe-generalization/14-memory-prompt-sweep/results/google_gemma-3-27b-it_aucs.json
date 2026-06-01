@@ -1,0 +1,423 @@
+{
+  "model": "google/gemma-3-27b-it",
+  "run_dir": "/data/probes/runs/promptsweep_google_gemma-3-27b-it",
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "min_trust_pos": 10,
+  "family_map": {
+    "CWE-089": "injection",
+    "CWE-078": "injection",
+    "CWE-022": "injection",
+    "CWE-079": "injection",
+    "CWE-190": "injection",
+    "CWE-125": "memory",
+    "CWE-476": "memory",
+    "CWE-416": "memory",
+    "CWE-787": "memory"
+  },
+  "question_by_variant": {
+    "V0_generic": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+    "V1_memory": "Does the code above contain a memory-safety vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+    "V2_memory_detailed": "Does the code above contain a memory-safety bug such as a use-after-free, NULL-pointer dereference, out-of-bounds read/write, or buffer overflow? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+    "V3_memory_cwe": "Does the code above contain CWE-416 (use-after-free), CWE-476 (NULL dereference), CWE-125 (out-of-bounds read), or CWE-787 (out-of-bounds write)? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else."
+  },
+  "variants": {
+    "V0_generic": {
+      "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+      "n_examples_scored": 1430,
+      "memory_auc_mean": 0.3902300623240964,
+      "memory_auc_std": 0.023607495679022202,
+      "injection_auc_mean": 0.6798287971107523,
+      "injection_auc_std": 0.026628790516547093,
+      "n_mem_pos": 59,
+      "n_inj_pos": 84,
+      "memory_trust": true,
+      "injection_trust": true,
+      "per_seed": {
+        "memory": [
+          {
+            "seed": 42,
+            "n_test_pos": 54,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.3515347539320142,
+            "n_eval_ex": 200
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 60,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.41079812206572774,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 57,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.3757621002861764,
+            "n_eval_ex": 198
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 59,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.39860139860139865,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 61,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.41445393673516506,
+            "n_eval_ex": 203
+          }
+        ],
+        "injection": [
+          {
+            "seed": 42,
+            "n_test_pos": 92,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.6921902918403813,
+            "n_eval_ex": 238
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 82,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.6869632428718653,
+            "n_eval_ex": 224
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 84,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.7084177642688281,
+            "n_eval_ex": 225
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 84,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.681943056943057,
+            "n_eval_ex": 227
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 81,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.6296296296296297,
+            "n_eval_ex": 223
+          }
+        ]
+      }
+    },
+    "V1_memory": {
+      "question": "Does the code above contain a memory-safety vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+      "n_examples_scored": 1430,
+      "memory_auc_mean": 0.6380532452312359,
+      "memory_auc_std": 0.002778968109033685,
+      "injection_auc_mean": 0.606466023500736,
+      "injection_auc_std": 0.03123266600971478,
+      "n_mem_pos": 59,
+      "n_inj_pos": 84,
+      "memory_trust": true,
+      "injection_trust": true,
+      "per_seed": {
+        "memory": [
+          {
+            "seed": 42,
+            "n_test_pos": 54,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.6374302384576358,
+            "n_eval_ex": 200
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 60,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.6382629107981221,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 57,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.64234166977728,
+            "n_eval_ex": 198
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 59,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.6336375488917861,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 61,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.6385938582313554,
+            "n_eval_ex": 203
+          }
+        ],
+        "injection": [
+          {
+            "seed": 42,
+            "n_test_pos": 92,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.6279779630732579,
+            "n_eval_ex": 238
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 82,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.583390587427001,
+            "n_eval_ex": 224
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 84,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.6509202971968929,
+            "n_eval_ex": 225
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 84,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.6072261072261071,
+            "n_eval_ex": 227
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 81,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.5628151625804209,
+            "n_eval_ex": 223
+          }
+        ]
+      }
+    },
+    "V2_memory_detailed": {
+      "question": "Does the code above contain a memory-safety bug such as a use-after-free, NULL-pointer dereference, out-of-bounds read/write, or buffer overflow? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+      "n_examples_scored": 1430,
+      "memory_auc_mean": 0.6704608109326295,
+      "memory_auc_std": 0.009187457854639003,
+      "injection_auc_mean": 0.6027046859262197,
+      "injection_auc_std": 0.029702757029680126,
+      "n_mem_pos": 59,
+      "n_inj_pos": 84,
+      "memory_trust": true,
+      "injection_trust": true,
+      "per_seed": {
+        "memory": [
+          {
+            "seed": 42,
+            "n_test_pos": 54,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.6881659056316591,
+            "n_eval_ex": 200
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 60,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.6634976525821596,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 57,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.6644892372775911,
+            "n_eval_ex": 198
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 59,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.6655209197582078,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 61,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.6706303394135303,
+            "n_eval_ex": 203
+          }
+        ],
+        "injection": [
+          {
+            "seed": 42,
+            "n_test_pos": 92,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.6107430017867778,
+            "n_eval_ex": 238
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 82,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.5815870834764686,
+            "n_eval_ex": 224
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 84,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.6465721040189124,
+            "n_eval_ex": 225
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 84,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.6147186147186147,
+            "n_eval_ex": 227
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 81,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.5599026256303252,
+            "n_eval_ex": 223
+          }
+        ]
+      }
+    },
+    "V3_memory_cwe": {
+      "question": "Does the code above contain CWE-416 (use-after-free), CWE-476 (NULL dereference), CWE-125 (out-of-bounds read), or CWE-787 (out-of-bounds write)? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+      "n_examples_scored": 1430,
+      "memory_auc_mean": 0.730221023433094,
+      "memory_auc_std": 0.011754199909053622,
+      "injection_auc_mean": 0.48202691986391943,
+      "injection_auc_std": 0.01483509735677776,
+      "n_mem_pos": 59,
+      "n_inj_pos": 84,
+      "memory_trust": true,
+      "injection_trust": true,
+      "per_seed": {
+        "memory": [
+          {
+            "seed": 42,
+            "n_test_pos": 54,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.7504439370877728,
+            "n_eval_ex": 200
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 60,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.7183098591549295,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 57,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.7362199825805649,
+            "n_eval_ex": 198
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 59,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.7239540120896053,
+            "n_eval_ex": 202
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 61,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.7221773262525977,
+            "n_eval_ex": 203
+          }
+        ],
+        "injection": [
+          {
+            "seed": 42,
+            "n_test_pos": 92,
+            "n_neg_test": 146,
+            "trust": true,
+            "auc": 0.4958308516974389,
+            "n_eval_ex": 238
+          },
+          {
+            "seed": 43,
+            "n_test_pos": 82,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.4808055650979045,
+            "n_eval_ex": 224
+          },
+          {
+            "seed": 44,
+            "n_test_pos": 84,
+            "n_neg_test": 141,
+            "trust": true,
+            "auc": 0.4981847348868626,
+            "n_eval_ex": 225
+          },
+          {
+            "seed": 45,
+            "n_test_pos": 84,
+            "n_neg_test": 143,
+            "trust": true,
+            "auc": 0.47847985347985345,
+            "n_eval_ex": 227
+          },
+          {
+            "seed": 46,
+            "n_test_pos": 81,
+            "n_neg_test": 142,
+            "trust": true,
+            "auc": 0.4568335941575377,
+            "n_eval_ex": 223
+          }
+        ]
+      }
+    }
+  }
+}
