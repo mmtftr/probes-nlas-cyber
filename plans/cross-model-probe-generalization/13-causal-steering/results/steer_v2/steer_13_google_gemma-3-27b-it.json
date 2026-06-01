@@ -1,0 +1,341 @@
+{
+  "model": "google/gemma-3-27b-it",
+  "layer": 19,
+  "scale_def": "proj_std",
+  "scale_def_long": "std over code tokens of (h . d_hat) at layer L (== hidden_states[L+1]); a steer of alpha*scale*d_hat moves the residual alpha std along d_hat",
+  "scale_token_pop": "live_code",
+  "degrade_thresh": 0.05,
+  "intervention": "additive along unit d_hat, ALL token positions, on decoder layer L output[0]",
+  "alpha_grid": [
+    -4.0,
+    -2.0,
+    -1.0,
+    0.0,
+    1.0,
+    2.0,
+    4.0
+  ],
+  "directions": {
+    "memory": {
+      "kind": "probe",
+      "family": "memory",
+      "scale": 11.66727065137286,
+      "raw_w_norm": 0.7953499555587769,
+      "n_fit_pos": 187,
+      "n_fit_neg": 482,
+      "scale_token_pop": "live_code"
+    },
+    "injection": {
+      "kind": "probe",
+      "family": "injection",
+      "scale": 7.005812548742185,
+      "raw_w_norm": 1.224113941192627,
+      "n_fit_pos": 295,
+      "n_fit_neg": 482,
+      "scale_token_pop": "live_code"
+    },
+    "random_0": {
+      "kind": "random",
+      "seed": 0,
+      "scale": 24.763005662493107,
+      "scale_token_pop": "live_code"
+    },
+    "random_1": {
+      "kind": "random",
+      "seed": 1,
+      "scale": 38.550452499869714,
+      "scale_token_pop": "live_code"
+    }
+  },
+  "by_direction": {
+    "memory": {
+      "by_subset": {
+        "memory_pos": {
+          "p_yes": [
+            0.9482099973400651,
+            0.9489078756144759,
+            0.9494518753052568,
+            0.9493196016324366,
+            0.9497880371553062,
+            0.9497732715195297,
+            0.9502413019623723
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "injection_pos": {
+          "p_yes": [
+            0.9768960127292166,
+            0.9761848140660737,
+            0.9795598377493879,
+            0.9817222291366228,
+            0.9795586474138057,
+            0.9795554456602567,
+            0.9795377498368509
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "negative": {
+          "p_yes": [
+            0.9500129166052137,
+            0.9500126798195414,
+            0.9500066474520406,
+            0.950021661696271,
+            0.9500212115121911,
+            0.950034726384469,
+            0.9500145035344444
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      "n_per_subset": {
+        "memory_pos": 40,
+        "injection_pos": 40,
+        "negative": 40
+      }
+    },
+    "injection": {
+      "by_subset": {
+        "memory_pos": {
+          "p_yes": [
+            0.949426612033918,
+            0.9498256027605743,
+            0.9495071220704286,
+            0.9493196016324366,
+            0.9494186784506645,
+            0.9496155607638155,
+            0.9494491007352532
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "injection_pos": {
+          "p_yes": [
+            0.9844372111789795,
+            0.9779792674678573,
+            0.9795598075537206,
+            0.9817222291366228,
+            0.9779788492874191,
+            0.9795593937234237,
+            0.9768956438805361
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "negative": {
+          "p_yes": [
+            0.95002192154725,
+            0.9500358478461747,
+            0.9500119884276208,
+            0.950021661696271,
+            0.9500109474503958,
+            0.9500053955798963,
+            0.9500088198554947
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      "n_per_subset": {
+        "memory_pos": 40,
+        "injection_pos": 40,
+        "negative": 40
+      }
+    },
+    "random_0": {
+      "by_subset": {
+        "memory_pos": {
+          "p_yes": [
+            0.9463456398572682,
+            0.9494403096801445,
+            0.9492655876781327,
+            0.9493196016324366,
+            0.9495236599150351,
+            0.94915829167846,
+            0.9490768897707642
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "injection_pos": {
+          "p_yes": [
+            0.987496182418971,
+            0.9768930010398256,
+            0.98172145473819,
+            0.9817222291366228,
+            0.9779788312167541,
+            0.9795601231237224,
+            0.9779792136590597
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "negative": {
+          "p_yes": [
+            0.9500345170767386,
+            0.9500358146854146,
+            0.9500054146998069,
+            0.950021661696271,
+            0.9500065682968828,
+            0.9500211913120612,
+            0.9500013879121616
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      "n_per_subset": {
+        "memory_pos": 40,
+        "injection_pos": 40,
+        "negative": 40
+      }
+    },
+    "random_1": {
+      "by_subset": {
+        "memory_pos": {
+          "p_yes": [
+            0.9703877582217867,
+            0.9517391124282369,
+            0.9500152326848316,
+            0.9493196016324366,
+            0.9488134500451213,
+            0.9462355800996246,
+            0.92726080825636
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "injection_pos": {
+          "p_yes": [
+            0.9970180009630226,
+            0.9874992386013123,
+            0.9905606552536078,
+            0.9817222291366228,
+            0.9757307782539772,
+            0.9757274519977273,
+            0.9750561897689639
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "negative": {
+          "p_yes": [
+            0.9502873178851454,
+            0.9500620677247811,
+            0.9500611489513922,
+            0.950021661696271,
+            0.9500012112529719,
+            0.9500018777830739,
+            0.9499962303513911
+          ],
+          "degraded": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      "n_per_subset": {
+        "memory_pos": 40,
+        "injection_pos": 40,
+        "negative": 40
+      }
+    }
+  },
+  "n_per_subset": {
+    "memory_pos": 40,
+    "injection_pos": 40,
+    "negative": 40
+  },
+  "selfcheck": {
+    "tol": 0.0001,
+    "max_abs_diff": 0.0,
+    "ok": true,
+    "n_checked": 3,
+    "worst": null
+  },
+  "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else."
+}

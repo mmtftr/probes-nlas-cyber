@@ -1,0 +1,139 @@
+{
+  "models": {
+    "Qwen2.5-Coder-32B": {
+      "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+      "layer": 25,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "epiphenomenal / flat",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 0.9642857142857145,
+          "endpoint_delta_memorypos": 0.005690025311434588,
+          "max_pos_alpha_used": 4.0,
+          "n_nondegraded_alphas": 7
+        },
+        "ii_beats_negative": {
+          "alpha": 4.0,
+          "delta_memorypos": 0.005690025311434588,
+          "delta_negative": 0.00467018076815684,
+          "memory_minus_negative": 0.001019844543277748
+        },
+        "iii_beats_random": {
+          "alpha": 4.0,
+          "delta_memorypos_memory_dir": 0.005690025311434588,
+          "delta_memorypos_random_mean": 0.0032151566977026216,
+          "per_random": {
+            "random_0": 0.0013132357277065992,
+            "random_1": 0.005117077667698644
+          },
+          "memory_minus_random": 0.002474868613731966
+        }
+      },
+      "notes": []
+    },
+    "gemma-3-27b": {
+      "model": "google/gemma-3-27b-it",
+      "layer": 19,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "epiphenomenal / flat",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 0.9285714285714288,
+          "endpoint_delta_memorypos": 0.0009217003299357707,
+          "max_pos_alpha_used": 4.0,
+          "n_nondegraded_alphas": 7
+        },
+        "ii_beats_negative": {
+          "alpha": 4.0,
+          "delta_memorypos": 0.0009217003299357707,
+          "delta_negative": -7.158161826614773e-06,
+          "memory_minus_negative": 0.0009288584917623854
+        },
+        "iii_beats_random": {
+          "alpha": 4.0,
+          "delta_memorypos_memory_dir": 0.0009217003299357707,
+          "delta_memorypos_random_mean": -0.011150752618874438,
+          "per_random": {
+            "random_0": -0.00024271186167235115,
+            "random_1": -0.022058793376076524
+          },
+          "memory_minus_random": 0.012072452948810208
+        }
+      },
+      "notes": []
+    },
+    "Qwen3-32B": {
+      "model": "Qwen/Qwen3-32B",
+      "layer": 27,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "epiphenomenal / flat",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 0.9642857142857145,
+          "endpoint_delta_memorypos": 0.010998851529161802,
+          "max_pos_alpha_used": 4.0,
+          "n_nondegraded_alphas": 7
+        },
+        "ii_beats_negative": {
+          "alpha": 4.0,
+          "delta_memorypos": 0.010998851529161802,
+          "delta_negative": 0.008792240230150239,
+          "memory_minus_negative": 0.0022066112990115627
+        },
+        "iii_beats_random": {
+          "alpha": 4.0,
+          "delta_memorypos_memory_dir": 0.010998851529161802,
+          "delta_memorypos_random_mean": 0.0001195258867661142,
+          "per_random": {
+            "random_0": -0.0027029042422812566,
+            "random_1": 0.002941956015813485
+          },
+          "memory_minus_random": 0.010879325642395687
+        }
+      },
+      "notes": []
+    },
+    "Qwen3.6-27B": {
+      "model": "Qwen/Qwen3.6-27B",
+      "layer": 30,
+      "scale_def": "proj_std",
+      "selfcheck_ok": true,
+      "selfcheck_max_abs_diff": 0.0,
+      "verdict": "epiphenomenal / flat",
+      "metrics": {
+        "i_monotonicity": {
+          "spearman_rho_pyes_vs_alpha": 0.8214285714285715,
+          "endpoint_delta_memorypos": 0.0017751229253212264,
+          "max_pos_alpha_used": 4.0,
+          "n_nondegraded_alphas": 7
+        },
+        "ii_beats_negative": {
+          "alpha": 4.0,
+          "delta_memorypos": 0.0017751229253212264,
+          "delta_negative": -0.0020440750595953627,
+          "memory_minus_negative": 0.003819197984916589
+        },
+        "iii_beats_random": {
+          "alpha": 4.0,
+          "delta_memorypos_memory_dir": 0.0017751229253212264,
+          "delta_memorypos_random_mean": 0.004583917035339613,
+          "per_random": {
+            "random_0": 0.004583917035339613
+          },
+          "memory_minus_random": -0.0028087941100183866
+        }
+      },
+      "notes": []
+    }
+  },
+  "cutoffs": {
+    "SPEC_MIN_RISE": 0.05,
+    "SPEC_MARGIN": 0.05
+  }
+}
