@@ -14,6 +14,9 @@ and citation-backed. If a guide grows past ~1 page, split it.
   (1-job limit), sequential orchestration, dependency isolation.
 - [probe-activation-extraction](probe-activation-extraction.md) — float32 acts,
   streaming memmaps, tokenizer-offset requirement, group-clean splits.
+- [activations-hf-dataset](activations-hf-dataset.md) — `mmtf/probes-activations`
+  HF dataset: per-model/per-layer bf16 files, layout, loading, generation
+  reference, download-vs-regenerate, Xet-disable upload lesson.
 - [span-max-loss-tuning](span-max-loss-tuning.md) — the loss, α/ω, neg_incl
   variant, per-model layer selection, repeated-split variance.
 
