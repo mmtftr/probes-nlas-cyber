@@ -1,0 +1,70 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "acts": "/data/probes/runs/logitdump_Qwen_Qwen2.5-Coder-32B-Instruct/token_activations",
+  "n_examples": 1430,
+  "n_train_ex": 1138,
+  "n_test_ex": 292,
+  "best_layer": 23,
+  "best": {
+    "layer": 23,
+    "n_tokens": 561266,
+    "n_tokens_code": 431807,
+    "test_tokens_auc": 0.7666657397964093,
+    "test_tokens_code_auc": 0.7816870603689126,
+    "test_example_auc": 0.5898855319947458,
+    "val_ex_auc": 0.4673745767928594,
+    "n_test_examples": 292
+  },
+  "layers": [
+    {
+      "layer": 23,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7666657397964093,
+      "test_tokens_code_auc": 0.7816870603689126,
+      "test_example_auc": 0.5898855319947458,
+      "val_ex_auc": 0.4673745767928594,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 24,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7581372962919235,
+      "test_tokens_code_auc": 0.7740182680210195,
+      "test_example_auc": 0.5,
+      "val_ex_auc": 0.5,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 25,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7614455161759992,
+      "test_tokens_code_auc": 0.7758113450212012,
+      "test_example_auc": 0.5,
+      "val_ex_auc": 0.5,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 26,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7639007143213212,
+      "test_tokens_code_auc": 0.7797678220753033,
+      "test_example_auc": 0.5,
+      "val_ex_auc": 0.5,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 27,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7676592070346102,
+      "test_tokens_code_auc": 0.7841472612591821,
+      "test_example_auc": 0.5,
+      "val_ex_auc": 0.5,
+      "n_test_examples": 292
+    }
+  ]
+}

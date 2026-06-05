@@ -1,0 +1,3 @@
+# Heavy per-token logit dumps (6MB each) — durable in this dir + cluster scratch.
+# Canonical persistence is wandb/HF (pending HF token); not committed to git.
+logits_layer*.npz

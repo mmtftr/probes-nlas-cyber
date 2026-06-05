@@ -1,0 +1,70 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "acts": "/data/probes/runs/logitdump_Qwen_Qwen2.5-Coder-7B-Instruct/token_activations",
+  "n_examples": 1430,
+  "n_train_ex": 1138,
+  "n_test_ex": 292,
+  "best_layer": 14,
+  "best": {
+    "layer": 14,
+    "n_tokens": 561266,
+    "n_tokens_code": 431807,
+    "test_tokens_auc": 0.7898473016815825,
+    "test_tokens_code_auc": 0.8048039766473072,
+    "test_example_auc": 0.5989632201163445,
+    "val_ex_auc": 0.4656817482302247,
+    "n_test_examples": 292
+  },
+  "layers": [
+    {
+      "layer": 14,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7898473016815825,
+      "test_tokens_code_auc": 0.8048039766473072,
+      "test_example_auc": 0.5989632201163445,
+      "val_ex_auc": 0.4656817482302247,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 16,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.8017575561248578,
+      "test_tokens_code_auc": 0.8131931052631299,
+      "test_example_auc": 0.5733252017264027,
+      "val_ex_auc": 0.45814096645121577,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 18,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7908724958981572,
+      "test_tokens_code_auc": 0.8078401215147238,
+      "test_example_auc": 0.5935916682304373,
+      "val_ex_auc": 0.46891351184979996,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 20,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7846596156146421,
+      "test_tokens_code_auc": 0.8043169476255401,
+      "test_example_auc": 0.5111184087070745,
+      "val_ex_auc": 0.5043090181594336,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 22,
+      "n_tokens": 561266,
+      "n_tokens_code": 431807,
+      "test_tokens_auc": 0.7786280837808586,
+      "test_tokens_code_auc": 0.7940154636612403,
+      "test_example_auc": 0.5053480953274535,
+      "val_ex_auc": 0.5207756232686981,
+      "n_test_examples": 292
+    }
+  ]
+}
