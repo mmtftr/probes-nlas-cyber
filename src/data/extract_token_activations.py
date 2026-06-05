@@ -299,8 +299,16 @@ def main() -> None:
     ap.add_argument("--pairs", default="data/dataset.jsonl")
     ap.add_argument("--out", default="data/token_activations")
     ap.add_argument("--max-length", type=int, default=2048)
+    ap.add_argument("--layers", default=None,
+                    help="Comma-separated explicit layer indices to capture "
+                         "(e.g. '23,24,25,26,27'). Default: auto {n/4,n/2,3n/4,n-1}. "
+                         "Layer L == hidden_states[L+1] (output of block L).")
     args = ap.parse_args()
-    extract(args.model, Path(args.pairs), Path(args.out), max_length=args.max_length)
+    layer_indices = None
+    if args.layers:
+        layer_indices = sorted({int(x) for x in args.layers.split(",") if x.strip() != ""})
+    extract(args.model, Path(args.pairs), Path(args.out),
+            layer_indices=layer_indices, max_length=args.max_length)
 
 
 if __name__ == "__main__":
