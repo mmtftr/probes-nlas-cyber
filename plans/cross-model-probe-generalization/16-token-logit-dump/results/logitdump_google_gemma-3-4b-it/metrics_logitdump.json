@@ -1,0 +1,70 @@
+{
+  "model": "google/gemma-3-4b-it",
+  "acts": "/data/probes/runs/logitdump_google_gemma-3-4b-it/token_activations",
+  "n_examples": 1430,
+  "n_train_ex": 1138,
+  "n_test_ex": 292,
+  "best_layer": 9,
+  "best": {
+    "layer": 9,
+    "n_tokens": 690148,
+    "n_tokens_code": 491131,
+    "test_tokens_auc": 0.7398689275616784,
+    "test_tokens_code_auc": 0.7514643558627956,
+    "test_example_auc": 0.5733252017264028,
+    "val_ex_auc": 0.5233918128654971,
+    "n_test_examples": 292
+  },
+  "layers": [
+    {
+      "layer": 5,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7621169907173445,
+      "test_tokens_code_auc": 0.7689214623140973,
+      "test_example_auc": 0.5466316382060423,
+      "val_ex_auc": 0.5249307479224377,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 6,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7557634245393563,
+      "test_tokens_code_auc": 0.7666585843604646,
+      "test_example_auc": 0.5134640645524489,
+      "val_ex_auc": 0.5084641428131733,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 7,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7598703406834454,
+      "test_tokens_code_auc": 0.7747886705595963,
+      "test_example_auc": 0.5062394445486957,
+      "val_ex_auc": 0.5244690674053555,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 8,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7460528589448187,
+      "test_tokens_code_auc": 0.7579305363901712,
+      "test_example_auc": 0.5626524676299494,
+      "val_ex_auc": 0.525854108956602,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 9,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7398689275616784,
+      "test_tokens_code_auc": 0.7514643558627956,
+      "test_example_auc": 0.5733252017264028,
+      "val_ex_auc": 0.5233918128654971,
+      "n_test_examples": 292
+    }
+  ]
+}

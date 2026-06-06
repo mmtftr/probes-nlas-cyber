@@ -1,0 +1,70 @@
+{
+  "model": "google/gemma-3-12b-it",
+  "acts": "/data/probes/runs/logitdump_google_gemma-3-12b-it/token_activations",
+  "n_examples": 1430,
+  "n_train_ex": 1138,
+  "n_test_ex": 292,
+  "best_layer": 13,
+  "best": {
+    "layer": 13,
+    "n_tokens": 690148,
+    "n_tokens_code": 491131,
+    "test_tokens_auc": 0.7734080949169244,
+    "test_tokens_code_auc": 0.7898220092274093,
+    "test_example_auc": 0.5089134922124227,
+    "val_ex_auc": 0.5192366882117575,
+    "n_test_examples": 292
+  },
+  "layers": [
+    {
+      "layer": 13,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7734080949169244,
+      "test_tokens_code_auc": 0.7898220092274093,
+      "test_example_auc": 0.5089134922124227,
+      "val_ex_auc": 0.5192366882117575,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 14,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7571327750540896,
+      "test_tokens_code_auc": 0.7632569739577126,
+      "test_example_auc": 0.49638768999812344,
+      "val_ex_auc": 0.5158510310864882,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 15,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7579353935759164,
+      "test_tokens_code_auc": 0.7626936682552758,
+      "test_example_auc": 0.5064270970163258,
+      "val_ex_auc": 0.5044629116651278,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 16,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.785975308842041,
+      "test_tokens_code_auc": 0.7989716435389618,
+      "test_example_auc": 0.49118033402139233,
+      "val_ex_auc": 0.5378578024007387,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 17,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7811689223771494,
+      "test_tokens_code_auc": 0.7921183344501574,
+      "test_example_auc": 0.5084443610433477,
+      "val_ex_auc": 0.5430901815943368,
+      "n_test_examples": 292
+    }
+  ]
+}

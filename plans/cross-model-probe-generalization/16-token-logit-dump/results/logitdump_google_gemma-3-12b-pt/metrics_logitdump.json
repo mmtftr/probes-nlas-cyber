@@ -1,0 +1,70 @@
+{
+  "model": "google/gemma-3-12b-pt",
+  "acts": "/data/probes/runs/logitdump_google_gemma-3-12b-pt/token_activations",
+  "n_examples": 1430,
+  "n_train_ex": 1138,
+  "n_test_ex": 292,
+  "best_layer": 11,
+  "best": {
+    "layer": 11,
+    "n_tokens": 690148,
+    "n_tokens_code": 491131,
+    "test_tokens_auc": 0.7327380167068658,
+    "test_tokens_code_auc": 0.7498753805138474,
+    "test_example_auc": 0.5744511165321824,
+    "val_ex_auc": 0.5409356725146199,
+    "n_test_examples": 292
+  },
+  "layers": [
+    {
+      "layer": 11,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7327380167068658,
+      "test_tokens_code_auc": 0.7498753805138474,
+      "test_example_auc": 0.5744511165321824,
+      "val_ex_auc": 0.5409356725146199,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 12,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7550760920640831,
+      "test_tokens_code_auc": 0.7678724492345347,
+      "test_example_auc": 0.5,
+      "val_ex_auc": 0.5,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 13,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7680316678723779,
+      "test_tokens_code_auc": 0.7817887769848052,
+      "test_example_auc": 0.5,
+      "val_ex_auc": 0.5,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 14,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7751171539155142,
+      "test_tokens_code_auc": 0.7956100684267522,
+      "test_example_auc": 0.5115640833176957,
+      "val_ex_auc": 0.5164666051092645,
+      "n_test_examples": 292
+    },
+    {
+      "layer": 15,
+      "n_tokens": 690148,
+      "n_tokens_code": 491131,
+      "test_tokens_auc": 0.7637063042698501,
+      "test_tokens_code_auc": 0.7708917700875446,
+      "test_example_auc": 0.4930334021392381,
+      "val_ex_auc": 0.5352416128039397,
+      "n_test_examples": 292
+    }
+  ]
+}
