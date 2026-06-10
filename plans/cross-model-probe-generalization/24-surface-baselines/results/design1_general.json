@@ -1,0 +1,120 @@
+{
+  "design": "1_general",
+  "note": "all live-code test tokens; pos=annotated vuln-span tokens, neg=other live-code tokens. Compare probe vs surface.",
+  "probe_ref_headline": 0.776,
+  "baselines": {
+    "probe_general": {
+      "tokens_code_auc": 0.7758113450212012,
+      "ci": [
+        0.7251539179332939,
+        0.8235214752280425
+      ],
+      "example_mean_auc": 0.5308688309251266,
+      "ci_example": [
+        0.4664626091059212,
+        0.5979267495836288
+      ],
+      "n_tok": 76489,
+      "n_pos_tok": 4160,
+      "n_pos_ex": 146,
+      "n_ex": 292
+    },
+    "token_unigram_lr": {
+      "tokens_code_auc": 0.6942514911829174,
+      "ci": [
+        0.6591326275982395,
+        0.7299689432661823
+      ],
+      "example_mean_auc": 0.5279602176768623,
+      "ci_example": [
+        0.46257295634080975,
+        0.595181053828285
+      ],
+      "n_tok": 76489,
+      "n_pos_tok": 4160,
+      "n_pos_ex": 146,
+      "n_ex": 292
+    },
+    "char_ngram_lr": {
+      "tokens_code_auc": 0.8028477229981165,
+      "ci": [
+        0.7477644070286381,
+        0.8488784869456014
+      ],
+      "example_mean_auc": 0.661052730343404,
+      "ci_example": [
+        0.5974500803043461,
+        0.7203344554821302
+      ],
+      "n_tok": 76489,
+      "n_pos_tok": 4160,
+      "n_pos_ex": 146,
+      "n_ex": 292
+    },
+    "keyword_lr": {
+      "tokens_code_auc": 0.6252467175231341,
+      "ci": [
+        0.586885875825944,
+        0.6630855995970614
+      ],
+      "example_mean_auc": 0.5131356727340964,
+      "ci_example": [
+        0.45035059240896225,
+        0.5767613549234931
+      ],
+      "n_tok": 76489,
+      "n_pos_tok": 4160,
+      "n_pos_ex": 146,
+      "n_ex": 292
+    },
+    "keyword_untrained": {
+      "tokens_code_auc": 0.5740915825203636,
+      "ci": [
+        0.534846129940012,
+        0.6184115073723903
+      ],
+      "example_mean_auc": 0.4779977481703884,
+      "ci_example": [
+        0.4107506450856204,
+        0.5412274244655445
+      ],
+      "n_tok": 76489,
+      "n_pos_tok": 4160,
+      "n_pos_ex": 146,
+      "n_ex": 292
+    },
+    "lang_indicator": {
+      "tokens_code_auc": 0.3227943351400704,
+      "ci": [
+        0.2796221887099211,
+        0.378563034248293
+      ],
+      "example_mean_auc": 0.5,
+      "ci_example": [
+        0.44526576965663567,
+        0.5543363023128456
+      ],
+      "n_tok": 76489,
+      "n_pos_tok": 4160,
+      "n_pos_ex": 146,
+      "n_ex": 292
+    },
+    "combined_abd_lr": {
+      "tokens_code_auc": 0.8013744769493457,
+      "ci": [
+        0.7469919708640005,
+        0.8489725485014279
+      ],
+      "example_mean_auc": 0.6664946519046726,
+      "ci_example": [
+        0.6046239154690916,
+        0.7243638418124028
+      ],
+      "n_tok": 76489,
+      "n_pos_tok": 4160,
+      "n_pos_ex": 146,
+      "n_ex": 292
+    }
+  },
+  "probe_minus_best_surface": -0.02703637797691527
+}

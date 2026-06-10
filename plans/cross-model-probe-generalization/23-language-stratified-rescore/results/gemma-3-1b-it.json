@@ -1,0 +1,300 @@
+{
+  "model": "gemma-3-1b-it",
+  "layer": 25,
+  "anchor_tokens_code_auc": 0.744,
+  "gate": {
+    "line_code_auc": 0.7440735313387261,
+    "tok_code_auc": 0.7328934272759324,
+    "delta_vs_anchor": 7.353133872611828e-05,
+    "pass": true
+  },
+  "within_language": {
+    "py_line": {
+      "pooled_auc": 0.7991697045408133,
+      "per_example_mean_auc": 0.8290068737409367,
+      "n_per_example_with_both_classes": 80,
+      "boot95_lo": 0.75948431785222,
+      "boot95_hi": 0.8367208778908131,
+      "n_tokens": 29284,
+      "n_pos_tokens": 3168,
+      "n_examples": 166,
+      "n_vuln_examples": 83
+    },
+    "py_tok": {
+      "pooled_auc": 0.7495260471583645,
+      "per_example_mean_auc": 0.7652220841017334,
+      "n_per_example_with_both_classes": 69,
+      "boot95_lo": 0.6791901530316202,
+      "boot95_hi": 0.8140218399156344,
+      "n_tokens": 29284,
+      "n_pos_tokens": 1175,
+      "n_examples": 166,
+      "n_vuln_examples": 83
+    },
+    "c_line": {
+      "pooled_auc": 0.563256482459228,
+      "per_example_mean_auc": 0.5345885096919519,
+      "n_per_example_with_both_classes": 59,
+      "boot95_lo": 0.5250156869759884,
+      "boot95_hi": 0.60167657268295,
+      "n_tokens": 58395,
+      "n_pos_tokens": 1575,
+      "n_examples": 126,
+      "n_vuln_examples": 63
+    },
+    "c_tok": {
+      "pooled_auc": 0.5334670269712709,
+      "per_example_mean_auc": 0.5164437127399153,
+      "n_per_example_with_both_classes": 27,
+      "boot95_lo": 0.4759104649784806,
+      "boot95_hi": 0.601190061306205,
+      "n_tokens": 58395,
+      "n_pos_tokens": 414,
+      "n_examples": 126,
+      "n_vuln_examples": 63
+    }
+  },
+  "family_x_language": {
+    "inj_py_line": {
+      "pooled_auc": 0.7991697045408133,
+      "boot95_lo": 0.7609376813794975,
+      "boot95_hi": 0.8371730093225671,
+      "n_pos_examples": 83,
+      "n_neg_examples": 83,
+      "n_pos_tokens": 3168,
+      "n_tokens": 29284,
+      "untrusted": false
+    },
+    "inj_py_tok": {
+      "pooled_auc": 0.7495260471583645,
+      "boot95_lo": 0.6785677760986466,
+      "boot95_hi": 0.8154609091611648,
+      "n_pos_examples": 83,
+      "n_neg_examples": 83,
+      "n_pos_tokens": 1175,
+      "n_tokens": 29284,
+      "untrusted": false
+    },
+    "inj_c_line": {
+      "pooled_auc": 0.7633849191381925,
+      "boot95_lo": 0.6734123503499984,
+      "boot95_hi": 0.8091025204053277,
+      "n_pos_examples": 5,
+      "n_neg_examples": 63,
+      "n_pos_tokens": 67,
+      "n_tokens": 31091,
+      "untrusted": true
+    },
+    "inj_c_tok": {
+      "pooled_auc": 0.44924412994532004,
+      "boot95_lo": 0.4020034530022269,
+      "boot95_hi": 0.48959417344541956,
+      "n_pos_examples": 5,
+      "n_neg_examples": 63,
+      "n_pos_tokens": 1,
+      "n_tokens": 31091,
+      "untrusted": true
+    },
+    "mem_py_line": {
+      "pooled_auc": NaN,
+      "boot95_lo": NaN,
+      "boot95_hi": NaN,
+      "n_pos_examples": 0,
+      "n_neg_examples": 83,
+      "n_pos_tokens": 0,
+      "n_tokens": 14734,
+      "untrusted": true
+    },
+    "mem_py_tok": {
+      "pooled_auc": NaN,
+      "boot95_lo": NaN,
+      "boot95_hi": NaN,
+      "n_pos_examples": 0,
+      "n_neg_examples": 83,
+      "n_pos_tokens": 0,
+      "n_tokens": 14734,
+      "untrusted": true
+    },
+    "mem_c_line": {
+      "pooled_auc": 0.5572383014758113,
+      "boot95_lo": 0.5194280051782075,
+      "boot95_hi": 0.5943552274302564,
+      "n_pos_examples": 58,
+      "n_neg_examples": 63,
+      "n_pos_tokens": 1508,
+      "n_tokens": 57151,
+      "untrusted": false
+    },
+    "mem_c_tok": {
+      "pooled_auc": 0.537008220189193,
+      "boot95_lo": 0.47761942424990644,
+      "boot95_hi": 0.6064730124763238,
+      "n_pos_examples": 58,
+      "n_neg_examples": 63,
+      "n_pos_tokens": 413,
+      "n_tokens": 57151,
+      "untrusted": false
+    }
+  },
+  "language_null": {
+    "general_line": {
+      "lang_null_auc_cPos": 0.3234808614914242,
+      "lang_null_auc_pyPos": 0.676519138508576,
+      "probe_auc": 0.7440735313387261,
+      "n_pos_tokens": 4743,
+      "n_tokens": 87679
+    },
+    "general_tok": {
+      "lang_null_auc_cPos": 0.2935241822902416,
+      "lang_null_auc_pyPos": 0.7064758177097584,
+      "probe_auc": 0.7328934272759324,
+      "n_pos_tokens": 1589,
+      "n_tokens": 87679
+    }
+  },
+  "per_cwe": {
+    "CWE-022": {
+      "family": "inj",
+      "dominant_lang": "py",
+      "frac_pos_tokens_c": 0.1347305389221557,
+      "n_pos_examples": 15,
+      "n_pos_tokens": 334,
+      "c_probe_auc": 0.7857678353617791,
+      "c_lang_null_cPos": 0.23261503954250268,
+      "c_n_tokens": 44915,
+      "b_probe_auc": 0.7828075088017334,
+      "b_lang_null_cPos": 0.2333450049925908,
+      "b_n_tokens": 87679,
+      "untrusted": false
+    },
+    "CWE-078": {
+      "family": "inj",
+      "dominant_lang": "py",
+      "frac_pos_tokens_c": 0.0,
+      "n_pos_examples": 19,
+      "n_pos_tokens": 823,
+      "c_probe_auc": 0.8175548579601568,
+      "c_lang_null_cPos": 0.16524977008142483,
+      "c_n_tokens": 45404,
+      "b_probe_auc": 0.8162443156707136,
+      "b_lang_null_cPos": 0.16384014921248963,
+      "b_n_tokens": 87679,
+      "untrusted": false
+    },
+    "CWE-079": {
+      "family": "inj",
+      "dominant_lang": "py",
+      "frac_pos_tokens_c": 0.06432748538011696,
+      "n_pos_examples": 10,
+      "n_pos_tokens": 342,
+      "c_probe_auc": 0.5878025949480746,
+      "c_lang_null_cPos": 0.1974135127714833,
+      "c_n_tokens": 44923,
+      "b_probe_auc": 0.5846066828451758,
+      "b_lang_null_cPos": 0.19798120836898037,
+      "b_n_tokens": 87679,
+      "untrusted": false
+    },
+    "CWE-089": {
+      "family": "inj",
+      "dominant_lang": "py",
+      "frac_pos_tokens_c": 0.0,
+      "n_pos_examples": 44,
+      "n_pos_tokens": 1736,
+      "c_probe_auc": 0.9136769262328592,
+      "c_lang_null_cPos": 0.16524977008142483,
+      "c_n_tokens": 46317,
+      "b_probe_auc": 0.9187550949399482,
+      "b_lang_null_cPos": 0.16026901551028006,
+      "b_n_tokens": 87679,
+      "untrusted": false
+    },
+    "CWE-125": {
+      "family": "mem",
+      "dominant_lang": "c",
+      "frac_pos_tokens_c": 1.0,
+      "n_pos_examples": 19,
+      "n_pos_tokens": 446,
+      "c_probe_auc": 0.5187320394187513,
+      "c_lang_null_cPos": 0.6652497700814248,
+      "c_n_tokens": 45027,
+      "b_probe_auc": 0.5156858141735661,
+      "b_lang_null_cPos": 0.6678493230772757,
+      "b_n_tokens": 87679,
+      "untrusted": false
+    },
+    "CWE-190": {
+      "family": "mem",
+      "dominant_lang": "c",
+      "frac_pos_tokens_c": 1.0,
+      "n_pos_examples": 4,
+      "n_pos_tokens": 222,
+      "c_probe_auc": 0.5550606235314968,
+      "c_lang_null_cPos": 0.6652497700814248,
+      "c_n_tokens": 44803,
+      "b_probe_auc": 0.5517701517564307,
+      "b_lang_null_cPos": 0.6674194175423351,
+      "b_n_tokens": 87679,
+      "untrusted": true
+    },
+    "CWE-416": {
+      "family": "mem",
+      "dominant_lang": "c",
+      "frac_pos_tokens_c": 1.0,
+      "n_pos_examples": 14,
+      "n_pos_tokens": 389,
+      "c_probe_auc": 0.4513934631218332,
+      "c_lang_null_cPos": 0.6652497700814248,
+      "c_n_tokens": 44970,
+      "b_probe_auc": 0.4484370715939334,
+      "b_lang_null_cPos": 0.6677397181807767,
+      "b_n_tokens": 87679,
+      "untrusted": false
+    },
+    "CWE-476": {
+      "family": "mem",
+      "dominant_lang": "c",
+      "frac_pos_tokens_c": 1.0,
+      "n_pos_examples": 16,
+      "n_pos_tokens": 362,
+      "c_probe_auc": 0.5179865973674338,
+      "c_lang_null_cPos": 0.6652497700814248,
+      "c_n_tokens": 44943,
+      "b_probe_auc": 0.5149692233993153,
+      "b_lang_null_cPos": 0.6676878500177514,
+      "b_n_tokens": 87679,
+      "untrusted": false
+    },
+    "CWE-787": {
+      "family": "mem",
+      "dominant_lang": "c",
+      "frac_pos_tokens_c": 1.0,
+      "n_pos_examples": 5,
+      "n_pos_tokens": 89,
+      "c_probe_auc": 0.47891390220401736,
+      "c_lang_null_cPos": 0.6652497700814248,
+      "c_n_tokens": 44670,
+      "b_probe_auc": 0.4758685448418385,
+      "b_lang_null_cPos": 0.6671652015070213,
+      "b_n_tokens": 87679,
+      "untrusted": true
+    }
+  },
+  "pair_acc_secondary": {
+    "inj_py": {
+      "pair_acc": 0.5542168674698795,
+      "n_pairs": 83,
+      "untrusted": false
+    },
+    "mem_c": {
+      "pair_acc": 0.4482758620689655,
+      "n_pairs": 58,
+      "untrusted": false
+    },
+    "inj_c": {
+      "pair_acc": 0.0,
+      "n_pairs": 5,
+      "untrusted": true
+    }
+  }
+}

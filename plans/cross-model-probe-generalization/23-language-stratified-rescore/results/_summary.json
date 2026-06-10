@@ -1,0 +1,51 @@
+{
+  "Qwen2.5-Coder-32B-Instruct": {
+    "gate_pass": true,
+    "gate_line_code_auc": 0.7758113450212012,
+    "within_py_line": 0.8393116473228696,
+    "within_c_line": 0.5962704132679052,
+    "general_lang_null_cPos_line": 0.3227943351400704
+  },
+  "Qwen2.5-Coder-7B-Instruct": {
+    "gate_pass": true,
+    "gate_line_code_auc": 0.8131931052631299,
+    "within_py_line": 0.8622286980715432,
+    "within_c_line": 0.6554422834274072,
+    "general_lang_null_cPos_line": 0.3227943351400704
+  },
+  "gemma-3-1b-it": {
+    "gate_pass": true,
+    "gate_line_code_auc": 0.7440735313387261,
+    "within_py_line": 0.7991697045408133,
+    "within_c_line": 0.563256482459228,
+    "general_lang_null_cPos_line": 0.3234808614914242
+  },
+  "gemma-3-4b-it": {
+    "gate_pass": true,
+    "gate_line_code_auc": 0.7747886705595962,
+    "within_py_line": 0.8190096672905345,
+    "within_c_line": 0.6083787510545694,
+    "general_lang_null_cPos_line": 0.3234808614914242
+  },
+  "gemma-3-12b-it": {
+    "gate_pass": true,
+    "gate_line_code_auc": 0.7626936682552758,
+    "within_py_line": 0.7974810337735604,
+    "within_c_line": 0.6003588441360352,
+    "general_lang_null_cPos_line": 0.3234808614914242
+  },
+  "gemma-3-27b-it": {
+    "gate_pass": true,
+    "gate_line_code_auc": 0.7586692972586652,
+    "within_py_line": 0.794845580653371,
+    "within_c_line": 0.6022564489364911,
+    "general_lang_null_cPos_line": 0.3234808614914242
+  },
+  "gemma-3-12b-pt": {
+    "gate_pass": true,
+    "gate_line_code_auc": 0.7817887769848051,
+    "within_py_line": 0.8042689734301198,
+    "within_c_line": 0.6294585407552671,
+    "general_lang_null_cPos_line": 0.3234808614914242
+  }
+}

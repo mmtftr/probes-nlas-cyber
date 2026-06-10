@@ -1,0 +1,1043 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "layer": 25,
+  "metric": "tokens_code_auc",
+  "cwes": [
+    "CWE-022",
+    "CWE-078",
+    "CWE-079",
+    "CWE-089",
+    "CWE-125",
+    "CWE-190",
+    "CWE-416",
+    "CWE-476",
+    "CWE-787"
+  ],
+  "inj": [
+    "CWE-022",
+    "CWE-078",
+    "CWE-079",
+    "CWE-089"
+  ],
+  "mem_pool": [
+    "CWE-125",
+    "CWE-416",
+    "CWE-476",
+    "CWE-787",
+    "CWE-190"
+  ],
+  "min_trust_pos": 10,
+  "n_test_pos": {
+    "CWE-022": 15,
+    "CWE-078": 19,
+    "CWE-079": 10,
+    "CWE-089": 44,
+    "CWE-125": 19,
+    "CWE-190": 4,
+    "CWE-416": 14,
+    "CWE-476": 16,
+    "CWE-787": 5
+  },
+  "n_neg_tok": {
+    "allclean": 38910,
+    "conly": 26211,
+    "pyonly": 12699
+  },
+  "allclean_trained": {
+    "per_cwe": {
+      "CWE-022": {
+        "family": "inj",
+        "n_test_pos": 15,
+        "trust": true,
+        "allclean": {
+          "auc": 0.943435780405817,
+          "lang_null": 0.25388989573738924,
+          "n_pos_tok": 269,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.9536163642618242,
+          "lang_null": 0.10744182170434798,
+          "n_pos_tok": 269,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.899326556337129,
+          "lang_null": 0.5497616745927714,
+          "n_pos_tok": 269,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.7706636426324321,
+          "lang_null": 0.3685641707418237,
+          "n_pos_tok": 269,
+          "n_neg_tok": 3380
+        }
+      },
+      "CWE-078": {
+        "family": "inj",
+        "n_test_pos": 19,
+        "trust": true,
+        "allclean": {
+          "auc": 0.9226574999614592,
+          "lang_null": 0.19035299121066063,
+          "n_pos_tok": 705,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.93716731005177,
+          "lang_null": 0.05762025316455699,
+          "n_pos_tok": 705,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8788239794043223,
+          "lang_null": 0.5,
+          "n_pos_tok": 705,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.832991464738001,
+          "lang_null": 0.5,
+          "n_pos_tok": 705,
+          "n_neg_tok": 4017
+        }
+      },
+      "CWE-079": {
+        "family": "inj",
+        "n_test_pos": 10,
+        "trust": true,
+        "allclean": {
+          "auc": 0.8628607899772699,
+          "lang_null": 0.2080474531938656,
+          "n_pos_tok": 292,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.9009862371982682,
+          "lang_null": 0.055648554234021784,
+          "n_pos_tok": 292,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.7616195863037503,
+          "lang_null": 0.534619489108141,
+          "n_pos_tok": 292,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5318238196301095,
+          "lang_null": 0.5150333507896695,
+          "n_pos_tok": 292,
+          "n_neg_tok": 1372
+        }
+      },
+      "CWE-089": {
+        "family": "inj",
+        "n_test_pos": 44,
+        "trust": true,
+        "allclean": {
+          "auc": 0.9830514293691179,
+          "lang_null": 0.19404692424419284,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.9938952562042079,
+          "lang_null": 0.06512144942925407,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.9592319643968201,
+          "lang_null": 0.5,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.9325174715499391,
+          "lang_null": 0.5,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 5454
+        }
+      },
+      "CWE-125": {
+        "family": "mem",
+        "n_test_pos": 19,
+        "trust": true,
+        "allclean": {
+          "auc": 0.732472108179232,
+          "lang_null": 0.6309958531905675,
+          "n_pos_tok": 405,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6749303545224004,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.7835734806384701,
+          "lang_null": 0.7852425876010782,
+          "n_pos_tok": 405,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6333157178406001,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 10413
+        }
+      },
+      "CWE-190": {
+        "family": "mem",
+        "n_test_pos": 4,
+        "trust": false,
+        "allclean": {
+          "auc": 0.7672971623431981,
+          "lang_null": 0.6577515527950311,
+          "n_pos_tok": 204,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.7058412526928669,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8856700312434969,
+          "lang_null": 0.9522758031198804,
+          "n_pos_tok": 204,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.7235434364481488,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 1596
+        }
+      },
+      "CWE-416": {
+        "family": "mem",
+        "n_test_pos": 14,
+        "trust": true,
+        "allclean": {
+          "auc": 0.7656794618977945,
+          "lang_null": 0.6487455197132617,
+          "n_pos_tok": 321,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.7142549127646904,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8248699704053627,
+          "lang_null": 0.8853787327021121,
+          "n_pos_tok": 321,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6102162395052473,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 4126
+        }
+      },
+      "CWE-476": {
+        "family": "mem",
+        "n_test_pos": 16,
+        "trust": true,
+        "allclean": {
+          "auc": 0.640303948287858,
+          "lang_null": 0.6424197564093936,
+          "n_pos_tok": 313,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.5794125710492869,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.716477846201575,
+          "lang_null": 0.8456074461136512,
+          "n_pos_tok": 313,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5441981083912759,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 6186
+        }
+      },
+      "CWE-787": {
+        "family": "mem",
+        "n_test_pos": 5,
+        "trust": false,
+        "allclean": {
+          "auc": 0.6695867954162197,
+          "lang_null": 0.6543275891403155,
+          "n_pos_tok": 84,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.5960751618886901,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.786246858775656,
+          "lang_null": 0.9252276989016877,
+          "n_pos_tok": 84,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5093006761304217,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 2366
+        }
+      }
+    },
+    "pooled_memory": {
+      "CWE-125": {
+        "allclean": {
+          "auc": 0.7431932444778614,
+          "lang_null": 0.6309958531905675,
+          "n_pos_tok": 405,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6722569069125035,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8246262464920745,
+          "lang_null": 0.7852425876010782,
+          "n_pos_tok": 405,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6637677746502552,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 10413
+        }
+      },
+      "CWE-190": {
+        "allclean": {
+          "auc": 0.6777474729022045,
+          "lang_null": 0.6577515527950311,
+          "n_pos_tok": 204,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.5757984657330684,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8710641853436296,
+          "lang_null": 0.9522758031198804,
+          "n_pos_tok": 204,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5962627557835124,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 1596
+        }
+      },
+      "CWE-416": {
+        "allclean": {
+          "auc": 0.6744522378974331,
+          "lang_null": 0.6487455197132617,
+          "n_pos_tok": 321,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.5763035224474006,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8237801193315076,
+          "lang_null": 0.8853787327021121,
+          "n_pos_tok": 321,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5459486775596475,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 4126
+        }
+      },
+      "CWE-476": {
+        "allclean": {
+          "auc": 0.7000691319253124,
+          "lang_null": 0.6424197564093936,
+          "n_pos_tok": 313,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6200169303822203,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.815846833179258,
+          "lang_null": 0.8456074461136512,
+          "n_pos_tok": 313,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6228994734994546,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 6186
+        }
+      },
+      "CWE-787": {
+        "allclean": {
+          "auc": 0.5762002562491102,
+          "lang_null": 0.6543275891403155,
+          "n_pos_tok": 84,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.449808646563674,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.7982743994999554,
+          "lang_null": 0.9252276989016877,
+          "n_pos_tok": 84,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.450781225732302,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 2366
+        }
+      }
+    },
+    "probe_set": "allclean_trained"
+  },
+  "conly_trained": {
+    "per_cwe": {
+      "CWE-022": {
+        "family": "inj",
+        "n_test_pos": 15,
+        "trust": true,
+        "allclean": {
+          "auc": 0.9299396091959384,
+          "lang_null": 0.25388989573738924,
+          "n_pos_tok": 269,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.9680993464976795,
+          "lang_null": 0.10744182170434798,
+          "n_pos_tok": 269,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8386892669515692,
+          "lang_null": 0.5497616745927714,
+          "n_pos_tok": 269,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.8005530731554391,
+          "lang_null": 0.3685641707418237,
+          "n_pos_tok": 269,
+          "n_neg_tok": 3380
+        }
+      },
+      "CWE-078": {
+        "family": "inj",
+        "n_test_pos": 19,
+        "trust": true,
+        "allclean": {
+          "auc": 0.942470948528776,
+          "lang_null": 0.19035299121066063,
+          "n_pos_tok": 705,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.9839640422539426,
+          "lang_null": 0.05762025316455699,
+          "n_pos_tok": 705,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.8549137672633832,
+          "lang_null": 0.5,
+          "n_pos_tok": 705,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.8604953754207743,
+          "lang_null": 0.5,
+          "n_pos_tok": 705,
+          "n_neg_tok": 4017
+        }
+      },
+      "CWE-079": {
+        "family": "inj",
+        "n_test_pos": 10,
+        "trust": true,
+        "allclean": {
+          "auc": 0.8582092693961246,
+          "lang_null": 0.2080474531938656,
+          "n_pos_tok": 292,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.9488900820794806,
+          "lang_null": 0.055648554234021784,
+          "n_pos_tok": 292,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.651858469308007,
+          "lang_null": 0.534619489108141,
+          "n_pos_tok": 292,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5125975028251701,
+          "lang_null": 0.5150333507896695,
+          "n_pos_tok": 292,
+          "n_neg_tok": 1372
+        }
+      },
+      "CWE-089": {
+        "family": "inj",
+        "n_test_pos": 44,
+        "trust": true,
+        "allclean": {
+          "auc": 0.9745046608477985,
+          "lang_null": 0.19404692424419284,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.9942412520377734,
+          "lang_null": 0.06512144942925407,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.9350477938263498,
+          "lang_null": 0.5,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.8911802310869378,
+          "lang_null": 0.5,
+          "n_pos_tok": 1567,
+          "n_neg_tok": 5454
+        }
+      },
+      "CWE-125": {
+        "family": "mem",
+        "n_test_pos": 19,
+        "trust": true,
+        "allclean": {
+          "auc": 0.6752536772019212,
+          "lang_null": 0.6309958531905675,
+          "n_pos_tok": 405,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6771817532990145,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.660585726487194,
+          "lang_null": 0.7852425876010782,
+          "n_pos_tok": 405,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6443649583965327,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 10413
+        }
+      },
+      "CWE-190": {
+        "family": "mem",
+        "n_test_pos": 4,
+        "trust": false,
+        "allclean": {
+          "auc": 0.6419277798075752,
+          "lang_null": 0.6577515527950311,
+          "n_pos_tok": 204,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6643186148184366,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.6031517243980006,
+          "lang_null": 0.9522758031198804,
+          "n_pos_tok": 204,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6809918790404446,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 1596
+        }
+      },
+      "CWE-416": {
+        "family": "mem",
+        "n_test_pos": 14,
+        "trust": true,
+        "allclean": {
+          "auc": 0.6903535019489471,
+          "lang_null": 0.6487455197132617,
+          "n_pos_tok": 321,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.678230689991469,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.6915707280069036,
+          "lang_null": 0.8853787327021121,
+          "n_pos_tok": 321,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5970551030938605,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 4126
+        }
+      },
+      "CWE-476": {
+        "family": "mem",
+        "n_test_pos": 16,
+        "trust": true,
+        "allclean": {
+          "auc": 0.6065509145844857,
+          "lang_null": 0.6424197564093936,
+          "n_pos_tok": 313,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6410326090224027,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.5411002748313345,
+          "lang_null": 0.8456074461136512,
+          "n_pos_tok": 313,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5867240124713521,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 6186
+        }
+      },
+      "CWE-787": {
+        "family": "mem",
+        "n_test_pos": 5,
+        "trust": false,
+        "allclean": {
+          "auc": 0.6393646781319047,
+          "lang_null": 0.6543275891403155,
+          "n_pos_tok": 84,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6295331344462972,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.6439645440281658,
+          "lang_null": 0.9252276989016877,
+          "n_pos_tok": 84,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.542413464624815,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 2366
+        }
+      }
+    },
+    "pooled_memory": {
+      "CWE-125": {
+        "allclean": {
+          "auc": 0.6583052205582517,
+          "lang_null": 0.6309958531905675,
+          "n_pos_tok": 405,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6426177519350951,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.6775321952680443,
+          "lang_null": 0.7852425876010782,
+          "n_pos_tok": 405,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6423986985550352,
+          "lang_null": 0.5,
+          "n_pos_tok": 405,
+          "n_neg_tok": 10413
+        }
+      },
+      "CWE-190": {
+        "allclean": {
+          "auc": 0.6102712215320911,
+          "lang_null": 0.6577515527950311,
+          "n_pos_tok": 204,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.5877157585113099,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.6578798696628021,
+          "lang_null": 0.9522758031198804,
+          "n_pos_tok": 204,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6279034433937062,
+          "lang_null": 0.5,
+          "n_pos_tok": 204,
+          "n_neg_tok": 1596
+        }
+      },
+      "CWE-416": {
+        "allclean": {
+          "auc": 0.6033184973837308,
+          "lang_null": 0.6487455197132617,
+          "n_pos_tok": 321,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.5815779063442614,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.6285059964498536,
+          "lang_null": 0.8853787327021121,
+          "n_pos_tok": 321,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.5407568323555509,
+          "lang_null": 0.5,
+          "n_pos_tok": 321,
+          "n_neg_tok": 4126
+        }
+      },
+      "CWE-476": {
+        "allclean": {
+          "auc": 0.6516390902161234,
+          "lang_null": 0.6424197564093936,
+          "n_pos_tok": 313,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.6351710553792642,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.6725715232723223,
+          "lang_null": 0.8456074461136512,
+          "n_pos_tok": 313,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.6252128645773138,
+          "lang_null": 0.5,
+          "n_pos_tok": 313,
+          "n_neg_tok": 6186
+        }
+      },
+      "CWE-787": {
+        "allclean": {
+          "auc": 0.49005110514662564,
+          "lang_null": 0.6543275891403155,
+          "n_pos_tok": 84,
+          "n_neg_tok": 38910
+        },
+        "conly": {
+          "auc": 0.46808097447951197,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 26211
+        },
+        "pyonly": {
+          "auc": 0.5283686840661793,
+          "lang_null": 0.9252276989016877,
+          "n_pos_tok": 84,
+          "n_neg_tok": 12699
+        },
+        "matchedpatch": {
+          "auc": 0.4640113275142629,
+          "lang_null": 0.5,
+          "n_pos_tok": 84,
+          "n_neg_tok": 2366
+        }
+      }
+    },
+    "probe_set": "conly_trained"
+  },
+  "diag_ci_allclean_trained": {
+    "CWE-022": {
+      "allclean": [
+        0.9131280696027247,
+        0.9658059378893908,
+        1000
+      ],
+      "conly": [
+        0.9258602237258248,
+        0.9759566801720365,
+        1000
+      ],
+      "pyonly": [
+        0.8567347431949182,
+        0.9337667007147201,
+        1000
+      ],
+      "matchedpatch": [
+        0.6853551900944348,
+        0.8277752777530897,
+        1000
+      ]
+    },
+    "CWE-078": {
+      "allclean": [
+        0.833713727380193,
+        0.9795302230707856,
+        1000
+      ],
+      "conly": [
+        0.8467497380099558,
+        0.9874773034949391,
+        1000
+      ],
+      "pyonly": [
+        0.7771514157963207,
+        0.9599587366026324,
+        1000
+      ],
+      "matchedpatch": [
+        0.722150830655025,
+        0.9393173337568662,
+        1000
+      ]
+    },
+    "CWE-079": {
+      "allclean": [
+        0.8019791753002133,
+        0.9453698139513822,
+        1000
+      ],
+      "conly": [
+        0.8576663223475948,
+        0.9645765031071661,
+        1000
+      ],
+      "pyonly": [
+        0.6664596216219786,
+        0.8882062252457958,
+        1000
+      ],
+      "matchedpatch": [
+        0.41528254470633513,
+        0.7394711412482544,
+        1000
+      ]
+    },
+    "CWE-089": {
+      "allclean": [
+        0.974821145088084,
+        0.9889971195148994,
+        1000
+      ],
+      "conly": [
+        0.9900625057613361,
+        0.9964671741070549,
+        1000
+      ],
+      "pyonly": [
+        0.9425798321188863,
+        0.9724721538150793,
+        1000
+      ],
+      "matchedpatch": [
+        0.9141902568875805,
+        0.944782159706353,
+        1000
+      ]
+    },
+    "CWE-125": {
+      "allclean": [
+        0.6744262648334731,
+        0.7988990089058131,
+        1000
+      ],
+      "conly": [
+        0.6127616159069332,
+        0.7449236931076434,
+        1000
+      ],
+      "pyonly": [
+        0.7315396153821809,
+        0.8415201636700609,
+        1000
+      ],
+      "matchedpatch": [
+        0.5747190968588636,
+        0.7010778992746801,
+        1000
+      ]
+    },
+    "CWE-190": {
+      "allclean": [
+        0.7003863942181212,
+        0.8762261397744753,
+        1000
+      ],
+      "conly": [
+        0.6315035212795853,
+        0.8345716919237597,
+        1000
+      ],
+      "pyonly": [
+        0.8436466438593501,
+        0.9552106821728233,
+        1000
+      ],
+      "matchedpatch": [
+        0.6839031235363381,
+        0.7566270566727606,
+        1000
+      ]
+    },
+    "CWE-416": {
+      "allclean": [
+        0.6560934996227106,
+        0.8790238573489643,
+        1000
+      ],
+      "conly": [
+        0.5949290641712466,
+        0.8239959326146745,
+        1000
+      ],
+      "pyonly": [
+        0.7403422149461317,
+        0.9015950575124252,
+        1000
+      ],
+      "matchedpatch": [
+        0.5144612877849752,
+        0.7093134632653465,
+        1000
+      ]
+    },
+    "CWE-476": {
+      "allclean": [
+        0.5812279734769312,
+        0.7277233844016333,
+        1000
+      ],
+      "conly": [
+        0.5170724256748942,
+        0.6758562102318152,
+        1000
+      ],
+      "pyonly": [
+        0.6724805111534438,
+        0.7881215294068673,
+        1000
+      ],
+      "matchedpatch": [
+        0.48331832147409,
+        0.6333043750008505,
+        1000
+      ]
+    },
+    "CWE-787": {
+      "allclean": [
+        0.6134542171370381,
+        0.7621303815345369,
+        1000
+      ],
+      "conly": [
+        0.5429390779252053,
+        0.6895511521194001,
+        1000
+      ],
+      "pyonly": [
+        0.7241452919521589,
+        0.8700105071474548,
+        1000
+      ],
+      "matchedpatch": [
+        0.467018469656992,
+        0.5961390258939581,
+        1000
+      ]
+    }
+  },
+  "note": "positives identical across regimes (annotated token_labels==1, code-only, CWE-Y vuln test); only the negative pool changes. lang_null = ROC-AUC of a pure C-vs-Python indicator on the SAME (pos,neg) token set."
+}

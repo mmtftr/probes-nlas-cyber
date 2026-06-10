@@ -1,0 +1,71 @@
+{
+  "analysis": "shared_transfer",
+  "metric": "tokens_code_auc",
+  "shared_mem_cwes": [
+    "CWE-125",
+    "CWE-416",
+    "CWE-476",
+    "CWE-787",
+    "CWE-190"
+  ],
+  "n_pv_clean_test": 435,
+  "n_sven_c_clean_test": 63,
+  "table": {
+    "CWE-125": {
+      "family": "mem",
+      "n_pv_test_pos": 47,
+      "n_sven_c_test_pos": 19,
+      "n_sven_train_pos": 72,
+      "n_pv_train_pos": 394,
+      "PV->PV": 0.6114476730572318,
+      "PV->SVEN_C": 0.6165694805096198,
+      "SVEN->PV": 0.6683262834068996,
+      "SVEN->SVEN_C": 0.7461446499986886
+    },
+    "CWE-416": {
+      "family": "mem",
+      "n_pv_test_pos": 29,
+      "n_sven_c_test_pos": 14,
+      "n_sven_train_pos": 36,
+      "n_pv_train_pos": 177,
+      "PV->PV": 0.6570499259512417,
+      "PV->SVEN_C": 0.8567688238327522,
+      "SVEN->PV": 0.7062781100478468,
+      "SVEN->SVEN_C": 0.7086697607391866
+    },
+    "CWE-476": {
+      "family": "mem",
+      "n_pv_test_pos": 39,
+      "n_sven_c_test_pos": 16,
+      "n_sven_train_pos": 43,
+      "n_pv_train_pos": 218,
+      "PV->PV": 0.6922064718464156,
+      "PV->SVEN_C": 0.6093881955475179,
+      "SVEN->PV": 0.4939972977787138,
+      "SVEN->SVEN_C": 0.5731593720527648
+    },
+    "CWE-787": {
+      "family": "mem",
+      "n_pv_test_pos": 72,
+      "n_sven_c_test_pos": 5,
+      "n_sven_train_pos": 36,
+      "n_pv_train_pos": 258,
+      "PV->PV": 0.5617213201804427,
+      "PV->SVEN_C": 0.44315208329148,
+      "SVEN->PV": 0.6347298677635986,
+      "SVEN->SVEN_C": 0.6577874821704803
+    },
+    "CWE-190": {
+      "family": "mem",
+      "n_pv_test_pos": 11,
+      "n_sven_c_test_pos": 4,
+      "n_sven_train_pos": 26,
+      "n_pv_train_pos": 139,
+      "PV->PV": 0.7298845008675316,
+      "PV->SVEN_C": 0.9042709385303974,
+      "SVEN->PV": 0.7547212199191147,
+      "SVEN->SVEN_C": 0.8215283100645434
+    }
+  },
+  "note": "same model+layer both sides => probe dims match. SVEN-C = SVEN C/C++ slice (language-matched negatives). PV clean = label==0 safe-halves. MIN_TRUST_POS=10 flagged per cell."
+}
