@@ -9,7 +9,7 @@ across open-weight models, and how do its properties vary? Probes are
 model-specific (different hidden spaces — no weight transfer), so "generalize"
 means: re-fit the same recipe per model on the same SVEN split, then compare
 probe *properties*. Grounds framing-doc Q3/Q5 and complication §2.1 with data
-from one 8 h GPU window on the cluster.
+from one ~8 h multi-GPU window.
 
 ## Steps
 
@@ -38,17 +38,16 @@ step 3. Every run = one set of `runs/<model>/metrics.json` (later → wandb).
 
 ## For agents
 
-Orchestrator + cluster mechanics: `src/remotes/the cluster/README.md`. Account
-`compute-account`, partition `debug`, single-node jobs (90 node-min budget), 4 GPUs
-packed as 4 models/job. Smoke before sweep. Step 1 is the running experiment;
-steps 2–4 are briefed below and await user sign-off before launch.
+Run the sweep one model per GPU (4 GPUs → 4 models/job); smoke-test before the
+full sweep. Step 1 is the running experiment; steps 2–4 are briefed below and
+await user sign-off before launch.
 
 ### Step 1 — Core sweep (briefing)
 - **Aim:** the span-max probe recipe yields a usable vuln probe (AUC ≫ regex)
   across model families/sizes/post-training, with best layer at a stable depth fraction.
-- **Inputs:** roster `src/remotes/the cluster/models.txt` (dense ≤32B + small MoE);
+- **Inputs:** model roster (dense ≤32B + small MoE);
   `bstee615/sven` rebuilt with token_labels; seed-42 20%-group-held-out split.
-- **Outputs:** `~/scratch/probes/runs/<slug>/{metrics.json,probe.npz}`.
+- **Outputs:** `runs/<slug>/{metrics.json,probe.npz}`.
 - **Result format:** table `model | params | best_layer | best_layer_frac |
   test_ex_auc | test_tok_auc | regex_auc | length_auc`.
 - **Interpretation:** AUC≈regex ⇒ probe adds nothing for that model; high AUC but

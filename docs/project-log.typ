@@ -76,8 +76,8 @@ probes (small MLP variants tried), mid–late layers.
   inner 15% val for layer/epoch selection.
 - *Layer:* per-model by max `val_tokens_code_auc`. Repo-layer L = `hidden_states[L+1]`.
 - *Negative pool (specialized probes):* all `cwe==null` clean rows (exp-06/10 recipe).
-- *Cluster:* the cluster `debug` only (1.5 node-h/job, MaxJobs=1); `fc` for unattended.
-  Default extractor vLLM (HF fallback `--backend hf`). KEEP operating-layer acts.
+- *Compute:* GPU node; jobs kept resumable. Default extractor vLLM (HF fallback
+  `--backend hf`). KEEP operating-layer acts.
 - *Review gate:* every result passes a cj/codex + Opus-subagent review before it
   reaches the user.
 
@@ -131,14 +131,13 @@ All AUCs are `tokens_code_auc` unless noted. ✅ done · ⏸ partial · ⛔ retr
   injection→memory domain shift. Extend past 2-model first cut; add error bars.
 - *Per-CWE FN/FP categorization* (exp-20 fn-fp style) for injection CWEs.
 - *Unlock memory in a single deployable probe* — per-family / multi-task head.
-- *vLLM as default extractor on the cluster* — wire `.python_deps_vllm` + validate
-  `extract_vllm` end-to-end.
+- *vLLM as default extractor* — validate `extract_vllm` end-to-end.
 - Research-framing open Qs: generation-transfer, own-code OOD, intent-to-exploit.
 
 #v(6pt)
 #text(size: 8pt, fill: muted)[
-  Summary of `docs/project-log.md` (the living high-level log; verbose narrative in
-  `claude-project-log.md`). Per-exp numbers extracted from each experiment's
+  Summary of `docs/project-log.md` (the living high-level log). Per-exp numbers
+  extracted from each experiment's
   RESULTS.md — flag any that look off. exp-21 is retracted; see exp-10 for the
   correct per-CWE token-AUC result.
 ]

@@ -26,7 +26,7 @@ winning.
 - **Cached acts (no extraction)** at each model's best layer:
   `runs/layersweep_<slug>/acts/layer_NN.npy` (+ `offsets.npz`, `y.npy`,
   `example_ids.npy`). The 4 model:layer pairs (val-`tokens_code`-selected,
-  IDENTICAL to exp-09's `submit_baselines.sh`):
+  IDENTICAL to exp-09's baselines):
   - `Qwen/Qwen2.5-Coder-32B-Instruct` : layer **25**
   - `google/gemma-3-27b-it` : layer **19**
   - `Qwen/Qwen3-32B` : layer **27**

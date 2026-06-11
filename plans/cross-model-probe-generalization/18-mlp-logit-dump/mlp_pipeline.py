@@ -12,9 +12,9 @@ Six instruct models, both heads (mlp256, mlp512):
     extract ALL layers, MLP-sweep every layer (val_tokens_code_auc-selected,
     identical carve to exp-12), then dump at each head's best layer.
 
-ONE worker per GPU (rank = SLURM_PROCID in [0, world)). Work is decomposed into
-per-unit files with skip-if-exists, so a 22.5-min debug wall just means
-resubmit-and-continue. Three stages, dependency-gated by file presence:
+ONE worker per GPU (rank in [0, world), passed via --rank/--world-size). Work is
+decomposed into per-unit files with skip-if-exists, so a worker that hits a time
+limit just gets re-run and continues. Three stages, dependency-gated by file presence:
 
   1. extract : (model, shard) — example-sharded (eid % EXTRACT_SHARDS). Each shard
      forwards its ~1/16 of rows ONCE, writes layer{NN}_shard{R}.npz (X,y,eids) for
@@ -98,7 +98,7 @@ def model_layers(m: dict) -> list[int]:
 
 
 def _load_train_eval():
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

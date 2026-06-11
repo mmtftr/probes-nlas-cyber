@@ -119,7 +119,7 @@ _vj = _load_by_path(
 _pc = _load_by_path(
     "exp10_per_cwe_probe", _EXP / "10-per-cwe-probes" / "per_cwe_probe.py")
 _te = _load_by_path(
-    "remote_train_eval", REPO / "src" / "remotes" / "the cluster" / "train_eval.py")
+    "remote_train_eval", REPO / "src" / "remotes" / "train_eval.py")
 
 FAMILY = _pc.FAMILY                  # CWE -> "injection" | "memory"
 build_content = _vj.build_content

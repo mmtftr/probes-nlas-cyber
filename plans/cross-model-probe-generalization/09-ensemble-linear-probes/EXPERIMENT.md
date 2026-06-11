@@ -114,11 +114,11 @@ a clean negative that hands the question to exp-08/10.
 
 ## For agents
 
-- Run pattern mirrors `06/submit_breakdown.sh` but cheaper: **1 GPU, single
-  layer, all {K × agg} cells in one `00:30:00` debug job**. `submit_09.sh` is
+- Run pattern mirrors `06`'s breakdown step but cheaper: **1 GPU, single
+  layer, all {K × agg} cells in one short run**. `run.sh` is
   idempotent (each cell skips if its JSON exists; aggregate always re-runs).
-- **Run AFTER exp-08** — scheduler allows ONE submitted job at a time; don't
-  launch while an 08 layersweep job is queued/running.
+- **Run AFTER exp-08** — run one experiment at a time; don't
+  launch while an 08 layersweep is still running.
 - Cached acts MUST exist (`runs/layersweep_<slug>/acts/`); the job asserts the
   dir is present and exits if not.
 - Score path: ensemble heads are non-linear, so `train_one_layer` returns
@@ -132,4 +132,3 @@ a clean negative that hands the question to exp-08/10.
   2. **gate granularity** per_token (default) vs global.
   3. **K sweep {1,2,4,8}** and the **agg set** {max, logsumexp, softmax_gate}.
   4. **secondary model** gemma-3-27b-it (L19) — run only if the lead wants it.
-- See `../HANDOFF.md` for cluster access, scratch layout, gotchas.

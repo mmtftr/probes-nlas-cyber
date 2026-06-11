@@ -56,7 +56,7 @@ We still TRAIN and DUMP every member; the low-n flagging happens in build_matrix
 pool for a given seed is recorded with score=None for that seed's examples.
 
 OUTPUT (resumable; skip if it exists):
-  $WORK/runs/ensemble15_<slug>/probe_member_scores.json = {
+  ./runs/ensemble15_<slug>/probe_member_scores.json = {
     "model", "layer", "alpha", "seeds", "members": [...ordered...],
     "family_map": {CWE: family}, "min_trust_pos",
     "labels":  {eid: 0/1 example label},        # union over seeds' test sets
@@ -117,7 +117,7 @@ def _load_compare_belief_audit():
 
 
 def _load_train_eval():
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

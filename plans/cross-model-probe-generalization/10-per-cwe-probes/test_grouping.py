@@ -1,7 +1,7 @@
 # [ai-generated]
 """Local unit test for exp-10 CWE-grouping / split logic. No GPU, no cluster,
 no cached acts — synthetic dataset rows + the real split helpers from
-src/remotes/the cluster/train_eval.py.
+src/remotes/train_eval.py.
 
 Run:  python plans/cross-model-probe-generalization/10-per-cwe-probes/test_grouping.py
 
@@ -28,7 +28,7 @@ REPO = Path(__file__).resolve().parents[3]
 
 
 def _load_train_eval():
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

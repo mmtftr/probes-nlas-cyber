@@ -18,12 +18,9 @@ Running to-do list for the probes/NLAs project. Append; check items off in place
   matrix on `tokens_code_auc` from the saved per-CWE logits
   (`runs/percwe_*/logits_percwe.npz`) — no re-extraction needed.
 
-- [ ] **vLLM as the default extractor on the cluster.** vLLM 0.22.1 is installed at
-  `$WORK/.python_deps_vllm` but is *off* the default `PYTHONPATH` (env.sh uses
-  `.python_deps5`), so the extractor silently falls back / errors on
-  `--backend vllm`. Wire `.python_deps_vllm` into `env.sh` (or the job) and
-  verify the uncommitted `extract_vllm` path runs end-to-end on the cluster —
-  it has never been validated on a full the cluster extraction.
+- [ ] **vLLM as the default extractor.** Verify the `extract_vllm` path
+  (`--backend vllm` in `src/data/extract_token_activations.py`) runs end-to-end —
+  it has not yet been validated on a full extraction.
 
 - [x] **Pooled-probe token-level FN/FP analysis (subtractive subset).** What does
   the pooled vulnerability probe consistently detect vs miss across Qwen and

@@ -9,7 +9,7 @@ away. Fixes the gap recorded in memory `persist-token-level-predictions`.
 For each captured layer under --acts (token_activations_layer{NN}.npz with
 X/y/example_ids, plus offsets.npz):
   1. group-clean train/test split (seed=42, 20% held-out), loaded VERBATIM from
-     the the cluster train_eval helper so the split matches every prior experiment;
+     the shared train_eval helper so the split matches every prior experiment;
   2. train a span-max linear probe on TRAIN tokens (train_one_layer);
   3. logit = X·w + b and prob = sigmoid(logit) for ALL tokens (train+test);
   4. attach per-token char offsets (from offsets.npz) and the tree-sitter
@@ -40,7 +40,7 @@ sys.path.insert(0, str(REPO))
 
 from sklearn.metrics import roc_auc_score  # noqa: E402
 from src.training.train_probe_spanmax import train_one_layer  # noqa: E402
-from src.remotes.the cluster.train_eval import load_or_make_split  # noqa: E402
+from src.remotes.train_eval import load_or_make_split  # noqa: E402
 from src.eval.code_mask import code_only_mask  # noqa: E402
 
 

@@ -18,15 +18,14 @@ This dumps the MLP-probe family (exp-12). The MLP scores as `sigmoid(probe(X))`
      `Qwen2.5-Coder-7B-Instruct` → extract ALL layers, MLP-sweep every layer
      (`val_tokens_code_auc`-selected, exp-12's 15%/seed-42 carve), dump at each
      head's best.
-   - *Dataset / split* — `$WORK/data/dataset.jsonl`, seed-42 group hold-out
+   - *Dataset / split* — `./data/dataset.jsonl`, seed-42 group hold-out
      `sven_split_meta.json` (same as exp-12/16). VAL = 15% of TRAIN groups,
      VAL_SEED=42 (exp-12). MLP train: `train_one_layer` + `MLPProbe(H)` via
      `probe_factory`, epochs=30, seed=7 — byte-for-byte exp-12.
 
-3. **Compute shape** — ONE 4-node × 4-GPU debug job (16 workers, rank=SLURM_PROCID),
-   resumable: every unit is a skip-if-exists file, so a 22.5-min wall just
-   resubmits-and-continues (`resubmit_mlp.sh`, nohup). 4 nodes × 22 min = 88
-   node-min < the 90 node-min (1.5 node-h) debug cap. Stages, dependency-gated by
+3. **Compute shape** — 16 workers (one per GPU, rank passed via --rank/--world-size),
+   resumable: every unit is a skip-if-exists file, so a worker interrupted by a
+   time limit just gets re-run and continues (`run.sh`). Stages, dependency-gated by
    file presence:
    - extract: (model, shard) example-sharded (eid % 16); each shard forwards its
      ~1/16 rows ONCE, writes `layer{NN}_shard{R}.npz` + offsets + DONE.
@@ -34,7 +33,7 @@ This dumps the MLP-probe family (exp-12). The MLP scores as `sigmoid(probe(X))`
      `sweep_<head>/layer{NN}.json` (val/test honest tokens_code_auc).
    - dump: (model, head) — best layer, retrain (deterministic → same probe), dump.
 
-4. **Outputs** — `$WORK/runs/mlp_logitdump/<slug>/dump_<head>/`, pulled to
+4. **Outputs** — `./runs/mlp_logitdump/<slug>/dump_<head>/`, collected into
    `results/<slug>/<head>/`:
    - `logits_mlp.npz` — token table: logit (=probe(X)), prob, y, example_id,
      char_start/end, is_test, is_code, layer, head.
@@ -54,14 +53,13 @@ This dumps the MLP-probe family (exp-12). The MLP scores as `sigmoid(probe(X))`
      one and varies widely (depth frac 0.22–0.70), hence the full all-layer sweep.
 
 ## For agents
-- Preflight (validate flow + GPU pinning on the smallest model, 1 node):
-  `NODES=1 bash submit_mlp_pipeline.sh 00:22:00 google/gemma-3-1b-it`
-  (world=4; still writes all 16 shards). Then full run via
-  `nohup bash resubmit_mlp.sh 12 4 >> $WORK/runs/mlp_logitdump/resubmit.log 2>&1 &`.
+- Preflight (validate flow + GPU pinning on the smallest model):
+  `bash run.sh google/gemma-3-1b-it`
+  (world=4; still writes all 16 shards). Then run the full roster via `run.sh`.
 - EXTRACT_SHARDS=16 is FIXED so a 4-GPU preflight and the 16-GPU run share shards.
-- GPU pinning: `CUDA_VISIBLE_DEVICES=$SLURM_LOCALID` (0–3 within node); rank =
-  `$SLURM_PROCID` (0..world-1); world = `$SLURM_NTASKS`.
-- Gemma is gated → `$WORK/secrets/hf_token` (env.sh reads it). MLP train is
+- GPU pinning: one worker per local GPU; rank = global worker index in [0, world);
+  world = total worker count (all passed as CLI args).
+- Gemma is gated → needs a Hugging Face token. MLP train is
   deterministic (seed=7) so the gate reproduces exp-12's tc.
 - `TODO(adhoc-decision)`: the dump trains the MLP on FIT (val carved), matching
   exp-12's selected-layer number, NOT on full TRAIN — so the gate is exact. The

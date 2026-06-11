@@ -19,7 +19,7 @@ not state when asked (the introspection gap; validates probing as more than
 Mirrors the cached-acts reuse / split logic of exp 03 (loss_alpha_sweep.py):
 acts dir holds layer_{NN}.npy, y.npy, example_ids.npy; the split is the
 group-clean make_split_for_seed (copied verbatim from exp-02 splits_variance.py);
-pair_group_key / example_scores come from src/remotes/the cluster/train_eval.py.
+pair_group_key / example_scores come from src/remotes/train_eval.py.
 """
 from __future__ import annotations
 import argparse
@@ -42,7 +42,7 @@ LENGTH_BASELINE = 0.49  # SVEN before/after length-baseline example-AUC (new exp
 
 
 def _load_train_eval():
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

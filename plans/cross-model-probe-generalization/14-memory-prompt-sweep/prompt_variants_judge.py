@@ -17,10 +17,10 @@ string appended after the fenced code block. Everything else is byte-for-byte th
 same machinery, so each variant remains a VALID first-assistant-token P(yes) read
 directly comparable to the belief audit's V0 reference.
 
-For EACH variant, P(yes) is scored over the SVEN rows, sharded over the node's
+For EACH variant, P(yes) is scored over the SVEN rows, sharded over the available
 GPUs (idx % n_gpus == gpu_id, mirroring verbalized_judge), writing per-variant
 per-example scores to:
-    $WORK/runs/promptsweep_<slug>/variant_<id>.gpu<g>.json   (eid, p_yes, label)
+    ./runs/promptsweep_<slug>/variant_<id>.gpu<g>.json   (eid, p_yes, label)
 Skip-if-exists per (variant, shard) — resumable. The aggregator
 (analyze_prompt_sweep.py) merges shards per variant and computes memory +
 injection example-AUC.

@@ -34,9 +34,9 @@ positive either way.
 canonical base result stays exp-16.
 
 ## Outputs
-- `~/scratch/probes/runs/subtractive_<slug>/metrics_grid.json` — per config:
+- `./runs/subtractive_<slug>/metrics_grid.json` — per config:
   AUCs on subtractive-test, base-test, additive-test (common honest eval) + probe
-  npz per config. Pulled to `results/` here.
+  npz per config. Collected into `results/` here.
 
 ## Result format
 Per model, at the operating layer: a table of the 8 configs ×

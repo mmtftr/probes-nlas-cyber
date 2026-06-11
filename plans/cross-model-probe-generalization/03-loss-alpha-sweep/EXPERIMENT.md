@@ -61,11 +61,11 @@ single-split value at that layer (same code path, same canonical split).
 - New loss: `src/training/train_probe_spanmax.py` — `span_max_loss(..., neg_incl=)`
   + convenience `span_max_loss_neg_incl`; `train_one_layer(..., alpha=, neg_incl=)`.
 - Files: `loss_alpha_sweep.py` (GPU-sharded cell grid, resumable, reuses cached
-  acts), `aggregate_loss_alpha.py`, `submit_loss_alpha.sh` (one debug job/model,
+  acts), `aggregate_loss_alpha.py`, `run.sh` (one run/model,
   no extraction), `plot_loss_alpha.py`.
-- Run (login node), sequential (scheduler MaxSubmit=1):
-  `MODEL=google/gemma-3-27b-it LAYERS=9,19,26,61 bash .../submit_loss_alpha.sh`
-  then `MODEL=Qwen/Qwen2.5-Coder-32B-Instruct LAYERS=34,41,52,63 bash .../submit_loss_alpha.sh`.
+- Run sequentially, one model at a time:
+  `MODEL=google/gemma-3-27b-it LAYERS=9,19,26,61 bash .../run.sh`
+  then `MODEL=Qwen/Qwen2.5-Coder-32B-Instruct LAYERS=34,41,52,63 bash .../run.sh`.
 - Est. ~8–10 min/model (200 cells / 4 GPUs, ~5–15 s each).
 
 ## Decisions (this experiment)
@@ -74,8 +74,8 @@ single-split value at that layer (same code path, same canonical split).
   over ALL tokens**), the symmetric mirror of the positive term and a direct
   surrogate for the example-level max-pool metric. Alternatives not taken:
   top-k mean of negatives, or a margin loss. Chosen for minimality + metric match.
-- *Best-layers, not full sweep:* a full-layer × 10-config sweep is ~100 min > the
-  90-min debug cap; best-layers × 5 splits is fast and adds variance bands. The
+- *Best-layers, not full sweep:* a full-layer × 10-config sweep is ~100 min, longer
+  than we want for a single run; best-layers × 5 splits is fast and adds variance bands. The
   layers cover the distinct depth regimes exp-02 found, so we don't miss an α that
   would change which region wins.
 - *α grid {1,5,10,20,50}:* log-ish, brackets the default 10 by ±one decade. α only

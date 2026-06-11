@@ -15,11 +15,11 @@
    example-AUC (the target) and INJECTION example-AUC (the control) per prompt.
 
 2. **Inputs**
-   - *Model* — one per node, LOADS the model (forward-pass read, needs GPU):
+   - *Model* — one per GPU, LOADS the model (forward-pass read, needs GPU):
      `Qwen/Qwen2.5-Coder-32B-Instruct` (L25), `google/gemma-3-27b-it` (L19),
      `Qwen/Qwen3-32B` (L27), `Qwen/Qwen3.6-27B` (L30). best_layer is provenance
      only — the verbalized read has no probe, so layer does not affect scores.
-   - *Dataset* — SVEN before/after `$WORK/data/dataset.jsonl` (the belief-audit
+   - *Dataset* — SVEN before/after `./data/dataset.jsonl` (the belief-audit
      dataset; rebuilt 2026-06-01). `cwe` field maps to family via the FAMILY map
      loaded VERBATIM from `compare_belief_audit.py`.
    - *Read* — `sigmoid(logsumexp(logprob[yes_ids]) − logsumexp(logprob[no_ids]))`
@@ -40,7 +40,7 @@
    - *Splits* — 5 group-clean seeds (42–46), `make_split_for_seed` reused
      verbatim from `compare_belief_audit.py`; pairs never straddle the boundary.
 
-3. **Outputs** — on scratch `runs/promptsweep_<slug>/`:
+3. **Outputs** — `runs/promptsweep_<slug>/`:
    - per-GPU per-variant shards `variant_<id>.gpu{0..3}.json` (eid, p_yes, label),
      skip-if-exists per (variant, shard).
    - aggregated `promptsweep_<slug>_aucs.json`: per variant
@@ -75,14 +75,14 @@
   reuses its read EXACTLY — only the QUESTION changes), `analyze_prompt_sweep.py`
   (CPU-only; merges shards, memory+injection example-AUC over 5 seeds; loads
   `compare_belief_audit.py` by file path for FAMILY/MIN_TRUST_POS/
-  make_split_for_seed), `run_prompt_node.sh` (per-NODE, one model: judge all
-  variants on 4 GPUs, then analyze).
-- Per-node CLI (the human submits these, one model per node):
+  make_split_for_seed), `run_prompt_node.sh` (one model: judge all
+  variants on the available GPUs, then analyze).
+- Run one model at a time:
   `bash run_prompt_node.sh Qwen/Qwen2.5-Coder-32B-Instruct 25`
   `bash run_prompt_node.sh google/gemma-3-27b-it 19`
   `bash run_prompt_node.sh Qwen/Qwen3-32B 27`
   `bash run_prompt_node.sh Qwen/Qwen3.6-27B 30`
-- Preflight (Qwen3): read the per-VARIANT debug print in the node log — verify
+- Preflight (Qwen3): read the per-VARIANT debug print in the run log — verify
   the rendered tail is the assistant turn-start with NO `<think>` token and that
   yes/no dominate the first-token argmax, for EVERY variant.
 - Sanity: V0_generic's memory/injection AUC here should ~match the belief audit's

@@ -20,7 +20,7 @@ Baselines (random/length/regex) are example-level, as in exp-02 — kept for
 continuity; they are NOT directly comparable to the token-level honest AUC, so
 the headline comparison is `tokens_code_auc` vs `tokens_auc` (the inflation gap).
 
-No plotting here (matplotlib isn't in the container) — plot locally from JSON.
+No plotting here — plot separately from JSON.
 """
 from __future__ import annotations
 import argparse
@@ -39,7 +39,7 @@ from sklearn.metrics import roc_auc_score  # noqa: E402
 
 
 def _load_train_eval():
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

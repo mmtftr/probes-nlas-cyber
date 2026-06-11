@@ -21,8 +21,8 @@ exp-09 MLP numbers under-state the MLP's true ceiling.
   all-layer float32 memmaps `layer_NN.npy` + `meta.json` (n_layers, hidden,
   model) + `offsets.npz` + `y.npy` + `example_ids.npy`. Produced by exp-06's
   extractor; reused read-only.
-- **Dataset / split:** `$WORK/data/dataset.jsonl`,
-  `$WORK/data/sven_split_meta.json` (persisted seeded 20% group hold-out =
+- **Dataset / split:** `./data/dataset.jsonl`,
+  `./data/sven_split_meta.json` (persisted seeded 20% group hold-out =
   test). VAL = a further group-aware 15% of TRAIN, `VAL_SEED=42` — identical
   carve to exp-06/exp-09.
 - **Head:** `MLPProbe(in_dim, hidden=H)` from `src.training.train_probe_spanmax`,
@@ -85,35 +85,31 @@ MLP returns `w=None, b=None`; the trained torch module is always in `r["probe"]`
 so scoring uses the module forward `torch.sigmoid(probe(X))` — NOT the closed-form
 `X@w+b` that exp-06 uses for the linear head.
 
-Per-model CLI (run inside `submit_12.sh` via srun; `<slug>` =
+Per-model CLI (run inside `run.sh`; `<slug>` =
 `MODEL | tr '/' '_'`, `<HEAD>` = mlp256 default):
 
 ```bash
-# phase 2 — 4-GPU shard
+# phase 2 — multi-GPU shard
 for g in 0 1 2 3; do
   CUDA_VISIBLE_DEVICES=$g python 12-mlp-layer-sweep/train_all_layers_mlp.py \
-    --acts-dir   $WORK/runs/layersweep_<slug>/acts \
-    --dataset    $WORK/data/dataset.jsonl \
-    --split      $WORK/data/sven_split_meta.json \
-    --out        $WORK/runs/mlp_sweep_<slug>/layers_mlp256 \
+    --acts-dir   ./runs/layersweep_<slug>/acts \
+    --dataset    ./data/dataset.jsonl \
+    --split      ./data/sven_split_meta.json \
+    --out        ./runs/mlp_sweep_<slug>/layers_mlp256 \
     --head mlp256 --epochs 30 --n-gpus 4 --gpu-id $g &
 done; wait
 
 # phase 3 — aggregate
 python 12-mlp-layer-sweep/aggregate_mlp_sweep.py \
-  --acts-dir  $WORK/runs/layersweep_<slug>/acts \
-  --dataset   $WORK/data/dataset.jsonl \
-  --split     $WORK/data/sven_split_meta.json \
-  --layer-dir $WORK/runs/mlp_sweep_<slug>/layers_mlp256 \
-  --out       $WORK/runs/mlp_sweep_<slug>/metrics_mlp256.json
+  --acts-dir  ./runs/layersweep_<slug>/acts \
+  --dataset   ./data/dataset.jsonl \
+  --split     ./data/sven_split_meta.json \
+  --layer-dir ./runs/mlp_sweep_<slug>/layers_mlp256 \
+  --out       ./runs/mlp_sweep_<slug>/metrics_mlp256.json
 ```
 
-Submit one job per model: `MODEL=<m> HEAD=mlp256 ./submit_12.sh`. SBATCH header
-mirrors `06/submit_layersweep.sh` verbatim; the orchestrator overrides
-partition/qos/time at submit time. `mlp512` is a second pass (separate
-`layers_mlp512/` + `metrics_mlp512.json`).
+Run one model at a time: `MODEL=<m> HEAD=mlp256 ./run.sh`. `mlp512` is a second
+pass (separate `layers_mlp512/` + `metrics_mlp512.json`).
 
-`TODO(adhoc-decision)`: per-model MLP-sweep orchestrator (analog of
-`06/run_honest_sweep_orch.sh`) is NOT written — the spec said the orchestrator
-submits one job per model and overrides partition/qos/time. Add a roster loop
-over the 4 models × {mlp256, mlp512} if/when sequential submission is wanted.
+`TODO(adhoc-decision)`: a per-model MLP-sweep driver looping over the 4 models ×
+{mlp256, mlp512} is NOT written — add one if/when sequential runs are wanted.

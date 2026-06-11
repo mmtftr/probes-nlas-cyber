@@ -5,7 +5,7 @@
 Third logit-dump variant: exp-16 = linear span-max probe, exp-17 = verbalized
 read, this = the MLP-probe family (exp-12). Materialised every per-token +
 per-example MLP logit for 6 instruct models × both heads (mlp256, mlp512). MLP
-scores as `sigmoid(probe(X))`. Ran as ONE resumable 4-node / 16-GPU debug job.
+scores as `sigmoid(probe(X))`. Ran as ONE resumable multi-GPU run.
 
 ## MLP `tokens_code_auc` (held-out) + best layer per head
 
@@ -44,7 +44,7 @@ Per model under `results/<slug>/{mlp256,mlp512}/`:
 Sweep models also: `results/<slug>/sweep_curves.json` — per-layer val/test
 tokens_code_auc for both heads (the full layer profile the best-layer came from).
 
-Compute: one 4-node × 4-GPU debug job (16 workers), resumable per-unit (96 extract
+Compute: one multi-GPU run, resumable per-unit (96 extract
 shards + 272 sweep cells + 12 dumps). The ~1 TB of all-layer activations were
 deleted after the dump (regenerable — re-extraction reproduces exp-12 exactly).
 Post-run review: no blocking issues.

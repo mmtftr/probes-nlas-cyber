@@ -147,7 +147,7 @@ def load_layer(acts_dir: Path, layer: int, ds):
 # ---------------------------------------------------------------------------
 def run(args):
     from src.training.train_probe_spanmax import train_one_layer
-    from src.remotes.the cluster.train_eval import load_or_make_split
+    from src.remotes.train_eval import load_or_make_split
     import torch
     device = "cuda" if torch.cuda.is_available() else "cpu"
 

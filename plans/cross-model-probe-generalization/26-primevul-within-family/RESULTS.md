@@ -167,4 +167,4 @@ token-level direction; the rest are idiosyncratic or fragile. The injection-vs-
 memory axis from exp-21 remains open (untestable on this dataset).
 
 Artifacts: `results/pv_within.json`, `results/cross_shared.json`. Logits and
-probes kept on scratch at `$WORK/exp26/Qwen_Qwen2.5-Coder-7B-Instruct/`.
+probes kept in `./runs/exp26/Qwen_Qwen2.5-Coder-7B-Instruct/`.

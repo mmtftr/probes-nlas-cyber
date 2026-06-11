@@ -104,8 +104,8 @@ plus `baseline_pyes_alpha0_selfcheck.max_abs_diff` (must be < 1e-4, ok=true).
 
 ## For agents
 
-- Run per node: `bash orchestration/run_steer_node.sh <model> <best_layer>`.
-  Needs `WORK`/`REPO` env (defaults match run_belief_node.sh), `env.sh`, cached
+- Run: `bash run.sh <model> <best_layer>`.
+  Needs `WORK`/`REPO` env, `env.sh`, cached
   acts under `runs/layersweep_<slug>/acts`, `data/dataset.jsonl`,
   `data/sven_split_meta.json`. skip-if-exists on `runs/steer_13_<slug>.json`.
 - Direct: `python steer_judge.py --model M --best-layer L --acts-dir ACTS

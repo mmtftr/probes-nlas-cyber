@@ -4,7 +4,7 @@
 
 Extends exp-05 (probe vs. the model's own yes/no judgment) from one overall
 number to a **per-CWE-family three-way comparison** across **four** models. Old
-exp-05 files (`verbalized_judge.py`, the 2-model `submit_verbalized.sh`) are
+exp-05 files (`verbalized_judge.py`, the 2-model runner) are
 EXTENDED, not replaced.
 
 ## The question (concrete)
@@ -58,11 +58,11 @@ judges, all at the EXAMPLE level, over (family positives ∪ all negatives):
      (seeds 42–46). FAMILY map copied verbatim from exp-10 `per_cwe_probe.py`.
 
 3. **Outputs**
-   - Per node (verbalized half): `$WORK/runs/verbalized_<slug>/verbalized_scores.gpu{0..3}.json`
-     (eid, p_yes, label), `best_layer.txt`. The 4-GPU fanout is resumable
+   - Verbalized half: `./runs/verbalized_<slug>/verbalized_scores.gpu{0..3}.json`
+     (eid, p_yes, label), `best_layer.txt`. The multi-GPU fanout is resumable
      (skip-if-shard-exists).
    - Compare (CPU-only, after ALL verbalized scores exist):
-     `$WORK/runs/belief_audit_<slug>.json` — overall probe-vs-verbalized (exp-05
+     `./runs/belief_audit_<slug>.json` — overall probe-vs-verbalized (exp-05
      number, preserved) PLUS per-family three-way means/stds + per-seed +
      n_test_pos + trust + seed42 arrays.
 
@@ -104,29 +104,27 @@ over-claim any individual memory CWE.
 
 - Files: `verbalized_judge.py` (4 models, thinking-off guard, VLM text-decoder
   load via the shared loader, clearer single-word prompt, mandatory debug print),
-  `compare_belief_audit.py` (per-family three-way, CPU-only), node runner
-  `../orchestration/run_belief_node.sh`.
-- The node runner does the **verbalized half only** (one model, 4-GPU shard,
-  skip-if-exists). It does NOT run compare and does NOT write the 4-node submit
-  wrapper / orchestrator — the human owns cluster submission.
+  `compare_belief_audit.py` (per-family three-way, CPU-only), runner `run.sh`.
+- The runner does the **verbalized half only** (one model, multi-GPU shard,
+  skip-if-exists). It does NOT run compare.
 - COMPARE runs AFTER all four models' verbalized scores exist. Exact CLI:
 
   ```bash
-  # verbalized half (per node, one model) — e.g. Qwen3 with thinking off:
-  bash orchestration/run_belief_node.sh Qwen/Qwen3-32B 27
+  # verbalized half (one model) — e.g. Qwen3 with thinking off:
+  bash run.sh Qwen/Qwen3-32B 27
 
   # compare (CPU-only, once all four models' shards exist), per model:
   python 05-probe-vs-verbalized/compare_belief_audit.py \
-    --acts-dir  $WORK/runs/layersweep_Qwen_Qwen3-32B/acts \
-    --dataset   $WORK/data/dataset.jsonl \
-    --scores-glob $WORK/runs/verbalized_Qwen_Qwen3-32B \
+    --acts-dir  ./runs/layersweep_Qwen_Qwen3-32B/acts \
+    --dataset   ./data/dataset.jsonl \
+    --scores-glob ./runs/verbalized_Qwen_Qwen3-32B \
     --layer 27 --model Qwen/Qwen3-32B \
-    --out $WORK/runs/belief_audit_Qwen_Qwen3-32B.json
+    --out ./runs/belief_audit_Qwen_Qwen3-32B.json
   ```
 
 - `make_split_for_seed` copied verbatim from exp-05/exp-02; FAMILY map + pooled
   fit copied verbatim from exp-10; `pair_group_key` / `example_scores` from
-  `src/remotes/the cluster/train_eval.py`.
+  `src/remotes/train_eval.py`.
 
 ## Open decisions (TODO(adhoc-decision))
 

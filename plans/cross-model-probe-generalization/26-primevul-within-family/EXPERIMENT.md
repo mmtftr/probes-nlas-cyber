@@ -13,7 +13,7 @@ family appears within one language on an independent dataset, family geometry is
 real (independent of language AND of SVEN). If not, exp-21's geometry was
 language/dataset structure and per-CWE probes are CWE-idiosyncratic.
 
-## Inputs (NO extraction needed — both act sets already on scratch)
+## Inputs (NO extraction needed — both act sets already cached)
 - **Model / layer:** Qwen2.5-Coder-7B-Instruct, **L16** (exp-22 operating layer).
   `$RUNS/primevul_Qwen_Qwen2.5-Coder-7B-Instruct/pv_acts/token_activations_layer16.npz` (118 GB),
   `.../sven_acts/token_activations_layer16.npz` (8 GB) — `offsets.npz` byte-identical
@@ -44,7 +44,7 @@ language/dataset structure and per-CWE probes are CWE-idiosyncratic.
    (exp-10 recipe), eval on PV (vs PV clean); and PV-trained probes eval on SVEN-C
    (C/C++ slice, vs SVEN-C clean). Same model+layer both sides ⇒ dims match.
 
-## Outputs (in `$WORK/exp26/<slug>/`, downloaded to `results/`)
+## Outputs (in `./runs/exp26/<slug>/`, collected into `results/`)
 - `pv_within.json` — within-PV matrix + family blocks + diagonal CIs.
 - `cross_shared.json` — SVEN↔PV shared-CWE memory transfer table.
 
@@ -72,4 +72,4 @@ language/dataset structure and per-CWE probes are CWE-idiosyncratic.
   not the stringified `cwe` list.
 - PV acts are 118 GB ⇒ load on CPU (won't fit 96 GB GPU); device="cpu" for training
   (matches exp-22 train_cross rationale). Probe training must be batched/bounded.
-- Runs AFTER exp-25 jobs (debug queue: 1 job at a time). No extraction needed.
+- Runs AFTER exp-25. No extraction needed.

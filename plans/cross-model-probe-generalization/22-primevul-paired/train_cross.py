@@ -18,7 +18,7 @@ A probe trained on dataset A is applied to dataset B's activations
 (logit_B = X_B @ w + b) — that IS the cross-dataset transfer measurement.
 
 Reuses exp-19 train_grid helpers (compute_labels/build_pairs/load_layer) and
-src.eval.metrics.max_gmean. Run inside the container container after env.sh.
+src.eval.metrics.max_gmean.
 """
 from __future__ import annotations
 import argparse, json, sys
@@ -36,7 +36,7 @@ CPP = {"c", "cpp", "c++"}
 
 
 def sven_test_eids(ds_path, split_path):
-    from src.remotes.the cluster.train_eval import load_or_make_split
+    from src.remotes.train_eval import load_or_make_split
     _, _train, test = load_or_make_split(Path(ds_path), Path(split_path))
     return set(int(e) for e in test)
 

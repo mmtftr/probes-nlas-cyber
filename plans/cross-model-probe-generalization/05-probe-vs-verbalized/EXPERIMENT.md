@@ -51,7 +51,7 @@ possible white-box read — the model's OWN yes/no answer to "is this vulnerable
      re-extraction). Best single layer: **Gemma-3-27B L19, Qwen2.5-Coder-32B
      L41** (exp 02), linear span-max, **α=1** (exp 03), 30 epochs, internal val
      seed=7. 5 group-clean splits (seeds 42–46).
-3. **Outputs** — on scratch `runs/verbalized_<slug>/`: per-GPU shards
+3. **Outputs** — `runs/verbalized_<slug>/`: per-GPU shards
    `verbalized_scores.gpu{0..3}.json` (eid, p_yes, label), aggregated
    `metrics_verbalized.json` (model_layer, n_examples_scored, per-seed +
    mean/std probe_auc / verbalized_auc / delta, spearman, disagreement lists +
@@ -76,16 +76,16 @@ possible white-box read — the model's OWN yes/no answer to "is this vulnerable
 
 - Files: `verbalized_judge.py` (model forward → P(yes) per example, GPU-sharded,
   resumable shards), `compare_probe_vs_verbalized.py` (cached-acts probe vs.
-  merged verbalized scores, no model), `submit_verbalized.sh` (one debug
-  job/model: phase 1 = 4-GPU model fanout, phase 2 = compare),
-  `plot_verbalized.py` (local matplotlib).
+  merged verbalized scores, no model), `run.sh` (one run/model:
+  phase 1 = multi-GPU model fanout, phase 2 = compare),
+  `plot_verbalized.py` (matplotlib).
 - `make_split_for_seed` copied verbatim from exp-02; `pair_group_key` /
-  `example_scores` come from `src/remotes/the cluster/train_eval.py`; model loading
+  `example_scores` come from `src/remotes/train_eval.py`; model loading
   from `src/data/extract_token_activations.py` (`_load_model`/`_load_tokenizer`,
-  bfloat16 on cuda). Same SBATCH/srun header as exp-03.
-- Run (login node), sequential (scheduler MaxSubmit=1):
-  `MODEL=google/gemma-3-27b-it LAYER=19 bash .../submit_verbalized.sh`
-  then `MODEL=Qwen/Qwen2.5-Coder-32B-Instruct LAYER=41 bash .../submit_verbalized.sh`.
+  bfloat16 on cuda).
+- Run one model at a time:
+  `MODEL=google/gemma-3-27b-it LAYER=19 bash run.sh`
+  then `MODEL=Qwen/Qwen2.5-Coder-32B-Instruct LAYER=41 bash run.sh`.
 - Phase 1 is a per-example forward over ~all SVEN rows (batch 1, no cache) —
   the slow part; phase 2 is fast (5 probes on cached acts).
 - Sanity: phase-2 probe_auc at this layer should ~match exp-03's base/α=1 cell

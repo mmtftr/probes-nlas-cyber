@@ -17,9 +17,9 @@ all-clean diagonal cannot, on its own, separate "memory-safety signal" from
 - **Activations (KEPT, reused — NO re-extraction):**
   `$RUNS/percwe_Qwen_Qwen2.5-Coder-32B-Instruct/token_activations/token_activations_layer25.npz` (11.5 GB)
   `$RUNS/percwe_google_gemma-3-1b-it/token_activations/token_activations_layer25.npz` (3.2 GB)
-  each with `offsets.npz`. `$RUNS=/data/probes/runs`.
+  each with `offsets.npz`. `$RUNS` defaults to `./runs`.
 - **Dataset / split:** `$DATA/dataset.jsonl` (1430 rows), `$DATA/sven_split_meta.json`
-  (group-clean pair-level, seed-42, 20% held-out). `$DATA=/.../scratch/probes/data`.
+  (group-clean pair-level, seed-42, 20% held-out). `$DATA` defaults to `./data`.
 - **Reproduction target:** `results/REPRO_TARGET_{qwen32b,gemma1b}.json` (= exp-21
   `transfer_allclean.json`, the all-clean diagonal that headlines claim #3).
 - **Probe recipe (parity with exp-10/21):** annotated `token_labels==1` positives,
@@ -32,7 +32,7 @@ all-clean diagonal cannot, on its own, separate "memory-safety signal" from
 - Memory CWEs 125/190/416/476/787: **100% C/C++**. Injection 089: 100% Python; 078/022/079: mostly Python.
 - Clean pool (label==0, cwe==null): 715 rows = 378 Python (53%) + 337 C/C++ (47%).
 
-## Outputs (land in `$WORK/exp25/<slug>/`, downloaded to `results/`)
+## Outputs (land in `./runs/exp25/<slug>/`, collected into `results/`)
 - `repro_gate.json` — all-clean diagonal; MUST match REPRO_TARGET ±0.001 (else nothing downstream trusted).
 - `deconfound.json` — per-CWE diagonal under 4 negative regimes × 2 probe sets,
   each with a **language-null** column; bootstrap CIs (over examples) for the
@@ -63,8 +63,8 @@ trusted CWEs in allclean & conly regimes. Headline metric `tokens_code_auc`.
 - Injection rows are the positive control: expected to stay strong under pyonly (their
   language-matched regime) since the injection signal is lexical/taint, not language.
 
-## For agents — asset paths discovered (2026-06-09)
-- All assets present and verified via `fc ls`. probes_allclean.npz + transfer_allclean.json
-  already on scratch for qwen32b (the gate target); gemma-1b target downloaded too.
-- SLUG = model with "/"→"_". Run dir `$WORK/exp25/<SLUG>/`. GPU0=qwen32b, GPU1=gemma1b.
-- env: `source $REPO/src/remotes/the cluster/env.sh` sets DATA/RUNS/PYTHONPATH. backend = hf (CPU/GPU torch only; no vLLM needed — eval on cached acts).
+## For agents — asset paths (2026-06-09)
+- probes_allclean.npz + transfer_allclean.json present for qwen32b (the gate
+  target); gemma-1b target available too.
+- SLUG = model with "/"→"_". Run dir `./runs/exp25/<SLUG>/`. GPU0=qwen32b, GPU1=gemma1b.
+- env: `source $REPO/src/remotes/env.sh` sets DATA/RUNS/PYTHONPATH. backend = hf (CPU/GPU torch only; no vLLM needed — eval on cached acts).

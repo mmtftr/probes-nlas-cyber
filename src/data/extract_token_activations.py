@@ -307,7 +307,7 @@ def extract_vllm(
     hidden_states[L+1] = vLLM aux id (L+1). See docs/vllm-hidden-states-extraction.md.
     """
     import os
-    os.environ.setdefault("VLLM_USE_FLASHINFER_SAMPLER", "0")  # Blackwell guard; harmless on Hopper
+    os.environ.setdefault("VLLM_USE_FLASHINFER_SAMPLER", "0")  # sampler guard; harmless across GPU archs
     os.environ.setdefault("VLLM_LOGGING_LEVEL", "WARNING")
 
     tokenizer = _load_tokenizer(model_id)

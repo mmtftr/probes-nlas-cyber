@@ -27,3 +27,20 @@ notebooks/**/data/*.pt
 
 # OS
 .DS_Store
+
+# Regenerable experiment payloads — kept out of the published repo
+*.npz
+*.tgz
+**/run.log
+plans/**/*_dataset.jsonl
+plans/**/dataset_*.jsonl
+
+# Generated reports (regenerate from .typ / .md / .qmd sources)
+docs/project-log.pdf
+plans/**/report.pdf
+docs/presentations/**/slides.pdf
+docs/presentations/**/slides.html
+
+# vLLM / extra deps installed off-tree
+.deps_vllm/
+.python_deps*/

@@ -21,7 +21,7 @@ family + a memory blind region (exp-20 thesis, tested per-CWE).
 - Models: **Qwen2.5-Coder-32B-Instruct L25** (big) + **Gemma-3-1b-it L25** (small)
   — max size & family contrast; 1b detected the most examples in exp-20.
 - Operating-layer token activations **re-extracted** (the exp-19 dumps were
-  deleted; only offsets survived on scratch). KEEP this time (no delete) so the
+  deleted; only offsets survived). KEEP this time (no delete) so the
   acts persist for any follow-up.
 - SVEN-**subtractive** subset; honest **tight∩is_code** per-token labels (ADR-0004).
 - Per-CWE probe = span-max linear head, **one-vs-paired-safe** (positives = tight
@@ -61,8 +61,8 @@ Wilson CIs; per-CWE self-detection (diagonal) vs transfer (off-diagonal).
   "(un)learnable" claim from this run (every memory cell has test n<10).
 
 ## For agents
-Self-contained cluster job (`gen_sbatch.py` → `submit_percwe.sbatch`, base64-embeds
-`train_percwe.py`; reuses on-scratch `extract_token_activations.py`,
-`train_probe_spanmax.py`, `code_mask`, `train_eval`). Submit via `fc`. Local
+Self-contained run (`run.sh` drives `train_percwe.py`; reuses
+`extract_token_activations.py`, `train_probe_spanmax.py`, `code_mask`,
+`train_eval`). Run on a GPU node. Local
 machinery check: `validate_local.py` (pooled-probe stand-in reproduces the
-injection/memory split). Job: 2490392.
+injection/memory split).

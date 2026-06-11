@@ -1,10 +1,10 @@
 # [ai-generated]
 """Concatenate K shard outputs (from extract_sharded.py) into ONE acts/ dir that is
-byte/array-identical in format to a single-node extract_all_layers.py run.
+byte/array-identical in format to a single-process extract_all_layers.py run.
 
 Shards are concatenated in ASCENDING shard order. Because each shard covers a
 contiguous, gap-free, non-overlapping row range (shard_bounds), shard-order
-concatenation reproduces the original 1-node row order — therefore the original
+concatenation reproduces the original single-process row order — therefore the original
 per-token order, the original y/example_ids ordering, and the original offsets keys.
 
 Memory-safe: each final layer memmap is pre-allocated on disk at the total token
@@ -18,7 +18,7 @@ Output (under --out):
   offsets.npz      offsets_row_{eid:04d} for ALL rows (union of shard keys)
   meta.json        {model, n_layers, hidden, n_tokens (sum), n_rows (sum),
                     max_length, pos_tokens (sum), n_shards}
-  DONE_EXTRACT     marker (so downstream train/aggregate treat this like a 1-node run)
+  DONE_EXTRACT     marker (so downstream train/aggregate treat this like a single-process run)
 
 Asserts (fail loud — a silent merge bug corrupts every downstream probe):
   * n_layers / hidden / model / max_length identical across all shards
@@ -189,7 +189,7 @@ def main() -> None:
             )
     np.savez(out / "offsets.npz", **offsets_out)
 
-    # ---- meta.json: format-identical to a 1-node run (+ n_shards provenance) ----
+    # ---- meta.json: format-identical to a single-process run (+ n_shards provenance) ----
     meta = {
         "model": ref["model"], "n_layers": n_layers, "hidden": hidden,
         "n_tokens": int(total_tokens), "n_rows": int(n_rows_total),

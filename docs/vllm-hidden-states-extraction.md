@@ -217,7 +217,7 @@ First run JIT-compiles flashinfer kernels (a few minutes, then cached). Not reco
 
 ---
 
-## the cluster (GPU, container container) — validated 2026-06-07
+## Installing vLLM on a GPU host without a preinstall — validated 2026-06-07
 
 Container: aarch64 + Hopper sm_90, py3.12, NGC torch 2.10.0a0/CUDA 13.1. vLLM is
 **not** preinstalled. Install into an isolated deps dir (uv resolves a consistent
@@ -225,15 +225,15 @@ stack — vllm 0.22.1 + torch 2.11.0+cu130; cu13 torch runs fine under the 13.1
 driver):
 
 ```bash
-uv pip install --target $WORK/.python_deps_vllm --python "$(command -v python)" vllm hf_transfer
+uv pip install --target ./.deps_vllm --python "$(command -v python)" vllm hf_transfer
 # extraction subprocess only (don't shadow the container torch used for training):
-PYTHONPATH="$WORK/.python_deps_vllm:$PYTHONPATH" python src/data/extract_token_activations.py --backend vllm ...
+PYTHONPATH="./.deps_vllm:$PYTHONPATH" python src/data/extract_token_activations.py --backend vllm ...
 ```
 
 Wired into `src/data/extract_token_activations.py` as `--backend vllm` (default;
 `extract_vllm()`), reusing the HF tokenizer for input_ids/offsets/labels.
 
-**Gotchas hit on the cluster (beyond the Colab table):**
+**Gotchas hit on a GPU host (beyond the Colab table):**
 - **multiprocessing spawn:** vLLM v1 spawns its engine-core process and re-imports
   the entry module → all top-level work must be under `if __name__ == "__main__":`
   (the extractor's `main()` already is; standalone scripts must guard too).

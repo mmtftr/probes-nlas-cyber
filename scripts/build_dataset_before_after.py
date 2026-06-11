@@ -227,7 +227,7 @@ def make_rows(row: dict, max_chars: int) -> list[dict] | None:
 
 
 def pair_group_key(row: dict) -> str:
-    """Mirror src/remotes/the cluster/train_eval.pair_group_key for split parity."""
+    """Mirror src/remotes/train_eval.pair_group_key for split parity."""
     fn = row.get("_file_name") or ""
     func = row.get("_func_name") or ""
     if fn or func:

@@ -39,7 +39,7 @@ the full AUC-vs-depth curve.
    (1560 rows); the shared SVEN group split (`sven_split_meta.json`, seed=42, 20%
    held out); transformers 5.9.0 stack. Probe hyperparams identical to the overnight
    run: span-max loss (α=10, ω linear 0→1), AdamW lr=1e-3, **30 epochs**, hard labels.
-3. **Outputs** — on scratch under `runs/layersweep_gemma3-27b/`: 62 float16 layer
+3. **Outputs** — under `runs/layersweep_gemma3-27b/`: 62 float16 layer
    memmaps (`acts/layer_NN.npy`, ~275 GB total), per-layer `layers/layer_NN.json`,
    aggregated `metrics_layersweep.json`. Activations are NOT committed (path logged).
 4. **Result format** — ex-AUC + tok-AUC for all 62 layers, the 3 baselines, best
@@ -57,14 +57,12 @@ pipeline diverged from the canonical one.
 - Files: `extract_all_layers.py` (stream all layers → memmaps, idempotent via
   `DONE_EXTRACT`), `train_all_layers.py` (per-layer span-max probe, resumable via
   `layer_NN.json`, GPU-shardable with `--n-gpus/--gpu-id`), `aggregate_layersweep.py`
-  (combine + baselines), `submit_layersweep.sh` (one node, 4 GPUs: extract → 4-GPU
-  train fan-out → aggregate).
+  (combine + baselines), `run.sh` (extract → multi-GPU train fan-out → aggregate).
 - All three scripts reuse the canonical functions (`_load_model`, `token_data`,
   `train_one_layer`, `train_eval.load_or_make_split/example_scores`,
   `baselines.all_baselines`) so the logic is identical to the overnight sweep.
-- Run on the login node: `cd ~/scratch/probes && bash repo/plans/.../submit_layersweep.sh`.
-  Re-submit to resume after a 90-min timeout (extract + finished layers are skipped).
-- Memmaps are ~551 GB (float32) on scratch; delete `runs/layersweep_gemma3-27b/acts/`
+- Run `bash run.sh` on a GPU node. Re-run to resume (extract + finished layers are skipped).
+- Memmaps are ~551 GB (float32); delete `runs/layersweep_gemma3-27b/acts/`
   when the curve is collected (per-layer JSONs + metrics_layersweep.json are the keepers).
 
 ## Results (2026-05-31, job 2438307)
@@ -130,7 +128,7 @@ and retrain the span-max probe under **K=5 group-clean SVEN splits**
 (seeds 42–46, each 20% held out at the pair-group level). Per (layer, seed):
 held-out example- + token-AUC. Aggregate → per-layer mean/std; baselines
 recomputed per seed for matching bands. Scripts: `splits_variance.py`,
-`aggregate_variance.py`, `submit_variance.sh`, `plot_variance.py`.
+`aggregate_variance.py`, `run.sh`, `plot_variance.py`.
 
 **Decisions made (autonomous run):**
 - *Vary only the outer test split, not the internal val seed.* `train_one_layer`'s
@@ -138,8 +136,8 @@ recomputed per seed for matching bands. Scripts: `splits_variance.py`,
   not a dataset split; varying it would conflate procedure noise with the
   split noise the user asked about.
 - *K=5 seeds (42–46), frac=0.2.* Cheap (linear probes on cached acts; ~45 min/model
-  across 4 GPUs) yet enough for a std estimate; resumable so a 90-min timeout just
-  resubmits. seed=42 reproduces the canonical persisted split bit-for-bit, so its
+  across 4 GPUs) yet enough for a std estimate; resumable per-unit so an interrupted
+  run just resumes. seed=42 reproduces the canonical persisted split bit-for-bit, so its
   per-seed value must equal the single-split sweep (built-in sanity tie-in).
 - *Gemma re-extracted* (its memmaps had been cleaned from scratch; Qwen's 64 were
   still cached and reused for free via `DONE_EXTRACT`).

@@ -4,8 +4,8 @@
 Reads layer_{NN}.json written by splits_variance.py (each holds a per-seed list)
 and produces metrics_variance.json: for every layer the mean/std/n of example-
 and token-AUC across the K seeds, plus the trivial baselines computed PER SEED
-(so the baseline bands resample with the same splits). No plotting here
-(matplotlib isn't in the container) -- plot locally from the JSON.
+(so the baseline bands resample with the same splits). No plotting here --
+plot separately from the JSON.
 """
 from __future__ import annotations
 import argparse
@@ -49,7 +49,7 @@ def main() -> None:
     seeds = [int(s) for s in args.seeds.split(",") if s.strip()]
     meta = json.loads((Path(args.acts_dir) / "meta.json").read_text())
     here = Path(__file__).resolve().parent
-    te_mod = _load_mod(REPO / "src" / "remotes" / "the cluster" / "train_eval.py", "remote_train_eval")
+    te_mod = _load_mod(REPO / "src" / "remotes" / "train_eval.py", "remote_train_eval")
     sv = _load_mod(here / "splits_variance.py", "splits_variance")
 
     # ---- per-layer mean/std across seeds ----

@@ -1,10 +1,10 @@
 # [ai-generated]
-"""Assert a 4-node-then-merged acts/ dir equals a reference 1-node acts/ dir for the
-SAME model + SAME rows. No GPU needed — pure array/byte comparison on scratch.
+"""Assert a multi-worker-then-merged acts/ dir equals a reference single-worker acts/
+dir for the SAME model + SAME rows. No GPU needed — pure array/byte comparison.
 
-This is the lead's correctness gate: extract gemma-3-1b-it 4-node, merge, then diff
-against the existing 1-node acts at
-  ~/scratch/probes/runs/layersweep_google_gemma-3-1b-it/acts/
+Correctness gate: extract gemma-3-1b-it across multiple workers, merge, then diff
+against the existing single-worker acts at
+  ./runs/layersweep_google_gemma-3-1b-it/acts/
 
 Validation procedure (what this checks, in order):
   1. meta.json — model, n_layers, hidden, n_tokens, n_rows, max_length, pos_tokens
@@ -14,11 +14,11 @@ Validation procedure (what this checks, in order):
                         if shards merged out of order, eids would differ here.
   4. offsets.npz      — same key set; each offsets_row array exactly equal.
   5. layer_NN.npy     — float32 activations. The extractor is deterministic
-     (inference_mode, no sampling, identical tokenization), so 4-node-then-merge
-     should be BIT-IDENTICAL to 1-node modulo nothing — the per-row forward pass is
-     the same computation regardless of which rank ran it. We assert exact equality
-     by default. `--rtol/--atol` switch to np.allclose if the lead observes
-     hardware-nondeterminism (e.g. different GPU SKUs across nodes); document the
+     (inference_mode, no sampling, identical tokenization), so multi-worker-then-merge
+     should be BIT-IDENTICAL to single-worker modulo nothing — the per-row forward pass
+     is the same computation regardless of which rank ran it. We assert exact equality
+     by default. `--rtol/--atol` switch to np.allclose under observed
+     hardware-nondeterminism (e.g. different GPU SKUs across workers); document the
      tolerance used in the run log if so.
 
      Layers checked: by default a sample (`--layer-sample N`, evenly spaced incl.
@@ -26,11 +26,11 @@ Validation procedure (what this checks, in order):
      Each checked layer is compared in row-chunks (mmap) to bound RAM.
 
 Exit code 0 = identical (within tolerance); non-zero on first mismatch with a
-diagnostic. Designed to be run inside the container OR on any box with numpy + the
-scratch FS mounted (no torch / no transformers needed).
+diagnostic. Runs on any box with numpy and the acts dirs mounted (no torch /
+no transformers needed).
 
 Usage:
-  python validate_merge.py --merged <merged_acts> --reference <1node_acts> \
+  python validate_merge.py --merged <merged_acts> --reference <single_worker_acts> \
       [--layer-sample 8 | --all-layers] [--rtol 0 --atol 0] [--chunk 65536]
 """
 from __future__ import annotations

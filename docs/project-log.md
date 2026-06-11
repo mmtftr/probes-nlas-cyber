@@ -7,7 +7,6 @@ whole project is held in mind at once: the research goal, what we currently know
 the standing conventions, the per-experiment ledger, and the open threads. It
 exists to stop re-running prior work or contradicting an existing finding.
 
-- Verbose chronological narrative: `claude-project-log.md` (append-only).
 - This file: the curated state. **Keep the ledger row updated when an experiment
   lands or is retracted** (same change as the result).
 - Decisions: `decisions/NNNN-*.md` (ADRs). Framing: `docs/research-framing.md`.
@@ -100,10 +99,8 @@ linear-vs-MLP probe family.
   oracle. Repo-layer L = transformers `hidden_states[L+1]` = output of block L.
 - **Negative pool (per-CWE / specialized probes):** all `cwe==null` clean rows
   (the exp-06/10 recipe) — keeps head-to-head comparable.
-- **Cluster:** the cluster `debug` only (1.5 node-h/job, MaxJobs=1); use `fc`
-  (job-API) for unattended. **Default extractor = vLLM** (HF fallback `--backend
-  hf`; note vLLM is installed at `.python_deps_vllm` but off the default PYTHONPATH).
-  Activations float32 on scratch; KEEP operating-layer acts.
+- **Compute:** GPU node; jobs kept resumable. **Default extractor = vLLM** (HF
+  fallback `--backend hf`). Activations stored float32; KEEP operating-layer acts.
 - **Review gate (CLAUDE.md):** every result passes a cj/codex + Opus-subagent review
   (metric / prior-work / methodology / conclusion) **before** reaching the user.
 
@@ -178,6 +175,5 @@ unless noted.
   (per-CWE matched-patch cells like CWE-125) supports a deployable monitor at a
   fixed-FPR operating point (recall@1%FPR, calibration — the AI-control bar).
 - **Per-CWE FN/FP categorization** (exp-20 fn-fp style, per-CWE) for injection CWEs.
-- **vLLM as the default extractor on the cluster** — wire `.python_deps_vllm` onto the
-  path + validate the uncommitted `extract_vllm` end-to-end.
+- **vLLM as the default extractor** — validate the `extract_vllm` path end-to-end.
 - Research-framing open questions (generation transfer, own-code OOD, intent).

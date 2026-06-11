@@ -2,7 +2,7 @@
 """Train one span-max probe per layer from the streamed memmaps, resumably.
 
 Mirrors the overnight per-layer logic EXACTLY (it reuses the same functions):
-  - SVEN group split via src/remotes/the cluster/train_eval.load_or_make_split
+  - SVEN group split via src/remotes/train_eval.load_or_make_split
   - src.training.train_probe_spanmax.train_one_layer (epochs=30, span-max loss)
   - held-out token-AUC + example-AUC (max-pool) via train_eval.example_scores
 
@@ -29,7 +29,7 @@ from sklearn.metrics import roc_auc_score  # noqa: E402
 
 def _load_train_eval():
     """Import the canonical train_eval module by path (no __init__ in its dir)."""
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

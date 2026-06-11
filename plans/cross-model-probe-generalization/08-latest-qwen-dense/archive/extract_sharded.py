@@ -1,8 +1,8 @@
 # [ai-generated]
-"""Sharded copy of 02-.../extract_all_layers.py for 4-node (16-rank) extraction.
+"""Sharded copy of 02-.../extract_all_layers.py for multi-GPU extraction.
 
 Identical extraction logic, format, dtype (float32 storage / bf16 compute), label
-+ offset mapping, and VLM-fallback loaders as the single-node extractor — but each
++ offset mapping, and VLM-fallback loaders as the single-process extractor — but each
 invocation processes only a CONTIGUOUS slice of the dataset rows, controlled by
 `--shard-id N --n-shards K`.
 
@@ -12,14 +12,14 @@ Row range for shard N of K over a dataset of R rows:
     this shard handles rows[lo:hi]   (the dataset's natural order)
 
 Because the slices are contiguous and partition [0, R) in shard order, simply
-concatenating shard outputs in ascending shard order reproduces the original 1-node
+concatenating shard outputs in ascending shard order reproduces the original single-process
 row order exactly. `merge_shards.py` does that.
 
 CRITICAL — global identity is preserved:
   - `example_ids.npy` stores the GLOBAL eid (the absolute dataset row index `lo+i`),
     NOT a shard-local index. Downstream splits key on the true eid.
   - `offsets.npz` keys are `offsets_row_{global_eid:04d}` — same key scheme as the
-    1-node extractor, so the merged npz has every original key exactly once.
+    single-process extractor, so the merged npz has every original key exactly once.
 
 Per-shard output (under --out):
   layer_{NN}.npy   per-layer float32 memmap, shape (T_shard, H)  (this shard's tokens)
@@ -169,7 +169,7 @@ def main() -> None:
             for li in range(n_layers):
                 h = hs[li + 1][0].float().cpu().numpy()  # (n, hidden) float32
                 mmaps[li][s : s + n] = h
-            # labels (identical mapping to the coarse / 1-node extractor)
+            # labels (identical mapping to the coarse / single-process extractor)
             tok_spans = char_spans_to_token_spans(parse_spans(row), offsets)
             tok_labels, _mask = token_labels_array(n, tok_spans)
             y[s : s + n] = tok_labels

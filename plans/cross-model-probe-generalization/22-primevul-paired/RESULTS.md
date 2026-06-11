@@ -71,12 +71,9 @@ saturated to ties and collapsed gemma sven_cpp to 0.00 — fixed.)
   fraction but ~5.3× more absolute localizable-vuln pairs.
 
 ## Provenance
-- Cluster: debug partition, 1 node × 2 GPU, HF extraction (operating layer only),
-  CPU probe training. Jobs 2491400 (OOM, NUMA-membind), 2491484 (OOM, train-step
-  GPU contention), 2491529 (success), 2491559 (pairAcc fix).
-- Two OOM fixes: dropped `numactl --membind` (PrimeVul ~6.6× SVEN exceeds one
-  ~120 GB NUMA node); moved probe training to CPU (GPU busy with the other
+- Run on a 2-GPU node, HF extraction (operating layer only), CPU probe training.
+- Two memory fixes: removed host-memory pinning (PrimeVul ~6.6× SVEN exceeds one
+  ~120 GB memory node); moved probe training to CPU (GPU busy with the other
   model's extraction). difflib char-diff length-guarded (PrimeVul funcs ≤480 KB).
 - Harness: `train_cross.py` (synthetic-tested), `build_primevul.py`,
-  `run_primevul.sh`/`submit_primevul.sh`/`overnight_primevul.sh`. Acts cached on
-  scratch (`KEEP_ACTS=1`). Metrics: `results/metrics_cross_*.json`.
+  `run.sh`. Acts cached (`KEEP_ACTS=1`). Metrics: `results/metrics_cross_*.json`.

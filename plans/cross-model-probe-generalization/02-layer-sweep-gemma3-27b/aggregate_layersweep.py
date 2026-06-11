@@ -3,7 +3,7 @@
 
 Reads layer_{NN}.json written by train_all_layers.py, computes the trivial
 baselines once on the held-out split, and writes metrics_layersweep.json. No
-plotting here (matplotlib isn't in the container) — plot locally from the JSON.
+plotting here — plot separately from the JSON.
 """
 from __future__ import annotations
 import argparse
@@ -22,7 +22,7 @@ from sklearn.metrics import roc_auc_score  # noqa: E402
 
 
 def _load_train_eval():
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

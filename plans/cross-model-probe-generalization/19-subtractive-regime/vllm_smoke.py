@@ -18,7 +18,7 @@ def main():
     MODEL = sys.argv[1] if len(sys.argv) > 1 else "google/gemma-3-1b-it"
     L = int(sys.argv[2]) if len(sys.argv) > 2 else 25
     N = int(sys.argv[3]) if len(sys.argv) > 3 else 8
-    DATA = os.path.expanduser("~/scratch/probes/data/dataset.jsonl")
+    DATA = os.environ.get("DATASET", "./data/dataset.jsonl")
 
     import torch
     from transformers import AutoTokenizer, AutoModelForCausalLM

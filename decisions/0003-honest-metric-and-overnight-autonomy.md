@@ -58,10 +58,9 @@ val-vs-oracle gap. This is itself the data for the §8 layer-policy question.
 of "were trivial negatives the crutch?"). Behind an additive flag
 `--mask-negatives {none,code_only}`, default `none`, so 02/03/04 reproduce.
 
-**Cluster env fix:** `tree-sitter` + `tree-sitter-{python,c,cpp}` were **absent**
-from the cluster deps (`env.sh` DEPS) — `code_only_mask` would have silently
-no-op'd and `tokens_code` would equal `tokens`. Added to `env.sh`; the `.deps_ok`
-sentinel is busted once so they install. A smoke gate asserts
+**Env fix:** `tree-sitter` + `tree-sitter-{python,c,cpp}` were **absent** from the
+runtime deps — `code_only_mask` would have silently no-op'd and `tokens_code`
+would equal `tokens`. Added to the deps. A smoke gate asserts
 `dropped_fraction > 0` before any full run is trusted.
 
 ## Consequences
@@ -71,15 +70,13 @@ sentinel is busted once so they install. A smoke gate asserts
   modified (06 has its own copies).
 - All shared changes are additive (new flags/fields); existing experiments
   reproduce with defaults.
-- Code lands on branch `honest-tokens-code-sweep`; the cluster checks it out.
-  `runs/` and the HF cache were wiped by the user → every model re-pulls + all
-  activations regenerate.
+- Code lands on branch `honest-tokens-code-sweep`. `runs/` and the HF cache were
+  wiped → every model re-pulls + all activations regenerate.
 - Resolves the research-framing §8 headline-metric open item → **`tokens_code`**
   (not raw AUC / not example-AUC). The layer-policy item is what 06 measures;
   leave it open until 06's val-vs-oracle gap is in.
-- Overnight execution is orchestrated by the agent: local code via an opus
-  subagent, cluster driving via the authenticated `the cluster` tmux channel
-  (`/tmp/ctmux.sh`); reconnect-on-drop is tolerated, loss-of-cert is the stop.
+- Overnight execution is agent-orchestrated: local code via an Opus subagent,
+  remote driving over an authenticated channel; reconnect-on-drop is tolerated.
 
 ## Update (2026-06-01, user awake) — layer selection switched to `val_tokens_code`
 

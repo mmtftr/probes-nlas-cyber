@@ -4,9 +4,8 @@
 
 One session, 4 experiments, all 4 big models (`Qwen2.5-Coder-32B` L25, `Qwen3-32B` L27,
 `Qwen3.6-27B` L30, `gemma-3-27b-it` L19). Honest pipeline (leakage-free group split,
-`val_tokens_code` selection, tree-sitter code mask). Run on the cluster as chained
-4-node debug jobs (one model/node; see `orchestration/`). Result JSONs in each
-experiment's `results/`.
+`val_tokens_code` selection, tree-sitter code mask). Run as a multi-GPU run,
+one model per GPU. Result JSONs in each experiment's `results/`.
 
 ---
 

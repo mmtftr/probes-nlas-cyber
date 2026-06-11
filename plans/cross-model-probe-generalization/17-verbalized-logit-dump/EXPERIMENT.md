@@ -19,7 +19,7 @@ hypothesis.
    - *Models* — the 6 INSTRUCT models from exp-16 (verbalized needs a chat model;
      gemma-3-12b-**pt** is excluded — base model, no chat template):
      gemma-3 `1b/4b/12b/27b-it`, `Qwen2.5-Coder-7B/32B-Instruct`.
-   - *Dataset* — `$WORK/data/dataset.jsonl` (SVEN before/after, rebuilt 2026-06-01,
+   - *Dataset* — `./data/dataset.jsonl` (SVEN before/after, rebuilt 2026-06-01,
      1430 rows, balanced).
    - *Split* — seed-42 20% group-clean hold-out `sven_split_meta.json` (VERBATIM
      `load_or_make_split`; same split exp-16 used — so `is_test` lines up).
@@ -27,7 +27,7 @@ hypothesis.
      read; carried verbatim from exp-05 `verbalized_judge.py`. Layer-independent
      (final next-token logits) — no probe, no cached acts, no layer.
 
-3. **Outputs** — on scratch `$WORK/runs/verbalized_logitdump_<slug>/`, pulled to
+3. **Outputs** — `./runs/verbalized_logitdump_<slug>/`, collected into
    `results/<slug>/`:
    - `logits_verbalized.npz` — per-example table: eid, label, is_test, p_yes,
      yes_lp, no_lp, margin, yes_logits_raw[N,|yes|], no_logits_raw[N,|no|],
@@ -53,13 +53,13 @@ hypothesis.
      argmax (else the read is invalid — the script aborts on a `<think>` top-1).
 
 ## For agents
-- Run (login node): `submit_verbalized_logitdump.sh "google/gemma-3-1b-it
+- Run: `run.sh "google/gemma-3-1b-it
   google/gemma-3-4b-it google/gemma-3-12b-it google/gemma-3-27b-it
   Qwen/Qwen2.5-Coder-7B-Instruct Qwen/Qwen2.5-Coder-32B-Instruct"`.
-  Submits one debug job per model, 4-GPU sharded, serialized (scheduler MaxJobs=1).
+  One run per model, multi-GPU sharded, one model at a time.
 - Idempotent: per-model `DONE` marker; resumable per-GPU shards (skip-if-exists),
-  so a job that hits the 22.5-min wall just gets resubmitted to continue.
-- Gemma is gated → needs `$WORK/secrets/hf_token` (env.sh reads it). Verbalized is
+  so a run that is interrupted by a time limit just gets re-run to continue.
+- Gemma is gated → needs a Hugging Face token. Verbalized is
   a light forward (use_cache=False, no hidden-state capture) so no OOM risk even
   on 27b/32b at one model per GPU (unlike exp-16's multi-layer extraction).
 - `p_yes` here is bit-identical to exp-05's (same float64 logsumexp/sigmoid

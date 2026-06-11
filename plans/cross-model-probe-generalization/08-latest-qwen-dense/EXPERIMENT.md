@@ -50,13 +50,10 @@ Qwen2.5-Coder-32B.
 
 ## For agents
 
-- Reuse `06-honest-metric-sweeps/submit_layersweep.sh` (MODEL env) per model; drive
-  both with a 2-model nohup orchestrator (copy `run_honest_sweep_orch.sh`, swap the
-  MODELS list). scheduler = one job at a time.
-- After both finish, add their slugs to `submit_breakdown.sh`'s MODELS and submit
-  (one cheap job).
+- Reuse `06-honest-metric-sweeps/run.sh` (MODEL env) per model; run both
+  sequentially (swap the MODELS list), one run at a time.
+- After both finish, add their slugs to the breakdown step's MODELS and run it.
 - **Smoke `Qwen/Qwen3-32B` first** (cleaner arch) — assert extraction succeeds +
   `dropped_fraction > 0` + sane n_layers — before trusting Qwen3.6-27B's
   linear-attention layers.
 - Pull metrics locally, regenerate the 06 plots (add the 2 models), `cursor -r`.
-- See `../HANDOFF.md` for cluster access, scratch layout, gotchas.

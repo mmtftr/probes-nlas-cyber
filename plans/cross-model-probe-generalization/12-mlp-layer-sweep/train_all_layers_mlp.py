@@ -64,7 +64,7 @@ VAL_SEED = 42
 
 def _load_train_eval():
     """Import the canonical train_eval module by path (no __init__ in its dir)."""
-    p = REPO / "src" / "remotes" / "the cluster" / "train_eval.py"
+    p = REPO / "src" / "remotes" / "train_eval.py"
     spec = importlib.util.spec_from_file_location("remote_train_eval", p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

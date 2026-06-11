@@ -13,37 +13,6 @@ high-level log: the experiment ledger (every exp with its aim + headline finding
 conventions, and the open threads. It exists so you hold the whole project in
 mind and never re-run or contradict prior work. Keep it updated: when an
 experiment lands (or is retracted), add/edit its ledger row in the same change.
-(The verbose chronological narrative lives in `claude-project-log.md`; the
-high-level state lives in `docs/project-log.md`.)
-
-## Cluster (the cluster) — ALWAYS use the `debug` partition
-
-`debug` schedules **instantly**; `normal` queues for a long time — never use
-`normal` for our jobs. The `debug` budget is a **GPU-hour budget, not a
-walltime**: **1.5 GPU-hours per job** (`MaxTRESMinsPerJob=node=90`,
-`MaxTRESPerJob=node=4`, `MaxJobs=1` running / `MaxSubmit=2`). So:
-
-- **4 nodes × 22.5 min = 1.5 node-h** ← the standard "use all 4 nodes" shape.
-- 2 nodes × 45 min, or 1 node × 90 min, are the equivalents.
-- Only **one** debug job runs at a time → to use 4 nodes, submit ONE 4-node
-  allocation (one model/task per node), NOT four concurrent jobs.
-- Make every job **resumable** (per-unit output files, skip-if-exists) so a job
-  that hits the 22.5-min wall just gets resubmitted to continue.
-
-(Re-derived from `scontrol show partition debug` + `sacctmgr show qos scheduler`;
-see `docs/guides/the cluster-cluster.md`. Absolute paths in ssh — login shell starts
-in `$HOME`, not `~/scratch/probes`.)
-
-**Unattended / overnight: use `fc` (job-API), not interactive ssh.** The SSH
-cert expires every 24 h (MFA to renew) and *will* strand a long run mid-flight.
-`fc` (`~/.local/bin/fc` — call by **full path**; the zsh `fc` builtin shadows it)
-uses job-API auth that survives the cert expiry. Subcommands: `submit [script]
-[--cmd …] [--wait] [--logs]`, `status <jid>`, `wait <jid> [--logs]`, `logs`,
-`ls <path>`, `download <remote> [local]` (**≤5 MB** — fine for metrics JSON /
-plots / logs; big npz stay on scratch), `cancel`, `systems` (default system
-`the cluster`). Prefer `fc` for submitting jobs + pulling results so a cert lapse
-can't block an unattended run; fall back to ssh+rsync only for interactive work
-or >5 MB transfers (which need a live cert anyway).
 
 ## Hidden-state extraction — default to vLLM (do not re-litigate)
 
@@ -61,13 +30,11 @@ This is settled — do not argue for HF `output_hidden_states`; HF is the
   long prefixes → cached tokens emit no hidden states), `attention_backend=
   "FLASH_ATTN"`, `VLLM_USE_FLASHINFER_SAMPLER=0`, `SamplingParams(max_tokens=1)`,
   and pass pre-tokenized `prompt_token_ids` (truncated to match HF token counts).
-- **the cluster:** vLLM is **not** in the `container` container by default — install it
-  into a `$WORK/.python_deps*` dir via the same `uv pip install` mechanism as
-  `src/remotes/the cluster/env.sh`, matched to the container's torch/CUDA (GPU =
-  Hopper sm_90). See `docs/guides/the cluster-cluster.md`.
+- **Install matched to your GPU:** vLLM isn't always preinstalled on a given
+  host; install it matched to that host's torch/CUDA build via `uv pip install`.
 - **Persist single/few-layer acts — never re-extract them.** One layer is small
   (~hidden_dim × n_tokens × 4 B ≈ 11 GB for a 32B model, far less for smaller
-  ones). ALWAYS keep extracted single/operating-layer activations on scratch
+  ones). ALWAYS keep extracted single/operating-layer activations on disk
   (`KEEP_ACTS=1`, no delete) so any follow-up (more seeds, relabel, new probe
   family) reuses them. Only the full multi-layer band (hundreds of GB–TBs) gets
   deleted after use.
@@ -119,9 +86,7 @@ Disclose AI authorship inline. Conventions:
 - **Section inside a mixed-authorship file**: prefix the section heading
   with `[ai-generated]`, e.g. `## [ai-generated] Method`.
 - **Carried-over code from prior projects** keeps its original provenance
-  (no tag added retroactively). The carry-over event itself is logged in
-  `claude-project-log.md`.
-- The running session log is `claude-project-log.md`. Append, don't rewrite.
+  (no tag added retroactively).
 
 Human authorship is the default — mark only AI work.
 

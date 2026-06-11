@@ -126,24 +126,21 @@ plus a per-FAMILY roll-up (n_test_pos-weighted, trustworthy CWEs only):
   `src.eval.honest_scoring.honest_token_aucs`. CWE/lang read straight from
   dataset rows (same derivation as `06/breakdown_lang_cwe.py`).
 - **Aggregator:** `compare_per_cwe.py <json…>` — per-CWE table + family roll-up.
-- **Submit:** `submit_10.sh` — single best layer, **1 GPU**, 30 min walltime,
+- **Run:** `run.sh` — single best layer, **1 GPU**,
   idempotent (skips a model whose OUT exists; skips a model whose cached acts
-  are missing). Runs AFTER 08 (scheduler = one job at a time).
+  are missing). Run after 08.
 
   ```bash
-  # on the login node, AFTER any 08 job has left the queue:
-  cd ~/scratch/probes && git -C repo pull
-  bash repo/plans/cross-model-probe-generalization/10-per-cwe-probes/submit_10.sh
-  # variants (lead's design forks):
-  HEAD=mlp  bash …/submit_10.sh        # MLP head (injection CWEs only, really)
-  CWE=memory bash …/submit_10.sh       # pooled memory-family probe (more data)
-  NEG_POOL=same_lang bash …/submit_10.sh
+  bash run.sh
+  # variants (design forks):
+  HEAD=mlp  bash run.sh        # MLP head (injection CWEs only, really)
+  CWE=memory bash run.sh       # pooled memory-family probe (more data)
+  NEG_POOL=same_lang bash run.sh
   ```
 
   Cost: per model ≈ (1 general fit + ≤9 tiny per-CWE fits) at one layer on
-  cached acts → a few minutes each; both default models well under the 30-min
-  debug cap, 1 GPU.
-- **Local test:** `python test_grouping.py` (no GPU/cluster) — asserts the
+  cached acts → a few minutes each, 1 GPU.
+- **Local test:** `python test_grouping.py` (no GPU) — asserts the
   group-aware split + 15% VAL carve are leakage-free globally and after CWE
   filtering. Passes.
 

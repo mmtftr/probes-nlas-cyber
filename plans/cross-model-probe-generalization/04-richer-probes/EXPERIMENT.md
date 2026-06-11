@@ -46,7 +46,7 @@ decision: stay linear, or move toward an Openia-style MLP / layer-concat probe.
      exp-02 variance (Gemma L19, Qwen L41). α=1, neg_incl off, internal val
      seed=7 fixed — all inherited from exp-03. 3×3×5 = 45 cells/model.
    Probe: AdamW lr=1e-3, 30 epochs, hard labels, MAX-pool example score.
-3. **Outputs** — on scratch `runs/richer_<slug>/`: one `cells/cell_*.json` per
+3. **Outputs** — `runs/richer_<slug>/`: one `cells/cell_*.json` per
    cell, aggregated `metrics_richer.json` (per (feature_set,arch): mean/std ex- &
    tok-AUC over seeds; overall `best`; `linear_single_best` = the single-layer
    linear config). Plot locally.
@@ -76,14 +76,13 @@ L41) — same code path, same canonical split, same α/loss.
   forward, not `Xte@w+b`.
 - Files: `richer_probe_sweep.py` (GPU-sharded cell grid, resumable, reuses
   cached acts; bounded-memory layer-concat with a per-(feature_set,seed)
-  feature cache), `aggregate_richer.py`, `submit_richer.sh` (one debug job/model,
+  feature cache), `aggregate_richer.py`, `run.sh` (one run/model,
   no extraction), `plot_richer.py`.
-- Run (login node), sequential (scheduler MaxSubmit=1):
-  `MODEL=google/gemma-3-27b-it FEATURESETS="9,19,26,61;19;17,19,22" bash .../submit_richer.sh`
-  then `MODEL=Qwen/Qwen2.5-Coder-32B-Instruct FEATURESETS="34,41,52,63;41;40,41,43" bash .../submit_richer.sh`.
-- FEATURESETS contains `;` — keep it quoted; the srun body is single-quoted so
-  the compute-node shell never word-splits it.
-- Est. ~3–6 min/model (45 cells / 4 GPUs; concat cells cost more RAM/compute).
+- Run one model at a time:
+  `MODEL=google/gemma-3-27b-it FEATURESETS="9,19,26,61;19;17,19,22" bash run.sh`
+  then `MODEL=Qwen/Qwen2.5-Coder-32B-Instruct FEATURESETS="34,41,52,63;41;40,41,43" bash run.sh`.
+- FEATURESETS contains `;` — keep it quoted so the shell never word-splits it.
+- Est. ~3–6 min/model (45 cells across GPUs; concat cells cost more RAM/compute).
 
 ## Decisions (this experiment)
 

@@ -137,7 +137,7 @@ be cited as the strength of the memory signal.
 - `results/repro_gate_{qwen32b,gemma1b}.json` — gate diagonal (bit-matches REPRO_TARGET).
 - `results/deconfound_{qwen32b,gemma1b}.json` — full per-CWE × 4-regime × 2-probe-set
   table, lang_null column, allclean-trained diagonal bootstrap CIs, pooled memory.
-- `probes_dc.npz` (on scratch `$WORK/exp25/<slug>/`) — saved W/b (allclean + conly + pooled).
+- `probes_dc.npz` (in `./runs/exp25/<slug>/`) — saved W/b (allclean + conly + pooled).
 - `results/cv/<slug>/<regime>_<cwe>_<seed>.json` — 84 CV cells (allclean+conly ×
   7 CWEs × 3 seeds × 2 models; 5 folds each). `results/cv_aggregate.json` —
   pooled mean/std/lang_null per (model, regime, CWE).

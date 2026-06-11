@@ -69,7 +69,7 @@ Hypotheses:
   that loads `offsets.npz` + per-example `code`/`lang`, builds the mask via
   `src.eval.code_mask.code_only_mask`, and returns `{tokens, tokens_code,
   dropped_fraction}`. Reused by 03/04 re-scoring (sweep 5) and 07. tree-sitter
-  (+ python/c/cpp grammars) must be present in the cluster env — verify in smoke;
+  (+ python/c/cpp grammars) must be present in the runtime env — verify in smoke;
   if a grammar is missing the mask is a no-op (AUC silently reverts to `tokens`),
   so **assert `dropped_fraction > 0`** on a canary before trusting results.
 
@@ -128,25 +128,21 @@ Sweep 6 rider (best layer, per model): `tokens_code_auc` broken down by **langua
   were wiped). Order: gated `HF_TOKEN` placed → extract per model (all layers,
   float32 acts — Gemma mid-layer massive-activations overflow f16) → per-layer
   span-max → honest scoring → aggregate. Reuse `02-.../extract_all_layers.py` and
-  `submit_layersweep.sh`; the 4-GPU layer-sharding in `train_all_layers.py`
+  `run.sh`; the 4-GPU layer-sharding in `train_all_layers.py`
   (`li % n_gpus == gpu_id`) stays.
-- **scheduler = one submitted job.** Sequential login-node `nohup` orchestrator
-  (pattern in scratch `run_*_orch.sh`); pack 4 models/node where they fit one
+- **One run at a time.** Sequential `run.sh`; pack models where they fit one
   96 GB GPU (the small Gemmas easily co-reside; 27b/32b run solo or 2-up).
-- **Cluster channel:** the `the cluster` tmux session (authenticated SSH to
-  the cluster-ln001) + `/tmp/ctmux.sh '<cmd>' [timeout]`. Keep it alive — it's the
-  cert workaround; if it drops, `login-host` re-sign needed.
 - **Smoke before sweep:** one small model (gemma-3-1b-it), assert
   `dropped_fraction > 0` and `tokens_code` n_pos / n_total are sane before
   committing the full roster.
-- **Provenance:** log `git rev-parse HEAD` per run (the cluster repo at `3209974`+);
+- **Provenance:** log `git rev-parse HEAD` per run (the repo at `3209974`+);
   refuse on dirty tree.
 
 ---
 
 ## Results (2026-06-01)
 
-Run on the cluster, 1 node × 4 GPU per model, sequential (scheduler). Acts float32,
+A multi-GPU run, one model at a time. Acts float32,
 all layers; probe = span-max linear; split = SVEN before/after seed-42 group hold-out.
 
 **Headline: `tokens_code` does NOT collapse.** On all 8 models the honest

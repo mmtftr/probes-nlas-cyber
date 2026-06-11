@@ -34,7 +34,7 @@ REPO = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(REPO))
 
 from sklearn.metrics import roc_auc_score  # noqa: E402
-from src.remotes.the cluster.train_eval import load_or_make_split  # noqa: E402
+from src.remotes.train_eval import load_or_make_split  # noqa: E402
 
 
 # Documented exp-05 historical verbalized example-AUC (before/after rebuild,

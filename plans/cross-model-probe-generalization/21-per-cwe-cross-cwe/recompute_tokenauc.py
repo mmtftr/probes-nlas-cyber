@@ -43,7 +43,7 @@ import numpy as np
 REPO = Path(os.environ.get("REPO", Path(__file__).resolve().parents[3]))
 sys.path.insert(0, str(REPO))
 from sklearn.metrics import roc_auc_score                              # noqa: E402
-from src.remotes.the cluster.train_eval import load_or_make_split        # noqa: E402
+from src.remotes.train_eval import load_or_make_split        # noqa: E402
 from src.eval.code_mask import live_code_char_ranges                  # noqa: E402
 
 INJ = {"CWE-089", "CWE-078", "CWE-022", "CWE-079"}

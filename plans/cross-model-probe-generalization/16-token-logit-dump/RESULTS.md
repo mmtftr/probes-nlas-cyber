@@ -4,7 +4,6 @@
 
 Regenerated the canonical span-max vulnerability probe and dumped **every**
 per-token + per-example logit over the full SVEN dataset (1430 ex), for 7 models.
-Run on the cluster after rebuilding the deleted `~/scratch/probes`.
 
 ## Correctness gate — PASSED for all 6 anchored models
 Each model's held-out `tokens_code_auc` at its **historical operating layer**
@@ -48,13 +47,13 @@ Notes:
 - `probe_layer{NN}.npz` — `w, b, layer` (the probe, finally persisted).
 - `example_scores_layer{NN}.json`, `metrics_logitdump.json`.
 
-Heavy `logits_*.npz` live in this dir + cluster scratch (gitignored); probes /
+Heavy `logits_*.npz` live in this dir (gitignored); probes /
 metrics / example-scores are committed. Canonical wandb/HF persistence pending.
 
 ## Operational notes
-- gemma-3 is gated → needs `$WORK/secrets/hf_token` (read scope suffices).
+- gemma-3 is gated → needs a Hugging Face token (read scope suffices).
 - **OOM:** gemma-3-27b is multimodal (loads via ImageTextToText) and OOM'd at a
-  5-layer band even alone (>460 GB peak at the CPU vstack). Fixes: `--mem=820000`
-  (node has 870 GB) + a 3-layer band. Also: do NOT co-schedule two heavy 5-layer
-  extractions on one node — they vstack ~690k×5 token-activation matrices in CPU
-  simultaneously. One heavy model per node, or trim layers.
+  5-layer band even alone (>460 GB peak at the CPU vstack). Fixes: allocate ample
+  host memory + a 3-layer band. Also: do NOT run two heavy 5-layer extractions
+  together — they vstack ~690k×5 token-activation matrices in CPU
+  simultaneously. One heavy model per run, or trim layers.

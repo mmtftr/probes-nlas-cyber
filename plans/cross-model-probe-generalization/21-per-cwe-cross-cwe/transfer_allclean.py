@@ -36,7 +36,7 @@ sys.path.insert(0, str(REPO))
 from sklearn.metrics import roc_auc_score                                  # noqa: E402
 from src.eval.token_data import parse_spans, char_spans_to_token_spans, token_labels_array  # noqa: E402
 from src.eval.code_mask import code_only_mask                             # noqa: E402
-from src.remotes.the cluster.train_eval import load_or_make_split, pair_group_key  # noqa: E402
+from src.remotes.train_eval import load_or_make_split, pair_group_key  # noqa: E402
 from src.training.train_probe_spanmax import train_one_layer             # noqa: E402
 
 INJ = {"CWE-089", "CWE-078", "CWE-022", "CWE-079"}
