@@ -1,0 +1,19 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-32B-Instruct",
+  "head": "mlp256",
+  "layer": 37,
+  "mode": "fixed",
+  "n_tokens": 561266,
+  "n_tokens_code": 431807,
+  "test_tokens_auc": 0.8005547030480173,
+  "test_tokens_code_auc": 0.8165457692254517,
+  "test_example_auc": 0.562863576656033,
+  "val_ex_auc": 0.5982142857142857,
+  "n_test_examples": 292,
+  "hist_gate": {
+    "hist_tokens_code_auc": 0.817,
+    "this_tokens_code_auc": 0.8165457692254517,
+    "delta": -0.0005,
+    "ok_within_0.02": true
+  }
+}

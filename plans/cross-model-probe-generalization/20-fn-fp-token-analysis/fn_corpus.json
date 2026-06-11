@@ -1,0 +1,4029 @@
+[
+  {
+    "eid": 10,
+    "cwe": "CWE-476",
+    "lang": "cpp",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "t",
+      "if (name_size == 0) return;\n    "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "0",
+        "logit": 3.67,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "m",
+        "logit": 15.119,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  10|     stream.ReadUI32(m_Reserved[0]);\n  11|     stream.ReadUI32(m_Reserved[1]);\n  12|     stream.ReadUI32(m_Reserved[2]);\n  13|     \n  14|     // read the name unless it is empty\n  15|     in\u00abt\u00bb name_size = size-(AP4_FULL_ATOM_HEADER_SIZE+20);\n  16|     \u00abif (name_size == 0) return;\n  17|     \u00bbchar* name = new char[name_size+1];\n  18|     stream.Read(name, name_size);\n  19|     name[name_size] = '\\0'; // force a null termination\n  20|     // handle a special case: the Quicktime files have a pascal\n  21|     // string here, but ISO MP4 files have a C string.\n  22|     // we try to detect a pascal encoding and correct it."
+  },
+  {
+    "eid": 22,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-27b-it"
+    ],
+    "removed_span": [
+      "if (vma) {\n\t\tup_read(&current->mm->mmap_sem);\n\t\tvma = NULL;\n\t}\n\n\t"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "+",
+        "logit": 4.682,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "vm",
+        "logit": 33.591,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  63| \t\t * the policy to userspace.\n  64| \t\t */\n  65| \t\t*policy |= (pol->flags & MPOL_MODE_FLAGS);\n  66| \t}\n  67| \n  68| \t\u00abif (vma) {\n  69| \t\tup_read(&current->mm->mmap_sem);\n  70| \t\tvma = NULL;\n  71| \t}\n  72| \n  73| \t\u00bberr = 0;\n  74| \tif (nmask) {\n  75| \t\tif (mpol_store_user_nodemask(pol)) {\n  76| \t\t\t*nmask = pol->w.user_nodemask;\n  77| \t\t} else {\n  78| \t\t\ttask_lock(current);"
+  },
+  {
+    "eid": 45,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      " ",
+      " "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " =",
+        "logit": 4.034,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " R",
+        "logit": 20.351,
+        "thr": 20.329
+      }
+    },
+    "excerpt": " 119| \t\t\t\tnew->ordinal = count++;\n 120| \t\t\t\t// TODO: move into adjust_offset\n 121| \t\t\t\tswitch (str_type) {\n 122| \t\t\t\tcase R_STRING_TYPE_WIDE:\n 123| \t\t\t\t\t{\n 124| \t\t\t\t\t\tconst ut8 *p = buf\u00ab \u00bb + str_start - 2;\n 125| \t\t\t\t\t\tif (p[0] == 0xff && p[1] == 0xfe) {\n 126| \t\t\t\t\t\t\tstr_start -= 2; // \\xff\\xfe\n 127| \t\t\t\t\t\t}\n 128| \t\t\t\t\t}\n 129| \t\t\t\t\tbreak;\n 130| \t\t\t\tcase R_STRING_TYPE_WIDE32:\n 131| \t\t\t\t\t{\n 132| \t\t\t\t\t\tconst ut8 *p = buf\u00ab \u00bb + str_start - 4;\n 133| \t\t\t\t\t\tif (p[0] == 0xff && p[1] == 0xfe) {\n 134| \t\t\t\t\t\t\tstr_start -= 4; // \\xff\\xfe\\x00\\x00\n 135| \t\t\t\t\t\t}\n 136| \t\t\t\t\t}\n 137| \t\t\t\t\tbreak;"
+  },
+  {
+    "eid": 64,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "c ="
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "str",
+        "logit": 5.816,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "fname",
+        "logit": 26.209,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  16| \tkfree(priv->ctrl.fname);\n  17| \tmemcpy(&priv->ctrl, p, sizeof(priv->ctrl));\n  18| \tif (p->fname) {\n  19| \t\tpriv->ctrl.fname = kstrdup(p->fname, GFP_KERNEL);\n  20| \t\tif (priv->ctrl.fname == NULL)\n  21| \t\t\tr\u00abc =\u00bb -ENOMEM;\n  22| \t}\n  23| \n  24| \t/*\n  25| \t * If firmware name changed, frees firmware. As free_firmware will\n  26| \t * reset the status to NO_FIRMWARE, this forces a new request_firmware"
+  },
+  {
+    "eid": 67,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "+str(index)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "=\"+",
+        "logit": 8.615,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " index",
+        "logit": 29.955,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def get_article(index):\n   2|     with conn.cursor(cursor_factory=DictCursor) as cur:\n   3|         query = \"SELECT * FROM articles WHERE index=\"\u00ab+str(index)\u00bb\n   4|         cur.execute(query)\n   5|         article = cur.fetchone()\n   6|         return article"
+  },
+  {
+    "eid": 75,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\t",
+      "\t\t",
+      "\t\t",
+      "\t\t\t",
+      "i",
+      "\t\t\t"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "\tdef",
+        "logit": 44.019,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "{}",
+        "logit": 25.5,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| \u00ab\t\u00bbdef add_input(self, data):\n   2| \u00ab\t\t\u00bbconnection = self.connect()\n   3| \u00ab\t\t\u00bbtry:\n   4| \u00ab\t\t\t\u00bb# The following introduces a deliberate security flaw.See section on SQL inject\u00abi\u00bbon below\n   5| \u00ab\t\t\t\u00bbquery = \"INSERT INTO crimes (description) VALUES(\u00ab'{}'\u00bb);\"\u00ab.format(data)\u00bb\n   6| \u00ab\t\t\t\u00bbwith connection.cursor() as cursor:\n   7| \u00ab\t\t\t\t\u00bbcursor.execute(query)\n   8| \u00ab\t\t\t\t\u00bbconnection.commit()\n   9| \u00ab\t\t\u00bbfinally:\n  10| \u00ab\t\t\t\u00bbconnection.close()"
+  },
+  {
+    "eid": 81,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " %"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " count",
+        "logit": 8.489,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 32.286,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def can_user_pass_that_amount_of_money(self, user_id, money):\n   2|         self.cursor.execute(\"SELECT count(id) FROM kickstarter.users where id = %s and money >= %s\"\u00ab %\u00bb (user_id, money))\n   3|         return self.cursor.fetchall()[0][0]"
+  },
+  {
+    "eid": 92,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\"+str(",
+      ")+\""
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " '\"+",
+        "logit": 7.458,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " date",
+        "logit": 28.148,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   2| def wins():\n   3|     if db == None:\n   4|         init()\n   5| \n   6|     player = request.args.get('tag', default=\"christmasmike\")\n   7|     sql = \"SELECT * FROM matches WHERE winner = '\u00ab\"+str(\u00bbplayer\u00ab)+\"\u00bb' ORDER BY date DESC;\"\n   8|     result = db.exec(sql)\n   9| \n  10|     result = [str(x) for x in result]\n  11|     result = '\\n'.join(result)\n  12|     return json.dumps(result)"
+  },
+  {
+    "eid": 103,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 4,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "os.path.join(",
+      "n",
+      "m",
+      "spac",
+      ", "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "(self",
+        "logit": 6.668,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": ".",
+        "logit": 28.921,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def span(self, key):\n   2|         path = \u00abos.path.join(\u00bbself.\u00abn\u00bba\u00abm\u00bbe\u00abspac\u00bbe\u00ab, \u00bbkey)\n   3|         try:\n   4|             self.etcd.write(path, None, dir=True, prevExist=False)\n   5|         except etcd.EtcdAlreadyExist as err:\n   6|             raise CSStoreExists(str(err))\n   7|         except etcd.EtcdException as err:"
+  },
+  {
+    "eid": 115,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\"%s\"",
+      "% "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %",
+        "logit": 7.702,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 29.574,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def check(current_num):\n   2|     try:\n   3|         cursor.execute('SELECT * FROM comics WHERE num=\u00ab\"%s\"\u00bb' \u00ab% \u00bbcurrent_num)\n   4|     except sqlite3.OperationalError:\n   5|         cursor.execute('CREATE TABLE comics (num text)')\n   6|         return False\n   7|     else:\n   8|         return False if cursor.fetchone() is None else True"
+  },
+  {
+    "eid": 133,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "{playli",
+      "t_id}",
+      ".format",
+      "\n        ",
+      "=playlist_id"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "playlist",
+        "logit": 8.673,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " playlist",
+        "logit": 30.311,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def retrieve_videos_from_playlist(playlist_id, db):\n   2|     db.execute(\"SELECT id, title, thumbnail, position from video WHERE playlist_id=\u00ab{playli\u00bbs\u00abt_id}\u00bb ORDER BY position ASC;\"\u00ab.format\u00bb(\u00ab\n   3|         \u00bbplaylist_id\u00ab=playlist_id\u00bb))\n   4|     rows = db.fetchall()\n   5|     return rows"
+  },
+  {
+    "eid": 149,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "%s %s' % (",
+      ", None)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "s",
+        "logit": 10.116,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 39.754,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def _remove_volume_from_volume_set(self, volume_name, vvs_name):\n   2|         self._cli_run('removevvset -f \u00ab%s %s' % (\u00bbvvs_name, volume_name)\u00ab, None)\u00bb"
+  },
+  {
+    "eid": 159,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'%s'",
+      "% ",
+      "'%s'",
+      "'%s'",
+      "% (",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %",
+        "logit": 7.116,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 36.351,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   7|         rows =[]\n   8| \n   9|         with sql.connect('amara.db') as con:\n  10|             con.row_factory = sql.Row\n  11|             cur = con.cursor()\n  12|             cur.execute(\"select * from pada inner join mula on pada.sloka_line = mula.sloka_line where pada.varga = \u00ab'%s'\u00bb order by random() limit 1;\" \u00ab% \u00bbvarga)\n  13|             rows = cur.fetchall();\n  14| \n  15|             artha = rows[0][\"artha\"];\n  16|             cur.execute(\"select pada from pada where varga = \u00ab'%s'\u00bb and artha = \u00ab'%s'\u00bb order by id\" \u00ab% (\u00bbvarga, artha\u00ab)\u00bb);\n  17|             paryaya = cur.fetchall();\n  18| \n  19|             return render_template('quiz.html', rows=rows, paryaya=paryaya, varga=varga)\n  20|     finally:\n  21|         con.close()"
+  },
+  {
+    "eid": 175,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " ",
+      "\n            # The following introduces a deliberate security flaw. \n            # See section on SQL injection below",
+      "'{}'",
+      ".format(data)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "format",
+        "logit": 7.624,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "{}",
+        "logit": 26.015,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def add_input(self,\u00ab \u00bbdata):\n   2|         connection = self.connect()\n   3|         try:\u00ab\n   4|             # The following introduces a deliberate security flaw. \n   5|             # See section on SQL injection below\u00bb\n   6|             query = \"INSERT INTO crimes (description) VALUES(\u00ab'{}'\u00bb);\"\u00ab.format(data)\u00bb\n   7|             with connection.cursor() as cursor:\n   8|                 cursor.execute(query)\n   9|                 connection.commit()\n  10|         finally:\n  11|             connection.close()"
+  },
+  {
+    "eid": 178,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'",
+      "+ ",
+      " + \"'\""
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " courses",
+        "logit": 5.674,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "='\"",
+        "logit": 32.569,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   7| \t\tsession['currentCourse'] = classNoSpace\n   8| \n   9| \t\tconn = mysql.connect()\n  10| \t\tcursor = conn.cursor()\n  11| \n  12| \t\tcursor.execute(\"SELECT courseName,courseOverview from courses where courseAbbreviation=\u00ab'\u00bb\" \u00ab+ \u00bbclassNoSpace\u00ab + \"'\"\u00bb)\n  13| \t\tdata = cursor.fetchone()\n  14| \n  15| \t\treturn render_template('overview.html', className = classNum, courseTitle = data[0], courseOverview = data[1])\n  16| \n  17| \treturn redirect(url_for('index'))"
+  },
+  {
+    "eid": 191,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'\" + tag + \"'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " tags",
+        "logit": 8.973,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " tag",
+        "logit": 34.332,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def tag_to_tag_num(self, tag):\n   2|         ''' Returns tag_num given tag. '''\n   3| \n   4|         q = \"SELECT rowid FROM tags WHERE tag = \u00ab'\" + tag + \"'\u00bb\"\n   5|         self.query(q)\n   6|         return self.c.fetchone()[0]"
+  },
+  {
+    "eid": 273,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'",
+      "+ ",
+      " + \"'\""
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " '\"",
+        "logit": 6.221,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " '\"",
+        "logit": 29.29,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| @bot.message_handler(func = lambda message: get_current_state(message.chat.id) == config.States.S_GET_TASK.value)\n   2| def get_task(message):\n   3|     settings = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + \"\\\\bases\\\\settings.db\")\n   4|     conn = settings.cursor()\n   5|     conn.execute(\"select * from users where chat_id = \u00ab'\u00bb\" \u00ab+ \u00bbstr(message.chat.id)\u00ab + \"'\"\u00bb)\n   6|     name = conn.fetchone()\n   7|     settings.close()\n   8|     if name == None:\n   9|         bot.send_message(message.chat.id, \"You should login before get tasks.\")\n  10|     else:"
+  },
+  {
+    "eid": 310,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "%r",
+      "'%s'",
+      ", value, id"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "r",
+        "logit": 7.036,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "r",
+        "logit": 37.389,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   4|         elif type(id) == unicode:\n   5|             id = id.encode('utf-8')\n   6|         else:\n   7|             id = str(id)\n   8|         self._openContainer(session)\n   9|         query = (\"UPDATE %s SET %s = \u00ab%r\u00bb WHERE identifier = \u00ab'%s'\u00bb;\" %\n  10|                  (self.table, mType\u00ab, value, id\u00bb)\n  11|                  )\n  12|         try:\n  13|             self._query(query)\n  14|         except:\n  15|             return None"
+  },
+  {
+    "eid": 314,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " %s",
+      " %"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %",
+        "logit": 10.075,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "cmd",
+        "logit": 36.759,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def _get_conn_fc_wwpns(self, host_name):\n   2|         wwpns = []\n   3|         cmd = 'svcinfo lsfabric -host\u00ab %s\u00bb'\u00ab %\u00bb host_name\n   4|         generator = self._port_conf_generator(cmd)\n   5|         header = next(generator, None)\n   6|         if not header:\n   7|             return wwpns\n   8| "
+  },
+  {
+    "eid": 320,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "hdesc->bN",
+      "D"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "esc",
+        "logit": 4.206,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " &",
+        "logit": 25.75,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  31| \t}\n  32| \n  33| \thid->version = le16_to_cpu(hdesc->bcdHID);\n  34| \thid->country = hdesc->bCountryCode;\n  35| \n  36| \tfor (n = 0; n < \u00abhdesc->bN\u00bbum\u00abD\u00bbescriptors; n++)\n  37| \t\tif (hdesc->desc[n].bDescriptorType == HID_DT_REPORT)\n  38| \t\t\trsize = le16_to_cpu(hdesc->desc[n].wDescriptorLength);\n  39| \n  40| \tif (!rsize || rsize > HID_MAX_DESCRIPTOR_SIZE) {\n  41| \t\tdbg_hid(\"weird size of report descriptor (%u)\\n\", rsize);"
+  },
+  {
+    "eid": 343,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "options_st",
+      " queryOne(c,",
+      "'{}'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " WHERE",
+        "logit": 7.567,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " name",
+        "logit": 32.13,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def getOptions(poll_name):\n   2|     conn, c = connectDB()\n   3|     \u00aboptions_st\u00bbr =\u00ab queryOne(c,\u00bb \"SELECT options FROM {} WHERE name=\u00ab'{}'\u00bb\".format(CFG(\"poll_table_name\"), poll_name))\n   4|     if options_str == None:\n   5|         return None\n   6|     options = options_str.split(\",\")\n   7|     closeDB(conn)\n   8|     return options"
+  },
+  {
+    "eid": 361,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 2,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": true,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-12b-it"
+    ],
+    "removed_span": [
+      "maxC",
+      "Cells;\n\tbitmapCache->cells = (BITMAP_V2_CELL*)calloc(bitmapCache->max"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "instance",
+        "logit": 4.37,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "rd",
+        "logit": 22.457,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   8| \t\treturn NULL;\n   9| \n  10| \tbitmapCache->settings = settings;\n  11| \tbitmapCache->update = ((freerdp*)settings->instance)->update;\n  12| \tbitmapCache->context = bitmapCache->update->context;\n  13| \tbitmapCache->\u00abmaxC\u00bbells = settings->BitmapCacheV2Num\u00abCells;\n  14| \tbitmapCache->cells = (BITMAP_V2_CELL*)calloc(bitmapCache->max\u00bbCells, sizeof(BITMAP_V2_CELL));\n  15| \n  16| \tif (!bitmapCache->cells)\n  17| \t\tgoto fail;\n  18| \n  19| \tfor (i = 0; i < (int)bitmapCache->maxCells; i++)"
+  },
+  {
+    "eid": 376,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 2,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": true,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [
+      "qwen-32b"
+    ],
+    "gemma_detect": [
+      "gemma-4b-it"
+    ],
+    "removed_span": [
+      ", None"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "('",
+        "logit": 7.178,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "cli",
+        "logit": 33.8,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def _get_3par_hostname_from_wwn_iqn(self, wwns_iqn):\n   2|         out = self._cli_run('showhost -d'\u00ab, None\u00bb)\n   3|         # wwns_iqn may be a list of strings or a single\n   4|         # string. So, if necessary, create a list to loop.\n   5|         if not isinstance(wwns_iqn, list):\n   6|             wwn_iqn_list = [wwns_iqn]\n   7|         else:"
+  },
+  {
+    "eid": 381,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\"+str(",
+      ")+\"",
+      "\"+str(",
+      ")+\"",
+      "\"+str(",
+      ")+\""
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " '\"+",
+        "logit": 8.966,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "1",
+        "logit": 29.453,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   3|     if db == None:\n   4|         init()\n   5| \n   6|     player1 = request.args.get('tag1', default=\"christmasmike\")\n   7|     player2 = request.args.get('tag2', default=\"christmasmike\")\n   8|     sql = \"SELECT * FROM matches WHERE (player1 = '\u00ab\"+str(\u00bbplayer1\u00ab)+\"\u00bb' OR \"\\\n   9|             +\"player2 = '\u00ab\"+str(\u00bbplayer1\u00ab)+\"\u00bb') AND (player1 = '\u00ab\"+str(\u00bbplayer2\u00ab)+\"\u00bb' OR \"\\\n  10|             +\"player2 = '\u00ab\"+str(\u00bbplayer2\u00ab)+\"\u00bb') ORDER BY date DESC;\"\n  11|     result = db.exec(sql)\n  12|     return json.dumps(result)"
+  },
+  {
+    "eid": 383,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\"%s\"",
+      "\"%s\"",
+      "\"%s\"",
+      " % (item[0]",
+      "rname[1], trname[2])"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "'",
+        "logit": 8.101,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 31.716,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def add_translationname(self, trname):\n   2|         \"\"\"Add new translation by item name for an item.\"\"\"\n   3|         if self.connection:\n   4|             for item in self.find_item_name([trname[0], '0']):\n   5|                 self.cursor.execute('insert into itemtranslation (itemid, itemlanguageid, translation) values (\u00ab\"%s\"\u00bb, \u00ab\"%s\"\u00bb, \u00ab\"%s\"\u00bb)'\u00ab % (item[0]\u00bb, t\u00abrname[1], trname[2])\u00bb)\n   6|             self.connection.commit()"
+  },
+  {
+    "eid": 386,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "    ",
+      "        ",
+      "s",
+      "        ",
+      "            ",
+      " "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "format",
+        "logit": 7.504,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "format",
+        "logit": 25.659,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| \u00ab    \u00bbdef add_input(self, data):\n   2| \u00ab        \u00bbconnection = self.connect\u00abs\u00bb()\n   3| \u00ab        \u00bbtry:\n   4| \u00ab            \u00bb# The following introduces a deliberate security flaw.\u00ab \u00bbSee section on SQL injecton below\n   5| \u00ab            \u00bbquery = \"INSERT INTO crimes (description) VALUES (\u00ab'{}'\u00bb);\"\u00ab.format(\u00bb\n   6| \u00ab                data)\n   7|             \u00bbwith connection.cursor() as cursor:\n   8| \u00ab                \u00bbcursor.execute(query)\n   9| \u00ab                \u00bbconnection.commit()\n  10| \u00ab        \u00bbfinally:\n  11| \u00ab            \u00bbconnection.close()"
+  },
+  {
+    "eid": 409,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " %s",
+      " %",
+      ", None"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "s",
+        "logit": 8.422,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "host",
+        "logit": 37.418,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def _get_active_nsp(self, hostname):\n   2|         \"\"\"Return the active nsp, if one exists, for the given host.\"\"\"\n   3|         result = self.common._cli_run('showvlun -a -host\u00ab %s\u00bb'\u00ab %\u00bb hostname\u00ab, None\u00bb)\n   4|         if result:\n   5|             # first line is header\n   6|             result = result[1:]\n   7|             for line in result:\n   8|                 info = line.split(\",\")"
+  },
+  {
+    "eid": 419,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "self."
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": ".readline",
+        "logit": 4.476,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": ".",
+        "logit": 27.295,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  48|             if request[-2:] != '\\r\\n':\n  49|                 raise HTTPError(400)\n  50| \n  51|             # try the request line and error out if can't parse it\n  52|             try:\n  53|                 self.method, \u00abself.\u00bbresource, self.request_http = self.request_line.split()\n  54|             # HTTP Status 400\n  55|             except ValueError:\n  56|                 raise HTTPError(400)\n  57| \n  58|             # HTTP Status 505"
+  },
+  {
+    "eid": 436,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-27b-it"
+    ],
+    "removed_span": [
+      "tlb_gather_mmu(&tlb, mm, 0, -1);\n\t",
+      "}\n",
+      "0",
+      "1"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " VM",
+        "logit": 1.889,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " VM",
+        "logit": 36.383,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  61| \t * should imply barriers already and the reader would hit a page fault\n  62| \t * if it stumbled over a reaped memory.\n  63| \t */\n  64| \tset_bit(MMF_UNSTABLE, &mm->flags);\n  65| \n  66| \t\u00abtlb_gather_mmu(&tlb, mm, 0, -1);\n  67| \t\u00bbfor (vma = mm->mmap ; vma; vma = vma->vm_next) {\n  68| \t\tif (!can_madv_dontneed_vma(vma))\n  69| \t\t\tcontinue;\n  70| \n  71| \t\t/*\n  72| \t\t * Only anonymous pages have a good chance to be dropped\n  73| \t\t * without additional steps which we cannot afford as we\n  74| \t\t * are OOM already.\n  75| \t\t *\n  76| \t\t * We do not even care about fs backed pages because all\n  77| \t\t * which are reclaimable have already been reclaimed and\n  78| \t\t * we do not want to block exit_mmap by keeping mm ref\n  79| \t\t * count elevated without a good reason.\n  80| \t\t */\n  81| \t\tif (vma_is_anonymous(vma) || !(vma->vm_flags & VM_SHARED))\n  82| \t\t\tunmap_page_range(&tlb, vma, vma->vm_start, vma->vm_end,\n  83| \t\t\t\t\t NULL);\n  84| \t\u00ab}\n  85| \u00bb\ttlb_finish_mmu(&tlb, \u00ab0\u00bb, -\u00ab1\u00bb);\n  86| \tpr_info(\"oom_reaper: reaped process %d (%s), now anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB\\n\",\n  87| \t\t\ttask_pid_nr(tsk), tsk->comm,\n  88| \t\t\tK(get_mm_counter(mm, MM_ANONPAGES)),\n  89| \t\t\tK(get_mm_counter(mm, MM_FILEPAGES)),\n  90| \t\t\tK(get_mm_counter(mm, MM_SHMEMPAGES)));"
+  },
+  {
+    "eid": 438,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "''",
+      "\\''''",
+      "+ email + '\\'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " where",
+        "logit": 7.927,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " like",
+        "logit": 29.682,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| @login_manager.user_loader\n   2| def load_user(s_id):\n   3|     email = str(s_id)\n   4|     query = '\u00ab''\u00bbselect * from usr where email like\u00ab\\''''\u00bb \u00ab+ email + '\\'\u00bb'\n   5|     cursor = g.conn.execute(query)\n   6|     user = User()\n   7|     for row in cursor:\n   8|         user.name = str(row.name)\n   9|         user.email = str(row.email)"
+  },
+  {
+    "eid": 456,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      " = conv_encoding(ci->pattern_enc, ci->target_enc, pattern, pattern_end,\n                      &cpat, &cpat_end);\n    if (r != 0) r",
+      "r"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "on",
+        "logit": 41.857,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "r",
+        "logit": 15.339,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   5|   UChar *cpat, *cpat_end;\n   6| \n   7|   if (IS_NOT_NULL(einfo)) einfo->par = (UChar* )NULL;\n   8| \n   9|   if (ci->pattern_enc != ci->target_enc) {\n  10|     r\u00ab = conv_encoding(ci->pattern_enc, ci->target_enc, pattern, pattern_end,\n  11|                       &cpat, &cpat_end);\n  12|     if (r != 0) r\u00bbeturn \u00abr\u00bb;\n  13|   }\n  14|   else {\n  15|     cpat     = (UChar* )pattern;\n  16|     cpat_end = (UChar* )pattern_end;\n  17|   }"
+  },
+  {
+    "eid": 500,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 3,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-12b-it",
+      "gemma-27b-it"
+    ],
+    "removed_span": [
+      "\tset_bit(HCI_UART_PROTO_READY, &hu->flags);\n",
+      "cl",
+      "a",
+      "\treturn err;\n\t}\n\n\t"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": ");\n",
+        "logit": 0.373,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "PROTO",
+        "logit": 30.084,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   6| \tp = hci_uart_get_proto(id);\n   7| \tif (!p)\n   8| \t\treturn -EPROTONOSUPPORT;\n   9| \n  10| \thu->proto = p;\n  11| \u00ab\tset_bit(HCI_UART_PROTO_READY, &hu->flags);\n  12| \u00bb\n  13| \terr = hci_uart_register_dev(hu);\n  14| \tif (err) {\n  15| \t\t\u00abcl\u00bbe\u00aba\u00bbr_bit(HCI_UART_PROTO_READY, &hu->flags);\n  16| \t\u00ab\treturn err;\n  17| \t}\n  18| \n  19| \t\u00bbreturn 0;\n  20| }"
+  },
+  {
+    "eid": 501,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "\n\t\t\t\t",
+      "_partial",
+      "_transport_header(skb) +",
+      "l",
+      "\n\t\t\t\t\t    "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " SOL",
+        "logit": 2.001,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "sum",
+        "logit": 18.967,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   5| \n   6| \tif (skb->ip_summed != CHECKSUM_COMPLETE)\n   7| \t\treturn;\n   8| \n   9| \tif (offset != 0)\n  10| \t\tcsum = csum_sub(csum,\u00ab\n  11| \t\t\t\t\u00bbcsum\u00ab_partial\u00bb(skb\u00ab_transport_header(skb) +\u00bb t\u00abl\u00bben,\u00ab\n  12| \t\t\t\t\t    \u00bb offset, 0));\n  13| \n  14| \tput_cmsg(msg, SOL_IP, IP_CHECKSUM, sizeof(__wsum), &csum);\n  15| }"
+  },
+  {
+    "eid": 522,
+    "cwe": "CWE-079",
+    "lang": "python",
+    "n_detect": 6,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\n        if self.column.render_function:\n            # We don't want to escape our html\n            return self.column.render_function(self.object)\n",
+      "escape(",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " self",
+        "logit": 5.369,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "_",
+        "logit": 28.594,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def get_value(self):\u00ab\n   2|         if self.column.render_function:\n   3|             # We don't want to escape our html\n   4|             return self.column.render_function(self.object)\n   5| \u00bb\n   6|         field = getattr(self.object, self.column.field_name) if self.column.field_name else None\n   7|         if type(self.object) == dict:\n   8|             value = self.object.get(self.column.field_name)\n   9|         elif callable(field):\n  10|             value = field() if getattr(field, 'do_not_call_in_templates', False) else field\n  11|         else:\n  12|             display_function = getattr(self.object, 'get_%s_display' % self.column.field_name, False)\n  13|             value = display_function() if display_function else field\n  14| \n  15|         return \u00abescape(\u00bbvalue\u00ab)\u00bb"
+  },
+  {
+    "eid": 553,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": true,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-12b-it"
+    ],
+    "removed_span": [
+      "jas_tvparser_destroy(tvp);\n\t"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "as",
+        "logit": 6.409,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "id",
+        "logit": 18.009,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  55| \t\t\t\treturn -1;\n  56| \t\t\t}\n  57| \t\t\tbreak;\n  58| \t\t}\n  59| \t}\n  60| \t\u00abjas_tvparser_destroy(tvp);\n  61| \t\u00bbif (!cmpt->sampperx || !cmpt->samppery) {\n  62| \t\tgoto error;\n  63| \t}\n  64| \tif (mif_hdr_addcmpt(hdr, hdr->numcmpts, cmpt)) {\n  65| \t\tgoto error;\n  66| \t}"
+  },
+  {
+    "eid": 570,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " %"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " (",
+        "logit": 5.393,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 32.745,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def save_failure_transaction(self, user_id, project_id, money):\n   2|         self.cursor.execute(\"insert into transactions (project_id,user_id, money, timestamp, state) values (%s, %s, %s, now(), 'failed' )\"\u00ab %\u00bb (project_id, user_id, money))\n   3|         self.db.commit()"
+  },
+  {
+    "eid": 571,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 2,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      ".replace(' ', '-'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "0",
+        "logit": 3.121,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "a",
+        "logit": 32.122,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   2|     try:\n   3|         basename = basename.casefold()\n   4|     except Exception:\n   5|         basename = basename.lower()\n   6| \n   7|     basename = basename\u00ab.replace(' ', '-'\u00bb)\n   8|     basename = re.sub(r'<[^>]*>', r'', basename)\n   9|     basename = re.sub(r'[^a-z0-9\\-]', r'', basename)\n  10|     basename = re.sub(r'\\-\\-', r'-', basename)\n  11|     basename = urllib.parse.quote_plus(basename)\n  12| "
+  },
+  {
+    "eid": 573,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "e",
+      "r",
+      "handle->h_",
+      "handle->h_",
+      "e",
+      "r"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "_error",
+        "logit": 3.735,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "_",
+        "logit": 27.938,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   8| \t\text4_put_nojournal(handle);\n   9| \t\treturn 0;\n  10| \t}\n  11| \n  12| \tif (!handle->h_transaction) {\n  13| \t\t\u00abe\u00bbr\u00abr\u00bb = jbd2_journal_stop(handle);\n  14| \t\treturn \u00abhandle->h_\u00bberr ? \u00abhandle->h_\u00bberr : \u00abe\u00bbr\u00abr\u00bb;\n  15| \t}\n  16| \n  17| \tsb = handle->h_transaction->t_journal->j_private\u00ab;\n  18| \terr = handle->h_err\u00bb;\n  19| \trc = jbd2_journal_stop(handle);\n  20| \n  21| \tif (!err)\n  22| \t\terr = rc;\n  23| \tif (err)"
+  },
+  {
+    "eid": 575,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "+ \"\\\"\" + ",
+      "+ \"\\\"\""
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " \"\"\"",
+        "logit": 7.703,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " name",
+        "logit": 27.092,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   4|             groceryButton.pack_forget()\n   5|             database_file = \"meal_planner.db\"\n   6|             print(recipeName)\n   7|             with sqlite3.connect(database_file) as conn:\n   8|                 cursor = conn.cursor()\n   9|                 selection = cursor.execute(\"\"\"SELECT * FROM recipe WHERE name = \"\"\" \u00ab+ \"\\\"\" + \u00bbrecipeName \u00ab+ \"\\\"\"\u00bb)\n  10|                 for result in [selection]:\n  11|                     for row in result.fetchall():\n  12|                         name = row[0]\n  13|                         time = row[1]\n  14|                         servings = row[2]"
+  },
+  {
+    "eid": 600,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "%s' % (",
+      "), None"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " (",
+        "logit": 8.636,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "cli",
+        "logit": 35.407,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def _get_3par_host(self, hostname):\n   2|         out = self._cli_run('showhost -verbose \u00ab%s' % (\u00bbhostname\u00ab), None\u00bb)\n   3|         LOG.debug(\"OUTPUT = \\n%s\" % (pprint.pformat(out)))\n   4|         host = {'id': None, 'name': None,\n   5|                 'domain': None,\n   6|                 'descriptors': {},\n   7|                 'iSCSIPaths': [],"
+  },
+  {
+    "eid": 620,
+    "cwe": "CWE-787",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": true,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-4b-it"
+    ],
+    "removed_span": [
+      "onst c"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "id",
+        "logit": 39.47,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "rc",
+        "logit": 17.239,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  36|       /* wow, this is ugly, but libidn manpage states:\n  37|        * char * out  output zero terminated string that must have room for at\n  38|        * least 63 characters plus the terminating zero.\n  39|        */\n  40|       if (output)\n  41| \tstrcpy (output, (c\u00abonst c\u00bbhar *) output_u8);\n  42| \n  43|       free(output_u8);\n  44|     }\n  45| \n  46|   return rc;"
+  },
+  {
+    "eid": 629,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'{1}'",
+      ","
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "\tdef",
+        "logit": 44.019,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "th",
+        "logit": 37.085,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   2| \t\t\"\"\"\n   3| \t\tReturns ID of a cached file on Telegram from DB. None if file doesn't exist or has no cached ID.\n   4| \t\t:param pth:\n   5| \t\t:return:\n   6| \t\t\"\"\"\n   7| \t\tcommand = \"SELECT file_id FROM {0} WHERE path=\u00ab'{1}'\u00bb\".format(TABLE_NAME\u00ab,\u00bb pth)\n   8| \t\tdata = self._run_command(command)\n   9| \n  10| \t\ttry:\n  11| \t\t\tdata = data[0][0]\n  12| \t\texcept IndexError:"
+  },
+  {
+    "eid": 642,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [
+      "qwen-32b"
+    ],
+    "gemma_detect": [],
+    "removed_span": [
+      "        l_current_data = p_j2k->m_specific_param.m_encoder.m_header_tile_data;\n",
+      "    ",
+      "\n"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "J",
+        "logit": 18.256,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "k",
+        "logit": 19.304,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  13|         assert(p_j2k != 00);\n  14|         assert(p_manager != 00);\n  15|         assert(p_stream != 00);\n  16| \n  17|         l_tcp =&(p_j2k->m_cp.tcps[p_j2k->m_current_tile_number]);\n  18| \u00ab        l_current_data = p_j2k->m_specific_param.m_encoder.m_header_tile_data;\n  19| \u00bb\n  20|         l_mco_size = 5 + l_tcp->m_nb_mcc_records;\n  21|         if (l_mco_size > p_j2k->m_specific_param.m_encoder.m_header_tile_data_size) {\n  22| \n  23|                 OPJ_BYTE *new_header_tile_data = (OPJ_BYTE *) opj_realloc(p_j2k->m_specific_param.m_encoder.m_header_tile_data, l_mco_size);\n  24|                 if (! new_header_tile_data) {\n  25|                         opj_free(p_j2k->m_specific_param.m_encoder.m_header_tile_data);\n  26|                         p_j2k->m_specific_param.m_encoder.m_header_tile_data = NULL;\n  27|                         p_j2k->m_specific_param.m_encoder.m_header_tile_data_size = 0;\n  28|                         opj_event_msg(p_manager, EVT_ERROR, \"Not enough memory to write MCO marker\\n\");\n  29|                         return OPJ_FALSE;\n  30|                 }\n  31|                 p_j2k->m_specific_param.m_encoder.m_header_tile_data = new_header_tile_data;\n  32|                 p_j2k->m_specific_param.m_encoder.m_header_tile_data_size = l_mco_size;\n  33|         }\n  34| \n  35|         opj_write_bytes(l_current_data,J2K_MS_MCO,2);                   /* MCO */\n  36|         l_current_data += 2;\n  37| \n  38|         opj_write_bytes(l_current_data,l_mco_size-2,2);                 /* Lmco */\n  39|         l_current_data += 2;\n  40| \n  41|         opj_write_bytes(l_current_data,l_tcp->m_nb_mcc_records,1);      /* Nmco : only one tranform stage*/\n  42|         ++l_current_data;\n  43| \n  44|         l_mcc_record = l_tcp->m_mcc_records;\n  45|         for \u00ab    \u00bb(i=0;i<l_tcp->m_nb_mcc_records;++i) {\n  46|                 opj_write_bytes(l_current_data,l_mcc_record->m_index,1);/* Imco -> use the mcc indicated by 1*/\n  47|                 ++l_current_data;\u00ab\n  48| \u00bb\n  49|                 ++l_mcc_record;\n  50|         }\n  51| \n  52|         if (opj_stream_write_data(p_stream,p_j2k->m_specific_param.m_encoder.m_header_tile_data,l_mco_size,p_manager) != l_mco_size) {"
+  },
+  {
+    "eid": 644,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "->pi",
+      "pi->"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "PC",
+        "logit": 6.651,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "->",
+        "logit": 18.955,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  25| \t\tfor (compno = 0, picomp = pi->picomps; compno < pi->numcomps;\n  26| \t\t  ++compno, ++picomp) {\n  27| \t\t\tfor (rlvlno = 0, pirlvl = picomp->pirlvls; rlvlno <\n  28| \t\t\t  picomp->numrlvls; ++rlvlno, ++pirlvl) {\n  29| \t\t\t\t// Check for the potential for overflow problems.\n  30| \t\t\t\tif (pirlvl->prcwidthexpn + pi\u00ab->pi\u00bbcomp->numrlvls >\n  31| \t\t\t\t  JAS_UINTFAST32_NUMBITS - 2 ||\n  32| \t\t\t\t  pirlvl->prcheightexpn + \u00abpi->\u00bbpicomp->numrlvls >\n  33| \t\t\t\t  JAS_UINTFAST32_NUMBITS - 2) {\n  34| \t\t\t\t\treturn -1;\n  35| \t\t\t\t}\n  36| \t\t\t\txstep = picomp->hsamp * (JAS_CAST(uint_fast32_t, 1) <<\n  37| \t\t\t\t  (pirlvl->prcwidthexpn + picomp->numrlvls - rlvlno - 1));"
+  },
+  {
+    "eid": 697,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "/*\n\t\t * Note: '1' here is a performance optimization.\n\t\t * Recall that the decompression layer returns a count of\n\t\t * available bytes; asking for more than that forces the\n\t\t * decompressor to combine reads by copying data.\n\t\t */\n\t\t",
+      "1"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "get",
+        "logit": 41.693,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "ss",
+        "logit": 19.233,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   5| \tssize_t bytes_avail;\n   6| \n   7| \tif (zip->codec == _7Z_COPY && zip->codec2 == (unsigned long)-1) {\n   8| \t\t/* Copy mode. */\n   9| \n  10| \t\t\u00ab/*\n  11| \t\t * Note: '1' here is a performance optimization.\n  12| \t\t * Recall that the decompression layer returns a count of\n  13| \t\t * available bytes; asking for more than that forces the\n  14| \t\t * decompressor to combine reads by copying data.\n  15| \t\t */\n  16| \t\t\u00bb*buff = __archive_read_ahead(a, \u00ab1\u00bb, &bytes_avail);\n  17| \t\tif (bytes_avail <= 0) {\n  18| \t\t\tarchive_set_error(&a->archive,\n  19| \t\t\t    ARCHIVE_ERRNO_FILE_FORMAT,\n  20| \t\t\t    \"Truncated 7-Zip file data\");\n  21| \t\t\treturn (ARCHIVE_FATAL);"
+  },
+  {
+    "eid": 724,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "os.path.join(",
+      "n",
+      "m",
+      "spac",
+      ", "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "(self",
+        "logit": 6.046,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "os",
+        "logit": 29.771,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def cut(self, key):\n   2|         try:\n   3|             self.etcd.delete(\u00abos.path.join(\u00bbself.\u00abn\u00bba\u00abm\u00bbe\u00abspac\u00bbe\u00ab, \u00bbkey))\n   4|         except etcd.EtcdKeyNotFound:\n   5|             return False\n   6|         except etcd.EtcdException as err:\n   7|             log_error(\"Error removing key %s: [%r]\" % (key, repr(err)))\n   8|             raise CSStoreError('Error occurred while trying to cut key')"
+  },
+  {
+    "eid": 727,
+    "cwe": "CWE-190",
+    "lang": "cpp",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "n",
+      "n"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "items",
+        "logit": 3.084,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "size",
+        "logit": 18.476,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   6|   int size = getContainerSize(items);\n   7|   if (size == 0) return empty_string();\n   8| \n   9|   req::vector<String> sitems;\n  10|   sitems.reserve(size);\n  11|   i\u00abn\u00bbt len = 0;\n  12|   i\u00abn\u00bbt lenDelim = delim.size();\n  13|   for (ArrayIter iter(items); iter; ++iter) {\n  14|     sitems.emplace_back(iter.second().toString());\n  15|     len += sitems.back().size() + lenDelim;\n  16|   }\n  17|   len -= lenDelim; // always one delimiter less than count of items"
+  },
+  {
+    "eid": 744,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 5,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "ase",
+      ":",
+      "str(",
+      ")",
+      "str(",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " =",
+        "logit": 3.039,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": ".",
+        "logit": 18.203,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def get_paths(b\u00abase\u00bb_path: pathlib.Path)\u00ab:\u00bb\n   2|     data_file = pathlib.Path(\u00abstr(\u00bbbase_path\u00ab)\u00bb + \".data\")\n   3|     metadata_file = pathlib.Path(\u00abstr(\u00bbbase_path\u00ab)\u00bb + \".meta\")\n   4| \n   5|     return data_file, metadata_file"
+  },
+  {
+    "eid": 760,
+    "cwe": "CWE-476",
+    "lang": "c",
+    "n_detect": 2,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-27b-it"
+    ],
+    "removed_span": [
+      "error",
+      "= security_mmap_addr",
+      ");\n\t",
+      "f (erro",
+      "error"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " VM",
+        "logit": 2.711,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "OCKED",
+        "logit": 33.89,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   4| \tstruct mm_struct *mm = vma->vm_mm;\n   5| \tstruct vm_area_struct *prev;\n   6| \tint error;\n   7| \n   8| \taddress &= PAGE_MASK;\n   9| \t\u00aberror\u00bb \u00ab= security_mmap_addr\u00bb(address\u00ab);\n  10| \t\u00bbi\u00abf (erro\u00bbr)\n  11| \t\treturn \u00aberror\u00bb;\n  12| \n  13| \t/* Enforce stack_guard_gap */\n  14| \tprev = vma->vm_prev;\n  15| \t/* Check that both stack segments have the same anon_vma? */\n  16| \tif (prev && !(prev->vm_flags & VM_GROWSDOWN) &&"
+  },
+  {
+    "eid": 761,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 5,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": false,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "s.",
+      ".jo",
+      "dir",
+      "u",
+      ".execute",
+      "'tee', '-a'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "('",
+        "logit": 8.627,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "key",
+        "logit": 41.326,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   2|     \"\"\"Add the given public ssh key to root's authorized_keys.\n   3| \n   4|     key is an ssh key string.\n   5|     fs is the path to the base of the filesystem into which to inject the key.\n   6|     \"\"\"\n   7|     sshdir = o\u00abs.\u00bbpath\u00ab.jo\u00bbin(fs, 'root', '.ssh')\n   8|     utils.execute('mkdir', '-p', sshdir, run_as_root=True)\n   9|     utils.execute('chown', 'root', sshdir, run_as_root=True)\n  10|     utils.execute('chmod', '700', sshdir, run_as_root=True)\n  11|     keyfile = os.path.join(ssh\u00abdir\u00bb, 'authorized_keys')\n  12|     key_data = [\n  13|         '\\n',\n  14|         '# The following ssh key was injected by Nova',\n  15|         '\\n',\n  16|         key.strip(),\n  17|         '\\n',\n  18|     ]\n  19|     \u00abu\u00bbtils\u00ab.execute\u00bb(\u00ab'tee', '-a'\u00bb, keyfile,\u00ab\n  20| \u00bb \u00ab                 process_input=''.join(\u00bbkey_data\u00ab)\u00bb, \u00abru\u00bbn\u00ab_as_root\u00bb=True)"
+  },
+  {
+    "eid": 762,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " ",
+      "ntroduce",
+      " deliberate security",
+      " - SQL Injection",
+      " ",
+      "'{}'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "{}",
+        "logit": 7.099,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "format",
+        "logit": 24.601,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def add_input(self,\u00ab \u00bbdata):\n   2|         connection = self.connect()\n   3|         try:\n   4|             # The following i\u00abntroduce\u00bbs a\u00ab deliberate security\u00bb flaw\u00ab - SQL Injection\u00bb\n   5|             query = \"INSERT INTO crimes\u00ab \u00bb(description) VALUES (\u00ab'{}'\u00bb);\"\u00ab.format(data)\u00bb\n   6|             with connection.cursor() as cursor:\n   7|                 cursor.execute(query)\n   8|                 connection.commit()\n   9|         finally:\n  10|             connection.close()"
+  },
+  {
+    "eid": 805,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'%s'",
+      "% ",
+      "'%s'",
+      "% "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %",
+        "logit": 8.361,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 33.062,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  10| \n  11|     try:\n  12|         with sql.connect('amara.db') as con:\n  13|             con.row_factory = sql.Row\n  14|             cur = con.cursor()\n  15|             cur.execute(\"select * from mula where sloka_number = \u00ab'%s'\u00bb order by sloka_line;\" \u00ab% \u00bbsloka_number)\n  16|             mula = cur.fetchall();\n  17| \n  18|             cur.execute(\"select * from pada where sloka_number = \u00ab'%s'\u00bb order by id;\" \u00ab% \u00bbsloka_number)\n  19|             pada = cur.fetchall();\n  20| \n  21|             varga = \"\"\n  22|             if len(pada) > 0:\n  23|                 varga = pada[0][\"varga\"]"
+  },
+  {
+    "eid": 827,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\"",
+      "%s %sg\" % (",
+      "),\n                          None"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "s",
+        "logit": 7.92,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 36.094,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   3|         old_size = volume.size\n   4|         growth_size = int(new_size) - old_size\n   5|         LOG.debug(\"Extending Volume %s from %s to %s, by %s GB.\" %\n   6|                   (volume_name, old_size, new_size, growth_size))\n   7|         try:\n   8|             self._cli_run(\u00ab\"\u00bbgrowvv -f \u00ab%s %sg\" % (\u00bbvolume_name, growth_size\u00ab),\n   9|                           None\u00bb)\n  10|         except Exception:\n  11|             with excutils.save_and_reraise_exception():\n  12|                 LOG.error(_(\"Error extending volume %s\") % volume)"
+  },
+  {
+    "eid": 828,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'{}'",
+      "'{}'",
+      "'{}'",
+      ".format(",
+      ")",
+      "'{}'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " and",
+        "logit": 7.634,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " chan",
+        "logit": 34.559,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  17|     global db_ready\n  18|     if not db_ready: db_init(db)\n  19|     chan = chan.lower()\n  20|     target = target.lower()\n  21|     voter = user.format_hostmask(mask)\n  22|     voters = db.execute(\"SELECT voters FROM votes where chan=\u00ab'{}'\u00bb and action=\u00ab'{}'\u00bb and target like \u00ab'{}'\u00bb\"\u00ab.format(\u00bbchan,action,target\u00ab)\u00bb).fetchone()\n  23| \n  24|     if conn.nick.lower() in target: return \"I dont think so Tim.\"\n  25| \n  26|     if voters: \n  27|         voters = voters[0]\n  28|         if voter in voters: \n  29|             notice(\"You have already voted.\")\n  30|             return\n  31|         else:\n  32|             voters = '{} {}'.format(voters,voter).strip()\n  33|             notice(\"Thank you for your vote!\")\n  34|     else: \n  35|         voters = voter\n  36| \n  37|     votecount = len(voters.split(' '))\n  38| \n  39|     if 'kick' in action: \n  40|         votemax = int(votes2kick)\n  41|         if votecount >= votemax:\n  42|             votefinished = True\n  43|             conn.send(\"KICK {} {} :{}\".format(chan, target, \"You have been voted off the island.\"))\n  44|     if 'ban' in action:\n  45|         votemax = int(votes2ban)\n  46|         if votecount >= votemax:\n  47|             votefinished = True\n  48|             conn.send(\"MODE {} +b {}\".format(chan, user.get_hostmask(target,db)))\n  49|             conn.send(\"KICK {} {} :\".format(chan, target, \"You have been voted off the island.\"))\n  50|     \n  51|     if votefinished: db.execute(\"DELETE FROM votes where chan=\u00ab'{}'\u00bb and action=\u00ab'{}'\u00bb and target like \u00ab'{}'\u00bb\"\u00ab.format(\u00bbchan,action,target\u00ab)\u00bb)\n  52|     else: db.execute(\"insert or replace into votes(chan, action, target, voters, time) values(?,?,?,?,?)\", (chan, action, target, voters, time.time()))\n  53|         \n  54|     db.commit()\n  55|     return (\"Votes to {} {}: {}/{}\".format(action, target, votecount,votemax))"
+  },
+  {
+    "eid": 829,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "% "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %",
+        "logit": 6.61,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 28.676,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def get_game_info(conn, game):\n   2|     # get the basic game properties\n   3|     cursor = conn.cursor()\n   4|     cursor.execute(\"SELECT player1,player2,size,state FROM games WHERE id = %d;\" \u00ab% \u00bbgame)\n   5|     if cursor.rowcount != 1:\n   6|         raise FormError(\"Invalid game ID\")\n   7| \n   8|     row = cursor.fetchall()[0]\n   9|     players = [row[0],row[1]]"
+  },
+  {
+    "eid": 834,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'{",
+      "}'\"\"\""
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " '{",
+        "logit": 6.901,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " '{",
+        "logit": 29.883,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   3|         json_data = request.get_json()\n   4|         if not json_data['email']:\n   5|             return jsonify({\"msg\": \"Missing email\"}), 400\n   6| \n   7|         data = database_utilities.execute_query(\n   8|             f\"\"\"select * from admins where email = \u00ab'{\u00bbjson_data['email']\u00ab}'\"\"\"\u00bb)\n   9|         if data:\n  10|             email = data[0]['email']\n  11|             access_token = create_access_token(identity=email)\n  12|             refresh_token = create_refresh_token(identity=email)\n  13| "
+  },
+  {
+    "eid": 844,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "(",
+      "%(po",
+      "t1)s",
+      " \"%(host_name)s\"",
+      " %",
+      "{"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %(",
+        "logit": 8.47,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "ask",
+        "logit": 47.088,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  21|                 ports.append('-hbawwpn %s' % wwpn)\n  22| \n  23|         # When creating a host, we need one port\n  24|         self._driver_assert(len(ports), _('_create_host: No connector ports'))\n  25|         port1 = ports.pop(0)\n  26|         ssh_cmd = \u00ab(\u00bb'svctask mkhost -force \u00ab%(po\u00bbr\u00abt1)s\u00bb -name\u00ab \"%(host_name)s\"\u00bb'\u00ab %\u00bb\n  27|                    \u00ab{\u00bb'\u00abport1\u00bb'\u00ab:\u00bb \u00abport1, 'host_name':\u00bb host_name\u00ab})\u00bb\n  28|         out, err = self._run_ssh(ssh_cmd)\n  29|         self._assert_ssh_return('successfully created' in out,\n  30|                                 '_create_host', ssh_cmd, out, err)\n  31| \n  32|         # Add any additional ports to the host\n  33|         for port in ports:\n  34|             ssh_cmd = \u00ab(\u00bb'svctask addhostport -force \u00ab%s\u00bb \u00ab%s'\u00bb \u00ab%\u00bb \u00ab(port,\u00bb host_name\u00ab))\u00bb\n  35|             out, err = self._run_ssh(ssh_cmd)\n  36| \n  37|         LOG.debug(_('leave: _create_host: host %(host)s - %(host_name)s') %\n  38|                   {'host': connector['host'], 'host_name': host_name})\n  39|         return host_name"
+  },
+  {
+    "eid": 847,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      ".fo",
+      "mat(",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "{}",
+        "logit": 9.477,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "{}",
+        "logit": 34.52,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def get_tournaments_during_month(db, scene, date):\n   2|     y, m, d = date.split('-')\n   3|     ym_date = '{}-{}'.format(y, m)\n   4|     sql = \"select url, date from matches where scene='{}' and date like '%{}%' group by url, date order by date\"\u00ab.fo\u00bbr\u00abmat(\u00bbscene, ym_date\u00ab)\u00bb\n   5|     res = db.exec(sql)\n   6|     urls = [r[0] for r in res]\n   7|     return urls"
+  },
+  {
+    "eid": 877,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "ql = ",
+      "'",
+      "'",
+      " %",
+      "\n    cursor.execute(sql",
+      "ql = "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " SET",
+        "logit": 7.789,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "s",
+        "logit": 33.096,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| @mod.route('/edit', methods=['GET', 'POST'])\n   2| def edit():\n   3|     s\u00abql = \u00bb\"SELECT * FROM users where email = \u00ab'\u00bb%s\u00ab'\u00bb;\"\u00ab %\u00bb (session['logged_email'])\u00ab\n   4|     cursor.execute(sql\u00bb)\n   5|     u = cursor.fetchone()\n   6|     if request.method == 'POST':\n   7|         s\u00abql = \u00bb\"UPDATE users SET nickname = \u00ab'\u00bb%s\u00ab'\u00bb where email = \u00ab'\u00bb%s\u00ab'\u00bb\"\u00ab \\\n   8|         %\u00bb (request.form['nickname'], session['logged_email'])\n   9|         cursor.execute(\u00absql)\n  10|         sql = \u00bb\"SELECT * FROM users where email = \u00ab'\u00bb%s\u00ab'\u00bb;\"\u00ab \\\n  11|             %\u00bb (session['logged_email'])\u00ab\n  12|         cursor.execute(sql\u00bb)\n  13|         u = cursor.fetchone()\n  14|         conn.commit()\n  15|         flash('Edit Nickname Success!')\n  16|     return render_template('users/edit.html', u=u)"
+  },
+  {
+    "eid": 894,
+    "cwe": "CWE-190",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": true,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-4b-it"
+    ],
+    "removed_span": [
+      " ",
+      " ",
+      " ",
+      " "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "n",
+        "logit": 5.962,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "->",
+        "logit": 18.872,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   5|     if (t -> Data) return;    // Already allocated\n   6| \n   7|     t-> nSamples   = atoi(cmsIT8GetProperty(it8, \"NUMBER_OF_FIELDS\"));\n   8|     t-> nPatches   = atoi(cmsIT8GetProperty(it8, \"NUMBER_OF_SETS\"));\n   9| \n  10|     t-> Data = (char**)AllocChunk\u00ab \u00bb(it8, ((cmsUInt32Number)\u00ab \u00bbt->nSamples + 1) * ((cmsUInt32Number)\u00ab \u00bbt->nPatches + 1) *sizeof\u00ab \u00bb(char*));\n  11|     if (t->Data == NULL) {\n  12| \n  13|         SynError(it8, \"AllocateDataSet: Unable to allocate data array\");\n  14|     }\n  15| "
+  },
+  {
+    "eid": 922,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "autoex = '-autoexpand' if opts['autoexpand'] else ''\n        ",
+      "-easytier ",
+      "-easytier ",
+      "''",
+      "(\n                ",
+      "(r"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %(",
+        "logit": 7.502,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "ask",
+        "logit": 43.276,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   2|         \"\"\"Create a new vdisk.\"\"\"\n   3| \n   4|         LOG.debug(_('enter: _create_vdisk: vdisk %s ') % name)\n   5| \n   6|         model_update = None\n   7|         \u00abautoex = '-autoexpand' if opts['autoexpand'] else ''\n   8|         \u00bbeasytier = '\u00ab-easytier \u00bbon' if opts['easytier'] else '\u00ab-easytier \u00bboff'\n   9| \n  10|         # Set space-efficient options\n  11|         if opts['rsize'] == -1:\n  12|             ssh_cmd_se_opt = \u00ab''\u00bb\n  13|         else:\n  14|             ssh_cmd_se_opt = \u00ab(\n  15|                 \u00bb'-rsize %\u00ab(r\u00bbs\u00abize)d%% %(autoex)s -warning %(warn)d\u00bb%%' %\u00ab\n  16| \u00bb \u00ab               {'\u00bbr\u00absize': \u00bbopts['rsize'],\n  17|                  'autoex'\u00ab:\u00bb a\u00abutoex\u00bb,\n  18|                  '\u00abwa\u00bbr\u00abn': \u00bbopts['warning']\u00ab}\u00bb)\n  19|             if opts['compression']:\n  20|                 ssh_cmd_se_opt\u00ab = ssh_cm\u00bbd\u00ab_se_opt + \u00bb'\u00ab \u00bb-compressed'\n  21|             else:\n  22|                 ssh_cmd_se_opt\u00ab = ssh_cm\u00bbd\u00ab_se_opt + \u00bb(\u00ab\n  23|                     \u00bb'\u00ab \u00bb-grainsize \u00ab%d' % \u00bbopts['grainsize'])\n  24| \n  25|         ssh_cmd = \u00ab(\u00bb'svctask mkvdisk -name \u00ab%(\u00bbname\u00ab)s\u00bb -mdiskgrp\u00ab %(mdiskgrp)s \u00bb'\u00ab\n  26|                    '-iogrp 0 -size %(size)s -unit '\n  27|                    '%(unit)s %(easytier)s %(ssh_cmd_se_opt)s'\n  28|                    % {'name': name\u00bb,\n  29|                   \u00ab 'mdiskgrp':\u00bb self.configuration.storwize_svc_volpool_name,\n  30|                    'size'\u00ab:\u00bb size, 'unit'\u00ab: units, 'easytier': easytier\u00bb,\n  31|                    'ss\u00abh_cmd_s\u00bbe\u00ab_opt':\u00bb ssh_cmd_se_opt\u00ab})\u00bb\n  32|         out, err = self._run_ssh(ssh_cmd)\n  33|         self._assert_ssh_return(len(out.strip()), '_create_vdisk',\n  34|                                 ssh_cmd, out, err)\n  35| \n  36|         # Ensure that the output is as expected"
+  },
+  {
+    "eid": 923,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      ".fo",
+      "mat(",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "\".",
+        "logit": 9.742,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " scene",
+        "logit": 31.627,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def get_monthly_ranks_for_scene(db, scene, tag):\n   2| \n   3|     sql = \"SELECT date, rank FROM ranks WHERE scene='{}' AND player='{}'\"\u00ab.fo\u00bbr\u00abmat(\u00bbscene, tag\u00ab)\u00bb\n   4|     res = db.exec(sql)\n   5| \n   6|     res = [r for r in res if played_during_month(db, scene, tag, get_previous_month(r[0]))]\n   7| \n   8|     # Build up a dict of {date: rank}"
+  },
+  {
+    "eid": 952,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'%s'",
+      " % current_institution"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %",
+        "logit": 6.612,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "s",
+        "logit": 31.963,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  20|             message = \"The institution %s is new in Solr.\" % current_institution\n  21|             if institution_table_is_filled:\n  22|                 send_message(message)\n  23|             else:\n  24|                 logging.info(message)\n  25|             sql = \"INSERT INTO institution (institution) VALUES (\u00ab'%s'\u00bb)\"\u00ab % current_institution\u00bb\n  26|             sqlite.execute(sql)\n  27|             conn.commit()"
+  },
+  {
+    "eid": 957,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "''",
+      " += \"",
+      "=",
+      "{}' \"",
+      ",",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " data",
+        "logit": 6.139,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "'",
+        "logit": 44.752,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   6|         [mandatory  ][name  ][key][value]\n   7|         \"\"\"\n   8| \n   9|         prefix = \"RCLONE_CONFIG_{}\".format(name.upper())\n  10| \n  11|         credentials = \u00ab''\u00bb\n  12|         credentials\u00ab += \"\u00bb{}_TYPE\u00ab=\u00bb'\u00ab{}' \"\u00bb.format(prefix\u00ab,\u00bb data.type\u00ab)\u00bb\n  13| \n  14|         def _addCredential(credentials, env_key, data_key):\n  15|             value = getattr(data, data_key, None)\n  16|             if value is not None:\n  17|                 credentials\u00ab += \"{}='{}' \".format(\u00bbenv_key\u00ab,\u00bb value\u00ab)\u00bb\n  18|             return credentials\n  19| \n  20| \n  21|         if data.type == 's3':\n  22|             credentials = _addCredential(credentials,"
+  },
+  {
+    "eid": 961,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "{0}",
+      "'{1}'",
+      ".format(project_id, str(expiry_date))"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "1",
+        "logit": 7.362,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "project",
+        "logit": 30.816,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   9|             WHERE t.id = th.task_id\n  10|             AND t.project_id = th.project_id\n  11|             AND t.task_status IN (1,3)\n  12|             AND th.action IN ( 'LOCKED_FOR_VALIDATION','LOCKED_FOR_MAPPING' )\n  13|             AND th.action_text IS NULL\n  14|             AND t.project_id = \u00ab{0}\u00bb\n  15|             AND th.action_date <= \u00ab'{1}'\u00bb\n  16|             '''\u00ab.format(project_id, str(expiry_date))\u00bb\n  17| \n  18|         old_tasks = db.engine.execute(old_locks_query)\n  19| \n  20|         if old_tasks.rowcount == 0:\n  21|             # no tasks older than the delta found, return without further processing"
+  },
+  {
+    "eid": 967,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " %s ",
+      " %"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "s",
+        "logit": 9.473,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "ask",
+        "logit": 46.63,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def _delete_host(self, host_name):\n   2|         \"\"\"Delete a host on the storage system.\"\"\"\n   3| \n   4|         LOG.debug(_('enter: _delete_host: host %s ') % host_name)\n   5| \n   6|         ssh_cmd = 'svctask rmhost\u00ab %s \u00bb'\u00ab %\u00bb host_name\n   7|         out, err = self._run_ssh(ssh_cmd)\n   8|         # No output should be returned from rmhost\n   9|         self._assert_ssh_return(len(out.strip()) == 0,\n  10|                                 '_delete_host', ssh_cmd, out, err)\n  11| "
+  },
+  {
+    "eid": 968,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 6,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " and new_src != data['src']",
+      "#",
+      "d",
+      "'",
+      "o",
+      "orry "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "encode",
+        "logit": 5.491,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "src",
+        "logit": 29.879,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   3|     data = await request.post()\n   4|     item = Item(data['src'])\n   5| \n   6|     # Update name\n   7|     new_src = data.get('new_src')\n   8|     if new_src\u00ab and new_src != data['src']\u00bb:\n   9|         \u00ab#\u00bb \u00abd\u00bbon\u00ab'\u00bbt need t\u00abo\u00bb w\u00aborry \u00bbab\u00abou\u00bbt \u00abhtml\u00bb \u00abunquo\u00bbte\n  10|         shutil.move(item.abspath, \u00absettings.STORAGE_DIR + \u00bbnew_s\u00abrc\u00bb)\n  11|         old_backup_abspath = item.backup_abspath\n  12|         item = Item(new_src)\n  13|         if os.path.isfile(old_backup_abspath):\n  14|             shutil.move(old_backup_abspath, item.backup_abspath)\n  15| "
+  },
+  {
+    "eid": 992,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "ql = ",
+      "d",
+      " %",
+      "\n        cursor.execute(sql",
+      "ql = ",
+      "'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "';",
+        "logit": 8.689,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " content",
+        "logit": 35.769,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| @mod.route('/edit/<int:cmt_id>', methods=['GET', 'POST'])\n   2| def edit(cmt_id):\n   3|     m = None\n   4|     if request.method == 'GET':\n   5|         s\u00abql = \u00bb\"SELECT * FROM comment where cmt_id = %\u00abd\u00bb;\"\u00ab %\u00bb (cmt_id)\u00ab\n   6|         cursor.execute(sql\u00bb)\n   7|         m = cursor.fetchone()\n   8|         return render_template('comment/edit.html', m=m, cmt_id=cmt_id)\n   9| \n  10|     if request.method == 'POST':\n  11|         content = request.form['content']\n  12|         s\u00abql = \u00bb\"UPDATE comment SET content = \u00ab'\u00bb%s\u00ab'\u00bb where cmt_id = \u00ab'\u00bb%\u00abd'\u00bb;\"\u00ab \\\n  13|             %\u00bb (content, cmt_id)\u00ab\n  14|         cursor.execute(sql\u00bb)\n  15|         conn.commit()\n  16|         s\u00abql = \u00bb\"SELECT msg_id FROM comment where cmt_id = %\u00abd\u00bb;\"\u00ab %\u00bb (cmt_id)\u00ab\n  17|         cursor.execute(sql\u00bb)\n  18|         m = cursor.fetchone()\n  19|         flash('Edit Success!')\n  20|         return redirect(url_for('comment.show', msg_id=m[0]))\n  21| \n  22|     return render_template('comment/edit.html', m=m, cmt_id=cmt_id)"
+  },
+  {
+    "eid": 1022,
+    "cwe": "CWE-416",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "if",
+      "(!",
+      "__sk_",
+      "_",
+      "k",
+      "\n"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "rr",
+        "logit": 2.529,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "rt",
+        "logit": 27.26,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   4| \tconst struct ip_options_rcu *inet_opt;\n   5| \t__be32 daddr = inet->inet_daddr;\n   6| \tstruct flowi4 fl4;\n   7| \tstruct rtable *rt;\n   8| \n   9| \t\u00abif\u00bb \u00ab(!\u00bb __sk_dst_get(sk) || \u00ab__sk_\u00bbdst\u00ab_\u00bbcheck(s\u00abk\u00bb, 0))\n  10| \t\treturn;\n  11| \u00ab\n  12| \u00bb\t\u00abrcu_read_lock();\u00bb\n  13| \tinet_opt = rcu_dereference(inet->inet_opt);\n  14| \tif (inet_opt && inet_opt->opt.srr)\n  15| \t\tdaddr = inet_opt->opt.faddr;\n  16| \trt = ip_route_output_ports(sock_net(sk), &fl4, sk, daddr,\n  17| \t\t\t\t   inet->inet_saddr, inet->inet_dport,\n  18| \t\t\t\t   inet->inet_sport, sk->sk_protocol,\n  19| \t\t\t\t   RT_CONN_FLAGS(sk), sk->sk_bound_dev_if);\n  20| \t\u00abif\u00bb \u00ab(\u00bb!IS_ERR(rt)\u00ab)\u00bb\n  21| \t\u00ab\t__\u00bbsk_dst_set(sk, \u00ab&rt->\u00bbdst);\n  22| \trcu_read_unlock();\n  23| }"
+  },
+  {
+    "eid": 1036,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "d",
+      "%(",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "\"%(",
+        "logit": 9.894,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": ")",
+        "logit": 29.867,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def deletePost(self,postid):\n   2|         sqlText=\"delete from post where post.postid=%\u00abd\u00bb\"\u00ab%(\u00bbpostid\u00ab)\u00bb\n   3|         result=sql.deleteDB(self.conn,sqlText)\n   4|         return result;"
+  },
+  {
+    "eid": 1055,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "verb, ",
+      "li_args",
+      "\n        cli_arg_strings = []\n        if cli_args:\n            for k, v in cli_args.items():\n                if k == '':\n                    cli_arg_strings.append(\" %s\" % k)\n                else:\n                    cli_arg_strings.append(\" %s=%s\" % (k, v))\n\n        cmd = verb + ''.join(cli_arg_strings)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " v",
+        "logit": 8.768,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "cmd",
+        "logit": 38.41,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def _cli_run(self, \u00abverb, \u00bbc\u00abli_args\u00bb):\n   2|         \"\"\"Runs a CLI command over SSH, without doing any result parsing.\"\"\"\u00ab\n   3|         cli_arg_strings = []\n   4|         if cli_args:\n   5|             for k, v in cli_args.items():\n   6|                 if k == '':\n   7|                     cli_arg_strings.append(\" %s\" % k)\n   8|                 else:\n   9|                     cli_arg_strings.append(\" %s=%s\" % (k, v))\n  10| \n  11|         cmd = verb + ''.join(cli_arg_strings)\u00bb\n  12|         LOG.debug(\"SSH CMD = %s \" % cmd)\n  13| \n  14|         (stdout, stderr) = self._run_ssh(cmd, False)\n  15| \n  16|         # we have to strip out the input and exit lines"
+  },
+  {
+    "eid": 1080,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " ",
+      " '%s'",
+      " % (inverter_serial)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " %",
+        "logit": 8.768,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "serial",
+        "logit": 30.925,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def get_previous_yields(self, inverter_serial):\n   2|         query = '''\n   3|            SELECT TimeStamp, EToday, ETotal\n   4|            FROM Inverters\n   5|            WHERE Serial\u00ab \u00bb=\u00ab '%s'\u00bb\n   6|         '''\u00ab % (inverter_serial)\u00bb\n   7|         self.c.execute(query)\n   8|         data = self.c.fetchone()\n   9|         return data[0], data[1], data[2]"
+  },
+  {
+    "eid": 1102,
+    "cwe": "CWE-079",
+    "lang": "python",
+    "n_detect": 4,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "=",
+      "\n    # Chrome considers any URL with more than two slashes to be absolute",
+      " but\n    # urlparse is not so flexible. Treat any url with three slashes as unsafe.\n    if url.startswith('///'):\n        return False\n    url_info = urlparse(url)\n    # Forbid URLs like http:///example.com - with a scheme, but without a hostname.\n    # In that URL, example.com is not the hostname but, a path component. However,\n    # Chrome will still consider example.com to be the hostname, so we must not\n    # allow this syntax.\n    if not url_info.netloc and url_info.scheme:\n        return False\n    # Forbid URLs that start with control characters. Some browsers (like\n    # Chrome) ignore quite a few control characters at the start of a\n    # URL and might consider the URL as scheme relative.\n    if unicodedata.category(url[0])[0] == 'C':\n        return False\n    return ((not url_info.netloc or url_info.netloc ==",
+      " and\n            (not url_info.scheme or url_info.scheme in ['http', 'https']))"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " (",
+        "logit": 3.811,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " ``",
+        "logit": 29.413,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   8|     if url is not None:\n   9|         url = url.strip()\n  10|     if not url:\n  11|         return False\n  12|     # Chrome treats \\ completely as /\n  13|     url \u00ab=\u00bb url.replace('\\\\', '/')\u00ab\n  14|     # Chrome considers any URL with more than two slashes to be absolute\u00bb,\u00ab but\n  15|     # urlparse is not so flexible. Treat any url with three slashes as unsafe.\n  16|     if url.startswith('///'):\n  17|         return False\n  18|     url_info = urlparse(url)\n  19|     # Forbid URLs like http:///example.com - with a scheme, but without a hostname.\n  20|     # In that URL, example.com is not the hostname but, a path component. However,\n  21|     # Chrome will still consider example.com to be the hostname, so we must not\n  22|     # allow this syntax.\n  23|     if not url_info.netloc and url_info.scheme:\n  24|         return False\n  25|     # Forbid URLs that start with control characters. Some browsers (like\n  26|     # Chrome) ignore quite a few control characters at the start of a\n  27|     # URL and might consider the URL as scheme relative.\n  28|     if unicodedata.category(url[0])[0] == 'C':\n  29|         return False\n  30|     return ((not url_info.netloc or url_info.netloc ==\u00bb host)\u00ab and\n  31|             (not url_info.scheme or url_info.scheme in ['http', 'https']))\u00bb"
+  },
+  {
+    "eid": 1130,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "{id}",
+      ".format",
+      "=id"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "format",
+        "logit": 8.544,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "format",
+        "logit": 26.822,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def delete_playlist(id, db):\n   2|     db.execute(\"DELETE FROM playlist where id=\u00ab{id}\u00bb;\"\u00ab.format\u00bb(id\u00ab=id\u00bb))"
+  },
+  {
+    "eid": 1148,
+    "cwe": "CWE-079",
+    "lang": "python",
+    "n_detect": 2,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [
+      "qwen-32b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it"
+    ],
+    "removed_span": [
+      ".get(",
+      ")",
+      "\n"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "ess",
+        "logit": 5.509,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": ".",
+        "logit": 32.002,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   5| \n   6|         Args:\n   7|             request (Request): Incoming request.\n   8| \n   9|         \"\"\"\n  10|         csessid = request.args\u00ab.get(\u00bb'csessid'\u00ab)\u00bb[0]\u00ab\n  11| \u00bb\n  12|         self.last_alive[csessid] = (time.time(), False)\n  13|         sess = self.sessionhandler.sessions_from_csessid(csessid)\n  14|         if sess:\n  15|             sess = sess[0]"
+  },
+  {
+    "eid": 1152,
+    "cwe": "CWE-190",
+    "lang": "c",
+    "n_detect": 3,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-12b-it",
+      "gemma-27b-it"
+    ],
+    "removed_span": [
+      "Size = zend_hash_check_size(nSize);\n\tht->nTable"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "Z",
+        "logit": 34.602,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "COUNT",
+        "logit": 26.297,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| ZEND_API void ZEND_FASTCALL _zend_hash_init(HashTable *ht, uint32_t nSize, dtor_func_t pDestructor, zend_bool persistent ZEND_FILE_LINE_DC)\n   2| {\n   3| \tGC_REFCOUNT(ht) = 1;\n   4| \tGC_TYPE_INFO(ht) = IS_ARRAY;\n   5| \tht->u.flags = (persistent ? HASH_FLAG_PERSISTENT : 0) | HASH_FLAG_APPLY_PROTECTION | HASH_FLAG_STATIC_KEYS;\n   6| \tht->nTable\u00abSize = zend_hash_check_size(nSize);\n   7| \tht->nTable\u00bbMask = HT_MIN_MASK;\n   8| \tHT_SET_DATA_ADDR(ht, &uninitialized_bucket);\n   9| \tht->nNumUsed = 0;\n  10| \tht->nNumOfElements = 0;\n  11| \tht->nInternalPointer = HT_INVALID_IDX;\n  12| \tht->nNextFreeElement = 0;"
+  },
+  {
+    "eid": 1159,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "{0}",
+      "{1}}}'\".format(user_id, ",
+      ")",
+      "{0}",
+      "{1}'''.format(project_id, ",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "1",
+        "logit": 10.585,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "format",
+        "logit": 28.191,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     @staticmethod\n   2|     def upsert_mapped_projects(user_id: int, project_id: int):\n   3|         \"\"\" Adds projects to mapped_projects if it doesn't exist \"\"\"\n   4|         sql = \"select * from users where id = \u00ab{0}\u00bb and projects_mapped @> '{{\u00ab{1}}}'\".format(user_id, \u00bbproject_id\u00ab)\u00bb\n   5|         result = db.engine.execute(sql)\n   6| \n   7|         if result.rowcount > 0:\n   8|             return  # User has previously mapped this project so return\n   9| \n  10|         sql = '''update users\n  11|                     set projects_mapped = array_append(projects_mapped, \u00ab{0}\u00bb)\n  12|                   where id = \u00ab{1}'''.format(project_id, \u00bbuser_id\u00ab)\u00bb\n  13| \n  14|         db.engine.execute(sql)"
+  },
+  {
+    "eid": 1163,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'\"+proxy_id+\"'",
+      "'\"+proxy_id+\"'"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " LIMIT",
+        "logit": 5.636,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " voting",
+        "logit": 32.61,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  20|         proxy_line = [0] * 5\n  21| \n  22|         proxy_id = results[p][0]\n  23|         proxy_line[0] = proxy_id\n  24| \n  25|         query = \"SELECT account_name, amount FROM holders WHERE account_id=\u00ab'\"+proxy_id+\"'\u00bb LIMIT 1\"\n  26|         cur.execute(query)\n  27|         proxy = cur.fetchone()\n  28| \n  29|         try:\n  30|             proxy_name = proxy[0]\n  31|             proxy_amount = proxy[1]\n  32|         except:\n  33|             proxy_name = \"unknown\"\n  34|             proxy_amount = 0\n  35| \n  36| \n  37|         proxy_line[1] = proxy_name\n  38| \n  39|         query = \"SELECT amount, account_id FROM holders WHERE voting_as=\u00ab'\"+proxy_id+\"'\u00bb\"\n  40|         cur.execute(query)\n  41|         results2 = cur.fetchall()\n  42| \n  43|         proxy_line[2] = int(proxy_amount)\n  44| "
+  },
+  {
+    "eid": 1180,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'{",
+      "}'\"\"\""
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " '{",
+        "logit": 8.691,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " '{",
+        "logit": 28.502,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def get(self, user_id):\n   2|         \"\"\" Fetch data for user with corresponding user_id \"\"\"\n   3|         return database_utilities.execute_query(f\"\"\"select * from users where user_id = \u00ab'{\u00bbuser_id\u00ab}'\"\"\"\u00bb)"
+  },
+  {
+    "eid": 1182,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'",
+      "+ ",
+      "+ \"'\"",
+      "'\" + str(x[0]) + \"'",
+      "'",
+      "+"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " '\"",
+        "logit": 7.669,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " '\"",
+        "logit": 32.191,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   3|     conn2 = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + '\\\\cf.db')\n   4|     settings = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + \"\\\\settings.db\")\n   5|     cursor = conn.cursor()\n   6|     cursor2 = conn2.cursor()\n   7|     cursor_settings = settings.cursor()\n   8|     cursor_settings.execute(\"select last_problem from users where chat_id = \u00ab'\u00bb\" \u00ab+ \u00bbstr(chat_id) \u00ab+ \"'\"\u00bb)\n   9|     update_eq = cursor_settings.fetchone()\n  10|     cursor_settings.execute(\"select * from last_update_problemset\")\n  11|     update_base = cursor_settings.fetchone()\n  12|     last_problem = update_base[0]\n  13|     if update_eq[0] != update_base[0]:\n  14|         cursor2.execute(\"SELECT * FROM problems\")\n  15|         x = cursor2.fetchone()\n  16|         while x != None:\n  17|             cursor.execute(\"select * from result where problem = \u00ab'\" + str(x[0]) + \"'\u00bb and diff = \u00ab'\u00bb\" \u00ab+\u00bb str(x[1])\u00ab + \"'\"\u00bb)\n  18|             x2 = cursor.fetchone()\n  19|             if x2 == None:\n  20|                 cursor.execute(\"insert into result values (?, ?, ? )\", (x[0], x[1], \"NULL\"))\n  21|             last_problem = x\n  22|             x = cursor2.fetchone()\n  23|         conn2.close()\n  24|         settings.close()\n  25|     if len(last_problem) == 2:\n  26|         last_problem = last_problem[0] + last_problem[1]\n  27| \n  28|     url = 'http://codeforces.com/submissions/' + username\n  29|     r = requests.get(url)\n  30|     max_page = 1\n  31|     soup = BeautifulSoup(r.text, \"lxml\")\n  32| \n  33|     for link in soup.find_all(attrs={\"class\": \"page-index\"}):\n  34|         s = link.find('a')\n  35|         s2 = s.get(\"href\").split('/')\n  36|         max_page = max(max_page, int(s2[4]))\n  37| \n  38|     v = False\n  39|     r = requests.get('http://codeforces.com/submissions/' + username + '/page/0')\n  40|     soup = BeautifulSoup(r.text, \"lxml\")\n  41|     last_try_new = soup.find(attrs={\"class\": \"status-small\"})\n  42|     last_try_new = str(last_try_new).split()\n  43|     last_try_new = str(last_try_new[2]) + str(last_try_new[3])\n  44|     for i in range(1, max_page + 1):\n  45|         r = requests.get('http://codeforces.com/submissions/' + username + '/page/' + str(i))\n  46|         soup = BeautifulSoup(r.text, \"lxml\")\n  47|         count = 0\n  48|         j = 0\n  49|         ver = soup.find_all(attrs={\"class\": \"submissionVerdictWrapper\"})\n  50|         last_try = soup.find_all(attrs={\"class\": \"status-small\"})\n  51|         for link in soup.find_all('a'):\n  52|             last_try_date = str(last_try[j]).split()\n  53|             last_try_date = str(last_try_date[2]) + str(last_try_date[3])\n  54|             if last_try_date == last_update:\n  55|                 v = True\n  56|                 break\n  57|             s = link.get('href')\n  58|             if s != None and s.find('/problemset') != -1:\n  59|                 s = s.split('/')\n  60|                 if len(s) == 5:\n  61|                     s2 = str(ver[count]).split()\n  62|                     s2 = s2[5].split('\\\"')\n  63|                     count += 1\n  64|                     j += 1\n  65|                     cursor.execute(\"select * from result where problem = \u00ab'\"\u00bb \u00ab+ s[3] + \"'\u00bband diff = \u00ab'\u00bb\" \u00ab+\u00bb s[4]\u00ab + \"'\"\u00bb)\n  66|                     x = cursor.fetchone()\n  67|                     if s2[1] == 'OK' and x != None:\n  68|                         cursor.execute(\u00ab\n  69|                             \u00bb\"update result set verdict = \u00ab'\" + s2[1] + \"'\u00bb where problem = \u00ab'\" + s[3] + \"'\u00bb and diff = \u00ab'\u00bb\" \u00ab+\n  70| \u00bb \u00ab                          \u00bb s[4]\u00ab + \"'\"\u00bb)\n  71|                     if x[2] != 'OK':\n  72|                         cursor.execute(\u00ab\n  73|                             \u00bb\"update result set verdict = \u00ab'\" + s2[1] + \"'\u00bb where problem = \u00ab'\" + s[3] + \"'\u00bb and diff = \u00ab'\u00bb\" \u00ab+\n  74| \u00bb \u00ab                          \u00bb s[4]\u00ab + \"'\"\u00bb)\n  75|         if v:\n  76|             break\n  77| \n  78|     conn.commit()\n  79|     conn.close()\n  80| \n  81|     settings = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + \"\\\\settings.db\")\n  82|     conn = settings.cursor()\n  83|     conn.execute(\"update users set username = \u00ab'\" + str(username) + \"'\u00bb where chat_id = \u00ab'\u00bb\" \u00ab+\u00bb str(chat_id)\u00ab + \"'\"\u00bb)\n  84|     conn.execute(\"update users set last_update = \u00ab'\u00bb\" \u00ab+ \u00bbstr(last_try_new)\u00ab + \"' where chat_id = '\" +\u00bb str(chat_id)\u00ab + \"'\"\u00bb)\n  85|     conn.execute(\"update users set last_problem = \u00ab'\u00bb\" \u00ab+ \u00bbstr(last_problem)\u00ab + \"' where chat_id = '\" +\u00bb str(chat_id)\u00ab + \"'\"\u00bb)\n  86| \n  87|     settings.commit()\n  88|     settings.close()"
+  },
+  {
+    "eid": 1203,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "d",
+      "'",
+      "'",
+      "%(",
+      ")"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "%",
+        "logit": 8.488,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "s",
+        "logit": 29.47,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def insertData(self,userid,post):\n   2|         sqlText=\"insert into post(userid,date,comment) \\\n   3|                 values(%\u00abd\u00bb,current_timestamp(0),\u00ab'\u00bb%s\u00ab'\u00bb);\"\u00ab%(\u00bbuserid,post\u00ab)\u00bb;\n   4|         result=sql.insertDB(self.conn,sqlText)\n   5|         return result;"
+  },
+  {
+    "eid": 1217,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'{}'",
+      ".format(",
+      ")",
+      "{0}",
+      "'{1}'",
+      ".format"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "0",
+        "logit": 8.557,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " karma",
+        "logit": 32.807,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   3|     db = db_connect()\n   4|     cursor = db.cursor()\n   5|     if karma is None:\n   6|         try:\n   7|             cursor.execute('''\n   8|                 INSERT INTO people(name,karma,shame) VALUES(\u00ab'{}'\u00bb,1,0)\n   9|                 '''\u00ab.format(\u00bbname\u00ab)\u00bb)\n  10|             db.commit()\n  11|             logger.debug('Inserted into karmadb 1 karma for {}'.format(name))\n  12|             return 1\n  13|         except Exception as e:\n  14|             logger.error('Execution failed with error: {}'.format(e))\n  15|             raise\n  16|     else:\n  17|         karma = karma + 1\n  18|         try:\n  19|             cursor.execute('''\n  20|                 UPDATE people SET karma = \u00ab{0}\u00bb WHERE name = \u00ab'{1}'\u00bb\n  21|                 '''\u00ab.format\u00bb(karma, name))\n  22|             db.commit()\n  23|             logger.debug('Inserted into karmadb {} karma for {}'.format(\n  24|                 karma, name))\n  25|             return karma\n  26| "
+  },
+  {
+    "eid": 1222,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "\n",
+      "'{}'",
+      ".format(data)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "format",
+        "logit": 8.254,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "format",
+        "logit": 29.537,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def add_input(self,data):\n   2|         connection = self.connect()\n   3| \u00ab\n   4| \u00bb        try:\n   5|             query = \"INSERT INTO crimes (description) VALUES (\u00ab'{}'\u00bb);\"\u00ab.format(data)\u00bb\n   6|             with connection.cursor() as cursor:\n   7|                 cursor.execute(query)\n   8|                 connection.commit()\n   9|         finally:\n  10|             connection.close()"
+  },
+  {
+    "eid": 1232,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      " ",
+      "'{}'",
+      ".format(data)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "format",
+        "logit": 7.617,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "{}",
+        "logit": 28.286,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def add_input(self,data):\n   2|         connection = self.connect()\n   3|         try:\n   4|             # The following is a flaw\n   5|             query = \"INSERT INTO crimes(description) VALUES\u00ab \u00bb(\u00ab'{}'\u00bb);\"\u00ab.format(data)\u00bb\n   6|             with connection.cursor() as cursor:\n   7|                 cursor.execute(query)\n   8|                 connection.commit()\n   9|         finally:\n  10|             connection.close()"
+  },
+  {
+    "eid": 1234,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 2,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-27b-it"
+    ],
+    "removed_span": [
+      "/* Report violation if chunk len overflows */\n\t\tch_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));\n\t\tif (ch_end > skb_tail_pointer(skb))\n\t\t\treturn sctp_sf_violation_chunklen(net, ep, asoc, type, arg,\n\t\t\t\t\t\t  commands);\n\n\t\t"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "_ack",
+        "logit": 5.86,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "p",
+        "logit": 26.342,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  51| \t\t\t\t\tbreak;\n  52| \t\t\t\t}\n  53| \t\t\t}\n  54| \t\t}\n  55| \n  56| \t\t\u00ab/* Report violation if chunk len overflows */\n  57| \t\tch_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));\n  58| \t\tif (ch_end > skb_tail_pointer(skb))\n  59| \t\t\treturn sctp_sf_violation_chunklen(net, ep, asoc, type, arg,\n  60| \t\t\t\t\t\t  commands);\n  61| \n  62| \t\t\u00bbch = (sctp_chunkhdr_t *) ch_end;\n  63| \t} while (ch_end < skb_tail_pointer(skb));\n  64| \n  65| \tif (ootb_shut_ack)\n  66| \t\treturn sctp_sf_shut_8_4_5(net, ep, asoc, type, arg, commands);\n  67| \telse if (ootb_cookie_ack)"
+  },
+  {
+    "eid": 1236,
+    "cwe": "CWE-078",
+    "lang": "python",
+    "n_detect": 5,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": false,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "'/' no",
+      " ",
+      "n ",
+      "os.path.",
+      "os.path.",
+      "3"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": ".join",
+        "logit": 4.56,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " '/'",
+        "logit": 26.631,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| @app.route('/api/uploads/<sid>/logs')\n   2| def get_logs(sid):\n   3|     if \u00ab'/' no\u00bbt\u00ab \u00bbi\u00abn \u00bbsid:\n   4|         path = \u00abos.path.\u00bbjoin(app.config['UPLOAD_FOLDER'], sid)\n   5|         if os.path.isfile(\u00abos.path.\u00bbjoin(path, app.config['LOG_FILE'])):\n   6|             return send_from_directory(directory=path,\n   7|                                         filename=app.config['LOG_FILE'])\n   8|         else:\n   9|             abort(404)\n  10|     else:\n  11|         abort(40\u00ab3\u00bb)"
+  },
+  {
+    "eid": 1240,
+    "cwe": "CWE-476",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-27b-it"
+    ],
+    "removed_span": [
+      "*",
+      " = (struct sockaddr_rc *) addr",
+      "cha",
+      " = sa->rc_channel;\n\tint",
+      ";\n\n\tBT_DBG(\"sk %p %pMR\", sk, &sa->rc_bdaddr)",
+      "->"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "\tint",
+        "logit": 0.902,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "rc",
+        "logit": 24.937,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| static int rfcomm_sock_bind(struct socket *sock, struct sockaddr *addr, int addr_len)\n   2| {\n   3| \tstruct sockaddr_rc \u00ab*\u00bbsa\u00ab = (struct sockaddr_rc *) addr\u00bb;\n   4| \tstruct sock *sk = sock->sk;\n   5| \tint \u00abcha\u00bbn\u00ab = sa->rc_channel;\n   6| \tint\u00bb err = 0\u00ab;\n   7| \n   8| \tBT_DBG(\"sk %p %pMR\", sk, &sa->rc_bdaddr)\u00bb;\n   9| \n  10| \tif (!addr || addr->sa_family != AF_BLUETOOTH)\n  11| \t\treturn -EINVAL;\n  12| \n  13| \tlock_sock(sk);\n  14| \n  15| \tif (sk->sk_state != BT_OPEN) {\n  16| \t\terr = -EBADFD;\n  17| \t\tgoto done;\n  18| \t}\n  19| \n  20| \tif (sk->sk_type != SOCK_STREAM) {\n  21| \t\terr = -EINVAL;\n  22| \t\tgoto done;\n  23| \t}\n  24| \n  25| \twrite_lock(&rfcomm_sk_list.lock);\n  26| \n  27| \tif (chan && __rfcomm_get_listen_sock_by_addr(chan, &sa\u00ab->\u00bbrc_bdaddr)) {\n  28| \t\terr = -EADDRINUSE;\n  29| \t} else {\n  30| \t\t/* Save source address */\n  31| \t\tbacpy(&rfcomm_pi(sk)->src, &sa\u00ab->\u00bbrc_bdaddr);\n  32| \t\trfcomm_pi(sk)->channel = chan;\n  33| \t\tsk->sk_state = BT_BOUND;\n  34| \t}\n  35| \n  36| \twrite_unlock(&rfcomm_sk_list.lock);"
+  },
+  {
+    "eid": 1265,
+    "cwe": "CWE-787",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "str",
+      "(password)"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "UTH",
+        "logit": 2.775,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "_",
+        "logit": 18.247,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  18| \t\tlength += (AUTH_PASS_LEN - 1);\t\t/* round it up */\n  19| \t\tlength &= ~(AUTH_PASS_LEN - 1);\t\t/* chop it off */\n  20| \t}\t\t\t\t\t\t/* 16*N maps to itself */\n  21| \n  22| \tmemset(hashed, 0, length);\n  23| \tmemcpy(hashed, password, \u00abstr\u00bblen\u00ab(password)\u00bb);\n  24| \n  25| \tattr = find_attribute(request, PW_PASSWORD);\n  26| \n  27| \tif (type == PW_PASSWORD) {\n  28| \t\tvector = request->vector;"
+  },
+  {
+    "eid": 1275,
+    "cwe": "CWE-022",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "s.",
+      ".jo",
+      "b",
+      "olute_path",
+      "p",
+      "oce"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "('",
+        "logit": 8.902,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "as",
+        "logit": 29.609,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def _inject_file_into_fs(fs, path, contents):\n   2|     absolute_path = o\u00abs.\u00bbpath\u00ab.jo\u00bbin(fs, path.lstrip('/'))\n   3|     parent_dir = os.path.dirname(absolute_path)\n   4|     utils.execute('mkdir', '-p', parent_dir, run_as_root=True)\n   5|     utils.execute('tee', a\u00abb\u00bbs\u00abolute_path\u00bb, \u00abp\u00bbr\u00aboce\u00bbs\u00abs_input=contents,\n   6|           run_as_root=True\u00bb)"
+  },
+  {
+    "eid": 1293,
+    "cwe": "CWE-476",
+    "lang": "c",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": true,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-4b-it"
+    ],
+    "removed_span": [
+      "(",
+      "f",
+      "!=",
+      "0x100"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " VO",
+        "logit": 6.847,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " VO",
+        "logit": 21.317,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   4|     int VO = 0, VOL = 0, VOP = 0, VISO = 0, res = 0;\n   5|     int i;\n   6| \n   7|     for (i = 0; i < probe_packet->buf_size; i++) {\n   8|         temp_buffer = (temp_buffer << 8) + probe_packet->buf[i];\n   9|         if (\u00ab(\u00bbtemp_buffer & 0xfffff\u00abf\u00bb00) \u00ab!=\u00bb \u00ab0x100\u00bb)\n  10|             continue;\n  11| \n  12|         if (temp_buffer == VOP_START_CODE)\n  13|             VOP++;\n  14|         else if (temp_buffer == VISUAL_OBJECT_START_CODE)"
+  },
+  {
+    "eid": 1313,
+    "cwe": "CWE-079",
+    "lang": "python",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": true,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-4b-it"
+    ],
+    "removed_span": [
+      "ark",
+      "own",
+      ", extensions=[\n                'markdown.extensions.extra',\n                'markdown.extensions.codehilite',\n                'markdown.extensions.toc',\n            ]"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " queryset",
+        "logit": 4.11,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "time",
+        "logit": 29.663,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def get_queryset(self, **kwargs):\n   2|         queryset = Article.objects.order_by('-time')\n   3|         for i in queryset:\n   4|             i.md = m\u00abark\u00bbd\u00abown\u00bb(i.content\u00ab, extensions=[\n   5|                 'markdown.extensions.extra',\n   6|                 'markdown.extensions.codehilite',\n   7|                 'markdown.extensions.toc',\n   8|             ]\u00bb)\n   9| \n  10|         return queryset"
+  },
+  {
+    "eid": 1318,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      " ",
+      " "
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "match",
+        "logit": 37.393,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " ==",
+        "logit": 24.45,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| matchCurrentInput(\n   2| \t\tconst InString *input, int pos, const widechar *passInstructions, int passIC) {\n   3| \tint k;\n   4| \tint kk = pos;\n   5| \tfor (k = passIC + 2;\u00ab \u00bbk < passIC + 2 + passInstructions[passIC + 1];\u00ab \u00bbk++)\n   6| \t\tif (input->chars[kk] == ENDSEGMENT || passInstructions[k] != input->chars[kk++])\n   7| \t\t\treturn 0;\n   8| \treturn 1;\n   9| }"
+  },
+  {
+    "eid": 1339,
+    "cwe": "CWE-022",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      "di"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": "path",
+        "logit": 5.453,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "path",
+        "logit": 30.489,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "  58| \t\tif (rpath[1] != 0)\n  59| \t\t\tstrlcat(rpath, \"/\", sizeof(rpath));\n  60| \t\tstrlcat(rpath, name, sizeof(rpath));\n  61| \t}\n  62| \n  63| \tif (!chrooted && strncmp(\u00abdi\u00bbr, home, strlen(home))) {\n  64| \t\tDBG(\"Failed non-chroot dir:%s vs home:%s\", dir, home);\n  65| \t\treturn NULL;\n  66| \t}\n  67| \n  68| \treturn rpath;"
+  },
+  {
+    "eid": 1355,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 3,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it"
+    ],
+    "removed_span": [
+      "c",
+      ".execute('''",
+      "''',"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " (%",
+        "logit": 5.329,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "name",
+        "logit": 31.594,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1| def new_category(category_name):\n   2|     try:\n   3|         conn = check_heroku_db()\n   4|         cur = conn.cursor()\n   5|         \u00abc\u00bbur\u00ab.execute('''\u00bbINSERT INTO categories (cat_name) VALUES (%s)\u00ab''',\u00bb (category_name,))\n   6|         conn.commit()\n   7|         conn.close()\n   8| \n   9|     except psycopg2.DatabaseError as e:\n  10|         print('Error %s' % e)"
+  },
+  {
+    "eid": 1397,
+    "cwe": "CWE-125",
+    "lang": "c",
+    "n_detect": 0,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": false,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [],
+    "removed_span": [
+      ",",
+      "\t"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " =",
+        "logit": 3.293,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " r",
+        "logit": 16.591,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   6| \tif (op_byte == 0xaa) {\n   7| \t\t// handle a table switch condition\n   8| \t\tif (pos + 8 > len) {\n   9| \t\t\treturn op->size;\n  10| \t\t}\n  11| \t\tint min_val = (ut32)(UINT (data, pos + 4))\u00ab,\u00bb\n  12| \t\t\u00ab\t\u00bbmax_val = (ut32)(UINT (data, pos + 8));\n  13| \n  14| \t\tut32 default_loc = (ut32) (UINT (data, pos)), cur_case = 0;\n  15| \t\top->switch_op = r_anal_switch_op_new (addr, min_val, default_loc);\n  16| \t\tRAnalCaseOp *caseop = NULL;\n  17| \t\tpos += 12;"
+  },
+  {
+    "eid": 1411,
+    "cwe": "CWE-089",
+    "lang": "python",
+    "n_detect": 7,
+    "detect": {
+      "qwen-32b": true,
+      "qwen-7b": true,
+      "gemma-1b-it": true,
+      "gemma-4b-it": true,
+      "gemma-12b-it": true,
+      "gemma-27b-it": true,
+      "gemma-12b-pt": true
+    },
+    "qwen_detect": [
+      "qwen-32b",
+      "qwen-7b"
+    ],
+    "gemma_detect": [
+      "gemma-1b-it",
+      "gemma-4b-it",
+      "gemma-12b-it",
+      "gemma-27b-it",
+      "gemma-12b-pt"
+    ],
+    "removed_span": [
+      "c",
+      "sor.execute(",
+      "'",
+      "'",
+      "%",
+      ";"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " (",
+        "logit": 6.367,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": " %",
+        "logit": 24.094,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   7|     Args:\n   8|       name: the player's full name (need not be unique).\n   9|     \"\"\"\n  10|     conn = connect()\n  11|     cursor = conn.cursor()\n  12|     \u00abc\u00bbur\u00absor.execute(\u00bb\"INSERT INTO players (name) VALUES (\u00ab'\u00bb%s\u00ab'\u00bb)\" \u00ab%\u00bb (name,))\u00ab;\u00bb\n  13|     conn.commit()\n  14|     conn.close()"
+  },
+  {
+    "eid": 1428,
+    "cwe": "CWE-079",
+    "lang": "python",
+    "n_detect": 1,
+    "detect": {
+      "qwen-32b": false,
+      "qwen-7b": false,
+      "gemma-1b-it": false,
+      "gemma-4b-it": true,
+      "gemma-12b-it": false,
+      "gemma-27b-it": false,
+      "gemma-12b-pt": false
+    },
+    "qwen_detect": [],
+    "gemma_detect": [
+      "gemma-4b-it"
+    ],
+    "removed_span": [
+      "ark",
+      "own",
+      ",\n                                 extensions=[\n                                     'markdown.extensions.extra',\n                                     'markdown.extensions.codehilite',\n                                     'markdown.extensions.toc',\n                                 ]"
+    ],
+    "flagship_top": {
+      "qwen": {
+        "text": " self",
+        "logit": 6.844,
+        "thr": 3.898
+      },
+      "gemma": {
+        "text": "time",
+        "logit": 35.614,
+        "thr": 20.329
+      }
+    },
+    "excerpt": "   1|     def get_context_data(self, **kwargs):\n   2|         context = super().get_context_data(**kwargs)\n   3|         context['comments'] = self.object.comment_set.all().order_by('-time')\n   4|         context['form'] = self.get_form()\n   5|         context['md'] = m\u00abark\u00bbd\u00abown\u00bb(self.object.content\u00ab,\n   6|                                  extensions=[\n   7|                                      'markdown.extensions.extra',\n   8|                                      'markdown.extensions.codehilite',\n   9|                                      'markdown.extensions.toc',\n  10|                                  ]\u00bb)\n  11| \n  12|         return context"
+  }
+]

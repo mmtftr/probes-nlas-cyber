@@ -1,0 +1,463 @@
+<!doctype html>
+<!-- [ai-generated] exp-16 logit explorer -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>exp-16 · logit explorer</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2230; --border:#30363d;
+    --fg:#e6edf3; --muted:#8b949e; --accent:#58a6ff;
+    --vuln:#ef4444; --safe:#22c55e; --amber:#f59e0b;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--fg);font:13px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  header{padding:8px 14px;border-bottom:1px solid var(--border);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  header h1{font-size:15px;margin:0;font-weight:600}
+  header .note{color:var(--muted);font-size:11px}
+  .controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--panel)}
+  .ctl{display:flex;flex-direction:column;gap:2px}
+  .ctl label{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  select,input[type=number]{background:var(--panel2);color:var(--fg);border:1px solid var(--border);border-radius:6px;padding:4px 6px;font-size:12px}
+  input[type=number]{width:74px}
+  .slider{display:flex;align-items:center;gap:8px}
+  input[type=range]{width:150px;accent-color:var(--accent)}
+  .pill{display:inline-block;padding:1px 6px;border-radius:10px;font-size:10px;border:1px solid var(--border);color:var(--muted)}
+  .warn{color:var(--amber)}
+  button{background:var(--panel2);color:var(--fg);border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:11px;cursor:pointer}
+  button:hover{border-color:var(--accent)}
+  main{display:grid;grid-template-columns:392px 1fr;height:calc(100vh - 96px)}
+  #left{border-right:1px solid var(--border);display:flex;flex-direction:column;min-height:0}
+  .filters{padding:8px;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:6px;background:var(--panel)}
+  .filters select,.filters input{font-size:11px;padding:3px 5px}
+  #viewmode{font-weight:600;border-color:var(--accent)}
+  #stats{padding:8px 10px;border-bottom:1px solid var(--border);font-size:11px;background:var(--panel)}
+  .cm{display:grid;grid-template-columns:auto auto auto;gap:3px;margin-top:4px}
+  .cm div{background:var(--panel2);border:1px solid var(--border);border-radius:4px;padding:3px 5px;text-align:center}
+  #list{overflow:auto;flex:1;min-height:0}
+  /* sample rows */
+  .row{display:grid;grid-template-columns:6px 44px 1fr auto;gap:6px;align-items:center;padding:5px 8px 5px 0;border-bottom:1px solid #21262d;cursor:pointer}
+  .row:hover{background:var(--panel2)} .row.sel{background:#1f2a3d}
+  .row .bar{height:100%;min-height:30px;border-radius:0 3px 3px 0}
+  .row .eid{color:var(--muted);font-variant-numeric:tabular-nums;font-size:11px}
+  .row .meta{display:flex;flex-direction:column;gap:2px;overflow:hidden}
+  .chips{display:flex;gap:4px;flex-wrap:wrap}
+  .chip{font-size:9px;padding:0 4px;border-radius:6px;background:var(--panel2);border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+  .chip.cwe{color:#d2a8ff;border-color:#3b2a52} .chip.test{color:#79c0ff;border-color:#1f3a52}
+  .score{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding-right:8px;font-variant-numeric:tabular-nums}
+  .sbar{width:60px;height:5px;border-radius:3px;background:#21262d;overflow:hidden}
+  .sbar>i{display:block;height:100%;background:var(--accent)}
+  .cat{font-size:10px;font-weight:600;padding:0 4px;border-radius:4px}
+  .cat.TP{background:#0f5132;color:#7ee2a8}.cat.TN{background:#1c2230;color:#8b949e}
+  .cat.FP{background:#5c2b2b;color:#ffb3b3}.cat.FN{background:#5a3a00;color:#ffd591}
+  /* pair rows */
+  .prow{display:grid;grid-template-columns:1fr 150px;gap:8px;align-items:center;padding:6px 8px 6px 10px;border-bottom:1px solid #21262d;cursor:pointer}
+  .prow:hover{background:var(--panel2)} .prow.sel{background:#1f2a3d}
+  .prow .meta{overflow:hidden}
+  .prow .fn{font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .prow .pscore{font-size:10px;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;gap:1px}
+  .prow .vs{display:flex;justify-content:space-between;gap:8px}
+  .prow .vs .lab{color:var(--muted)}
+  .prow .rank{font-weight:600;border-radius:4px;text-align:right}
+  .rank.ok{color:#7ee2a8}.rank.bad{color:#ffb3b3}
+  .vbar{width:80px;height:5px;border-radius:3px;background:#21262d;overflow:hidden;display:inline-block;vertical-align:middle}
+  .vbar>i{display:block;height:100%}
+  /* right / panes */
+  #right{display:flex;flex-direction:column;min-height:0}
+  #panes{flex:1;display:flex;min-height:0;overflow:hidden}
+  .pane{flex:1;min-width:0;display:flex;flex-direction:column;border-right:1px solid var(--border)}
+  .pane:last-child{border-right:none}
+  .ph{padding:8px 12px;border-bottom:1px solid var(--border);background:var(--panel);font-size:12px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
+  .ph .big{font-size:14px;font-weight:600}
+  .kv{color:var(--muted)} .kv b{color:var(--fg);font-weight:600}
+  .verdict{padding:2px 8px;border-radius:6px;font-weight:600}
+  .rolebadge{padding:1px 7px;border-radius:6px;font-weight:600;font-size:11px}
+  .rolebadge.v{background:#5c2b2b;color:#ffb3b3}.rolebadge.s{background:#0f5132;color:#7ee2a8}
+  .pc{overflow:auto;flex:1;min-height:0;padding:12px 14px}
+  .pc pre{white-space:pre-wrap;font:12px/1.6 "SF Mono",Menlo,Consolas,monospace;tab-size:4;margin:0}
+  .tok{border-radius:2px;border:1px solid rgba(255,255,255,.16)}
+  .tok.pos{border-color:#ef4444;box-shadow:0 0 0 1px rgba(239,68,68,.5)}
+  .tok.evi{border-bottom:2px solid var(--amber)}
+  .legend{display:flex;gap:14px;align-items:center;padding:6px 14px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);background:var(--panel)}
+  .grad{width:120px;height:10px;border-radius:3px;background:linear-gradient(90deg,rgba(239,68,68,0),rgba(239,68,68,1))}
+  #tooltip{position:fixed;z-index:50;pointer-events:none;background:#000;border:1px solid var(--border);border-radius:6px;padding:6px 8px;font:11px/1.4 monospace;max-width:320px;display:none;box-shadow:0 4px 16px rgba(0,0,0,.5)}
+  #tooltip .t{color:var(--accent)} .dim{color:var(--muted)}
+  .empty{color:var(--muted);padding:30px;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <h1>exp-16 · logit explorer</h1>
+  <span class="note">span-max linear probe over SVEN (1430 ex · 715 before/after pairs) · token char-offset highlighting · Platt threshold default</span>
+</header>
+
+<div class="controls">
+  <div class="ctl"><label>probe type</label>
+    <select id="probetype" title="Only the span-max linear probe was dumped in exp-16 (MLP/others not yet)">
+      <option>Linear (span-max)</option>
+    </select></div>
+  <div class="ctl"><label>model variant</label><select id="model"></select></div>
+  <div class="ctl"><label>layer</label><select id="layer"></select></div>
+  <div class="ctl"><label>calibration</label>
+    <select id="caliblevel">
+      <option value="token">Token-level (local fit)</option>
+      <option value="example">Example-level (local fit)</option>
+      <option value="production">Production (gemmaforge ref)</option>
+    </select></div>
+  <div class="ctl"><label>apply platt</label>
+    <select id="platt"><option value="1">on (calibrated)</option><option value="0">off (raw σ)</option></select></div>
+  <div class="ctl"><label>T (temp)</label><input type="number" id="T" step="0.01"></div>
+  <div class="ctl"><label>a (shift)</label><input type="number" id="a" step="0.01"></div>
+  <div class="ctl"><label>threshold <span id="thrval" class="pill"></span></label>
+    <div class="slider"><input type="range" id="thr" min="0" max="1" step="0.001"></div></div>
+  <button id="reset">reset to fitted</button>
+  <span id="fitnote" class="note"></span>
+</div>
+
+<main>
+  <div id="left">
+    <div class="filters">
+      <select id="viewmode"><option value="samples">samples</option><option value="pairs">vuln/safe pairs</option></select>
+      <select id="f_split"><option value="all">all splits</option><option value="test" selected>test only</option><option value="train">train only</option></select>
+      <select id="f_label"><option value="all">all labels</option><option value="1">vuln</option><option value="0">safe</option></select>
+      <select id="f_correct"><option value="all">all preds</option><option value="correct">correct</option><option value="incorrect">incorrect</option><option value="TP">TP</option><option value="FP">FP</option><option value="FN">FN</option><option value="TN">TN</option></select>
+      <select id="f_lang"></select>
+      <input id="f_cwe" placeholder="cwe filter…" size="8">
+      <select id="f_sort"><option value="score_desc">score ↓</option><option value="score_asc">score ↑</option><option value="eid">eid</option></select>
+    </div>
+    <div id="stats"></div>
+    <div id="list"></div>
+  </div>
+  <div id="right">
+    <div id="panes"><div class="empty">← pick a sample / pair</div></div>
+    <div class="legend">
+      <span>prob</span><span class="grad"></span>
+      <span><span class="tok pos" style="padding:0 4px">above thr</span></span>
+      <span><span class="tok evi" style="padding:0 4px">ground-truth vuln span</span></span>
+      <span class="dim" id="legtok"></span>
+    </div>
+  </div>
+</main>
+<div id="tooltip"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const sigmoid=x=>x>=0?1/(1+Math.exp(-x)):Math.exp(x)/(1+Math.exp(x));
+const platt=(x,T,a)=>sigmoid((x-a)/T);
+let MODELS={},CAL={},CFG={};
+const S={mode:'samples',model:null,layer:null,caliblevel:'token',platt:true,T:1,a:0,threshold:0.5,
+         examples:[],byEid:{},pairs:[],rows:[],sel:null,selPair:null,panes:[]};
+
+async function jget(u){const r=await fetch(u);const j=await r.json();if(j&&j.error)throw new Error(j.error);return j;}
+const calProb=l=>S.platt?platt(l,S.T,S.a):sigmoid(l);
+function category(label,pred){return label?(pred?'TP':'FN'):(pred?'FP':'TN');}
+
+// ---- calibration defaults --------------------------------------------------
+function fittedCalib(){
+  if(S.caliblevel==='production'){const p=CAL.production||{};return {T:p.T,a:p.a,threshold:p.threshold,kind:'production'};}
+  const rec=((CAL[S.model]||{})[String(S.layer)]||{})[S.caliblevel];
+  if(rec&&rec.T!=null)return {T:rec.T,a:rec.a,threshold:rec.threshold,kind:S.caliblevel,fit:rec};
+  const tok=((CAL[S.model]||{})[String(S.layer)]||{}).token;
+  if(tok&&tok.T!=null)return {T:tok.T,a:tok.a,threshold:tok.threshold,kind:'token',fallback:S.caliblevel};
+  const p=CAL.production||{};return {T:p.T,a:p.a,threshold:p.threshold,kind:'production',fallback:S.caliblevel};
+}
+function applyFitted(){
+  const c=fittedCalib();
+  S.T=c.T;S.a=c.a;S.threshold=c.threshold;
+  $('T').value=(+c.T).toFixed(3);$('a').value=(+c.a).toFixed(3);
+  $('thr').value=c.threshold;$('thrval').textContent=(+c.threshold).toFixed(3);
+  let n='';
+  if(c.fallback)n=`⚠ ${c.fallback}-level fit degenerate → using ${c.kind}`;
+  else if(c.fit)n=`fit: F1=${c.fit.f1.toFixed(3)} P=${c.fit.precision.toFixed(2)} R=${c.fit.recall.toFixed(2)} · n=${c.fit.n} pos=${c.fit.n_pos} · base=${(c.fit.base_rate*100).toFixed(1)}%`;
+  else if(c.kind==='production')n='gemmaforge production probe (different probe — reference only)';
+  $('fitnote').className='note '+(c.fallback?'warn':'');
+  $('fitnote').textContent=n;
+}
+
+// ---- selects ---------------------------------------------------------------
+function buildModelSelect(){
+  const sel=$('model');sel.innerHTML='';
+  for(const [k,v] of Object.entries(MODELS)){
+    const o=document.createElement('option');o.value=k;
+    o.textContent=`${v.name}  (L${v.layers[0]}–${v.layers[v.layers.length-1]})`;sel.appendChild(o);
+  }
+}
+function buildLayerSelect(){
+  const sel=$('layer');sel.innerHTML='';const v=MODELS[S.model];
+  for(const ly of v.layers){
+    const o=document.createElement('option');o.value=ly;const m=v.metrics[ly]||{};
+    o.textContent=`L${ly}${ly===v.best_layer?' ★':''}`+(m.test_tokens_code_auc?`  codeAUC=${m.test_tokens_code_auc.toFixed(3)}`:'');
+    sel.appendChild(o);
+  }
+  sel.value=v.best_layer;S.layer=v.best_layer;
+}
+
+async function onModelLayerChange(refetch=true){
+  applyFitted();
+  if(refetch){
+    const q=`model=${encodeURIComponent(S.model)}&layer=${S.layer}`;
+    [S.examples,S.pairs]=await Promise.all([jget('/api/examples?'+q),jget('/api/pairs?'+q)]);
+    S.byEid={};for(const e of S.examples)S.byEid[e.eid]=e;
+    const langs=[...new Set(S.examples.map(e=>e.lang))].sort();
+    const lf=$('f_lang');const cur=lf.value;
+    lf.innerHTML='<option value="all">all langs</option>'+langs.map(l=>`<option>${l}</option>`).join('');
+    if([...lf.options].some(o=>o.value===cur))lf.value=cur;
+  }
+  buildList();
+  if(S.mode==='samples'&&S.sel!=null)await openExample(S.sel,true);
+  if(S.mode==='pairs'&&S.selPair!=null){const p=S.pairs.find(p=>p.pair_key===S.selPair);if(p)await openPair(p,true);}
+}
+
+// ---- list ------------------------------------------------------------------
+function buildList(){ S.mode==='pairs'?buildPairList():buildSampleList(); }
+
+function filteredSorted(){
+  const fs=$('f_split').value,fl=$('f_label').value,fc=$('f_correct').value,fg=$('f_lang').value,
+        fw=$('f_cwe').value.trim().toLowerCase(),so=$('f_sort').value;
+  let xs=S.examples.filter(e=>{
+    if(fs==='test'&&!e.is_test)return false; if(fs==='train'&&e.is_test)return false;
+    if(fl!=='all'&&String(e.label)!==fl)return false;
+    if(fg!=='all'&&e.lang!==fg)return false;
+    if(fw&&!String(e.cwe||'').toLowerCase().includes(fw))return false;
+    if(fc!=='all'){const pred=calProb(e.logit_max)>=S.threshold?1:0;const cat=category(e.label,pred);
+      if(fc==='correct'&&pred!==e.label)return false;
+      if(fc==='incorrect'&&pred===e.label)return false;
+      if(['TP','FP','FN','TN'].includes(fc)&&cat!==fc)return false;}
+    return true;
+  });
+  if(so==='eid')xs.sort((a,b)=>a.eid-b.eid);
+  else xs.sort((a,b)=>(so==='score_asc'?1:-1)*(calProb(a.logit_max)-calProb(b.logit_max)));
+  return xs;
+}
+
+function buildSampleList(){
+  const list=$('list');list.innerHTML='';S.rows=[];
+  const xs=filteredSorted();
+  if(!xs.length){list.innerHTML='<div class="empty">no samples match filters</div>';refreshStats([]);return;}
+  const frag=document.createDocumentFragment();
+  for(const e of xs){
+    const row=document.createElement('div');row.className='row';row.dataset.eid=e.eid;
+    const bar=document.createElement('div');bar.className='bar';bar.style.background=e.label?'var(--vuln)':'var(--safe)';
+    const eid=document.createElement('div');eid.className='eid';eid.textContent='#'+e.eid;
+    const meta=document.createElement('div');meta.className='meta';
+    const chips=document.createElement('div');chips.className='chips';
+    chips.innerHTML=`<span class="chip">${e.lang||'?'}</span>`+(e.cwe?`<span class="chip cwe">${e.cwe}</span>`:'')+(e.is_test?'<span class="chip test">TEST</span>':'');
+    meta.appendChild(chips);
+    const sc=document.createElement('div');sc.className='score';
+    const scval=document.createElement('div');const sb=document.createElement('div');sb.className='sbar';
+    const sbi=document.createElement('i');sb.appendChild(sbi);const cat=document.createElement('span');cat.className='cat';
+    sc.append(scval,sb,cat);row.append(bar,eid,meta,sc);
+    row.onclick=()=>openExample(e.eid);frag.appendChild(row);
+    S.rows.push({e,row,scval,sbi,cat});
+  }
+  list.appendChild(frag);refreshScores();
+  if(S.sel!=null){const r=S.rows.find(r=>r.e.eid===S.sel);if(r)r.row.classList.add('sel');}
+}
+
+function filteredSortedPairs(){
+  const fs=$('f_split').value,fc=$('f_correct').value,fg=$('f_lang').value,
+        fw=$('f_cwe').value.trim().toLowerCase(),so=$('f_sort').value;
+  const gap=p=>calProb(p.vuln.logit_max)-calProb(p.safe.logit_max);
+  let xs=S.pairs.filter(p=>{
+    if(fs==='test'&&!p.is_test)return false; if(fs==='train'&&p.is_test)return false;
+    if(fg!=='all'&&p.lang!==fg)return false;
+    if(fw&&!String(p.cwe||'').toLowerCase().includes(fw))return false;
+    if(fc==='correct'&&!(gap(p)>0))return false;
+    if(fc==='incorrect'&&gap(p)>0)return false;
+    return true;
+  });
+  if(so==='eid')xs.sort((a,b)=>a.vuln.eid-b.vuln.eid);
+  else xs.sort((a,b)=>(so==='score_asc'?1:-1)*(gap(a)-gap(b)));
+  return xs;
+}
+
+function buildPairList(){
+  const list=$('list');list.innerHTML='';S.rows=[];
+  const xs=filteredSortedPairs();
+  if(!xs.length){list.innerHTML='<div class="empty">no pairs match filters</div>';refreshStats([]);return;}
+  const frag=document.createDocumentFragment();
+  for(const p of xs){
+    const row=document.createElement('div');row.className='prow';row.dataset.pk=p.pair_key;
+    const meta=document.createElement('div');meta.className='meta';
+    meta.innerHTML=`<div class="fn" title="${p.file}::${p.func}">${p.func||'?'}()</div>`+
+      `<div class="chips"><span class="chip">${p.lang||'?'}</span>`+(p.cwe?`<span class="chip cwe">${p.cwe}</span>`:'')+(p.is_test?'<span class="chip test">TEST</span>':'')+`</div>`;
+    const ps=document.createElement('div');ps.className='pscore';
+    const vrow=document.createElement('div');vrow.className='vs';
+    const srow=document.createElement('div');srow.className='vs';
+    const rank=document.createElement('div');rank.className='rank';
+    ps.append(vrow,srow,rank);row.append(meta,ps);
+    row.onclick=()=>openPair(p);frag.appendChild(row);
+    S.rows.push({p,row,vrow,srow,rank});
+  }
+  list.appendChild(frag);refreshScores();
+  if(S.selPair!=null){const r=S.rows.find(r=>r.p.pair_key===S.selPair);if(r)r.row.classList.add('sel');}
+}
+
+// ---- score refresh ---------------------------------------------------------
+function refreshScores(){
+  if(S.mode==='pairs')return refreshPairScores();
+  let TP=0,FP=0,FN=0,TN=0;
+  for(const r of S.rows){
+    const p=calProb(r.e.logit_max);const pred=p>=S.threshold?1:0;const cat=category(r.e.label,pred);
+    r.scval.textContent=p.toFixed(3);r.sbi.style.width=Math.round(p*100)+'%';
+    r.sbi.style.background=pred?'var(--vuln)':'var(--accent)';
+    r.cat.className='cat '+cat;r.cat.textContent=cat;
+    if(cat==='TP')TP++;else if(cat==='FP')FP++;else if(cat==='FN')FN++;else TN++;
+  }
+  refreshStats([TP,FP,FN,TN]);updatePaneHeads();recolorCode();
+}
+function refreshPairScores(){
+  let correct=0,total=0,gapSum=0;
+  for(const r of S.rows){
+    const vC=calProb(r.p.vuln.logit_max),sC=calProb(r.p.safe.logit_max);
+    const ok=vC>sC;if(ok)correct++;total++;gapSum+=vC-sC;
+    r.vrow.innerHTML=`<span class="lab">V #${r.p.vuln.eid}</span><span><span class="vbar"><i style="width:${Math.round(vC*100)}%;background:var(--vuln)"></i></span> <b>${vC.toFixed(3)}</b></span>`;
+    r.srow.innerHTML=`<span class="lab">S #${r.p.safe.eid}</span><span><span class="vbar"><i style="width:${Math.round(sC*100)}%;background:var(--safe)"></i></span> <b>${sC.toFixed(3)}</b></span>`;
+    r.rank.className='rank '+(ok?'ok':'bad');r.rank.textContent=(ok?'Δ+':'Δ')+(vC-sC).toFixed(3);
+  }
+  refreshStats(null,{correct,total,gap:total?gapSum/total:0});updatePaneHeads();recolorCode();
+}
+
+function refreshStats(cm,pair){
+  const v=MODELS[S.model],m=(v&&v.metrics[S.layer])||{};
+  let html=`<div><b>${v?v.name:''}</b> · L${S.layer} · <span class="dim">tok-codeAUC</span> ${m.test_tokens_code_auc?m.test_tokens_code_auc.toFixed(3):'–'} · <span class="dim">exAUC</span> ${m.test_example_auc?m.test_example_auc.toFixed(3):'–'}</div>`;
+  if(pair){
+    const acc=pair.total?pair.correct/pair.total:0;
+    html+=`<div class="cm"><div>pairs ${pair.total}</div><div>vuln&gt;safe ${pair.correct}</div><div class="dim">rank-acc ${acc.toFixed(3)}</div>
+      <div class="dim" style="grid-column:1/4">mean(vuln−safe) calibrated gap = ${pair.gap.toFixed(3)} · paired-AUC analog</div></div>`;
+  } else if(cm&&cm.length){
+    const [TP,FP,FN,TN]=cm,P=TP+FP,prec=P?TP/P:0,rec=(TP+FN)?TP/(TP+FN):0,f1=(prec+rec)?2*prec*rec/(prec+rec):0,acc=(TP+TN)/Math.max(1,TP+FP+FN+TN);
+    html+=`<div class="cm">
+      <div>TP ${TP}</div><div>FP ${FP}</div><div class="dim">P ${prec.toFixed(2)}</div>
+      <div>FN ${FN}</div><div>TN ${TN}</div><div class="dim">R ${rec.toFixed(2)}</div>
+      <div class="dim">F1 ${f1.toFixed(2)}</div><div class="dim">acc ${acc.toFixed(2)}</div><div class="dim">n ${TP+FP+FN+TN}</div></div>
+      <div class="dim" style="margin-top:3px">confusion over filtered set @ thr=${S.threshold.toFixed(3)}</div>`;
+  }
+  $('stats').innerHTML=html;
+}
+
+// ---- open / render ---------------------------------------------------------
+async function openExample(eid,force=false){
+  if(S.sel===eid&&!force&&S.mode==='samples'){return;}
+  S.sel=eid;S.selPair=null;
+  for(const r of S.rows)r.row.classList.toggle('sel',r.e&&r.e.eid===eid);
+  const d=await jget(`/api/example?model=${encodeURIComponent(S.model)}&layer=${S.layer}&eid=${eid}`);
+  renderPanes([{data:d,role:null}]);
+}
+async function openPair(p,force=false){
+  if(S.selPair===p.pair_key&&!force){return;}
+  S.selPair=p.pair_key;S.sel=null;
+  for(const r of S.rows)r.row.classList.toggle('sel',r.p&&r.p.pair_key===p.pair_key);
+  const q=`model=${encodeURIComponent(S.model)}&layer=${S.layer}`;
+  const [v,s]=await Promise.all([jget(`/api/example?${q}&eid=${p.vuln_eid}`),jget(`/api/example?${q}&eid=${p.safe_eid}`)]);
+  renderPanes([{data:v,role:'v'},{data:s,role:'s'}]);
+}
+
+function renderPanes(items){
+  const wrap=$('panes');wrap.innerHTML='';S.panes=[];
+  for(const it of items){
+    const pane=document.createElement('div');pane.className='pane';
+    const ph=document.createElement('div');ph.className='ph';
+    const pc=document.createElement('div');pc.className='pc';
+    const pre=document.createElement('pre');pc.appendChild(pre);
+    pane.append(ph,pc);wrap.appendChild(pane);
+    const spans=renderCodeInto(pre,it.data);
+    S.panes.push({data:it.data,role:it.role,head:ph,spans});
+  }
+  updatePaneHeads();recolorCode();
+}
+
+function renderCodeInto(pre,d){
+  pre.innerHTML='';const code=d.code||'';const ev=d.evidence||[];
+  const inEvi=(s,e)=>ev.some(([a,b])=>s<b&&e>a);
+  const frag=document.createDocumentFragment();let cursor=0;const spans=[];
+  for(const t of d.tokens){
+    let s=t.s,e=t.e;if(s<cursor)s=cursor;if(e<=s)continue;
+    if(s>cursor)frag.appendChild(document.createTextNode(code.slice(cursor,s)));
+    const span=document.createElement('span');span.className='tok';span.textContent=code.slice(s,e);
+    span.dataset.logit=t.logit;span.dataset.y=t.y;span.dataset.code=t.code?1:0;span.dataset.evi=inEvi(t.s,t.e)?1:0;
+    frag.appendChild(span);spans.push(span);cursor=e;
+  }
+  if(cursor<code.length)frag.appendChild(document.createTextNode(code.slice(cursor)));
+  pre.appendChild(frag);return spans;
+}
+
+function recolorCode(){
+  let ntok=0;
+  for(const pane of S.panes){
+    for(const sp of pane.spans){
+      const p=calProb(+sp.dataset.logit);
+      sp.style.background=`rgba(239,68,68,${p.toFixed(3)})`;
+      sp.style.color=p>0.55?'#fff':'';
+      sp.className='tok'+(p>=S.threshold?' pos':'')+(sp.dataset.evi==='1'?' evi':'');
+    }
+    ntok+=pane.spans.length;
+  }
+  $('legtok').textContent=S.panes.length?`(${ntok} tokens · hover for logit/σ/calibrated)`:'';
+}
+
+function updatePaneHeads(){
+  for(const pane of S.panes){
+    const d=pane.data;const e=S.byEid[d.eid]||{};
+    const p=calProb(e.logit_max!=null?e.logit_max:0);const pred=p>=S.threshold?1:0;const cat=category(d.label,pred);
+    const vcol={TP:'#0f5132',TN:'#1c2230',FP:'#5c2b2b',FN:'#5a3a00'}[cat];
+    const vfg ={TP:'#7ee2a8',TN:'#8b949e',FP:'#ffb3b3',FN:'#ffd591'}[cat];
+    const ntok=d.tokens.length,ncode=d.tokens.filter(t=>t.code).length;
+    const role=pane.role==='v'?'<span class="rolebadge v">VULN (before)</span>':pane.role==='s'?'<span class="rolebadge s">SAFE (after)</span>':'';
+    pane.head.innerHTML=role+`<span class="big">#${d.eid}</span>`+
+      `<span class="verdict" style="background:${vcol};color:${vfg}">${cat} · pred ${pred?'VULN':'safe'} / actual ${d.label?'VULN':'safe'}</span>`+
+      `<span class="kv">score <b>${p.toFixed(3)}</b></span>`+
+      (d.cwe?`<span class="kv">cwe <b>${d.cwe}</b></span>`:'')+
+      `<span class="kv">${d.lang||'?'}</span>`+
+      `<span class="kv">${d.func?d.func+'()':''}</span>`+
+      `<span class="kv">${ntok} tok (${ncode} code)</span>`+
+      `<span class="kv">${(d.evidence||[]).length} evid</span>`;
+  }
+}
+
+// ---- tooltip (delegated on #panes) -----------------------------------------
+$('panes').addEventListener('mousemove',ev=>{
+  const tt=$('tooltip');const t=ev.target;
+  if(!t.classList||!t.classList.contains('tok')){tt.style.display='none';return;}
+  const l=+t.dataset.logit;const raw=sigmoid(l);const cal=platt(l,S.T,S.a);
+  tt.innerHTML=`<span class="t">${(t.textContent||'').slice(0,40).replace(/</g,'&lt;')}</span><br>`+
+    `logit <b>${l.toFixed(3)}</b> · σ <b>${raw.toFixed(3)}</b><br>`+
+    `calibrated <b>${cal.toFixed(3)}</b> ${cal>=S.threshold?'≥ thr ✓':'< thr'}<br>`+
+    `<span class="dim">token y=${t.dataset.y} · ${t.dataset.code==='1'?'code':'non-code'} · ${t.dataset.evi==='1'?'in evidence':'—'}</span>`;
+  tt.style.display='block';
+  tt.style.left=Math.min(ev.clientX+14,innerWidth-330)+'px';
+  tt.style.top=Math.min(ev.clientY+14,innerHeight-90)+'px';
+});
+$('panes').addEventListener('mouseleave',()=>$('tooltip').style.display='none');
+
+// ---- wiring ----------------------------------------------------------------
+function wire(){
+  $('model').onchange=async e=>{S.model=e.target.value;buildLayerSelect();await onModelLayerChange();};
+  $('layer').onchange=async e=>{S.layer=+e.target.value;await onModelLayerChange();};
+  $('caliblevel').onchange=async e=>{S.caliblevel=e.target.value;applyFitted();await onModelLayerChange(false);};
+  $('platt').onchange=e=>{S.platt=e.target.value==='1';buildList();};
+  $('viewmode').onchange=e=>{S.mode=e.target.value;S.sel=null;S.selPair=null;S.panes=[];
+    $('panes').innerHTML='<div class="empty">← pick a '+(S.mode==='pairs'?'pair':'sample')+'</div>';
+    $('f_label').disabled=(S.mode==='pairs');buildList();};
+  $('T').oninput=e=>{S.T=+e.target.value||1;refreshScores();};
+  $('a').oninput=e=>{S.a=+e.target.value||0;refreshScores();};
+  $('thr').oninput=e=>{S.threshold=+e.target.value;$('thrval').textContent=S.threshold.toFixed(3);
+    if($('f_correct').value!=='all')buildList();else refreshScores();};
+  $('reset').onclick=()=>{applyFitted();buildList();};
+  for(const id of ['f_split','f_label','f_correct','f_lang','f_sort'])$(id).onchange=()=>buildList();
+  $('f_cwe').oninput=()=>buildList();
+}
+
+async function init(){
+  [CFG,MODELS,CAL]=await Promise.all([jget('/api/config'),jget('/api/models'),jget('/api/calibration')]);
+  const keys=Object.keys(MODELS);
+  S.model=keys.find(k=>/32B/i.test(k))||keys[0];
+  buildModelSelect();$('model').value=S.model;buildLayerSelect();
+  wire();await onModelLayerChange();
+}
+init().catch(e=>{document.body.insertAdjacentHTML('beforeend',`<div class="empty">init error: ${e.message}</div>`);});
+</script>
+</body>
+</html>

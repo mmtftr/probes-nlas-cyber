@@ -1,0 +1,332 @@
+[
+ {
+  "eid": 10,
+  "cwe": "CWE-476",
+  "lang": "cpp",
+  "n_detect": 0,
+  "removed_span": [
+   "t",
+   "if (name_size == 0) return;\n    "
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "0",
+    "logit": 3.67,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "m",
+    "logit": 15.119,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  10|     stream.ReadUI32(m_Reserved[0]);\n  11|     stream.ReadUI32(m_Reserved[1]);\n  12|     stream.ReadUI32(m_Reserved[2]);\n  13|     \n  14|     // read the name unless it is empty\n  15|     in\u00abt\u00bb name_size = size-(AP4_FULL_ATOM_HEADER_SIZE+20);\n  16|     \u00abif (name_size == 0) return;\n  17|     \u00bbchar* name = new char[name_size+1];\n  18|     stream.Read(name, name_size);\n  19|     name[name_size] = '\\0'; // force a null termination\n  20|     // handle a special case: the Quicktime files have a pascal\n  21|     // string here, but ISO MP4 files have a C string.\n  22|     // we try to detect a pascal encoding and correct it."
+ },
+ {
+  "eid": 22,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   "if (vma) {\n\t\tup_read(&current->mm->mmap_sem);\n\t\tvma = NULL;\n\t}\n\n\t"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "+",
+    "logit": 4.682,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "vm",
+    "logit": 33.591,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  63| \t\t * the policy to userspace.\n  64| \t\t */\n  65| \t\t*policy |= (pol->flags & MPOL_MODE_FLAGS);\n  66| \t}\n  67| \n  68| \t\u00abif (vma) {\n  69| \t\tup_read(&current->mm->mmap_sem);\n  70| \t\tvma = NULL;\n  71| \t}\n  72| \n  73| \t\u00bberr = 0;\n  74| \tif (nmask) {\n  75| \t\tif (mpol_store_user_nodemask(pol)) {\n  76| \t\t\t*nmask = pol->w.user_nodemask;\n  77| \t\t} else {\n  78| \t\t\ttask_lock(current);"
+ },
+ {
+  "eid": 45,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   " ",
+   " "
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " =",
+    "logit": 4.034,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": " R",
+    "logit": 20.351,
+    "thr": 20.329
+   }
+  },
+  "excerpt": " 119| \t\t\t\tnew->ordinal = count++;\n 120| \t\t\t\t// TODO: move into adjust_offset\n 121| \t\t\t\tswitch (str_type) {\n 122| \t\t\t\tcase R_STRING_TYPE_WIDE:\n 123| \t\t\t\t\t{\n 124| \t\t\t\t\t\tconst ut8 *p = buf\u00ab \u00bb + str_start - 2;\n 125| \t\t\t\t\t\tif (p[0] == 0xff && p[1] == 0xfe) {\n 126| \t\t\t\t\t\t\tstr_start -= 2; // \\xff\\xfe\n 127| \t\t\t\t\t\t}\n 128| \t\t\t\t\t}\n 129| \t\t\t\t\tbreak;\n 130| \t\t\t\tcase R_STRING_TYPE_WIDE32:\n 131| \t\t\t\t\t{\n 132| \t\t\t\t\t\tconst ut8 *p = buf\u00ab \u00bb + str_start - 4;\n 133| \t\t\t\t\t\tif (p[0] == 0xff && p[1] == 0xfe) {\n 134| \t\t\t\t\t\t\tstr_start -= 4; // \\xff\\xfe\\x00\\x00\n 135| \t\t\t\t\t\t}\n 136| \t\t\t\t\t}\n 137| \t\t\t\t\tbreak;"
+ },
+ {
+  "eid": 64,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "c ="
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "str",
+    "logit": 5.816,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "fname",
+    "logit": 26.209,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  16| \tkfree(priv->ctrl.fname);\n  17| \tmemcpy(&priv->ctrl, p, sizeof(priv->ctrl));\n  18| \tif (p->fname) {\n  19| \t\tpriv->ctrl.fname = kstrdup(p->fname, GFP_KERNEL);\n  20| \t\tif (priv->ctrl.fname == NULL)\n  21| \t\t\tr\u00abc =\u00bb -ENOMEM;\n  22| \t}\n  23| \n  24| \t/*\n  25| \t * If firmware name changed, frees firmware. As free_firmware will\n  26| \t * reset the status to NO_FIRMWARE, this forces a new request_firmware"
+ },
+ {
+  "eid": 320,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "hdesc->bN",
+   "D"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "esc",
+    "logit": 4.206,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": " &",
+    "logit": 25.75,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  31| \t}\n  32| \n  33| \thid->version = le16_to_cpu(hdesc->bcdHID);\n  34| \thid->country = hdesc->bCountryCode;\n  35| \n  36| \tfor (n = 0; n < \u00abhdesc->bN\u00bbum\u00abD\u00bbescriptors; n++)\n  37| \t\tif (hdesc->desc[n].bDescriptorType == HID_DT_REPORT)\n  38| \t\t\trsize = le16_to_cpu(hdesc->desc[n].wDescriptorLength);\n  39| \n  40| \tif (!rsize || rsize > HID_MAX_DESCRIPTOR_SIZE) {\n  41| \t\tdbg_hid(\"weird size of report descriptor (%u)\\n\", rsize);"
+ },
+ {
+  "eid": 361,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 2,
+  "removed_span": [
+   "maxC",
+   "Cells;\n\tbitmapCache->cells = (BITMAP_V2_CELL*)calloc(bitmapCache->max"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "instance",
+    "logit": 4.37,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "rd",
+    "logit": 22.457,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   8| \t\treturn NULL;\n   9| \n  10| \tbitmapCache->settings = settings;\n  11| \tbitmapCache->update = ((freerdp*)settings->instance)->update;\n  12| \tbitmapCache->context = bitmapCache->update->context;\n  13| \tbitmapCache->\u00abmaxC\u00bbells = settings->BitmapCacheV2Num\u00abCells;\n  14| \tbitmapCache->cells = (BITMAP_V2_CELL*)calloc(bitmapCache->max\u00bbCells, sizeof(BITMAP_V2_CELL));\n  15| \n  16| \tif (!bitmapCache->cells)\n  17| \t\tgoto fail;\n  18| \n  19| \tfor (i = 0; i < (int)bitmapCache->maxCells; i++)"
+ },
+ {
+  "eid": 436,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   "tlb_gather_mmu(&tlb, mm, 0, -1);\n\t",
+   "}\n",
+   "0",
+   "1"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " VM",
+    "logit": 1.889,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": " VM",
+    "logit": 36.383,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  61| \t * should imply barriers already and the reader would hit a page fault\n  62| \t * if it stumbled over a reaped memory.\n  63| \t */\n  64| \tset_bit(MMF_UNSTABLE, &mm->flags);\n  65| \n  66| \t\u00abtlb_gather_mmu(&tlb, mm, 0, -1);\n  67| \t\u00bbfor (vma = mm->mmap ; vma; vma = vma->vm_next) {\n  68| \t\tif (!can_madv_dontneed_vma(vma))\n  69| \t\t\tcontinue;\n  70| \n  71| \t\t/*\n  72| \t\t * Only anonymous pages have a good chance to be dropped\n  73| \t\t * without additional steps which we cannot afford as we\n  74| \t\t * are OOM already.\n  75| \t\t *\n  76| \t\t * We do not even care about fs backed pages because all\n  77| \t\t * which are reclaimable have already been reclaimed and\n  78| \t\t * we do not want to block exit_mmap by keeping mm ref\n  79| \t\t * count elevated without a good reason.\n  80| \t\t */\n  81| \t\tif (vma_is_anonymous(vma) || !(vma->vm_flags & VM_SHARED))\n  82| \t\t\tunmap_page_range(&tlb, vma, vma->vm_start, vma->vm_end,\n  83| \t\t\t\t\t NULL);\n  84| \t\u00ab}\n  85| \u00bb\ttlb_finish_mmu(&tlb, \u00ab0\u00bb, -\u00ab1\u00bb);\n  86| \tpr_info(\"oom_reaper: reaped process %d (%s), now anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB\\n\",\n  87| \t\t\ttask_pid_nr(tsk), tsk->comm,\n  88| \t\t\tK(get_mm_counter(mm, MM_ANONPAGES)),\n  89| \t\t\tK(get_mm_counter(mm, MM_FILEPAGES)),\n  90| \t\t\tK(get_mm_counter(mm, MM_SHMEMPAGES)));"
+ },
+ {
+  "eid": 456,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   " = conv_encoding(ci->pattern_enc, ci->target_enc, pattern, pattern_end,\n                      &cpat, &cpat_end);\n    if (r != 0) r",
+   "r"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "on",
+    "logit": 41.857,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "r",
+    "logit": 15.339,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   5|   UChar *cpat, *cpat_end;\n   6| \n   7|   if (IS_NOT_NULL(einfo)) einfo->par = (UChar* )NULL;\n   8| \n   9|   if (ci->pattern_enc != ci->target_enc) {\n  10|     r\u00ab = conv_encoding(ci->pattern_enc, ci->target_enc, pattern, pattern_end,\n  11|                       &cpat, &cpat_end);\n  12|     if (r != 0) r\u00bbeturn \u00abr\u00bb;\n  13|   }\n  14|   else {\n  15|     cpat     = (UChar* )pattern;\n  16|     cpat_end = (UChar* )pattern_end;\n  17|   }"
+ },
+ {
+  "eid": 500,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 3,
+  "removed_span": [
+   "\tset_bit(HCI_UART_PROTO_READY, &hu->flags);\n",
+   "cl",
+   "a",
+   "\treturn err;\n\t}\n\n\t"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": ");\n",
+    "logit": 0.373,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "PROTO",
+    "logit": 30.084,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   6| \tp = hci_uart_get_proto(id);\n   7| \tif (!p)\n   8| \t\treturn -EPROTONOSUPPORT;\n   9| \n  10| \thu->proto = p;\n  11| \u00ab\tset_bit(HCI_UART_PROTO_READY, &hu->flags);\n  12| \u00bb\n  13| \terr = hci_uart_register_dev(hu);\n  14| \tif (err) {\n  15| \t\t\u00abcl\u00bbe\u00aba\u00bbr_bit(HCI_UART_PROTO_READY, &hu->flags);\n  16| \t\u00ab\treturn err;\n  17| \t}\n  18| \n  19| \t\u00bbreturn 0;\n  20| }"
+ },
+ {
+  "eid": 501,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "\n\t\t\t\t",
+   "_partial",
+   "_transport_header(skb) +",
+   "l",
+   "\n\t\t\t\t\t    "
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " SOL",
+    "logit": 2.001,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "sum",
+    "logit": 18.967,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   5| \n   6| \tif (skb->ip_summed != CHECKSUM_COMPLETE)\n   7| \t\treturn;\n   8| \n   9| \tif (offset != 0)\n  10| \t\tcsum = csum_sub(csum,\u00ab\n  11| \t\t\t\t\u00bbcsum\u00ab_partial\u00bb(skb\u00ab_transport_header(skb) +\u00bb t\u00abl\u00bben,\u00ab\n  12| \t\t\t\t\t    \u00bb offset, 0));\n  13| \n  14| \tput_cmsg(msg, SOL_IP, IP_CHECKSUM, sizeof(__wsum), &csum);\n  15| }"
+ },
+ {
+  "eid": 553,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   "jas_tvparser_destroy(tvp);\n\t"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "as",
+    "logit": 6.409,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "id",
+    "logit": 18.009,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  55| \t\t\t\treturn -1;\n  56| \t\t\t}\n  57| \t\t\tbreak;\n  58| \t\t}\n  59| \t}\n  60| \t\u00abjas_tvparser_destroy(tvp);\n  61| \t\u00bbif (!cmpt->sampperx || !cmpt->samppery) {\n  62| \t\tgoto error;\n  63| \t}\n  64| \tif (mif_hdr_addcmpt(hdr, hdr->numcmpts, cmpt)) {\n  65| \t\tgoto error;\n  66| \t}"
+ },
+ {
+  "eid": 573,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "e",
+   "r",
+   "handle->h_",
+   "handle->h_",
+   "e",
+   "r"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "_error",
+    "logit": 3.735,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "_",
+    "logit": 27.938,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   8| \t\text4_put_nojournal(handle);\n   9| \t\treturn 0;\n  10| \t}\n  11| \n  12| \tif (!handle->h_transaction) {\n  13| \t\t\u00abe\u00bbr\u00abr\u00bb = jbd2_journal_stop(handle);\n  14| \t\treturn \u00abhandle->h_\u00bberr ? \u00abhandle->h_\u00bberr : \u00abe\u00bbr\u00abr\u00bb;\n  15| \t}\n  16| \n  17| \tsb = handle->h_transaction->t_journal->j_private\u00ab;\n  18| \terr = handle->h_err\u00bb;\n  19| \trc = jbd2_journal_stop(handle);\n  20| \n  21| \tif (!err)\n  22| \t\terr = rc;\n  23| \tif (err)"
+ },
+ {
+  "eid": 620,
+  "cwe": "CWE-787",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   "onst c"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "id",
+    "logit": 39.47,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "rc",
+    "logit": 17.239,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  36|       /* wow, this is ugly, but libidn manpage states:\n  37|        * char * out  output zero terminated string that must have room for at\n  38|        * least 63 characters plus the terminating zero.\n  39|        */\n  40|       if (output)\n  41| \tstrcpy (output, (c\u00abonst c\u00bbhar *) output_u8);\n  42| \n  43|       free(output_u8);\n  44|     }\n  45| \n  46|   return rc;"
+ },
+ {
+  "eid": 642,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   "        l_current_data = p_j2k->m_specific_param.m_encoder.m_header_tile_data;\n",
+   "    ",
+   "\n"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "J",
+    "logit": 18.256,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "k",
+    "logit": 19.304,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  13|         assert(p_j2k != 00);\n  14|         assert(p_manager != 00);\n  15|         assert(p_stream != 00);\n  16| \n  17|         l_tcp =&(p_j2k->m_cp.tcps[p_j2k->m_current_tile_number]);\n  18| \u00ab        l_current_data = p_j2k->m_specific_param.m_encoder.m_header_tile_data;\n  19| \u00bb\n  20|         l_mco_size = 5 + l_tcp->m_nb_mcc_records;\n  21|         if (l_mco_size > p_j2k->m_specific_param.m_encoder.m_header_tile_data_size) {\n  22| \n  23|                 OPJ_BYTE *new_header_tile_data = (OPJ_BYTE *) opj_realloc(p_j2k->m_specific_param.m_encoder.m_header_tile_data, l_mco_size);\n  24|                 if (! new_header_tile_data) {\n  25|                         opj_free(p_j2k->m_specific_param.m_encoder.m_header_tile_data);\n  26|                         p_j2k->m_specific_param.m_encoder.m_header_tile_data = NULL;\n  27|                         p_j2k->m_specific_param.m_encoder.m_header_tile_data_size = 0;\n  28|                         opj_event_msg(p_manager, EVT_ERROR, \"Not enough memory to write MCO marker\\n\");\n  29|                         return OPJ_FALSE;\n  30|                 }\n  31|                 p_j2k->m_specific_param.m_encoder.m_header_tile_data = new_header_tile_data;\n  32|                 p_j2k->m_specific_param.m_encoder.m_header_tile_data_size = l_mco_size;\n  33|         }\n  34| \n  35|         opj_write_bytes(l_current_data,J2K_MS_MCO,2);                   /* MCO */\n  36|         l_current_data += 2;\n  37| \n  38|         opj_write_bytes(l_current_data,l_mco_size-2,2);                 /* Lmco */\n  39|         l_current_data += 2;\n  40| \n  41|         opj_write_bytes(l_current_data,l_tcp->m_nb_mcc_records,1);      /* Nmco : only one tranform stage*/\n  42|         ++l_current_data;\n  43| \n  44|         l_mcc_record = l_tcp->m_mcc_records;\n  45|         for \u00ab    \u00bb(i=0;i<l_tcp->m_nb_mcc_records;++i) {\n  46|                 opj_write_bytes(l_current_data,l_mcc_record->m_index,1);/* Imco -> use the mcc indicated by 1*/\n  47|                 ++l_current_data;\u00ab\n  48| \u00bb\n  49|                 ++l_mcc_record;\n  50|         }\n  51| \n  52|         if (opj_stream_write_data(p_stream,p_j2k->m_specific_param.m_encoder.m_header_tile_data,l_mco_size,p_manager) != l_mco_size) {"
+ }
+]

@@ -1,0 +1,164 @@
+[
+ {
+  "eid": 376,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "n_detect": 2,
+  "removed_span": [
+   ", None"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "('",
+    "logit": 7.178,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "cli",
+    "logit": 33.8,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   1|     def _get_3par_hostname_from_wwn_iqn(self, wwns_iqn):\n   2|         out = self._cli_run('showhost -d'\u00ab, None\u00bb)\n   3|         # wwns_iqn may be a list of strings or a single\n   4|         # string. So, if necessary, create a list to loop.\n   5|         if not isinstance(wwns_iqn, list):\n   6|             wwn_iqn_list = [wwns_iqn]\n   7|         else:"
+ },
+ {
+  "eid": 419,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "n_detect": 0,
+  "removed_span": [
+   "self."
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": ".readline",
+    "logit": 4.476,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": ".",
+    "logit": 27.295,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  48|             if request[-2:] != '\\r\\n':\n  49|                 raise HTTPError(400)\n  50| \n  51|             # try the request line and error out if can't parse it\n  52|             try:\n  53|                 self.method, \u00abself.\u00bbresource, self.request_http = self.request_line.split()\n  54|             # HTTP Status 400\n  55|             except ValueError:\n  56|                 raise HTTPError(400)\n  57| \n  58|             # HTTP Status 505"
+ },
+ {
+  "eid": 571,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "n_detect": 2,
+  "removed_span": [
+   ".replace(' ', '-'"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "0",
+    "logit": 3.121,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "a",
+    "logit": 32.122,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   2|     try:\n   3|         basename = basename.casefold()\n   4|     except Exception:\n   5|         basename = basename.lower()\n   6| \n   7|     basename = basename\u00ab.replace(' ', '-'\u00bb)\n   8|     basename = re.sub(r'<[^>]*>', r'', basename)\n   9|     basename = re.sub(r'[^a-z0-9\\-]', r'', basename)\n  10|     basename = re.sub(r'\\-\\-', r'-', basename)\n  11|     basename = urllib.parse.quote_plus(basename)\n  12| "
+ },
+ {
+  "eid": 1148,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "n_detect": 2,
+  "removed_span": [
+   ".get(",
+   ")",
+   "\n"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "ess",
+    "logit": 5.509,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": ".",
+    "logit": 32.002,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   5| \n   6|         Args:\n   7|             request (Request): Incoming request.\n   8| \n   9|         \"\"\"\n  10|         csessid = request.args\u00ab.get(\u00bb'csessid'\u00ab)\u00bb[0]\u00ab\n  11| \u00bb\n  12|         self.last_alive[csessid] = (time.time(), False)\n  13|         sess = self.sessionhandler.sessions_from_csessid(csessid)\n  14|         if sess:\n  15|             sess = sess[0]"
+ },
+ {
+  "eid": 1313,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "n_detect": 1,
+  "removed_span": [
+   "ark",
+   "own",
+   ", extensions=[\n                'markdown.extensions.extra',\n                'markdown.extensions.codehilite',\n                'markdown.extensions.toc',\n            ]"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " queryset",
+    "logit": 4.11,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "time",
+    "logit": 29.663,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   1|     def get_queryset(self, **kwargs):\n   2|         queryset = Article.objects.order_by('-time')\n   3|         for i in queryset:\n   4|             i.md = m\u00abark\u00bbd\u00abown\u00bb(i.content\u00ab, extensions=[\n   5|                 'markdown.extensions.extra',\n   6|                 'markdown.extensions.codehilite',\n   7|                 'markdown.extensions.toc',\n   8|             ]\u00bb)\n   9| \n  10|         return queryset"
+ },
+ {
+  "eid": 1355,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "n_detect": 3,
+  "removed_span": [
+   "c",
+   ".execute('''",
+   "''',"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " (%",
+    "logit": 5.329,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "name",
+    "logit": 31.594,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   1| def new_category(category_name):\n   2|     try:\n   3|         conn = check_heroku_db()\n   4|         cur = conn.cursor()\n   5|         \u00abc\u00bbur\u00ab.execute('''\u00bbINSERT INTO categories (cat_name) VALUES (%s)\u00ab''',\u00bb (category_name,))\n   6|         conn.commit()\n   7|         conn.close()\n   8| \n   9|     except psycopg2.DatabaseError as e:\n  10|         print('Error %s' % e)"
+ },
+ {
+  "eid": 1428,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "n_detect": 1,
+  "removed_span": [
+   "ark",
+   "own",
+   ",\n                                 extensions=[\n                                     'markdown.extensions.extra',\n                                     'markdown.extensions.codehilite',\n                                     'markdown.extensions.toc',\n                                 ]"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " self",
+    "logit": 6.844,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "time",
+    "logit": 35.614,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   1|     def get_context_data(self, **kwargs):\n   2|         context = super().get_context_data(**kwargs)\n   3|         context['comments'] = self.object.comment_set.all().order_by('-time')\n   4|         context['form'] = self.get_form()\n   5|         context['md'] = m\u00abark\u00bbd\u00abown\u00bb(self.object.content\u00ab,\n   6|                                  extensions=[\n   7|                                      'markdown.extensions.extra',\n   8|                                      'markdown.extensions.codehilite',\n   9|                                      'markdown.extensions.toc',\n  10|                                  ]\u00bb)\n  11| \n  12|         return context"
+ }
+]

@@ -44,11 +44,76 @@ class ClfMetrics:
     n_pos: int = 0
     n_neg: int = 0
     n_total: int = 0
+    # g-mean = sqrt(TPR * TNR); g-mean^2 = TPR * TNR. Reported at the threshold
+    # that MAXIMISES g-mean (the probe's best class-balanced operating point),
+    # which is the imbalanced-data analogue of `threshold_optimized_accuracy`.
+    # Fields default to NaN so older callers/serialised cards stay valid.
+    gmean: float = float("nan")
+    gmean_squared: float = float("nan")
+    gmean_threshold: float = float("nan")
+    tpr_at_gmean: float = float("nan")
+    tnr_at_gmean: float = float("nan")
 
     def to_dict(self) -> dict:
         d = asdict(self)
         # JSON-friendly: round floats for printing; keep raw for downstream.
         return d
+
+
+def gmean_at_threshold(
+    labels: np.ndarray, probs: np.ndarray, threshold: float
+) -> dict[str, float]:
+    """g-mean (= sqrt(TPR*TNR)) and g-mean^2 (= TPR*TNR) at a fixed threshold.
+
+    g-mean rewards joint performance on BOTH classes and collapses to 0 the
+    moment one class is ignored — the right lens for the heavily imbalanced
+    token-level eval (few vulnerable tokens, many safe code tokens), where
+    plain accuracy is dominated by the negative class.
+    """
+    labels = np.asarray(labels).astype(int)
+    probs = np.asarray(probs).astype(float)
+    pred = (probs >= threshold).astype(int)
+    tp = int(((pred == 1) & (labels == 1)).sum())
+    fn = int(((pred == 0) & (labels == 1)).sum())
+    tn = int(((pred == 0) & (labels == 0)).sum())
+    fp = int(((pred == 1) & (labels == 0)).sum())
+    tpr = tp / (tp + fn) if (tp + fn) else float("nan")
+    tnr = tn / (tn + fp) if (tn + fp) else float("nan")
+    g2 = tpr * tnr
+    return {
+        "threshold": float(threshold),
+        "tpr": float(tpr),
+        "tnr": float(tnr),
+        "gmean": float(np.sqrt(g2)) if g2 == g2 and g2 >= 0 else float("nan"),
+        "gmean_squared": float(g2),
+    }
+
+
+def max_gmean(labels: np.ndarray, probs: np.ndarray) -> dict[str, float]:
+    """Sweep ROC thresholds and return the one maximising g-mean.
+
+    Returns {gmean, gmean_squared, threshold, tpr, tnr}. With TNR = 1 - FPR the
+    sweep is exact over `roc_curve` breakpoints (every distinct score). NaN if
+    only one class is present.
+    """
+    labels = np.asarray(labels).astype(int)
+    probs = np.asarray(probs).astype(float)
+    nan = float("nan")
+    if len(np.unique(labels)) < 2:
+        return {"gmean": nan, "gmean_squared": nan, "threshold": nan,
+                "tpr": nan, "tnr": nan}
+    fpr, tpr, thr = roc_curve(labels, probs)
+    tnr = 1.0 - fpr
+    g = np.sqrt(np.clip(tpr * tnr, 0.0, None))
+    k = int(np.argmax(g))
+    return {
+        "gmean": float(g[k]),
+        "gmean_squared": float(tpr[k] * tnr[k]),
+        # roc_curve's first threshold is +inf (predict-none point); clamp it.
+        "threshold": float(min(thr[k], probs.max())),
+        "tpr": float(tpr[k]),
+        "tnr": float(tnr[k]),
+    }
 
 
 def _safe_auc(labels: np.ndarray, probs: np.ndarray) -> float:
@@ -104,6 +169,9 @@ def compute_clf_metrics(
             idx = np.where(fpr <= target)[0]
             recall_at_fpr[f"recall_at_fpr_{target:.2f}"] = float(tpr[idx[-1]]) if len(idx) else 0.0
 
+    # g-mean at its maximising threshold (NaN-filled when single-class).
+    mg = max_gmean(labels, probs)
+
     return ClfMetrics(
         auc=auc,
         accuracy=acc,
@@ -116,6 +184,11 @@ def compute_clf_metrics(
         n_pos=int((labels == 1).sum()),
         n_neg=int((labels == 0).sum()),
         n_total=int(len(labels)),
+        gmean=mg["gmean"],
+        gmean_squared=mg["gmean_squared"],
+        gmean_threshold=mg["threshold"],
+        tpr_at_gmean=mg["tpr"],
+        tnr_at_gmean=mg["tnr"],
     )
 
 

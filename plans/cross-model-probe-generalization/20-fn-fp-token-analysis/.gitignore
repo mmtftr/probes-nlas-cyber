@@ -1,0 +1,3 @@
+# regenerable from extract_fn_fp.py (full 6119-span FP corpus, ~4.5M)
+fp_corpus.json
+__pycache__/

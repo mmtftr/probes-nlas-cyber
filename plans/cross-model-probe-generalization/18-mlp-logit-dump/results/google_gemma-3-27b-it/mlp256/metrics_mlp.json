@@ -1,0 +1,19 @@
+{
+  "model": "google/gemma-3-27b-it",
+  "head": "mlp256",
+  "layer": 21,
+  "mode": "fixed",
+  "n_tokens": 690148,
+  "n_tokens_code": 491131,
+  "test_tokens_auc": 0.8060225629176062,
+  "test_tokens_code_auc": 0.8217512560991377,
+  "test_example_auc": 0.6502861700131356,
+  "val_ex_auc": 0.6007653061224489,
+  "n_test_examples": 292,
+  "hist_gate": {
+    "hist_tokens_code_auc": 0.822,
+    "this_tokens_code_auc": 0.8217512560991377,
+    "delta": -0.0002,
+    "ok_within_0.02": true
+  }
+}

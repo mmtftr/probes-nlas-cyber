@@ -1,0 +1,336 @@
+[
+ {
+  "eid": 644,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "->pi",
+   "pi->"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "PC",
+    "logit": 6.651,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "->",
+    "logit": 18.955,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  25| \t\tfor (compno = 0, picomp = pi->picomps; compno < pi->numcomps;\n  26| \t\t  ++compno, ++picomp) {\n  27| \t\t\tfor (rlvlno = 0, pirlvl = picomp->pirlvls; rlvlno <\n  28| \t\t\t  picomp->numrlvls; ++rlvlno, ++pirlvl) {\n  29| \t\t\t\t// Check for the potential for overflow problems.\n  30| \t\t\t\tif (pirlvl->prcwidthexpn + pi\u00ab->pi\u00bbcomp->numrlvls >\n  31| \t\t\t\t  JAS_UINTFAST32_NUMBITS - 2 ||\n  32| \t\t\t\t  pirlvl->prcheightexpn + \u00abpi->\u00bbpicomp->numrlvls >\n  33| \t\t\t\t  JAS_UINTFAST32_NUMBITS - 2) {\n  34| \t\t\t\t\treturn -1;\n  35| \t\t\t\t}\n  36| \t\t\t\txstep = picomp->hsamp * (JAS_CAST(uint_fast32_t, 1) <<\n  37| \t\t\t\t  (pirlvl->prcwidthexpn + picomp->numrlvls - rlvlno - 1));"
+ },
+ {
+  "eid": 697,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "/*\n\t\t * Note: '1' here is a performance optimization.\n\t\t * Recall that the decompression layer returns a count of\n\t\t * available bytes; asking for more than that forces the\n\t\t * decompressor to combine reads by copying data.\n\t\t */\n\t\t",
+   "1"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "get",
+    "logit": 41.693,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "ss",
+    "logit": 19.233,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   5| \tssize_t bytes_avail;\n   6| \n   7| \tif (zip->codec == _7Z_COPY && zip->codec2 == (unsigned long)-1) {\n   8| \t\t/* Copy mode. */\n   9| \n  10| \t\t\u00ab/*\n  11| \t\t * Note: '1' here is a performance optimization.\n  12| \t\t * Recall that the decompression layer returns a count of\n  13| \t\t * available bytes; asking for more than that forces the\n  14| \t\t * decompressor to combine reads by copying data.\n  15| \t\t */\n  16| \t\t\u00bb*buff = __archive_read_ahead(a, \u00ab1\u00bb, &bytes_avail);\n  17| \t\tif (bytes_avail <= 0) {\n  18| \t\t\tarchive_set_error(&a->archive,\n  19| \t\t\t    ARCHIVE_ERRNO_FILE_FORMAT,\n  20| \t\t\t    \"Truncated 7-Zip file data\");\n  21| \t\t\treturn (ARCHIVE_FATAL);"
+ },
+ {
+  "eid": 727,
+  "cwe": "CWE-190",
+  "lang": "cpp",
+  "n_detect": 0,
+  "removed_span": [
+   "n",
+   "n"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "items",
+    "logit": 3.084,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "size",
+    "logit": 18.476,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   6|   int size = getContainerSize(items);\n   7|   if (size == 0) return empty_string();\n   8| \n   9|   req::vector<String> sitems;\n  10|   sitems.reserve(size);\n  11|   i\u00abn\u00bbt len = 0;\n  12|   i\u00abn\u00bbt lenDelim = delim.size();\n  13|   for (ArrayIter iter(items); iter; ++iter) {\n  14|     sitems.emplace_back(iter.second().toString());\n  15|     len += sitems.back().size() + lenDelim;\n  16|   }\n  17|   len -= lenDelim; // always one delimiter less than count of items"
+ },
+ {
+  "eid": 760,
+  "cwe": "CWE-476",
+  "lang": "c",
+  "n_detect": 2,
+  "removed_span": [
+   "error",
+   "= security_mmap_addr",
+   ");\n\t",
+   "f (erro",
+   "error"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " VM",
+    "logit": 2.711,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "OCKED",
+    "logit": 33.89,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   4| \tstruct mm_struct *mm = vma->vm_mm;\n   5| \tstruct vm_area_struct *prev;\n   6| \tint error;\n   7| \n   8| \taddress &= PAGE_MASK;\n   9| \t\u00aberror\u00bb \u00ab= security_mmap_addr\u00bb(address\u00ab);\n  10| \t\u00bbi\u00abf (erro\u00bbr)\n  11| \t\treturn \u00aberror\u00bb;\n  12| \n  13| \t/* Enforce stack_guard_gap */\n  14| \tprev = vma->vm_prev;\n  15| \t/* Check that both stack segments have the same anon_vma? */\n  16| \tif (prev && !(prev->vm_flags & VM_GROWSDOWN) &&"
+ },
+ {
+  "eid": 894,
+  "cwe": "CWE-190",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   " ",
+   " ",
+   " ",
+   " "
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "n",
+    "logit": 5.962,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "->",
+    "logit": 18.872,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   5|     if (t -> Data) return;    // Already allocated\n   6| \n   7|     t-> nSamples   = atoi(cmsIT8GetProperty(it8, \"NUMBER_OF_FIELDS\"));\n   8|     t-> nPatches   = atoi(cmsIT8GetProperty(it8, \"NUMBER_OF_SETS\"));\n   9| \n  10|     t-> Data = (char**)AllocChunk\u00ab \u00bb(it8, ((cmsUInt32Number)\u00ab \u00bbt->nSamples + 1) * ((cmsUInt32Number)\u00ab \u00bbt->nPatches + 1) *sizeof\u00ab \u00bb(char*));\n  11|     if (t->Data == NULL) {\n  12| \n  13|         SynError(it8, \"AllocateDataSet: Unable to allocate data array\");\n  14|     }\n  15| "
+ },
+ {
+  "eid": 1022,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "if",
+   "(!",
+   "__sk_",
+   "_",
+   "k",
+   "\n"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "rr",
+    "logit": 2.529,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "rt",
+    "logit": 27.26,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   4| \tconst struct ip_options_rcu *inet_opt;\n   5| \t__be32 daddr = inet->inet_daddr;\n   6| \tstruct flowi4 fl4;\n   7| \tstruct rtable *rt;\n   8| \n   9| \t\u00abif\u00bb \u00ab(!\u00bb __sk_dst_get(sk) || \u00ab__sk_\u00bbdst\u00ab_\u00bbcheck(s\u00abk\u00bb, 0))\n  10| \t\treturn;\n  11| \u00ab\n  12| \u00bb\t\u00abrcu_read_lock();\u00bb\n  13| \tinet_opt = rcu_dereference(inet->inet_opt);\n  14| \tif (inet_opt && inet_opt->opt.srr)\n  15| \t\tdaddr = inet_opt->opt.faddr;\n  16| \trt = ip_route_output_ports(sock_net(sk), &fl4, sk, daddr,\n  17| \t\t\t\t   inet->inet_saddr, inet->inet_dport,\n  18| \t\t\t\t   inet->inet_sport, sk->sk_protocol,\n  19| \t\t\t\t   RT_CONN_FLAGS(sk), sk->sk_bound_dev_if);\n  20| \t\u00abif\u00bb \u00ab(\u00bb!IS_ERR(rt)\u00ab)\u00bb\n  21| \t\u00ab\t__\u00bbsk_dst_set(sk, \u00ab&rt->\u00bbdst);\n  22| \trcu_read_unlock();\n  23| }"
+ },
+ {
+  "eid": 1152,
+  "cwe": "CWE-190",
+  "lang": "c",
+  "n_detect": 3,
+  "removed_span": [
+   "Size = zend_hash_check_size(nSize);\n\tht->nTable"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "Z",
+    "logit": 34.602,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "COUNT",
+    "logit": 26.297,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   1| ZEND_API void ZEND_FASTCALL _zend_hash_init(HashTable *ht, uint32_t nSize, dtor_func_t pDestructor, zend_bool persistent ZEND_FILE_LINE_DC)\n   2| {\n   3| \tGC_REFCOUNT(ht) = 1;\n   4| \tGC_TYPE_INFO(ht) = IS_ARRAY;\n   5| \tht->u.flags = (persistent ? HASH_FLAG_PERSISTENT : 0) | HASH_FLAG_APPLY_PROTECTION | HASH_FLAG_STATIC_KEYS;\n   6| \tht->nTable\u00abSize = zend_hash_check_size(nSize);\n   7| \tht->nTable\u00bbMask = HT_MIN_MASK;\n   8| \tHT_SET_DATA_ADDR(ht, &uninitialized_bucket);\n   9| \tht->nNumUsed = 0;\n  10| \tht->nNumOfElements = 0;\n  11| \tht->nInternalPointer = HT_INVALID_IDX;\n  12| \tht->nNextFreeElement = 0;"
+ },
+ {
+  "eid": 1234,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 2,
+  "removed_span": [
+   "/* Report violation if chunk len overflows */\n\t\tch_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));\n\t\tif (ch_end > skb_tail_pointer(skb))\n\t\t\treturn sctp_sf_violation_chunklen(net, ep, asoc, type, arg,\n\t\t\t\t\t\t  commands);\n\n\t\t"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "_ack",
+    "logit": 5.86,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "p",
+    "logit": 26.342,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  51| \t\t\t\t\tbreak;\n  52| \t\t\t\t}\n  53| \t\t\t}\n  54| \t\t}\n  55| \n  56| \t\t\u00ab/* Report violation if chunk len overflows */\n  57| \t\tch_end = ((__u8 *)ch) + SCTP_PAD4(ntohs(ch->length));\n  58| \t\tif (ch_end > skb_tail_pointer(skb))\n  59| \t\t\treturn sctp_sf_violation_chunklen(net, ep, asoc, type, arg,\n  60| \t\t\t\t\t\t  commands);\n  61| \n  62| \t\t\u00bbch = (sctp_chunkhdr_t *) ch_end;\n  63| \t} while (ch_end < skb_tail_pointer(skb));\n  64| \n  65| \tif (ootb_shut_ack)\n  66| \t\treturn sctp_sf_shut_8_4_5(net, ep, asoc, type, arg, commands);\n  67| \telse if (ootb_cookie_ack)"
+ },
+ {
+  "eid": 1240,
+  "cwe": "CWE-476",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   "*",
+   " = (struct sockaddr_rc *) addr",
+   "cha",
+   " = sa->rc_channel;\n\tint",
+   ";\n\n\tBT_DBG(\"sk %p %pMR\", sk, &sa->rc_bdaddr)",
+   "->"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "\tint",
+    "logit": 0.902,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "rc",
+    "logit": 24.937,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   1| static int rfcomm_sock_bind(struct socket *sock, struct sockaddr *addr, int addr_len)\n   2| {\n   3| \tstruct sockaddr_rc \u00ab*\u00bbsa\u00ab = (struct sockaddr_rc *) addr\u00bb;\n   4| \tstruct sock *sk = sock->sk;\n   5| \tint \u00abcha\u00bbn\u00ab = sa->rc_channel;\n   6| \tint\u00bb err = 0\u00ab;\n   7| \n   8| \tBT_DBG(\"sk %p %pMR\", sk, &sa->rc_bdaddr)\u00bb;\n   9| \n  10| \tif (!addr || addr->sa_family != AF_BLUETOOTH)\n  11| \t\treturn -EINVAL;\n  12| \n  13| \tlock_sock(sk);\n  14| \n  15| \tif (sk->sk_state != BT_OPEN) {\n  16| \t\terr = -EBADFD;\n  17| \t\tgoto done;\n  18| \t}\n  19| \n  20| \tif (sk->sk_type != SOCK_STREAM) {\n  21| \t\terr = -EINVAL;\n  22| \t\tgoto done;\n  23| \t}\n  24| \n  25| \twrite_lock(&rfcomm_sk_list.lock);\n  26| \n  27| \tif (chan && __rfcomm_get_listen_sock_by_addr(chan, &sa\u00ab->\u00bbrc_bdaddr)) {\n  28| \t\terr = -EADDRINUSE;\n  29| \t} else {\n  30| \t\t/* Save source address */\n  31| \t\tbacpy(&rfcomm_pi(sk)->src, &sa\u00ab->\u00bbrc_bdaddr);\n  32| \t\trfcomm_pi(sk)->channel = chan;\n  33| \t\tsk->sk_state = BT_BOUND;\n  34| \t}\n  35| \n  36| \twrite_unlock(&rfcomm_sk_list.lock);"
+ },
+ {
+  "eid": 1265,
+  "cwe": "CWE-787",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "str",
+   "(password)"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "UTH",
+    "logit": 2.775,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "_",
+    "logit": 18.247,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  18| \t\tlength += (AUTH_PASS_LEN - 1);\t\t/* round it up */\n  19| \t\tlength &= ~(AUTH_PASS_LEN - 1);\t\t/* chop it off */\n  20| \t}\t\t\t\t\t\t/* 16*N maps to itself */\n  21| \n  22| \tmemset(hashed, 0, length);\n  23| \tmemcpy(hashed, password, \u00abstr\u00bblen\u00ab(password)\u00bb);\n  24| \n  25| \tattr = find_attribute(request, PW_PASSWORD);\n  26| \n  27| \tif (type == PW_PASSWORD) {\n  28| \t\tvector = request->vector;"
+ },
+ {
+  "eid": 1293,
+  "cwe": "CWE-476",
+  "lang": "c",
+  "n_detect": 1,
+  "removed_span": [
+   "(",
+   "f",
+   "!=",
+   "0x100"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " VO",
+    "logit": 6.847,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": " VO",
+    "logit": 21.317,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   4|     int VO = 0, VOL = 0, VOP = 0, VISO = 0, res = 0;\n   5|     int i;\n   6| \n   7|     for (i = 0; i < probe_packet->buf_size; i++) {\n   8|         temp_buffer = (temp_buffer << 8) + probe_packet->buf[i];\n   9|         if (\u00ab(\u00bbtemp_buffer & 0xfffff\u00abf\u00bb00) \u00ab!=\u00bb \u00ab0x100\u00bb)\n  10|             continue;\n  11| \n  12|         if (temp_buffer == VOP_START_CODE)\n  13|             VOP++;\n  14|         else if (temp_buffer == VISUAL_OBJECT_START_CODE)"
+ },
+ {
+  "eid": 1318,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   " ",
+   " "
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "match",
+    "logit": 37.393,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": " ==",
+    "logit": 24.45,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   1| matchCurrentInput(\n   2| \t\tconst InString *input, int pos, const widechar *passInstructions, int passIC) {\n   3| \tint k;\n   4| \tint kk = pos;\n   5| \tfor (k = passIC + 2;\u00ab \u00bbk < passIC + 2 + passInstructions[passIC + 1];\u00ab \u00bbk++)\n   6| \t\tif (input->chars[kk] == ENDSEGMENT || passInstructions[k] != input->chars[kk++])\n   7| \t\t\treturn 0;\n   8| \treturn 1;\n   9| }"
+ },
+ {
+  "eid": 1339,
+  "cwe": "CWE-022",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   "di"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": "path",
+    "logit": 5.453,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": "path",
+    "logit": 30.489,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "  58| \t\tif (rpath[1] != 0)\n  59| \t\t\tstrlcat(rpath, \"/\", sizeof(rpath));\n  60| \t\tstrlcat(rpath, name, sizeof(rpath));\n  61| \t}\n  62| \n  63| \tif (!chrooted && strncmp(\u00abdi\u00bbr, home, strlen(home))) {\n  64| \t\tDBG(\"Failed non-chroot dir:%s vs home:%s\", dir, home);\n  65| \t\treturn NULL;\n  66| \t}\n  67| \n  68| \treturn rpath;"
+ },
+ {
+  "eid": 1397,
+  "cwe": "CWE-125",
+  "lang": "c",
+  "n_detect": 0,
+  "removed_span": [
+   ",",
+   "\t"
+  ],
+  "flagship_top": {
+   "qwen": {
+    "text": " =",
+    "logit": 3.293,
+    "thr": 3.898
+   },
+   "gemma": {
+    "text": " r",
+    "logit": 16.591,
+    "thr": 20.329
+   }
+  },
+  "excerpt": "   6| \tif (op_byte == 0xaa) {\n   7| \t\t// handle a table switch condition\n   8| \t\tif (pos + 8 > len) {\n   9| \t\t\treturn op->size;\n  10| \t\t}\n  11| \t\tint min_val = (ut32)(UINT (data, pos + 4))\u00ab,\u00bb\n  12| \t\t\u00ab\t\u00bbmax_val = (ut32)(UINT (data, pos + 8));\n  13| \n  14| \t\tut32 default_loc = (ut32) (UINT (data, pos)), cur_case = 0;\n  15| \t\top->switch_op = r_anal_switch_op_new (addr, min_val, default_loc);\n  16| \t\tRAnalCaseOp *caseop = NULL;\n  17| \t\tpos += 12;"
+ }
+]

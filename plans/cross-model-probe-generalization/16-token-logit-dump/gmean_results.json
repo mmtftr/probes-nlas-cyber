@@ -1,0 +1,93 @@
+[
+  {
+    "model": "Qwen-32B-Instruct",
+    "layer": 25,
+    "auc_token": 0.7723399048348735,
+    "token_gmean_sq": 0.5101234004598862,
+    "token_gmean": 0.714229235231859,
+    "token_tpr": 0.6485557083906465,
+    "token_tnr": 0.7865529419604185,
+    "token_threshold": 0.14838777482509613,
+    "example_gmean_sq_all": 0.32806342653405896,
+    "example_gmean_sq_sub": 0.43892105634797346,
+    "n_examples": 292
+  },
+  {
+    "model": "Qwen-7B-Instruct",
+    "layer": 16,
+    "auc_token": 0.8063707729606973,
+    "token_gmean_sq": 0.5438342436986536,
+    "token_gmean": 0.737451180552756,
+    "token_tpr": 0.6602475928473177,
+    "token_tnr": 0.8236822816019191,
+    "token_threshold": -0.4783311188220978,
+    "example_gmean_sq_all": 0.31581910302120475,
+    "example_gmean_sq_sub": 0.44612342889422396,
+    "n_examples": 292
+  },
+  {
+    "model": "g3-1b-it",
+    "layer": 25,
+    "auc_token": 0.7328934199658311,
+    "token_gmean_sq": 0.4714154497967463,
+    "token_gmean": 0.6865970068364312,
+    "token_tpr": 0.6142227816236627,
+    "token_tnr": 0.7674991288186781,
+    "token_threshold": 0.3075810968875885,
+    "example_gmean_sq_all": 0.277725652092325,
+    "example_gmean_sq_sub": 0.3262251094478181,
+    "n_examples": 292
+  },
+  {
+    "model": "g3-4b-it",
+    "layer": 7,
+    "auc_token": 0.7690542285975402,
+    "token_gmean_sq": 0.49263266061151484,
+    "token_gmean": 0.7018779527891689,
+    "token_tpr": 0.645059786028949,
+    "token_tnr": 0.7637007782553142,
+    "token_threshold": -1.1419048309326172,
+    "example_gmean_sq_all": 0.26979733533495964,
+    "example_gmean_sq_sub": 0.355881937579438,
+    "n_examples": 292
+  },
+  {
+    "model": "g3-12b-it",
+    "layer": 15,
+    "auc_token": 0.7702736887304774,
+    "token_gmean_sq": 0.49534219351724135,
+    "token_gmean": 0.7038055083027138,
+    "token_tpr": 0.7130270610446822,
+    "token_tnr": 0.6947032175630155,
+    "token_threshold": 2.1918554306030273,
+    "example_gmean_sq_all": 0.29231563145055356,
+    "example_gmean_sq_sub": 0.4137127524360966,
+    "n_examples": 292
+  },
+  {
+    "model": "g3-27b-it",
+    "layer": 19,
+    "auc_token": 0.7841406475185385,
+    "token_gmean_sq": 0.5126951385852658,
+    "token_gmean": 0.7160273308926594,
+    "token_tpr": 0.7086217747010699,
+    "token_tnr": 0.723510279939598,
+    "token_threshold": 11.381552696228027,
+    "example_gmean_sq_all": 0.3039969975605179,
+    "example_gmean_sq_sub": 0.37056912865414493,
+    "n_examples": 292
+  },
+  {
+    "model": "g3-12b-pt",
+    "layer": 13,
+    "auc_token": 0.7986041142273503,
+    "token_gmean_sq": 0.5227635092316711,
+    "token_gmean": 0.7230238649115748,
+    "token_tpr": 0.65764631843927,
+    "token_tnr": 0.7949006853293066,
+    "token_threshold": 10.10362720489502,
+    "example_gmean_sq_all": 0.33425595796584723,
+    "example_gmean_sq_sub": 0.4360259850303629,
+    "n_examples": 292
+  }
+]

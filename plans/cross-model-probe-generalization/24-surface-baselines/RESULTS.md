@@ -26,11 +26,19 @@ probe; the probe column is the exp-16 L25 per-token sigmoid (`prob`) on a
 0.776) through this harness; neg/pos pools bit-exact vs exp-21
 (`n_neg_test_tokens`=38910; per-CWE pos-token counts match).
 
-**Supervision caveat (deliberate).** Baselines get **per-token** supervision
-(positive = `y==1 ∩ is_code` train tokens; negative = other live-code train
-tokens); the probe trains **span-max**. So these baselines are an **upper
-lexical bar** — generous to the surface side on purpose. Any probe number that
-fails to clear this bar is not evidence of internal representation.
+**Supervision caveat (deliberate).** Baselines get **purely per-token, static**
+supervision (positive = `y==1 ∩ is_code` train tokens; negative = other live-code
+train tokens; hard labels) — they optimize *exactly* the per-token quantity this
+metric scores. The probe (exp-16 span-max trainer) trains an **annealed blend**,
+`L = (1−ω)·per-token-BCE + ω·span-max-BCE` with ω linear 0→1, so its per-token
+term is soft-labelled + entity-up-weighted and **annealed away** toward an
+example-level span-max peak — it is *not* purely per-token, nor purely span-max.
+Both columns are scored identically on the per-token metric (eval is
+apples-to-apples); only the *training* objective differs. So these baselines are
+an **upper lexical bar** — generous to the surface side on purpose: tuned
+directly and only on the scored per-token quantity, while the probe's per-token
+supervision is diluted toward a different objective. Any probe number that fails
+to clear this bar is not evidence of internal representation.
 
 Baselines: (a) token-unigram LR [one-hot token string], (b) char 3–5-gram
 HashingVectorizer LR over a ±48-char window, (c) keyword/regex security lexicon

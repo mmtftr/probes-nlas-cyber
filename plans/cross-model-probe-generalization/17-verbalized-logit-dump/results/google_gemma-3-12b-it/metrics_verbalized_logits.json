@@ -1,0 +1,25 @@
+{
+  "model": "google/gemma-3-12b-it",
+  "n_examples": 1430,
+  "n_test": 292,
+  "n_train": 1138,
+  "verbalized_auc_all": 0.5571421585407599,
+  "verbalized_auc_test": 0.5557796960030024,
+  "yes_ids": [
+    4443,
+    8438,
+    10784,
+    11262,
+    26915
+  ],
+  "no_ids": [
+    951,
+    1904,
+    2301,
+    3771,
+    7018
+  ],
+  "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+  "framing": "code-before-question, neutral preamble (matches exp-05)",
+  "hist_gate": null
+}

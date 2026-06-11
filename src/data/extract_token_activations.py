@@ -293,12 +293,128 @@ def extract(
         )
 
 
+def extract_vllm(
+    model_id: str,
+    jsonl_path: Path,
+    out_dir: Path,
+    layer_indices: list[int] | None = None,
+    max_length: int = 2048,
+) -> None:
+    """vLLM `extract_hidden_states` backend — ~2.2–2.5× faster than the HF
+    forward, byte-identical output format. Reuses the HF tokenizer for
+    input_ids/offsets/labels (these don't depend on the forward); vLLM only
+    produces the hidden states. Layer convention preserved: repo-layer L =
+    hidden_states[L+1] = vLLM aux id (L+1). See docs/vllm-hidden-states-extraction.md.
+    """
+    import os
+    os.environ.setdefault("VLLM_USE_FLASHINFER_SAMPLER", "0")  # Blackwell guard; harmless on Hopper
+    os.environ.setdefault("VLLM_LOGGING_LEVEL", "WARNING")
+
+    tokenizer = _load_tokenizer(model_id)
+    rows: list[dict] = []
+    with jsonl_path.open() as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                rows.append(json.loads(line))
+
+    # need n_layers to default the layer set + bound aux ids
+    from transformers import AutoConfig
+    cfg = AutoConfig.from_pretrained(model_id, trust_remote_code=True)
+    n_layers = getattr(cfg, "num_hidden_layers", None) or getattr(getattr(cfg, "text_config", cfg), "num_hidden_layers")
+    if layer_indices is None:
+        layer_indices = sorted({n_layers // 4, n_layers // 2, (3 * n_layers) // 4, n_layers - 1})
+    aux_ids = sorted({li + 1 for li in layer_indices})
+    print(f"[token-extract:vllm] model={model_id} layers={layer_indices} aux_ids={aux_ids} of {n_layers}", file=sys.stderr)
+
+    # ---- tokenize (identical call to the HF path) ----
+    input_ids_list: list[list[int]] = []
+    offsets_per_row: list[np.ndarray] = []
+    labels: list[int] = []
+    example_ids: list[int] = []
+    spans: list[tuple[int, int, int]] = []
+    pos_span_lengths: list[int] = []
+    pos_rows = pos_rows_with_span = 0
+    for eid, row in enumerate(rows):
+        if _row_label(row) == 1:
+            pos_rows += 1
+        enc = tokenizer(row["code"], return_offsets_mapping=True, truncation=True,
+                        max_length=max_length, return_tensors=None)
+        input_ids = enc["input_ids"]; offsets = enc["offset_mapping"]
+        n_pos = len(input_ids)
+        tok_spans = char_spans_to_token_spans(parse_spans(row), offsets)
+        tok_labels, _ = token_labels_array(n_pos, tok_spans)
+        row_pos = [(s, e) for (s, e, lbl) in tok_spans if lbl == 1]
+        if row_pos:
+            pos_rows_with_span += 1
+            for s, e in row_pos:
+                spans.append((eid, s, e)); pos_span_lengths.append(e - s + 1)
+        labels.extend(tok_labels.tolist())
+        example_ids.extend([eid] * n_pos)
+        offsets_per_row.append(np.array(offsets, dtype=np.int32))
+        input_ids_list.append(input_ids)
+
+    # ---- vLLM forward (prefill-only, hidden states via KVConnector) ----
+    hs_dir = out_dir / "hs_extract"
+    import shutil
+    shutil.rmtree(hs_dir, ignore_errors=True); hs_dir.mkdir(parents=True, exist_ok=True)
+    from vllm import LLM, SamplingParams
+    from vllm.config.kv_transfer import KVTransferConfig
+    from vllm.distributed.kv_transfer.kv_connector.v1 import example_hidden_states_connector
+    t0 = time.time()
+    llm = LLM(
+        model=model_id, enable_chunked_prefill=False, enable_prefix_caching=False,
+        attention_backend="FLASH_ATTN", max_model_len=max_length + 16, trust_remote_code=True,
+        speculative_config={"method": "extract_hidden_states", "num_speculative_tokens": 1,
+                            "draft_model_config": {"hf_config": {"eagle_aux_hidden_state_layer_ids": aux_ids}}},
+        kv_transfer_config=KVTransferConfig(kv_connector="ExampleHiddenStatesConnector", kv_role="kv_producer",
+                                            kv_connector_extra_config={"shared_storage_path": str(hs_dir)}),
+    )
+    print(f"[token-extract:vllm] engine init {time.time()-t0:.1f}s", file=sys.stderr)
+    t1 = time.time()
+    outputs = llm.generate([{"prompt_token_ids": ids} for ids in input_ids_list],
+                           SamplingParams(max_tokens=1, temperature=0.0))
+    print(f"[token-extract:vllm] generate {time.time()-t1:.1f}s "
+          f"({len(rows)/(time.time()-t1):.1f} ex/s)", file=sys.stderr)
+
+    # outputs are in request (=input) order; assert + assemble per layer
+    aux_index = {aid: j for j, aid in enumerate(aux_ids)}
+    per_layer: dict[int, list[np.ndarray]] = {li: [] for li in layer_indices}
+    for eid, o in enumerate(outputs):
+        obj = example_hidden_states_connector.load_hidden_states(o.kv_transfer_params["hidden_states_path"])
+        hs = obj["hidden_states"]
+        hs = hs.float().cpu().numpy() if hasattr(hs, "float") else np.asarray(hs, dtype=np.float32)
+        if hs.shape[0] != len(input_ids_list[eid]):
+            raise SystemExit(f"vllm token mismatch eid {eid}: hs={hs.shape[0]} ids={len(input_ids_list[eid])}")
+        for li in layer_indices:
+            per_layer[li].append(hs[:, aux_index[li + 1], :].astype(np.float32))
+    shutil.rmtree(hs_dir, ignore_errors=True)
+
+    # ---- write identical output format ----
+    y = np.array(labels, dtype=np.int8)
+    eid_arr = np.array(example_ids, dtype=np.int32)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for li in layer_indices:
+        mat = np.vstack(per_layer[li]).astype(np.float32)
+        p = out_dir / f"token_activations_layer{li:02d}.npz"
+        np.savez(p, X=mat, y=y, example_ids=eid_arr)
+        print(f"[token-extract:vllm] saved {p}  X={mat.shape}", file=sys.stderr)
+    (out_dir / "spans.json").write_text(json.dumps(spans))
+    np.savez(out_dir / "offsets.npz",
+             **{f"offsets_row_{i:04d}": offsets_per_row[i] for i in range(len(offsets_per_row))})
+    print(f"[token-extract:vllm] spans={len(spans)} rows={len(offsets_per_row)} "
+          f"pos_rows={pos_rows} with_span={pos_rows_with_span} pos_tokens={int(y.sum())}", file=sys.stderr)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="google/gemma-4-E2B-it")
     ap.add_argument("--pairs", default="data/dataset.jsonl")
     ap.add_argument("--out", default="data/token_activations")
     ap.add_argument("--max-length", type=int, default=2048)
+    ap.add_argument("--backend", choices=["vllm", "hf"], default="vllm",
+                    help="vllm (default, ~2.2-2.5x faster, needs vllm on PYTHONPATH) "
+                         "or hf (transformers output_hidden_states fallback).")
     ap.add_argument("--layers", default=None,
                     help="Comma-separated explicit layer indices to capture "
                          "(e.g. '23,24,25,26,27'). Default: auto {n/4,n/2,3n/4,n-1}. "
@@ -307,8 +423,9 @@ def main() -> None:
     layer_indices = None
     if args.layers:
         layer_indices = sorted({int(x) for x in args.layers.split(",") if x.strip() != ""})
-    extract(args.model, Path(args.pairs), Path(args.out),
-            layer_indices=layer_indices, max_length=args.max_length)
+    fn = extract_vllm if args.backend == "vllm" else extract
+    fn(args.model, Path(args.pairs), Path(args.out),
+       layer_indices=layer_indices, max_length=args.max_length)
 
 
 if __name__ == "__main__":

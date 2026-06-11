@@ -1,0 +1,782 @@
+[
+ {
+  "eid": 383,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "'",
+  "n_models": 7,
+  "models": {
+   "qwen-32b": 4.203,
+   "qwen-7b": 2.361,
+   "gemma-1b-it": 2.307,
+   "gemma-4b-it": 6.13,
+   "gemma-12b-it": 13.182,
+   "gemma-27b-it": 4.447,
+   "gemma-12b-pt": 6.573
+  },
+  "max_margin": 13.182,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     def add_translationname(self, trname):\n   2|         \"\"\"Add new translation by item name for an item.\"\"\"\n   3|         if self.connection:\n   4|             for item in self.find_item_name([trname[0], '0']):\n   5|                 self.cursor.execute('insert into itemtranslation (itemid, itemlanguageid, translation) values (\"%s\", \"%s\", \"%s\")\u00ab'\u00bb % (item[0], trname[1], trname[2]))\n   6|             self.connection.commit()"
+ },
+ {
+  "eid": 992,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "UPDATE comment SET content =",
+  "n_models": 6,
+  "models": {
+   "qwen-32b": 3.766,
+   "qwen-7b": 1.507,
+   "gemma-1b-it": 3.949,
+   "gemma-4b-it": 10.023,
+   "gemma-12b-it": 26.198,
+   "gemma-27b-it": 15.44
+  },
+  "max_margin": 26.198,
+  "nearest_vuln_dist": 1,
+  "excerpt": "   8|         return render_template('comment/edit.html', m=m, cmt_id=cmt_id)\n   9| \n  10|     if request.method == 'POST':\n  11|         content = request.form['content']\n  12|         sql = \"\u00abUPDATE comment SET content =\u00bb '%s' where cmt_id = '%d';\" \\\n  13|             % (content, cmt_id)\n  14|         cursor.execute(sql)\n  15|         conn.commit()\n  16|         sql = \"SELECT msg_id FROM comment where cmt_id = %d;\" % (cmt_id)"
+ },
+ {
+  "eid": 877,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "s",
+  "n_models": 6,
+  "models": {
+   "qwen-32b": 2.119,
+   "qwen-7b": 1.542,
+   "gemma-4b-it": 3.931,
+   "gemma-12b-it": 5.761,
+   "gemma-27b-it": 8.92,
+   "gemma-12b-pt": 3.528
+  },
+  "max_margin": 8.92,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   3|     sql = \"SELECT * FROM users where email = '%s';\" % (session['logged_email'])\n   4|     cursor.execute(sql)\n   5|     u = cursor.fetchone()\n   6|     if request.method == 'POST':\n   7|         sql = \"UPDATE users SET nickname = '%s' where email = '%\u00abs\u00bb'\" \\\n   8|         % (request.form['nickname'], session['logged_email'])\n   9|         cursor.execute(sql)\n  10|         sql = \"SELECT * FROM users where email = '%s';\" \\\n  11|             % (session['logged_email'])"
+ },
+ {
+  "eid": 1130,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "(id",
+  "n_models": 6,
+  "models": {
+   "qwen-32b": 0.003,
+   "qwen-7b": 1.478,
+   "gemma-1b-it": 1.336,
+   "gemma-4b-it": 6.954,
+   "gemma-12b-it": 4.332,
+   "gemma-12b-pt": 4.286
+  },
+  "max_margin": 6.954,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1| def delete_playlist(id, db):\n   2|     db.execute(\"DELETE FROM playlist where id={id};\".format\u00ab(id\u00bb=id))"
+ },
+ {
+  "eid": 877,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "s",
+  "n_models": 6,
+  "models": {
+   "qwen-32b": 1.861,
+   "gemma-1b-it": 1.112,
+   "gemma-4b-it": 2.006,
+   "gemma-12b-it": 3.299,
+   "gemma-27b-it": 4.821,
+   "gemma-12b-pt": 3.071
+  },
+  "max_margin": 4.821,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   6|     if request.method == 'POST':\n   7|         sql = \"UPDATE users SET nickname = '%s' where email = '%s'\" \\\n   8|         % (request.form['nickname'], session['logged_email'])\n   9|         cursor.execute(sql)\n  10|         sql = \"SELECT * FROM users where email = '%\u00abs\u00bb';\" \\\n  11|             % (session['logged_email'])\n  12|         cursor.execute(sql)\n  13|         u = cursor.fetchone()\n  14|         conn.commit()"
+ },
+ {
+  "eid": 877,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "s' where email =",
+  "n_models": 5,
+  "models": {
+   "qwen-32b": 2.745,
+   "qwen-7b": 1.312,
+   "gemma-1b-it": 2.985,
+   "gemma-4b-it": 8.108,
+   "gemma-12b-it": 13.228
+  },
+  "max_margin": 13.228,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   3|     sql = \"SELECT * FROM users where email = '%s';\" % (session['logged_email'])\n   4|     cursor.execute(sql)\n   5|     u = cursor.fetchone()\n   6|     if request.method == 'POST':\n   7|         sql = \"UPDATE users SET nickname = '%\u00abs' where email =\u00bb '%s'\" \\\n   8|         % (request.form['nickname'], session['logged_email'])\n   9|         cursor.execute(sql)\n  10|         sql = \"SELECT * FROM users where email = '%s';\" \\\n  11|             % (session['logged_email'])"
+ },
+ {
+  "eid": 844,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " -name",
+  "n_models": 5,
+  "models": {
+   "qwen-7b": 0.684,
+   "gemma-1b-it": 0.914,
+   "gemma-4b-it": 1.959,
+   "gemma-27b-it": 13.132,
+   "gemma-12b-pt": 9.065
+  },
+  "max_margin": 13.132,
+  "nearest_vuln_dist": 0,
+  "excerpt": "  22| \n  23|         # When creating a host, we need one port\n  24|         self._driver_assert(len(ports), _('_create_host: No connector ports'))\n  25|         port1 = ports.pop(0)\n  26|         ssh_cmd = ('svctask mkhost -force %(port1)s\u00ab -name\u00bb \"%(host_name)s\"' %\n  27|                    {'port1': port1, 'host_name': host_name})\n  28|         out, err = self._run_ssh(ssh_cmd)\n  29|         self._assert_ssh_return('successfully created' in out,\n  30|                                 '_create_host', ssh_cmd, out, err)"
+ },
+ {
+  "eid": 877,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "s",
+  "n_models": 5,
+  "models": {
+   "gemma-1b-it": 0.726,
+   "gemma-4b-it": 4.001,
+   "gemma-12b-it": 6.176,
+   "gemma-27b-it": 12.768,
+   "gemma-12b-pt": 8.002
+  },
+  "max_margin": 12.768,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1| @mod.route('/edit', methods=['GET', 'POST'])\n   2| def edit():\n   3|     sql = \"SELECT * FROM users where email = '%\u00abs\u00bb';\" % (session['logged_email'])\n   4|     cursor.execute(sql)\n   5|     u = cursor.fetchone()\n   6|     if request.method == 'POST':\n   7|         sql = \"UPDATE users SET nickname = '%s' where email = '%s'\" \\"
+ },
+ {
+  "eid": 409,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "' % hostname",
+  "n_models": 5,
+  "models": {
+   "qwen-7b": 0.48,
+   "gemma-1b-it": 1.177,
+   "gemma-4b-it": 5.906,
+   "gemma-27b-it": 8.625,
+   "gemma-12b-pt": 5.087
+  },
+  "max_margin": 8.625,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     def _get_active_nsp(self, hostname):\n   2|         \"\"\"Return the active nsp, if one exists, for the given host.\"\"\"\n   3|         result = self.common._cli_run('showvlun -a -host %s\u00ab' % hostname\u00bb, None)\n   4|         if result:\n   5|             # first line is header\n   6|             result = result[1:]\n   7|             for line in result:"
+ },
+ {
+  "eid": 1130,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "))",
+  "n_models": 5,
+  "models": {
+   "qwen-7b": 1.612,
+   "gemma-4b-it": 2.821,
+   "gemma-12b-it": 6.755,
+   "gemma-27b-it": 1.287,
+   "gemma-12b-pt": 0.081
+  },
+  "max_margin": 6.755,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1| def delete_playlist(id, db):\n   2|     db.execute(\"DELETE FROM playlist where id={id};\".format(id=id\u00ab))\u00bb"
+ },
+ {
+  "eid": 1182,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "and",
+  "n_models": 5,
+  "models": {
+   "qwen-32b": 1.273,
+   "qwen-7b": 0.466,
+   "gemma-4b-it": 4.542,
+   "gemma-12b-it": 1.342,
+   "gemma-27b-it": 6.538
+  },
+  "max_margin": 6.538,
+  "nearest_vuln_dist": 0,
+  "excerpt": "  61|                     s2 = str(ver[count]).split()\n  62|                     s2 = s2[5].split('\\\"')\n  63|                     count += 1\n  64|                     j += 1\n  65|                     cursor.execute(\"select * from result where problem = '\" + s[3] + \"'\u00aband\u00bb diff = '\" + s[4] + \"'\")\n  66|                     x = cursor.fetchone()\n  67|                     if s2[1] == 'OK' and x != None:\n  68|                         cursor.execute(\n  69|                             \"update result set verdict = '\" + s2[1] + \"' where problem = '\" + s[3] + \"' and diff = '\" +"
+ },
+ {
+  "eid": 1203,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "userid,post",
+  "n_models": 5,
+  "models": {
+   "qwen-32b": 2.041,
+   "qwen-7b": 2.341,
+   "gemma-1b-it": 1.659,
+   "gemma-4b-it": 6.479,
+   "gemma-27b-it": 4.247
+  },
+  "max_margin": 6.479,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     def insertData(self,userid,post):\n   2|         sqlText=\"insert into post(userid,date,comment) \\\n   3|                 values(%d,current_timestamp(0),'%s');\"%(\u00abuserid,post\u00bb);\n   4|         result=sql.insertDB(self.conn,sqlText)\n   5|         return result;"
+ },
+ {
+  "eid": 133,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "(",
+  "n_models": 5,
+  "models": {
+   "gemma-1b-it": 1.253,
+   "gemma-4b-it": 6.345,
+   "gemma-12b-it": 1.871,
+   "gemma-27b-it": 3.117,
+   "gemma-12b-pt": 1.7
+  },
+  "max_margin": 6.345,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1| def retrieve_videos_from_playlist(playlist_id, db):\n   2|     db.execute(\"SELECT id, title, thumbnail, position from video WHERE playlist_id={playlist_id} ORDER BY position ASC;\".format\u00ab(\u00bb\n   3|         playlist_id=playlist_id))\n   4|     rows = db.fetchall()\n   5|     return rows"
+ },
+ {
+  "eid": 877,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " (",
+  "n_models": 5,
+  "models": {
+   "qwen-32b": 0.916,
+   "qwen-7b": 0.539,
+   "gemma-1b-it": 0.227,
+   "gemma-4b-it": 5.592,
+   "gemma-12b-pt": 0.187
+  },
+  "max_margin": 5.592,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   4|     cursor.execute(sql)\n   5|     u = cursor.fetchone()\n   6|     if request.method == 'POST':\n   7|         sql = \"UPDATE users SET nickname = '%s' where email = '%s'\" \\\n   8|         %\u00ab (\u00bbrequest.form['nickname'], session['logged_email'])\n   9|         cursor.execute(sql)\n  10|         sql = \"SELECT * FROM users where email = '%s';\" \\\n  11|             % (session['logged_email'])\n  12|         cursor.execute(sql)"
+ },
+ {
+  "eid": 1411,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " (",
+  "n_models": 5,
+  "models": {
+   "qwen-32b": 2.469,
+   "qwen-7b": 1.338,
+   "gemma-1b-it": 0.603,
+   "gemma-12b-it": 2.148,
+   "gemma-12b-pt": 0.305
+  },
+  "max_margin": 2.469,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   8|       name: the player's full name (need not be unique).\n   9|     \"\"\"\n  10|     conn = connect()\n  11|     cursor = conn.cursor()\n  12|     cursor.execute(\"INSERT INTO players (name) VALUES ('%s')\" %\u00ab (\u00bbname,));\n  13|     conn.commit()\n  14|     conn.close()"
+ },
+ {
+  "eid": 1182,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " =",
+  "n_models": 5,
+  "models": {
+   "qwen-32b": 0.012,
+   "gemma-1b-it": 1.762,
+   "gemma-4b-it": 0.252,
+   "gemma-27b-it": 0.043,
+   "gemma-12b-pt": 0.86
+  },
+  "max_margin": 1.762,
+  "nearest_vuln_dist": 1,
+  "excerpt": "  81|     settings = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + \"\\\\settings.db\")\n  82|     conn = settings.cursor()\n  83|     conn.execute(\"update users set username = '\" + str(username) + \"' where chat_id = '\" + str(chat_id) + \"'\")\n  84|     conn.execute(\"update users set last_update = '\" + str(last_try_new) + \"' where chat_id = '\" + str(chat_id) + \"'\")\n  85|     conn.execute(\"update users set last_problem\u00ab =\u00bb '\" + str(last_problem) + \"' where chat_id = '\" + str(chat_id) + \"'\")\n  86| \n  87|     settings.commit()\n  88|     settings.close()"
+ },
+ {
+  "eid": 1130,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " where id",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 1.352,
+   "qwen-7b": 1.918,
+   "gemma-12b-it": 19.261,
+   "gemma-12b-pt": 5.097
+  },
+  "max_margin": 19.261,
+  "nearest_vuln_dist": 1,
+  "excerpt": "   1| def delete_playlist(id, db):\n   2|     db.execute(\"DELETE FROM playlist\u00ab where id\u00bb={id};\".format(id=id))"
+ },
+ {
+  "eid": 828,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " like",
+  "n_models": 4,
+  "models": {
+   "qwen-7b": 0.625,
+   "gemma-4b-it": 4.127,
+   "gemma-12b-it": 15.805,
+   "gemma-12b-pt": 1.14
+  },
+  "max_margin": 15.805,
+  "nearest_vuln_dist": 1,
+  "excerpt": "  47|             votefinished = True\n  48|             conn.send(\"MODE {} +b {}\".format(chan, user.get_hostmask(target,db)))\n  49|             conn.send(\"KICK {} {} :\".format(chan, target, \"You have been voted off the island.\"))\n  50|     \n  51|     if votefinished: db.execute(\"DELETE FROM votes where chan='{}' and action='{}' and target\u00ab like\u00bb '{}'\".format(chan,action,target))\n  52|     else: db.execute(\"insert or replace into votes(chan, action, target, voters, time) values(?,?,?,?,?)\", (chan, action, target, voters, time.time()))\n  53|         \n  54|     db.commit()\n  55|     return (\"Votes to {} {}: {}/{}\".format(action, target, votecount,votemax))"
+ },
+ {
+  "eid": 310,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " WHERE",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 2.412,
+   "qwen-7b": 0.996,
+   "gemma-12b-it": 15.338,
+   "gemma-12b-pt": 2.322
+  },
+  "max_margin": 15.338,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   5|             id = id.encode('utf-8')\n   6|         else:\n   7|             id = str(id)\n   8|         self._openContainer(session)\n   9|         query = (\"UPDATE %s SET %s = %r\u00ab WHERE\u00bb identifier = '%s';\" %\n  10|                  (self.table, mType, value, id)\n  11|                  )\n  12|         try:\n  13|             self._query(query)"
+ },
+ {
+  "eid": 310,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " %",
+  "n_models": 4,
+  "models": {
+   "gemma-4b-it": 7.941,
+   "gemma-12b-it": 8.187,
+   "gemma-27b-it": 15.325,
+   "gemma-12b-pt": 4.723
+  },
+  "max_margin": 15.325,
+  "nearest_vuln_dist": 2,
+  "excerpt": "   5|             id = id.encode('utf-8')\n   6|         else:\n   7|             id = str(id)\n   8|         self._openContainer(session)\n   9|         query = (\"UPDATE %s SET %s = %r WHERE identifier = '%s';\"\u00ab %\u00bb\n  10|                  (self.table, mType, value, id)\n  11|                  )\n  12|         try:\n  13|             self._query(query)"
+ },
+ {
+  "eid": 992,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "s' where cmt_id =",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 3.197,
+   "gemma-1b-it": 2.68,
+   "gemma-4b-it": 8.649,
+   "gemma-12b-it": 14.67
+  },
+  "max_margin": 14.67,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   8|         return render_template('comment/edit.html', m=m, cmt_id=cmt_id)\n   9| \n  10|     if request.method == 'POST':\n  11|         content = request.form['content']\n  12|         sql = \"UPDATE comment SET content = '%\u00abs' where cmt_id =\u00bb '%d';\" \\\n  13|             % (content, cmt_id)\n  14|         cursor.execute(sql)\n  15|         conn.commit()\n  16|         sql = \"SELECT msg_id FROM comment where cmt_id = %d;\" % (cmt_id)"
+ },
+ {
+  "eid": 600,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "hostname",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 0.183,
+   "gemma-4b-it": 2.26,
+   "gemma-27b-it": 11.46,
+   "gemma-12b-pt": 4.696
+  },
+  "max_margin": 11.46,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     def _get_3par_host(self, hostname):\n   2|         out = self._cli_run('showhost -verbose %s' % (\u00abhostname\u00bb), None)\n   3|         LOG.debug(\"OUTPUT = \\n%s\" % (pprint.pformat(out)))\n   4|         host = {'id': None, 'name': None,\n   5|                 'domain': None,\n   6|                 'descriptors': {},"
+ },
+ {
+  "eid": 1217,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " WHERE name =",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 0.755,
+   "gemma-1b-it": 6.343,
+   "gemma-4b-it": 5.683,
+   "gemma-12b-it": 10.943
+  },
+  "max_margin": 10.943,
+  "nearest_vuln_dist": 0,
+  "excerpt": "  16|     else:\n  17|         karma = karma + 1\n  18|         try:\n  19|             cursor.execute('''\n  20|                 UPDATE people SET karma = {0}\u00ab WHERE name =\u00bb '{1}'\n  21|                 '''.format(karma, name))\n  22|             db.commit()\n  23|             logger.debug('Inserted into karmadb {} karma for {}'.format(\n  24|                 karma, name))"
+ },
+ {
+  "eid": 923,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "scene, tag",
+  "n_models": 4,
+  "models": {
+   "gemma-1b-it": 0.304,
+   "gemma-4b-it": 4.548,
+   "gemma-27b-it": 10.466,
+   "gemma-12b-pt": 9.843
+  },
+  "max_margin": 10.466,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1| def get_monthly_ranks_for_scene(db, scene, tag):\n   2| \n   3|     sql = \"SELECT date, rank FROM ranks WHERE scene='{}' AND player='{}'\".format(\u00abscene, tag\u00bb)\n   4|     res = db.exec(sql)\n   5| \n   6|     res = [r for r in res if played_during_month(db, scene, tag, get_previous_month(r[0]))]\n   7| "
+ },
+ {
+  "eid": 1411,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "%s",
+  "n_models": 4,
+  "models": {
+   "qwen-7b": 2.864,
+   "gemma-1b-it": 2.367,
+   "gemma-4b-it": 5.079,
+   "gemma-12b-pt": 10.363
+  },
+  "max_margin": 10.363,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   8|       name: the player's full name (need not be unique).\n   9|     \"\"\"\n  10|     conn = connect()\n  11|     cursor = conn.cursor()\n  12|     cursor.execute(\"INSERT INTO players (name) VALUES ('\u00ab%s\u00bb')\" % (name,));\n  13|     conn.commit()\n  14|     conn.close()"
+ },
+ {
+  "eid": 310,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": ")",
+  "n_models": 4,
+  "models": {
+   "gemma-1b-it": 1.414,
+   "gemma-4b-it": 1.445,
+   "gemma-12b-it": 10.352,
+   "gemma-27b-it": 2.076
+  },
+  "max_margin": 10.352,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   6|         else:\n   7|             id = str(id)\n   8|         self._openContainer(session)\n   9|         query = (\"UPDATE %s SET %s = %r WHERE identifier = '%s';\" %\n  10|                  (self.table, mType, value, id\u00ab)\u00bb\n  11|                  )\n  12|         try:\n  13|             self._query(query)\n  14|         except:"
+ },
+ {
+  "eid": 1182,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " and",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 1.774,
+   "qwen-7b": 0.65,
+   "gemma-12b-it": 10.124,
+   "gemma-27b-it": 3.032
+  },
+  "max_margin": 10.124,
+  "nearest_vuln_dist": 0,
+  "excerpt": "  13|     if update_eq[0] != update_base[0]:\n  14|         cursor2.execute(\"SELECT * FROM problems\")\n  15|         x = cursor2.fetchone()\n  16|         while x != None:\n  17|             cursor.execute(\"select * from result where problem = '\" + str(x[0]) + \"'\u00ab and\u00bb diff = '\" + str(x[1]) + \"'\")\n  18|             x2 = cursor.fetchone()\n  19|             if x2 == None:\n  20|                 cursor.execute(\"insert into result values (?, ?, ? )\", (x[0], x[1], \"NULL\"))\n  21|             last_problem = x"
+ },
+ {
+  "eid": 1159,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " and",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 2.391,
+   "qwen-7b": 0.313,
+   "gemma-12b-it": 9.476,
+   "gemma-12b-pt": 1.355
+  },
+  "max_margin": 9.476,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     @staticmethod\n   2|     def upsert_mapped_projects(user_id: int, project_id: int):\n   3|         \"\"\" Adds projects to mapped_projects if it doesn't exist \"\"\"\n   4|         sql = \"select * from users where id = {0}\u00ab and\u00bb projects_mapped @> '{{{1}}}'\".format(user_id, project_id)\n   5|         result = db.engine.execute(sql)\n   6| \n   7|         if result.rowcount > 0:\n   8|             return  # User has previously mapped this project so return"
+ },
+ {
+  "eid": 314,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "'",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 4.598,
+   "gemma-1b-it": 1.073,
+   "gemma-4b-it": 2.696,
+   "gemma-12b-it": 8.985
+  },
+  "max_margin": 8.985,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     def _get_conn_fc_wwpns(self, host_name):\n   2|         wwpns = []\n   3|         cmd = 'svcinfo lsfabric -host %s\u00ab'\u00bb % host_name\n   4|         generator = self._port_conf_generator(cmd)\n   5|         header = next(generator, None)\n   6|         if not header:\n   7|             return wwpns"
+ },
+ {
+  "eid": 1222,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " (",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 0.621,
+   "gemma-4b-it": 8.243,
+   "gemma-12b-it": 0.3,
+   "gemma-27b-it": 0.135
+  },
+  "max_margin": 8.243,
+  "nearest_vuln_dist": 21,
+  "excerpt": "   1|     def add_input(self,data):\n   2|         connection = self.connect()\n   3| \n   4|         try:\n   5|             query = \"INSERT INTO crimes\u00ab (\u00bbdescription) VALUES ('{}');\".format(data)\n   6|             with connection.cursor() as cursor:\n   7|                 cursor.execute(query)\n   8|                 connection.commit()\n   9|         finally:"
+ },
+ {
+  "eid": 1182,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " str",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 0.549,
+   "gemma-1b-it": 0.511,
+   "gemma-27b-it": 7.003,
+   "gemma-12b-pt": 0.968
+  },
+  "max_margin": 7.003,
+  "nearest_vuln_dist": 0,
+  "excerpt": "  13|     if update_eq[0] != update_base[0]:\n  14|         cursor2.execute(\"SELECT * FROM problems\")\n  15|         x = cursor2.fetchone()\n  16|         while x != None:\n  17|             cursor.execute(\"select * from result where problem = '\" + str(x[0]) + \"' and diff = '\" +\u00ab str\u00bb(x[1]) + \"'\")\n  18|             x2 = cursor.fetchone()\n  19|             if x2 == None:\n  20|                 cursor.execute(\"insert into result values (?, ?, ? )\", (x[0], x[1], \"NULL\"))\n  21|             last_problem = x"
+ },
+ {
+  "eid": 1036,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "id",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 0.308,
+   "qwen-7b": 1.212,
+   "gemma-12b-it": 6.803,
+   "gemma-27b-it": 3.041
+  },
+  "max_margin": 6.803,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     def deletePost(self,postid):\n   2|         sqlText=\"delete from post where post.postid=%d\"%(post\u00abid\u00bb)\n   3|         result=sql.deleteDB(self.conn,sqlText)\n   4|         return result;"
+ },
+ {
+  "eid": 828,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "chan",
+  "n_models": 4,
+  "models": {
+   "gemma-1b-it": 0.285,
+   "gemma-12b-it": 5.773,
+   "gemma-27b-it": 4.65,
+   "gemma-12b-pt": 3.629
+  },
+  "max_margin": 5.773,
+  "nearest_vuln_dist": 0,
+  "excerpt": "  18|     if not db_ready: db_init(db)\n  19|     chan = chan.lower()\n  20|     target = target.lower()\n  21|     voter = user.format_hostmask(mask)\n  22|     voters = db.execute(\"SELECT voters FROM votes where chan='{}' and action='{}' and target like '{}'\".format(\u00abchan\u00bb,action,target)).fetchone()\n  23| \n  24|     if conn.nick.lower() in target: return \"I dont think so Tim.\"\n  25| \n  26|     if voters: "
+ },
+ {
+  "eid": 381,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "1",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 0.156,
+   "gemma-1b-it": 2.608,
+   "gemma-27b-it": 4.783,
+   "gemma-12b-pt": 5.039
+  },
+  "max_margin": 5.039,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   4|         init()\n   5| \n   6|     player1 = request.args.get('tag1', default=\"christmasmike\")\n   7|     player2 = request.args.get('tag2', default=\"christmasmike\")\n   8|     sql = \"SELECT * FROM matches WHERE (player1 = '\"+str(player\u00ab1\u00bb)+\"' OR \"\\\n   9|             +\"player2 = '\"+str(player1)+\"') AND (player1 = '\"+str(player2)+\"' OR \"\\\n  10|             +\"player2 = '\"+str(player2)+\"') ORDER BY date DESC;\"\n  11|     result = db.exec(sql)\n  12|     return json.dumps(result)"
+ },
+ {
+  "eid": 1182,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " =",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 2.178,
+   "gemma-1b-it": 0.639,
+   "gemma-4b-it": 3.993,
+   "gemma-27b-it": 4.194
+  },
+  "max_margin": 4.194,
+  "nearest_vuln_dist": 1,
+  "excerpt": "  61|                     s2 = str(ver[count]).split()\n  62|                     s2 = s2[5].split('\\\"')\n  63|                     count += 1\n  64|                     j += 1\n  65|                     cursor.execute(\"select * from result where problem = '\" + s[3] + \"'and diff\u00ab =\u00bb '\" + s[4] + \"'\")\n  66|                     x = cursor.fetchone()\n  67|                     if s2[1] == 'OK' and x != None:\n  68|                         cursor.execute(\n  69|                             \"update result set verdict = '\" + s2[1] + \"' where problem = '\" + s[3] + \"' and diff = '\" +"
+ },
+ {
+  "eid": 877,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " (",
+  "n_models": 4,
+  "models": {
+   "gemma-1b-it": 0.575,
+   "gemma-12b-it": 4.118,
+   "gemma-27b-it": 0.695,
+   "gemma-12b-pt": 2.679
+  },
+  "max_margin": 4.118,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1| @mod.route('/edit', methods=['GET', 'POST'])\n   2| def edit():\n   3|     sql = \"SELECT * FROM users where email = '%s';\" %\u00ab (\u00bbsession['logged_email'])\n   4|     cursor.execute(sql)\n   5|     u = cursor.fetchone()\n   6|     if request.method == 'POST':\n   7|         sql = \"UPDATE users SET nickname = '%s' where email = '%s'\" \\"
+ },
+ {
+  "eid": 575,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "Name",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 2.915,
+   "gemma-1b-it": 2.574,
+   "gemma-4b-it": 1.365,
+   "gemma-27b-it": 2.967
+  },
+  "max_margin": 2.967,
+  "nearest_vuln_dist": 1,
+  "excerpt": "   5|             database_file = \"meal_planner.db\"\n   6|             print(recipeName)\n   7|             with sqlite3.connect(database_file) as conn:\n   8|                 cursor = conn.cursor()\n   9|                 selection = cursor.execute(\"\"\"SELECT * FROM recipe WHERE name = \"\"\" + \"\\\"\" + recipe\u00abName\u00bb + \"\\\"\")\n  10|                 for result in [selection]:\n  11|                     for row in result.fetchall():\n  12|                         name = row[0]\n  13|                         time = row[1]"
+ },
+ {
+  "eid": 159,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " =",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 1.571,
+   "qwen-7b": 0.612,
+   "gemma-12b-it": 2.335,
+   "gemma-27b-it": 2.39
+  },
+  "max_margin": 2.39,
+  "nearest_vuln_dist": 1,
+  "excerpt": "   8| \n   9|         with sql.connect('amara.db') as con:\n  10|             con.row_factory = sql.Row\n  11|             cur = con.cursor()\n  12|             cur.execute(\"select * from pada inner join mula on pada.sloka_line = mula.sloka_line where pada.varga\u00ab =\u00bb '%s' order by random() limit 1;\" % varga)\n  13|             rows = cur.fetchall();\n  14| \n  15|             artha = rows[0][\"artha\"];\n  16|             cur.execute(\"select pada from pada where varga = '%s' and artha = '%s' order by id\" % (varga, artha));"
+ },
+ {
+  "eid": 967,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "ssh_cmd = 'svctask rmhost",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 5.375,
+   "gemma-27b-it": 26.301,
+   "gemma-12b-pt": 14.803
+  },
+  "max_margin": 26.301,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   2|         \"\"\"Delete a host on the storage system.\"\"\"\n   3| \n   4|         LOG.debug(_('enter: _delete_host: host %s ') % host_name)\n   5| \n   6|         \u00abssh_cmd = 'svctask rmhost\u00bb %s ' % host_name\n   7|         out, err = self._run_ssh(ssh_cmd)\n   8|         # No output should be returned from rmhost\n   9|         self._assert_ssh_return(len(out.strip()) == 0,\n  10|                                 '_delete_host', ssh_cmd, out, err)"
+ },
+ {
+  "eid": 92,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " ORDER BY date",
+  "n_models": 3,
+  "models": {
+   "gemma-4b-it": 4.593,
+   "gemma-12b-it": 21.759,
+   "gemma-27b-it": 7.819
+  },
+  "max_margin": 21.759,
+  "nearest_vuln_dist": 1,
+  "excerpt": "   3|     if db == None:\n   4|         init()\n   5| \n   6|     player = request.args.get('tag', default=\"christmasmike\")\n   7|     sql = \"SELECT * FROM matches WHERE winner = '\"+str(player)+\"'\u00ab ORDER BY date\u00bb DESC;\"\n   8|     result = db.exec(sql)\n   9| \n  10|     result = [str(x) for x in result]\n  11|     result = '\\n'.join(result)"
+ },
+ {
+  "eid": 1036,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " where post.postid=%",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 3.991,
+   "qwen-7b": 1.865,
+   "gemma-12b-it": 21.42
+  },
+  "max_margin": 21.42,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1|     def deletePost(self,postid):\n   2|         sqlText=\"delete from post\u00ab where post.postid=%\u00bbd\"%(postid)\n   3|         result=sql.deleteDB(self.conn,sqlText)\n   4|         return result;"
+ },
+ {
+  "eid": 629,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " FROM {0} WHERE path",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 1.364,
+   "gemma-12b-it": 21.213,
+   "gemma-12b-pt": 10.779
+  },
+  "max_margin": 21.213,
+  "nearest_vuln_dist": 1,
+  "excerpt": "   3| \t\tReturns ID of a cached file on Telegram from DB. None if file doesn't exist or has no cached ID.\n   4| \t\t:param pth:\n   5| \t\t:return:\n   6| \t\t\"\"\"\n   7| \t\tcommand = \"SELECT file_id\u00ab FROM {0} WHERE path\u00bb='{1}'\".format(TABLE_NAME, pth)\n   8| \t\tdata = self._run_command(command)\n   9| \n  10| \t\ttry:\n  11| \t\t\tdata = data[0][0]"
+ },
+ {
+  "eid": 761,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "key",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.745,
+   "gemma-27b-it": 20.997,
+   "gemma-12b-pt": 3.304
+  },
+  "max_margin": 20.997,
+  "nearest_vuln_dist": 23,
+  "excerpt": "   7|     sshdir = os.path.join(fs, 'root', '.ssh')\n   8|     utils.execute('mkdir', '-p', sshdir, run_as_root=True)\n   9|     utils.execute('chown', 'root', sshdir, run_as_root=True)\n  10|     utils.execute('chmod', '700', sshdir, run_as_root=True)\n  11|     \u00abkey\u00bbfile = os.path.join(sshdir, 'authorized_keys')\n  12|     key_data = [\n  13|         '\\n',\n  14|         '# The following ssh key was injected by Nova',\n  15|         '\\n',"
+ },
+ {
+  "eid": 438,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": " where email like",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 19.092,
+   "gemma-27b-it": 9.353,
+   "gemma-12b-pt": 3.641
+  },
+  "max_margin": 19.092,
+  "nearest_vuln_dist": 0,
+  "excerpt": "   1| @login_manager.user_loader\n   2| def load_user(s_id):\n   3|     email = str(s_id)\n   4|     query = '''select * from usr\u00ab where email like\u00bb\\'''' + email + '\\''\n   5|     cursor = g.conn.execute(query)\n   6|     user = User()\n   7|     for row in cursor:\n   8|         user.name = str(row.name)"
+ },
+ {
+  "eid": 629,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "spread",
+  "token_text": "th)",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.9,
+   "gemma-12b-it": 11.421,
+   "gemma-27b-it": 16.756
+  },
+  "max_margin": 16.756,
+  "nearest_vuln_dist": 2,
+  "excerpt": "   3| \t\tReturns ID of a cached file on Telegram from DB. None if file doesn't exist or has no cached ID.\n   4| \t\t:param pth:\n   5| \t\t:return:\n   6| \t\t\"\"\"\n   7| \t\tcommand = \"SELECT file_id FROM {0} WHERE path='{1}'\".format(TABLE_NAME, p\u00abth)\u00bb\n   8| \t\tdata = self._run_command(command)\n   9| \n  10| \t\ttry:\n  11| \t\t\tdata = data[0][0]"
+ }
+]

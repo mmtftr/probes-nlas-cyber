@@ -1,0 +1,14 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "head": "mlp512",
+  "layer": 9,
+  "mode": "sweep",
+  "n_tokens": 561266,
+  "n_tokens_code": 431807,
+  "test_tokens_auc": 0.8156093113831169,
+  "test_tokens_code_auc": 0.8280795579387776,
+  "test_example_auc": 0.5996434603115031,
+  "val_ex_auc": 0.5863095238095238,
+  "n_test_examples": 292,
+  "hist_gate": null
+}

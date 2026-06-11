@@ -1,0 +1,38 @@
+{
+  "_note": "Merged taxonomy compiled from 6 categorization sub-agents (Agent tool, Opus). FN = 35 hard-missed vuln examples (n_detect<=3 of 7 probes); FP = 129 curated spurious-firing spans (stratum-capped sample of the 6119 total FP spans). Sample counts are the sub-agents' own tallies mapped to unified buckets; population FP counts are the reproducible lexical heuristic in fp_buckets.json.",
+
+  "fn_taxonomy": {
+    "total_categorized": 35,
+    "categories": [
+      {"name": "Missing-check insertion", "definition": "fix ADDS a guard/bounds/null/error early-return; the vulnerable version is an *absence* with no token to localize", "count": 7, "eids": [10, 64, 456, 760, 1022, 1234, 1318]},
+      {"name": "Use-after-free / stale-pointer / op-ordering", "definition": "fix inserts/relocates a free, null-out, destroy, or flag-set; freed/stale pointer reused with no syntactic marker (all CWE-416)", "count": 6, "eids": [22, 436, 500, 553, 573, 642]},
+      {"name": "Integer overflow / unvalidated size-or-count arithmetic", "definition": "size/length/count arithmetic overflows or is unvalidated, driving alloc/loop; bare operators carry no cue", "count": 5, "eids": [320, 361, 727, 894, 1152]},
+      {"name": "Wrong pointer/cast/offset or comparison constant", "definition": "subtle logic edit: wrong pointer/cast, bad read offset, or changed comparison constant; correct-looking syntax, no token cue", "count": 7, "eids": [45, 501, 644, 1240, 1339, 1293, 1397]},
+      {"name": "Unbounded / wrong copy-or-read length", "definition": "input-derived or literal length to copy/read exceeds buffer/available bytes (strcpy, memcpy(strlen), read 1 byte)", "count": 3, "eids": [620, 1265, 697]},
+      {"name": "Python injection missed: fix on a non-sink token", "definition": "injection vuln where the fix touches a taint source, a sanitizer call, or a render/template sink the probe does not key on (no SQL/command string literal)", "count": 7, "eids": [376, 419, 571, 1148, 1313, 1355, 1428]}
+    ],
+    "meta_theme": "Categories 1-5 (28 examples) are all C/C++ memory-safety and share one cause: no localizable lexical sink token (the vuln is an absence, an ordering, or a subtle numeric/pointer change). Category 6 (7 Python) is injection where the fix is not on the SQL/command-string token the probe latches onto."
+  },
+
+  "fp_taxonomy": {
+    "sample_categorized": 129,
+    "categories": [
+      {"name": "SQL keyword/clause token", "definition": "SQL reserved word / clause fragment inside a query string literal (SELECT, WHERE, SET, FROM, LIKE, INSERT INTO, ORDER BY, AND/OR)", "sample_count": 42, "population_count": 929},
+      {"name": "SQL identifier / column / value / placeholder", "definition": "non-keyword piece of a query string: column/table name, %s/%d placeholder, or the tainted value variable interpolated in", "sample_count": 33, "population_count": 3111},
+      {"name": "Format / punctuation / quote operator", "definition": "string-format operator (%, .format), arg-tuple parens/commas, delimiter quotes, attribute dots, brackets", "sample_count": 31, "population_count": 1527},
+      {"name": "DB/cursor/ORM API call", "definition": "database access token: cursor, cursor.execute, execute_query, order_by, post-fetch call", "sample_count": 9, "population_count": 455},
+      {"name": "OS-command / path / shell string", "definition": "shell/SSH command-argument list or filesystem-path string token (CWE-022/078)", "sample_count": 15, "population_count": 97}
+    ],
+    "population_total": 6119,
+    "note": "Curated sample over-weights the SQL-keyword and os/path buckets (curation picked high-margin, cross-model-shared spans, which are the SQL-string pieces). Population is dominated by the identifier/value bucket (51%) and punctuation (25%) — many low-information firings are threshold-permissiveness noise. Both views agree the probe fires on query-string constituents, not on anything specific to the *injection* (taint reaching the sink unsanitized)."
+  },
+
+  "agent_provenance": {
+    "a3716ad5dc6397b09": {"slice": "fn_c1.json (14, C/C++)", "categories": ["missing guard/bounds/error-check insertion (4)", "stale-pointer cleanup or operation reorder (6)", "unvalidated count/size driving alloc or loop (2)", "raw pointer/length arithmetic OOB (2)"]},
+    "aa31547a96842d13f": {"slice": "fn_c2.json (14, C/C++)", "categories": ["inserted-missing-check (4)", "pointer-or-cast-swap-deref (3)", "integer-overflow-in-size-arith (3)", "unbounded-or-wrong-length-arg (2)", "comparison-or-offset-logic-change (2)"]},
+    "a882d8bbb9b099f8e": {"slice": "fn_py.json (7, Python)", "categories": ["Source/accessor token no sink (3)", "Sanitization/normalization call (2)", "Render/template API sink no SQL-like cue (2)"]},
+    "a9056f16d4b917164": {"slice": "fp_safe.json (50, safe_alarm)", "categories": ["SQL keyword/clause (17)", "SQL column/identifier/value (12)", "DB/cursor API (5)", "OS/command/SSH path (9)", "String-format/punctuation/operator (8)"]},
+    "a57315480c9ecf236": {"slice": "fp_spread.json (44, spread)", "categories": ["sql-clause-keyword-in-string (17)", "format-operator-and-arg-tuple (12)", "tainted-value-name (9)", "string-delimiter-quote (3)", "command-string-construct-head (3)"]},
+    "a11aab11d5f997b31": {"slice": "fp_misplaced.json (35, misplaced)", "categories": ["SQL keyword/clause (8)", "DB call/cursor/ORM (4)", "Identifier/column/table/var (12)", "Attribute/punctuation (8)", "Path/command/shell-arg (3)"]}
+  }
+}

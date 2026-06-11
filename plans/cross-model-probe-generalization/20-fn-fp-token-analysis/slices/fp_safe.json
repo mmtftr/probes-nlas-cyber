@@ -1,0 +1,810 @@
+[
+ {
+  "eid": 1287,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "time",
+  "n_models": 5,
+  "models": {
+   "qwen-7b": 0.31,
+   "gemma-1b-it": 0.012,
+   "gemma-12b-it": 15.126,
+   "gemma-27b-it": 15.291,
+   "gemma-12b-pt": 3.657
+  },
+  "max_margin": 15.291,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def get_context_data(self, **kwargs):\n   2|         context = super().get_context_data(**kwargs)\n   3|         context['comments'] = self.object.comment_set.all().order_by('-\u00abtime\u00bb')\n   4|         context['form'] = self.get_form()\n   5|         context['md'] = safe_md(self.object.content)\n   6| \n   7|         return context"
+ },
+ {
+  "eid": 735,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " +",
+  "n_models": 5,
+  "models": {
+   "qwen-7b": 0.347,
+   "gemma-1b-it": 0.904,
+   "gemma-4b-it": 1.679,
+   "gemma-27b-it": 1.677,
+   "gemma-12b-pt": 3.236
+  },
+  "max_margin": 3.236,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1| def get_paths(root: str, sub_path: str) \\\n   2|         -> typing.Tuple[pathlib.Path, pathlib.Path]:\n   3|     base_path = flask.safe_join(root, sub_path)\n   4|     data_file = pathlib.Path(base_path\u00ab +\u00bb \".data\")\n   5|     metadata_file = pathlib.Path(base_path + \".meta\")\n   6| \n   7|     return data_file, metadata_file"
+ },
+ {
+  "eid": 1188,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "set",
+  "n_models": 4,
+  "models": {
+   "gemma-4b-it": 6.017,
+   "gemma-12b-it": 11.219,
+   "gemma-27b-it": 0.517,
+   "gemma-12b-pt": 3.282
+  },
+  "max_margin": 11.219,
+  "nearest_vuln_dist": null,
+  "excerpt": "   7|         if result.rowcount > 0:\n   8|             return  # User has previously mapped this project so return\n   9| \n  10|         sql = '''update users\n  11|                     \u00abset\u00bb projects_mapped = array_append(projects_mapped, :project_id)\n  12|                   where id = :user_id'''\n  13| \n  14|         db.engine.execute(text(sql), project_id=project_id, user_id=user_id)"
+ },
+ {
+  "eid": 105,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "sql",
+  "n_models": 4,
+  "models": {
+   "gemma-4b-it": 9.405,
+   "gemma-12b-it": 7.059,
+   "gemma-27b-it": 3.594,
+   "gemma-12b-pt": 0.623
+  },
+  "max_margin": 9.405,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def deletePost(self,postid):\n   2|         \u00absql\u00bbText=\"delete from post where post.postid=%s\"\n   3|         params=[postid]\n   4|         result=sql.deleteDB(self.conn,sqlText,params)\n   5|         return result;"
+ },
+ {
+  "eid": 203,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " (",
+  "n_models": 4,
+  "models": {
+   "qwen-32b": 0.621,
+   "gemma-4b-it": 8.208,
+   "gemma-12b-it": 0.344,
+   "gemma-27b-it": 0.186
+  },
+  "max_margin": 8.208,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def add_input(self,data):\n   2|         connection = self.connect()\n   3| \n   4|         try:\n   5|             query = \"INSERT INTO crimes\u00ab (\u00bbdescription) VALUES (%s);\"\n   6|             with connection.cursor() as cursor:\n   7|                 cursor.execute(query,data)\n   8|                 connection.commit()\n   9|         finally:"
+ },
+ {
+  "eid": 794,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " %",
+  "n_models": 4,
+  "models": {
+   "gemma-4b-it": 2.344,
+   "gemma-12b-it": 6.739,
+   "gemma-27b-it": 2.41,
+   "gemma-12b-pt": 3.166
+  },
+  "max_margin": 6.739,
+  "nearest_vuln_dist": null,
+  "excerpt": "  14|             value = self.object.get(self.column.field_name)\n  15|         elif callable(field):\n  16|             value = field() if getattr(field, 'do_not_call_in_templates', False) else field\n  17|         else:\n  18|             display_function = getattr(self.object, 'get_%s_display'\u00ab %\u00bb self.column.field_name, False)\n  19|             value = display_function() if display_function else field\n  20| \n  21|         return value"
+ },
+ {
+  "eid": 1025,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " %s SET %s",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 25.044,
+   "gemma-27b-it": 8.538,
+   "gemma-12b-pt": 8.853
+  },
+  "max_margin": 25.044,
+  "nearest_vuln_dist": null,
+  "excerpt": "   5|             id = id.encode('utf-8')\n   6|         else:\n   7|             id = str(id)\n   8|         self._openContainer(session)\n   9|         query = (\"UPDATE\u00ab %s SET %s\u00bb = $1 WHERE identifier = $2;\" %\n  10|                  (self.table, mType)\n  11|                  )\n  12|         args = (value, id)\n  13|         try:"
+ },
+ {
+  "eid": 1394,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "key",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.259,
+   "gemma-27b-it": 20.017,
+   "gemma-12b-pt": 2.117
+  },
+  "max_margin": 20.017,
+  "nearest_vuln_dist": null,
+  "excerpt": "   8|     utils.execute('mkdir', '-p', sshdir, run_as_root=True)\n   9|     utils.execute('chown', 'root', sshdir, run_as_root=True)\n  10|     utils.execute('chmod', '700', sshdir, run_as_root=True)\n  11| \n  12|     \u00abkey\u00bbfile = os.path.join('root', '.ssh', 'authorized_keys')\n  13| \n  14|     key_data = ''.join([\n  15|         '\\n',\n  16|         '# The following ssh key was injected by Nova',"
+ },
+ {
+  "eid": 1192,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " where id=%",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 1.352,
+   "gemma-12b-it": 19.261,
+   "gemma-12b-pt": 5.097
+  },
+  "max_margin": 19.261,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1| def delete_playlist(id, db):\n   2|     db.execute(\"DELETE FROM playlist\u00ab where id=%\u00bbs;\", (id,))"
+ },
+ {
+  "eid": 976,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " tags WHERE tag =",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 5.074,
+   "gemma-1b-it": 2.813,
+   "gemma-27b-it": 14.273
+  },
+  "max_margin": 14.273,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def tag_to_tag_num(self, tag):\n   2|         ''' Returns tag_num given tag. '''\n   3| \n   4|         q = \"SELECT rowid FROM\u00ab tags WHERE tag =\u00bb ?\"\n   5|         self.query(q, tag)\n   6|         return self.c.fetchone()[0]"
+ },
+ {
+  "eid": 270,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " target like",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 3.117,
+   "gemma-27b-it": 14.146,
+   "gemma-12b-pt": 1.559
+  },
+  "max_margin": 14.146,
+  "nearest_vuln_dist": null,
+  "excerpt": "  18|     if not db_ready: db_init(db)\n  19|     chan = chan.lower()\n  20|     target = target.lower()\n  21|     voter = user.format_hostmask(mask)\n  22|     voters = db.execute(\"SELECT voters FROM votes where chan=? and action=? and\u00ab target like\u00bb ?\", chan, action, target).fetchone()\n  23| \n  24|     if conn.nick.lower() in target: return \"I dont think so Tim.\"\n  25| \n  26|     if voters: "
+ },
+ {
+  "eid": 1178,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " WHERE",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 1.081,
+   "gemma-12b-it": 13.748,
+   "gemma-27b-it": 4.703
+  },
+  "max_margin": 13.748,
+  "nearest_vuln_dist": null,
+  "excerpt": "  21| \n  22|         proxy_id = results[p][0]\n  23|         proxy_line[0] = proxy_id\n  24| \n  25|         query = \"SELECT account_name, amount FROM holders\u00ab WHERE\u00bb account_id=%s LIMIT 1\"\n  26|         cur.execute(query, (proxy_id,))\n  27|         proxy = cur.fetchone()\n  28| \n  29|         try:"
+ },
+ {
+  "eid": 1127,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " where",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 2.209,
+   "gemma-12b-it": 12.861,
+   "gemma-12b-pt": 0.047
+  },
+  "max_margin": 12.861,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1| def get_tournaments_during_month(db, scene, date):\n   2|     y, m, d = date.split('-')\n   3|     ym_date = '{}-{}'.format(y, m)\n   4|     sql = \"select url, date from matches\u00ab where\u00bb scene='{scene}' and date like '%{date}%' group by url, date order by date\"\n   5|     args = {'scene': scene, 'date': ym_date}\n   6|     res = db.exec(sql, args)\n   7|     urls = [r[0] for r in res]\n   8|     return urls"
+ },
+ {
+  "eid": 1178,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " WHERE",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.654,
+   "gemma-12b-it": 11.295,
+   "gemma-12b-pt": 2.389
+  },
+  "max_margin": 11.295,
+  "nearest_vuln_dist": null,
+  "excerpt": "  35| \n  36| \n  37|         proxy_line[1] = proxy_name\n  38| \n  39|         query = \"SELECT amount, account_id FROM holders\u00ab WHERE\u00bb voting_as=%s\"\n  40|         cur.execute(query, (proxy_id,))\n  41|         results2 = cur.fetchall()\n  42| \n  43|         proxy_line[2] = int(proxy_amount)"
+ },
+ {
+  "eid": 635,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "name",
+  "n_models": 3,
+  "models": {
+   "gemma-4b-it": 0.274,
+   "gemma-27b-it": 11.14,
+   "gemma-12b-pt": 7.299
+  },
+  "max_margin": 11.14,
+  "nearest_vuln_dist": null,
+  "excerpt": "  23|         # When creating a host, we need one port\n  24|         self._driver_assert(len(ports), _('_create_host: No connector ports'))\n  25|         port1 = ports.pop(0)\n  26|         arg_name, arg_val = port1.split()\n  27|         ssh_cmd = ['svctask', 'mkhost', '-force', arg_name, arg_val, '-\u00abname\u00bb',\n  28|                    '\"%s\"' % host_name]\n  29|         out, err = self._run_ssh(ssh_cmd)\n  30|         self._assert_ssh_return('successfully created' in out,\n  31|                                 '_create_host', ssh_cmd, out, err)"
+ },
+ {
+  "eid": 7,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " = \"SELECT",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.655,
+   "qwen-7b": 0.918,
+   "gemma-12b-it": 10.993
+  },
+  "max_margin": 10.993,
+  "nearest_vuln_dist": null,
+  "excerpt": "   3| \t\tReturns ID of a cached file on Telegram from DB. None if file doesn't exist or has no cached ID.\n   4| \t\t:param pth:\n   5| \t\t:return:\n   6| \t\t\"\"\"\n   7| \t\tcommand\u00ab = \"SELECT\u00bb file_id FROM {0} WHERE path=?;\".format(TABLE_NAME)\n   8| \t\tparams = (pth,)\n   9| \t\tdata = self._run_command(command, params)\n  10| \n  11| \t\ttry:"
+ },
+ {
+  "eid": 21,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " set",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 10.953,
+   "gemma-27b-it": 3.407,
+   "gemma-12b-pt": 5.908
+  },
+  "max_margin": 10.953,
+  "nearest_vuln_dist": null,
+  "excerpt": "  77|     settings = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + \"\\\\settings.db\")\n  78|     conn = settings.cursor()\n  79|     conn.execute(\"update users set username = ? where chat_id = ?\", (str(username), str(chat_id)))\n  80|     conn.execute(\"update users set last_update = ? where chat_id = ?\", (str(last_try_new), str(chat_id)))\n  81|     conn.execute(\"update users\u00ab set\u00bb last_problem = ? where chat_id = ?\", (str(last_problem), str(chat_id)))\n  82| \n  83|     settings.commit()\n  84|     settings.close()"
+ },
+ {
+  "eid": 1025,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " WHERE",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 1.661,
+   "qwen-7b": 0.917,
+   "gemma-12b-it": 10.69
+  },
+  "max_margin": 10.69,
+  "nearest_vuln_dist": null,
+  "excerpt": "   5|             id = id.encode('utf-8')\n   6|         else:\n   7|             id = str(id)\n   8|         self._openContainer(session)\n   9|         query = (\"UPDATE %s SET %s = $1\u00ab WHERE\u00bb identifier = $2;\" %\n  10|                  (self.table, mType)\n  11|                  )\n  12|         args = (value, id)\n  13|         try:"
+ },
+ {
+  "eid": 794,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": ".",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 9.508,
+   "gemma-27b-it": 2.989,
+   "gemma-12b-pt": 1.223
+  },
+  "max_margin": 9.508,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def get_value(self):\n   2|         field = getattr(self.object, self.column.field_name) if self.column.field_name else None\n   3|         if self\u00ab.\u00bbcolumn.render_function:\n   4|             template = self.column.render_function(self.object)\n   5|             if not self.is_template_instance(template):\n   6|                 raise SmartListException(\n   7|                     'Your render_function {} should return django.template.Template or django.template.backends.django.Template object instead of {}'.format("
+ },
+ {
+  "eid": 568,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " (",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 0.056,
+   "gemma-12b-it": 9.463,
+   "gemma-12b-pt": 3.743
+  },
+  "max_margin": 9.463,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def save_failure_transaction(self, user_id, project_id, money):\n   2|         self.cursor.execute(\"insert into transactions\u00ab (\u00bbproject_id,user_id, money, timestamp, state) values (%s, %s, \"\n   3|                             \"%s, now(), 'failed' )\", (project_id, user_id, money))\n   4|         self.db.commit()"
+ },
+ {
+  "eid": 481,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "time",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 7.156,
+   "gemma-27b-it": 9.373,
+   "gemma-12b-pt": 0.878
+  },
+  "max_margin": 9.373,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def get_queryset(self, **kwargs):\n   2|         queryset = Article.objects.order_by('-\u00abtime\u00bb')\n   3|         for i in queryset:\n   4|             i.md = safe_md(i.content)\n   5| \n   6|         return queryset"
+ },
+ {
+  "eid": 96,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " '{",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 0.991,
+   "gemma-12b-it": 9.357,
+   "gemma-12b-pt": 8.544
+  },
+  "max_margin": 9.357,
+  "nearest_vuln_dist": null,
+  "excerpt": "   5| \n   6|     player1 = request.args.get('tag1', default=\"christmasmike\")\n   7|     player2 = request.args.get('tag2', default=\"christmasmike\")\n   8|     sql = \"SELECT * FROM matches WHERE (player1 = '{player1}' OR \"\\\n   9|             +\"player2 =\u00ab '{\u00bbplayer1}') AND (player1 = '{player2}' OR \"\\\n  10|             +\"player2 = '{player2}') ORDER BY date DESC;\"\n  11|     args = {'player1': player1, 'player2': player2}\n  12|     result = db.exec(sql, args)\n  13|     return json.dumps(result)"
+ },
+ {
+  "eid": 765,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " WHERE",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 0.358,
+   "gemma-12b-it": 8.992,
+   "gemma-27b-it": 5.276
+  },
+  "max_margin": 8.992,
+  "nearest_vuln_dist": null,
+  "excerpt": "   3|     if db == None:\n   4|         init()\n   5| \n   6|     player = request.args.get('tag', default=\"christmasmike\")\n   7|     sql = \"SELECT * FROM matches\u00ab WHERE\u00bb winner = '{player}' ORDER BY date DESC;\"\n   8|     args = {'player': player}\n   9|     result = db.exec(sql, args)\n  10| \n  11|     result = [str(x) for x in result]"
+ },
+ {
+  "eid": 327,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "sql",
+  "n_models": 3,
+  "models": {
+   "gemma-4b-it": 8.542,
+   "gemma-12b-it": 8.781,
+   "gemma-27b-it": 3.575
+  },
+  "max_margin": 8.781,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def insertData(self,userid,post):\n   2|         \u00absql\u00bbText=\"insert into post(userid,date,comment) \\\n   3|                 values(%s,current_timestamp(0),%s);\"\n   4|         params=[userid,post];\n   5|         result=sql.insertDB(self.conn,sqlText,params)\n   6|         return result;"
+ },
+ {
+  "eid": 794,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " getattr",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.168,
+   "gemma-4b-it": 2.635,
+   "gemma-12b-pt": 8.759
+  },
+  "max_margin": 8.759,
+  "nearest_vuln_dist": null,
+  "excerpt": "  12|             value = template.render()\n  13|         elif type(self.object) == dict:\n  14|             value = self.object.get(self.column.field_name)\n  15|         elif callable(field):\n  16|             value = field() if\u00ab getattr\u00bb(field, 'do_not_call_in_templates', False) else field\n  17|         else:\n  18|             display_function = getattr(self.object, 'get_%s_display' % self.column.field_name, False)\n  19|             value = display_function() if display_function else field\n  20| "
+ },
+ {
+  "eid": 21,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " set",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 0.927,
+   "gemma-12b-it": 7.935,
+   "gemma-12b-pt": 7.454
+  },
+  "max_margin": 7.935,
+  "nearest_vuln_dist": null,
+  "excerpt": "  64|                     j += 1\n  65|                     cursor.execute(\"select * from result where problem = ? and diff = ?\", (s[3], s[4]))\n  66|                     x = cursor.fetchone()\n  67|                     if s2[1] == 'OK' and x != None:\n  68|                         cursor.execute(\"update result\u00ab set\u00bb verdict = ? where problem = ? and diff = ?\", (s2[1], s[3], s[4]))\n  69|                     if x[2] != 'OK':\n  70|                         cursor.execute(\"update result set verdict = ? where problem = ? and diff = ?\", (s2[1], s[3], s[4]))\n  71|         if v:\n  72|             break"
+ },
+ {
+  "eid": 1228,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " cmd",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 5.345,
+   "gemma-27b-it": 1.817,
+   "gemma-12b-pt": 7.537
+  },
+  "max_margin": 7.537,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def _cli_run(self, cmd):\n   2|         \"\"\"Runs a CLI command over SSH, without doing any result parsing.\"\"\"\n   3|         LOG.debug(\"SSH CMD = %s \" %\u00ab cmd\u00bb)\n   4| \n   5|         (stdout, stderr) = self._run_ssh(cmd, False)\n   6| \n   7|         # we have to strip out the input and exit lines"
+ },
+ {
+  "eid": 105,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "delete from",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.595,
+   "gemma-12b-it": 7.516,
+   "gemma-12b-pt": 1.612
+  },
+  "max_margin": 7.516,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def deletePost(self,postid):\n   2|         sqlText=\"\u00abdelete from\u00bb post where post.postid=%s\"\n   3|         params=[postid]\n   4|         result=sql.deleteDB(self.conn,sqlText,params)\n   5|         return result;"
+ },
+ {
+  "eid": 125,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "._",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 1.945,
+   "gemma-27b-it": 5.976,
+   "gemma-12b-pt": 7.49
+  },
+  "max_margin": 7.49,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def span(self, key):\n   2|         path = self\u00ab._\u00bbabsolute_key(key)\n   3|         try:\n   4|             self.etcd.write(path, None, dir=True, prevExist=False)\n   5|         except etcd.EtcdAlreadyExist as err:\n   6|             raise CSStoreExists(str(err))"
+ },
+ {
+  "eid": 742,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "cursor",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.671,
+   "gemma-4b-it": 1.922,
+   "gemma-12b-it": 7.3
+  },
+  "max_margin": 7.3,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1| def get_game_info(conn, game):\n   2|     # get the basic game properties\n   3|     \u00abcursor\u00bb = conn.cursor()\n   4|     cursor.execute(\"SELECT player1,player2,size,state FROM games WHERE id = %d;\", (game,))\n   5|     if cursor.rowcount != 1:\n   6|         raise FormError(\"Invalid game ID\")\n   7| "
+ },
+ {
+  "eid": 129,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "svc",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.01,
+   "gemma-4b-it": 1.196,
+   "gemma-12b-pt": 6.537
+  },
+  "max_margin": 6.537,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def _get_conn_fc_wwpns(self, host_name):\n   2|         wwpns = []\n   3|         cmd = ['\u00absvc\u00bbinfo', 'lsfabric', '-host', host_name]\n   4|         generator = self._port_conf_generator(cmd)\n   5|         header = next(generator, None)\n   6|         if not header:\n   7|             return wwpns"
+ },
+ {
+  "eid": 21,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "id =",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 1.559,
+   "gemma-4b-it": 3.485,
+   "gemma-12b-it": 6.408
+  },
+  "max_margin": 6.408,
+  "nearest_vuln_dist": null,
+  "excerpt": "  75|     conn.close()\n  76| \n  77|     settings = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + \"\\\\settings.db\")\n  78|     conn = settings.cursor()\n  79|     conn.execute(\"update users set username = ? where chat_\u00abid =\u00bb ?\", (str(username), str(chat_id)))\n  80|     conn.execute(\"update users set last_update = ? where chat_id = ?\", (str(last_try_new), str(chat_id)))\n  81|     conn.execute(\"update users set last_problem = ? where chat_id = ?\", (str(last_problem), str(chat_id)))\n  82| \n  83|     settings.commit()"
+ },
+ {
+  "eid": 1121,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "(f",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.316,
+   "qwen-7b": 1.758,
+   "gemma-27b-it": 6.056
+  },
+  "max_margin": 6.056,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def get(self, user_id):\n   2|         \"\"\" Fetch data for user with corresponding user_id \"\"\"\n   3|         return database_utilities.execute_query\u00ab(f\u00bb\"\"\"select * from users where user_id = %s\"\"\", (user_id, ))"
+ },
+ {
+  "eid": 21,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " set",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 1.318,
+   "gemma-27b-it": 1.803,
+   "gemma-12b-pt": 5.18
+  },
+  "max_margin": 5.18,
+  "nearest_vuln_dist": null,
+  "excerpt": "  66|                     x = cursor.fetchone()\n  67|                     if s2[1] == 'OK' and x != None:\n  68|                         cursor.execute(\"update result set verdict = ? where problem = ? and diff = ?\", (s2[1], s[3], s[4]))\n  69|                     if x[2] != 'OK':\n  70|                         cursor.execute(\"update result\u00ab set\u00bb verdict = ? where problem = ? and diff = ?\", (s2[1], s[3], s[4]))\n  71|         if v:\n  72|             break\n  73| \n  74|     conn.commit()"
+ },
+ {
+  "eid": 48,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "s",
+  "n_models": 3,
+  "models": {
+   "gemma-4b-it": 1.735,
+   "gemma-12b-it": 2.427,
+   "gemma-27b-it": 5.083
+  },
+  "max_margin": 5.083,
+  "nearest_vuln_dist": null,
+  "excerpt": "   9|         # Set space-efficient options\n  10|         if opts['rsize'] == -1:\n  11|             ssh_cmd_se_opt = []\n  12|         else:\n  13|             ssh_cmd_se_opt = ['-rsize', '%\u00abs\u00bb%%' % str(opts['rsize']),\n  14|                               '-autoexpand', '-warning',\n  15|                               '%s%%' % str(opts['warning'])]\n  16|             if not opts['autoexpand']:\n  17|                 ssh_cmd_se_opt.remove('-autoexpand')"
+ },
+ {
+  "eid": 21,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " last",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.256,
+   "gemma-1b-it": 0.209,
+   "gemma-12b-pt": 4.39
+  },
+  "max_margin": 4.39,
+  "nearest_vuln_dist": null,
+  "excerpt": "   4|     settings = sqlite3.connect(os.path.abspath(os.path.dirname(__file__)) + \"\\\\settings.db\")\n   5|     cursor = conn.cursor()\n   6|     cursor2 = conn2.cursor()\n   7|     cursor_settings = settings.cursor()\n   8|     cursor_settings.execute(\"select\u00ab last\u00bb_problem from users where chat_id = ?\", (str(chat_id), ))\n   9|     update_eq = cursor_settings.fetchone()\n  10|     cursor_settings.execute(\"select * from last_update_problemset\")\n  11|     update_base = cursor_settings.fetchone()\n  12|     last_problem = update_base[0]"
+ },
+ {
+  "eid": 1299,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " from",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 1.11,
+   "gemma-27b-it": 4.108,
+   "gemma-12b-pt": 3.865
+  },
+  "max_margin": 4.108,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1| def retrieve_videos_from_playlist(playlist_id, db):\n   2|     db.execute(\"SELECT id, title, thumbnail, position\u00ab from\u00bb video WHERE playlist_id=%s ORDER BY position ASC;\", (playlist_id,))\n   3|     rows = db.fetchall()\n   4|     return rows"
+ },
+ {
+  "eid": 503,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "content",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 1.927,
+   "gemma-12b-it": 3.681,
+   "gemma-12b-pt": 1.435
+  },
+  "max_margin": 3.681,
+  "nearest_vuln_dist": null,
+  "excerpt": "   7|         return render_template('comment/edit.html', m=m, cmt_id=cmt_id)\n   8| \n   9|     if request.method == 'POST':\n  10|         content = request.form['content']\n  11|         cursor.execute(\"UPDATE comment SET content = %s where cmt_id = %s;\", (\u00abcontent\u00bb, cmt_id))\n  12|         conn.commit()\n  13|         cursor.execute(\"SELECT msg_id FROM comment where cmt_id = %s;\", (cmt_id,))\n  14|         m = cursor.fetchone()\n  15|         flash('Edit Success!')"
+ },
+ {
+  "eid": 742,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "d",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 1.766,
+   "gemma-27b-it": 3.474,
+   "gemma-12b-pt": 0.731
+  },
+  "max_margin": 3.474,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1| def get_game_info(conn, game):\n   2|     # get the basic game properties\n   3|     cursor = conn.cursor()\n   4|     cursor.execute(\"SELECT player1,player2,size,state FROM games WHERE id = %\u00abd\u00bb;\", (game,))\n   5|     if cursor.rowcount != 1:\n   6|         raise FormError(\"Invalid game ID\")\n   7| \n   8|     row = cursor.fetchall()[0]"
+ },
+ {
+  "eid": 1188,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " =",
+  "n_models": 3,
+  "models": {
+   "gemma-4b-it": 2.631,
+   "gemma-12b-it": 3.115,
+   "gemma-12b-pt": 1.276
+  },
+  "max_margin": 3.115,
+  "nearest_vuln_dist": null,
+  "excerpt": "   7|         if result.rowcount > 0:\n   8|             return  # User has previously mapped this project so return\n   9| \n  10|         sql = '''update users\n  11|                     set projects_mapped\u00ab =\u00bb array_append(projects_mapped, :project_id)\n  12|                   where id = :user_id'''\n  13| \n  14|         db.engine.execute(text(sql), project_id=project_id, user_id=user_id)"
+ },
+ {
+  "eid": 1188,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " users",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.388,
+   "gemma-12b-it": 3.076,
+   "gemma-27b-it": 0.425
+  },
+  "max_margin": 3.076,
+  "nearest_vuln_dist": null,
+  "excerpt": "   6| \n   7|         if result.rowcount > 0:\n   8|             return  # User has previously mapped this project so return\n   9| \n  10|         sql = '''update\u00ab users\u00bb\n  11|                     set projects_mapped = array_append(projects_mapped, :project_id)\n  12|                   where id = :user_id'''\n  13| \n  14|         db.engine.execute(text(sql), project_id=project_id, user_id=user_id)"
+ },
+ {
+  "eid": 311,
+  "cwe": "CWE-022",
+  "lang": "c",
+  "kind": "safe_alarm",
+  "token_text": " path",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.06,
+   "gemma-27b-it": 2.986,
+   "gemma-12b-pt": 1.691
+  },
+  "max_margin": 2.986,
+  "nearest_vuln_dist": null,
+  "excerpt": "   5| \tchar *name, *ptr;\n   6| \tchar dir[PATH_MAX] = { 0 };\n   7| \n   8| \tstrlcpy(dir, ctrl->cwd, sizeof(dir));\n   9| \tDBG(\"Compose\u00ab path\u00bb from cwd: %s, arg: %s\", ctrl->cwd, path ?: \"\");\n  10| \tif (!path || !strlen(path))\n  11| \t\tgoto check;\n  12| \n  13| \tif (path) {"
+ },
+ {
+  "eid": 21,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " =",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.034,
+   "gemma-1b-it": 0.167,
+   "gemma-4b-it": 2.979
+  },
+  "max_margin": 2.979,
+  "nearest_vuln_dist": null,
+  "excerpt": "  61|                     s2 = str(ver[count]).split()\n  62|                     s2 = s2[5].split('\\\"')\n  63|                     count += 1\n  64|                     j += 1\n  65|                     cursor.execute(\"select * from result where problem = ? and diff\u00ab =\u00bb ?\", (s[3], s[4]))\n  66|                     x = cursor.fetchone()\n  67|                     if s2[1] == 'OK' and x != None:\n  68|                         cursor.execute(\"update result set verdict = ? where problem = ? and diff = ?\", (s2[1], s[3], s[4]))\n  69|                     if x[2] != 'OK':"
+ },
+ {
+  "eid": 635,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "ask",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 2.551,
+   "qwen-7b": 0.495,
+   "gemma-1b-it": 0.067
+  },
+  "max_margin": 2.551,
+  "nearest_vuln_dist": null,
+  "excerpt": "  23|         # When creating a host, we need one port\n  24|         self._driver_assert(len(ports), _('_create_host: No connector ports'))\n  25|         port1 = ports.pop(0)\n  26|         arg_name, arg_val = port1.split()\n  27|         ssh_cmd = ['svct\u00abask\u00bb', 'mkhost', '-force', arg_name, arg_val, '-name',\n  28|                    '\"%s\"' % host_name]\n  29|         out, err = self._run_ssh(ssh_cmd)\n  30|         self._assert_ssh_return('successfully created' in out,\n  31|                                 '_create_host', ssh_cmd, out, err)"
+ },
+ {
+  "eid": 96,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": " '{",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 2.546,
+   "gemma-27b-it": 1.443,
+   "gemma-12b-pt": 2.399
+  },
+  "max_margin": 2.546,
+  "nearest_vuln_dist": null,
+  "excerpt": "   6|     player1 = request.args.get('tag1', default=\"christmasmike\")\n   7|     player2 = request.args.get('tag2', default=\"christmasmike\")\n   8|     sql = \"SELECT * FROM matches WHERE (player1 = '{player1}' OR \"\\\n   9|             +\"player2 = '{player1}') AND (player1 = '{player2}' OR \"\\\n  10|             +\"player2 =\u00ab '{\u00bbplayer2}') ORDER BY date DESC;\"\n  11|     args = {'player1': player1, 'player2': player2}\n  12|     result = db.exec(sql, args)\n  13|     return json.dumps(result)"
+ },
+ {
+  "eid": 1385,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": ".",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 2.233,
+   "gemma-27b-it": 2.256,
+   "gemma-12b-pt": 1.853
+  },
+  "max_margin": 2.256,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def add_translationname(self, trname):\n   2|         \"\"\"Add new translation by item name for an item.\"\"\"\n   3|         if self\u00ab.\u00bbconnection:\n   4|             for item in self.find_item_name([trname[0], '0']):\n   5|                 t = (item[0], trname[1], trname[2], )\n   6|                 self.cursor.execute('insert into itemtranslation (itemid, itemlanguageid, translation) values (?, ?, ?)', t)\n   7|             self.connection.commit()"
+ },
+ {
+  "eid": 1394,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "ssh",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.438,
+   "gemma-27b-it": 1.933,
+   "gemma-12b-pt": 1.49
+  },
+  "max_margin": 1.933,
+  "nearest_vuln_dist": null,
+  "excerpt": "   3| \n   4|     key is an ssh key string.\n   5|     fs is the path to the base of the filesystem into which to inject the key.\n   6|     \"\"\"\n   7|     \u00abssh\u00bbdir = _join_and_check_path_within_fs(fs, 'root', '.ssh')\n   8|     utils.execute('mkdir', '-p', sshdir, run_as_root=True)\n   9|     utils.execute('chown', 'root', sshdir, run_as_root=True)\n  10|     utils.execute('chmod', '700', sshdir, run_as_root=True)\n  11| "
+ },
+ {
+  "eid": 586,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "bot",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.219,
+   "gemma-12b-it": 0.287,
+   "gemma-27b-it": 1.542
+  },
+  "max_margin": 1.542,
+  "nearest_vuln_dist": null,
+  "excerpt": "   5|     conn.execute(\"select * from users where chat_id = ?\", (str(message.chat.id),))\n   6|     name = conn.fetchone()\n   7|     settings.close()\n   8|     if name == None:\n   9|         \u00abbot\u00bb.send_message(message.chat.id, \"You should login before get tasks.\")\n  10|     else:\n  11|         bases.update.update_user(name[1], name[0], name[2])\n  12|         bot.send_message(message.chat.id, bases.problem.get_unsolved_problem(message.text, name[1]))\n  13|     set_state(message.chat.id, config.States.S_START.value)"
+ },
+ {
+  "eid": 1122,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "verters",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.82,
+   "gemma-4b-it": 1.45,
+   "gemma-12b-pt": 1.427
+  },
+  "max_margin": 1.45,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def get_previous_yields(self, inverter_serial):\n   2|         query = '''\n   3|            SELECT TimeStamp, EToday, ETotal\n   4|            FROM In\u00abverters\u00bb\n   5|            WHERE Serial=?\n   6|         '''\n   7|         self.c.execute(query, (inverter_serial,))\n   8|         data = self.c.fetchone()"
+ },
+ {
+  "eid": 568,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "safe_alarm",
+  "token_text": "_id,",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 0.754,
+   "gemma-1b-it": 0.847,
+   "gemma-4b-it": 0.474
+  },
+  "max_margin": 0.847,
+  "nearest_vuln_dist": null,
+  "excerpt": "   1|     def save_failure_transaction(self, user_id, project_id, money):\n   2|         self.cursor.execute(\"insert into transactions (project_id,user_id, money, timestamp, state) values (%s, %s, \"\n   3|                             \"%s, now(), 'failed' )\", (project\u00ab_id,\u00bb user_id, money))\n   4|         self.db.commit()"
+ }
+]

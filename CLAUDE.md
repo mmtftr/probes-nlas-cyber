@@ -7,6 +7,15 @@ Read `README.md` for what's in `src/` and `scripts/`.
 Read `docs/research-framing.md` before designing any experiment — it holds the
 target property, scope, and open questions the work is narrowing toward.
 
+**Read `docs/project-log.md` FIRST, every session.** It is the unified
+high-level log: the experiment ledger (every exp with its aim + headline finding
++ metric + status), the consolidated current understanding, the standing
+conventions, and the open threads. It exists so you hold the whole project in
+mind and never re-run or contradict prior work. Keep it updated: when an
+experiment lands (or is retracted), add/edit its ledger row in the same change.
+(The verbose chronological narrative lives in `claude-project-log.md`; the
+high-level state lives in `docs/project-log.md`.)
+
 ## Cluster (the cluster) — ALWAYS use the `debug` partition
 
 `debug` schedules **instantly**; `normal` queues for a long time — never use
@@ -24,6 +33,55 @@ walltime**: **1.5 GPU-hours per job** (`MaxTRESMinsPerJob=node=90`,
 (Re-derived from `scontrol show partition debug` + `sacctmgr show qos scheduler`;
 see `docs/guides/the cluster-cluster.md`. Absolute paths in ssh — login shell starts
 in `$HOME`, not `~/scratch/probes`.)
+
+**Unattended / overnight: use `fc` (job-API), not interactive ssh.** The SSH
+cert expires every 24 h (MFA to renew) and *will* strand a long run mid-flight.
+`fc` (`~/.local/bin/fc` — call by **full path**; the zsh `fc` builtin shadows it)
+uses job-API auth that survives the cert expiry. Subcommands: `submit [script]
+[--cmd …] [--wait] [--logs]`, `status <jid>`, `wait <jid> [--logs]`, `logs`,
+`ls <path>`, `download <remote> [local]` (**≤5 MB** — fine for metrics JSON /
+plots / logs; big npz stay on scratch), `cancel`, `systems` (default system
+`the cluster`). Prefer `fc` for submitting jobs + pulling results so a cert lapse
+can't block an unattended run; fall back to ssh+rsync only for interactive work
+or >5 MB transfers (which need a live cert anyway).
+
+## Hidden-state extraction — default to vLLM (do not re-litigate)
+
+For per-token hidden-state extraction, **use vLLM's `extract_hidden_states` API,
+not transformers batch-1.** It is ~2.2–2.5× faster (FLASH_ATTN, prefill-only).
+This is settled — do not argue for HF `output_hidden_states`; HF is the
+**fallback only** when vLLM genuinely can't be installed on the target.
+
+- Reference: `docs/vllm-hidden-states-extraction.md` (API + gotchas); working
+  harness `docs/colab-vllm-bench/bench_vllm.py`.
+- **Layer convention:** repo-layer L = transformers `hidden_states[L+1]` =
+  output of block L. In vLLM pass `eagle_aux_hidden_state_layer_ids = L+1` to
+  get repo-layer L (vLLM aux id `i` → `hidden_states[i]`).
+- **Must-haves:** `enable_prefix_caching=False` (SVEN before/after pairs share
+  long prefixes → cached tokens emit no hidden states), `attention_backend=
+  "FLASH_ATTN"`, `VLLM_USE_FLASHINFER_SAMPLER=0`, `SamplingParams(max_tokens=1)`,
+  and pass pre-tokenized `prompt_token_ids` (truncated to match HF token counts).
+- **the cluster:** vLLM is **not** in the `container` container by default — install it
+  into a `$WORK/.python_deps*` dir via the same `uv pip install` mechanism as
+  `src/remotes/the cluster/env.sh`, matched to the container's torch/CUDA (GPU =
+  Hopper sm_90). See `docs/guides/the cluster-cluster.md`.
+- **Persist single/few-layer acts — never re-extract them.** One layer is small
+  (~hidden_dim × n_tokens × 4 B ≈ 11 GB for a 32B model, far less for smaller
+  ones). ALWAYS keep extracted single/operating-layer activations on scratch
+  (`KEEP_ACTS=1`, no delete) so any follow-up (more seeds, relabel, new probe
+  family) reuses them. Only the full multi-layer band (hundreds of GB–TBs) gets
+  deleted after use.
+
+## Probe training — batch, don't loop
+
+Probes are linear (or tiny-MLP) heads on **cached** activations; training is
+trivial FLOPs. Train all configs/folds/seeds **together, vectorized** — one
+`X @ W` matmul (hidden → K) for all K probes at once, segment-max pooling
+vectorized, **full-batch** GD (no 8-example mini-batches for a linear head).
+Do NOT run K separate `train_one_layer` calls in a Python loop: the
+epoch×batch×example triple-loop is overhead-bound and ~100× too slow (e.g. 120
+CV probes took ~1 h that should be minutes). Parallelism is across probe heads
+in one GPU pass, not across processes.
 
 ## Collaboration model
 
@@ -97,10 +155,35 @@ each tight — the user needs to understand the experiment, not skim a wall.
 
 **Do not run until the user signals understanding.**
 
-After the run completes, spawn a second subagent to review. Apply
-**blocking** fixes — anything that would change the conclusion (wrong
-split, leaky baseline, miscounted positives, off-by-one in metrics).
-Skip nitpicks (style, wording, harmless redundancy).
+## Review gate — MANDATORY before any result reaches the user
+
+A result/analysis is **not** presentable until it has passed an independent
+review. This is a hard gate, not a nicety: it exists because an un-reviewed run
+once shipped a wrong-metric, prior-work-duplicating conclusion to the user. Do
+**both** passes, in parallel, before you write up or post anything:
+
+1. **Independent adversarial pass — `cj` (codex) or `aj`.** Hand it the script +
+   the headline claim and tell it to try to break the conclusion. Fresh model,
+   no shared context → catches what you rationalized.
+2. **Opus subagent one-pass** (Agent tool) over the same artifacts.
+
+Both reviewers must explicitly check, and you must clear, this checklist:
+
+- [ ] **Metric is the default.** Headline is `tokens_code_auc` (honest token-level
+      AUC) unless the user asked otherwise. Any other metric (example-AUC,
+      pair-ranking, detection-rate) is *secondary* and labelled as such — **never**
+      base a "signal absent / unlearnable / works" claim on a non-default metric.
+- [ ] **Prior work checked (reuse).** Search `plans/` and `docs/project-log.md`:
+      did this experiment already run? Does it contradict an existing finding? If
+      it duplicates or conflicts, stop and reconcile before presenting.
+- [ ] **Methodology sound.** Correct split (no leak), right negative pool, honest
+      labels, no off-by-one, n large enough for the claim (flag tiny-n cells).
+- [ ] **Conclusion matches the metric and the numbers** — no overclaim beyond what
+      the chosen metric supports.
+
+Apply **blocking** fixes (anything that would change the conclusion). Skip
+nitpicks. Only after both passes clear the checklist do you write the result up
+or send it to the user. Then update the `docs/project-log.md` ledger row.
 
 ## Tracking
 

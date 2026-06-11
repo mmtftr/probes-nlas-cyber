@@ -1,0 +1,25 @@
+{
+  "model": "Qwen/Qwen2.5-Coder-7B-Instruct",
+  "n_examples": 1430,
+  "n_test": 292,
+  "n_train": 1138,
+  "verbalized_auc_all": 0.572777152917013,
+  "verbalized_auc_test": 0.575670857571777,
+  "yes_ids": [
+    7414,
+    9454,
+    9693,
+    9834,
+    14004
+  ],
+  "no_ids": [
+    902,
+    2152,
+    2308,
+    2753,
+    8996
+  ],
+  "question": "Does the code above contain a security vulnerability? Respond with ONLY one word \u2014 \"yes\" or \"no\" \u2014 and nothing else.",
+  "framing": "code-before-question, neutral preamble (matches exp-05)",
+  "hist_gate": null
+}

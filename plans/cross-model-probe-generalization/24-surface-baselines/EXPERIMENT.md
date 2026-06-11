@@ -72,11 +72,20 @@ trained on the SAME seed-42 group split and scored with the SAME
 
 ## Supervision caveat (state in RESULTS)
 
-Baselines get **per-token** supervision (positive = `y==1 ∩ is_code` train
-tokens; negative = other live-code train tokens), whereas the probe trains
-**span-max** (one max-token signal per example). So these baselines are an
-**upper lexical bar** — deliberately generous to the surface side. That is the
-point: any probe number not clearing this bar is not evidence of representation.
+Baselines get **purely per-token, static** supervision (positive = `y==1 ∩
+is_code` train tokens; negative = other live-code train tokens; hard labels,
+every live-code token an independent training row) — they optimize *exactly* the
+per-token quantity `tokens_code_auc` scores. The probe (exp-16 span-max trainer)
+trains an **annealed blend**: `L = (1−ω)·Σ wᵢ·BCE(yᵢ,pᵢ) + ω·Σ BCE(y_s=1,
+maxᵢ pᵢ)` with ω linear 0→1 over training — so its per-token term is soft-labelled
+(triangular diff halo) and α=10 entity-up-weighted, and is **annealed away** in
+favor of an example-level span-max peak. (Both are scored identically on the
+per-token metric, so the eval is apples-to-apples; the asymmetry is only in the
+*training* objective.) So these baselines are an **upper lexical bar** —
+deliberately generous to the surface side: they're tuned directly and only on the
+scored per-token quantity, while the probe's per-token supervision is diluted
+toward a different, example-level objective. That is the point: any probe number
+not clearing this bar is not evidence of representation.
 
 ## For agents — exact knobs
 

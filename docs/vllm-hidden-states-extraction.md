@@ -214,3 +214,33 @@ export CUDA_HOME=$CU PATH=$CU/bin:$PATH TORCH_CUDA_ARCH_LIST=12.0+PTX
 ```
 
 First run JIT-compiles flashinfer kernels (a few minutes, then cached). Not recommended for extraction — FLASH_ATTN is faster.
+
+---
+
+## the cluster (GPU, container container) — validated 2026-06-07
+
+Container: aarch64 + Hopper sm_90, py3.12, NGC torch 2.10.0a0/CUDA 13.1. vLLM is
+**not** preinstalled. Install into an isolated deps dir (uv resolves a consistent
+stack — vllm 0.22.1 + torch 2.11.0+cu130; cu13 torch runs fine under the 13.1
+driver):
+
+```bash
+uv pip install --target $WORK/.python_deps_vllm --python "$(command -v python)" vllm hf_transfer
+# extraction subprocess only (don't shadow the container torch used for training):
+PYTHONPATH="$WORK/.python_deps_vllm:$PYTHONPATH" python src/data/extract_token_activations.py --backend vllm ...
+```
+
+Wired into `src/data/extract_token_activations.py` as `--backend vllm` (default;
+`extract_vllm()`), reusing the HF tokenizer for input_ids/offsets/labels.
+
+**Gotchas hit on the cluster (beyond the Colab table):**
+- **multiprocessing spawn:** vLLM v1 spawns its engine-core process and re-imports
+  the entry module → all top-level work must be under `if __name__ == "__main__":`
+  (the extractor's `main()` already is; standalone scripts must guard too).
+- **EAGLE3 per-arch support:** `extract_hidden_states` is EAGLE3-based and only
+  works for models that implement the interface. In vllm 0.22.1: **qwen2/qwen3,
+  llama, deepseek, gemma-4 YES; gemma-3 NO** (`Model does not support EAGLE3
+  interface but aux_hidden_state_outputs was requested`). Use HF for gemma-3.
+- **Numerical:** vLLM (FLASH_ATTN bf16) vs HF (eager bf16) mean cos ≈ 0.998 on
+  Qwen2.5-Coder-7B L16 (short seqs 0.9995+; a few low-norm tokens in long seqs
+  drag the min — benign, not an alignment bug since short rows stay tight).

@@ -1,0 +1,14 @@
+{
+  "model": "google/gemma-3-4b-it",
+  "head": "mlp256",
+  "layer": 8,
+  "mode": "sweep",
+  "n_tokens": 690148,
+  "n_tokens_code": 491131,
+  "test_tokens_auc": 0.7895874789749147,
+  "test_tokens_code_auc": 0.7993711359214244,
+  "test_example_auc": 0.621880277725652,
+  "val_ex_auc": 0.6926020408163265,
+  "n_test_examples": 292,
+  "hist_gate": null
+}

@@ -1,0 +1,547 @@
+[
+ {
+  "eid": 1428,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "time",
+  "n_models": 5,
+  "models": {
+   "qwen-7b": 0.31,
+   "gemma-1b-it": 0.111,
+   "gemma-12b-it": 15.179,
+   "gemma-27b-it": 15.285,
+   "gemma-12b-pt": 3.658
+  },
+  "max_margin": 15.285,
+  "nearest_vuln_dist": 70,
+  "excerpt": "   1|     def get_context_data(self, **kwargs):\n   2|         context = super().get_context_data(**kwargs)\n   3|         context['comments'] = self.object.comment_set.all().order_by('-\u00abtime\u00bb')\n   4|         context['form'] = self.get_form()\n   5|         context['md'] = markdown(self.object.content,\n   6|                                  extensions=[\n   7|                                      'markdown.extensions.extra',"
+ },
+ {
+  "eid": 522,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " %",
+  "n_models": 5,
+  "models": {
+   "qwen-7b": 0.442,
+   "gemma-4b-it": 1.49,
+   "gemma-12b-it": 8.462,
+   "gemma-27b-it": 3.581,
+   "gemma-12b-pt": 3.759
+  },
+  "max_margin": 8.462,
+  "nearest_vuln_dist": 118,
+  "excerpt": "   8|             value = self.object.get(self.column.field_name)\n   9|         elif callable(field):\n  10|             value = field() if getattr(field, 'do_not_call_in_templates', False) else field\n  11|         else:\n  12|             display_function = getattr(self.object, 'get_%s_display'\u00ab %\u00bb self.column.field_name, False)\n  13|             value = display_function() if display_function else field\n  14| \n  15|         return escape(value)"
+ },
+ {
+  "eid": 1159,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "set",
+  "n_models": 4,
+  "models": {
+   "gemma-4b-it": 5.851,
+   "gemma-12b-it": 10.28,
+   "gemma-27b-it": 1.064,
+   "gemma-12b-pt": 3.976
+  },
+  "max_margin": 10.28,
+  "nearest_vuln_dist": 49,
+  "excerpt": "   7|         if result.rowcount > 0:\n   8|             return  # User has previously mapped this project so return\n   9| \n  10|         sql = '''update users\n  11|                     \u00abset\u00bb projects_mapped = array_append(projects_mapped, {0})\n  12|                   where id = {1}'''.format(project_id, user_id)\n  13| \n  14|         db.engine.execute(sql)"
+ },
+ {
+  "eid": 1036,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "sql",
+  "n_models": 4,
+  "models": {
+   "gemma-4b-it": 9.405,
+   "gemma-12b-it": 7.185,
+   "gemma-27b-it": 3.594,
+   "gemma-12b-pt": 0.614
+  },
+  "max_margin": 9.405,
+  "nearest_vuln_dist": 42,
+  "excerpt": "   1|     def deletePost(self,postid):\n   2|         \u00absql\u00bbText=\"delete from post where post.postid=%d\"%(postid)\n   3|         result=sql.deleteDB(self.conn,sqlText)\n   4|         return result;"
+ },
+ {
+  "eid": 570,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " (",
+  "n_models": 3,
+  "models": {
+   "qwen-7b": 0.062,
+   "gemma-12b-it": 9.47,
+   "gemma-12b-pt": 3.815
+  },
+  "max_margin": 9.47,
+  "nearest_vuln_dist": 83,
+  "excerpt": "   1|     def save_failure_transaction(self, user_id, project_id, money):\n   2|         self.cursor.execute(\"insert into transactions\u00ab (\u00bbproject_id,user_id, money, timestamp, state) values (%s, %s, %s, now(), 'failed' )\" % (project_id, user_id, money))\n   3|         self.db.commit()"
+ },
+ {
+  "eid": 1313,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "time",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 7.447,
+   "gemma-27b-it": 9.334,
+   "gemma-12b-pt": 1.012
+  },
+  "max_margin": 9.334,
+  "nearest_vuln_dist": 50,
+  "excerpt": "   1|     def get_queryset(self, **kwargs):\n   2|         queryset = Article.objects.order_by('-\u00abtime\u00bb')\n   3|         for i in queryset:\n   4|             i.md = markdown(i.content, extensions=[\n   5|                 'markdown.extensions.extra',\n   6|                 'markdown.extensions.codehilite',"
+ },
+ {
+  "eid": 522,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " getattr",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.561,
+   "gemma-4b-it": 3.657,
+   "gemma-12b-pt": 9.138
+  },
+  "max_margin": 9.138,
+  "nearest_vuln_dist": 256,
+  "excerpt": "   6|         field = getattr(self.object, self.column.field_name) if self.column.field_name else None\n   7|         if type(self.object) == dict:\n   8|             value = self.object.get(self.column.field_name)\n   9|         elif callable(field):\n  10|             value = field() if\u00ab getattr\u00bb(field, 'do_not_call_in_templates', False) else field\n  11|         else:\n  12|             display_function = getattr(self.object, 'get_%s_display' % self.column.field_name, False)\n  13|             value = display_function() if display_function else field\n  14| "
+ },
+ {
+  "eid": 1203,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "sql",
+  "n_models": 3,
+  "models": {
+   "gemma-4b-it": 8.542,
+   "gemma-12b-it": 8.781,
+   "gemma-27b-it": 3.562
+  },
+  "max_margin": 8.781,
+  "nearest_vuln_dist": 70,
+  "excerpt": "   1|     def insertData(self,userid,post):\n   2|         \u00absql\u00bbText=\"insert into post(userid,date,comment) \\\n   3|                 values(%d,current_timestamp(0),'%s');\"%(userid,post);\n   4|         result=sql.insertDB(self.conn,sqlText)\n   5|         return result;"
+ },
+ {
+  "eid": 829,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "cursor",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.671,
+   "gemma-4b-it": 1.922,
+   "gemma-12b-it": 7.3
+  },
+  "max_margin": 7.3,
+  "nearest_vuln_dist": 98,
+  "excerpt": "   1| def get_game_info(conn, game):\n   2|     # get the basic game properties\n   3|     \u00abcursor\u00bb = conn.cursor()\n   4|     cursor.execute(\"SELECT player1,player2,size,state FROM games WHERE id = %d;\" % game)\n   5|     if cursor.rowcount != 1:\n   6|         raise FormError(\"Invalid game ID\")\n   7| "
+ },
+ {
+  "eid": 1339,
+  "cwe": "CWE-022",
+  "lang": "c",
+  "kind": "misplaced",
+  "token_text": " path",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.006,
+   "gemma-27b-it": 2.996,
+   "gemma-12b-pt": 1.583
+  },
+  "max_margin": 2.996,
+  "nearest_vuln_dist": 1286,
+  "excerpt": "   5| \tchar *name, *ptr;\n   6| \tchar dir[PATH_MAX] = { 0 };\n   7| \n   8| \tstrlcpy(dir, ctrl->cwd, sizeof(dir));\n   9| \tDBG(\"Compose\u00ab path\u00bb from cwd: %s, arg: %s\", ctrl->cwd, path ?: \"\");\n  10| \tif (!path || !strlen(path))\n  11| \t\tgoto check;\n  12| \n  13| \tif (path) {"
+ },
+ {
+  "eid": 383,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": ".",
+  "n_models": 3,
+  "models": {
+   "gemma-12b-it": 2.041,
+   "gemma-27b-it": 2.238,
+   "gemma-12b-pt": 1.813
+  },
+  "max_margin": 2.238,
+  "nearest_vuln_dist": 186,
+  "excerpt": "   1|     def add_translationname(self, trname):\n   2|         \"\"\"Add new translation by item name for an item.\"\"\"\n   3|         if self\u00ab.\u00bbconnection:\n   4|             for item in self.find_item_name([trname[0], '0']):\n   5|                 self.cursor.execute('insert into itemtranslation (itemid, itemlanguageid, translation) values (\"%s\", \"%s\", \"%s\")' % (item[0], trname[1], trname[2]))\n   6|             self.connection.commit()"
+ },
+ {
+  "eid": 1159,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " users",
+  "n_models": 3,
+  "models": {
+   "qwen-32b": 0.754,
+   "gemma-12b-it": 2.201,
+   "gemma-27b-it": 0.391
+  },
+  "max_margin": 2.201,
+  "nearest_vuln_dist": 73,
+  "excerpt": "   6| \n   7|         if result.rowcount > 0:\n   8|             return  # User has previously mapped this project so return\n   9| \n  10|         sql = '''update\u00ab users\u00bb\n  11|                     set projects_mapped = array_append(projects_mapped, {0})\n  12|                   where id = {1}'''.format(project_id, user_id)\n  13| \n  14|         db.engine.execute(sql)"
+ },
+ {
+  "eid": 273,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "bot",
+  "n_models": 3,
+  "models": {
+   "gemma-1b-it": 0.221,
+   "gemma-12b-it": 0.446,
+   "gemma-27b-it": 2.036
+  },
+  "max_margin": 2.036,
+  "nearest_vuln_dist": 79,
+  "excerpt": "   5|     conn.execute(\"select * from users where chat_id = '\" + str(message.chat.id) + \"'\")\n   6|     name = conn.fetchone()\n   7|     settings.close()\n   8|     if name == None:\n   9|         \u00abbot\u00bb.send_message(message.chat.id, \"You should login before get tasks.\")\n  10|     else:\n  11|         bases.update.update_user(name[1], name[0], name[2])\n  12|         bot.send_message(message.chat.id, bases.problem.get_unsolved_problem(message.text, name[1]))\n  13|     set_state(message.chat.id, config.States.S_START.value)"
+ },
+ {
+  "eid": 961,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "id",
+  "n_models": 3,
+  "models": {
+   "gemma-4b-it": 0.87,
+   "gemma-12b-it": 0.437,
+   "gemma-12b-pt": 0.119
+  },
+  "max_margin": 0.87,
+  "nearest_vuln_dist": 311,
+  "excerpt": "   3|         \"\"\"Unlock all tasks locked for longer than the auto-unlock delta\"\"\"\n   4|         expiry_delta = Task.auto_unlock_delta()\n   5|         lock_duration = (datetime.datetime.min + expiry_delta).time().isoformat()\n   6|         expiry_date = datetime.datetime.utcnow() - expiry_delta\n   7|         old_locks_query = '''SELECT t.\u00abid\u00bb\n   8|             FROM tasks t, task_history th\n   9|             WHERE t.id = th.task_id\n  10|             AND t.project_id = th.project_id\n  11|             AND t.task_status IN (1,3)"
+ },
+ {
+  "eid": 1163,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " WHERE voting",
+  "n_models": 2,
+  "models": {
+   "gemma-12b-it": 21.426,
+   "gemma-27b-it": 12.281
+  },
+  "max_margin": 21.426,
+  "nearest_vuln_dist": 331,
+  "excerpt": "   7|     cur.execute(query)\n   8|     total = cur.fetchone()\n   9|     total_votes = total[0]\n  10| \n  11|     query = \"SELECT voting_as FROM holders\u00ab WHERE voting\u00bb_as<>'1.2.5' group by voting_as\"\n  12|     cur.execute(query)\n  13|     results = cur.fetchall()\n  14|     #con.close()\n  15| "
+ },
+ {
+  "eid": 847,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " where",
+  "n_models": 2,
+  "models": {
+   "qwen-32b": 2.246,
+   "gemma-12b-it": 12.822
+  },
+  "max_margin": 12.822,
+  "nearest_vuln_dist": 66,
+  "excerpt": "   1| def get_tournaments_during_month(db, scene, date):\n   2|     y, m, d = date.split('-')\n   3|     ym_date = '{}-{}'.format(y, m)\n   4|     sql = \"select url, date from matches\u00ab where\u00bb scene='{}' and date like '%{}%' group by url, date order by date\".format(scene, ym_date)\n   5|     res = db.exec(sql)\n   6|     urls = [r[0] for r in res]\n   7|     return urls"
+ },
+ {
+  "eid": 961,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "project",
+  "n_models": 2,
+  "models": {
+   "gemma-1b-it": 0.22,
+   "gemma-27b-it": 10.488
+  },
+  "max_margin": 10.488,
+  "nearest_vuln_dist": 207,
+  "excerpt": "   6|         expiry_date = datetime.datetime.utcnow() - expiry_delta\n   7|         old_locks_query = '''SELECT t.id\n   8|             FROM tasks t, task_history th\n   9|             WHERE t.id = th.task_id\n  10|             AND t.\u00abproject\u00bb_id = th.project_id\n  11|             AND t.task_status IN (1,3)\n  12|             AND th.action IN ( 'LOCKED_FOR_VALIDATION','LOCKED_FOR_MAPPING' )\n  13|             AND th.action_text IS NULL\n  14|             AND t.project_id = {0}"
+ },
+ {
+  "eid": 1217,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "cursor.execute('''",
+  "n_models": 2,
+  "models": {
+   "gemma-4b-it": 10.171,
+   "gemma-12b-it": 8.552
+  },
+  "max_margin": 10.171,
+  "nearest_vuln_dist": 61,
+  "excerpt": "   3|     db = db_connect()\n   4|     cursor = db.cursor()\n   5|     if karma is None:\n   6|         try:\n   7|             \u00abcursor.execute('''\u00bb\n   8|                 INSERT INTO people(name,karma,shame) VALUES('{}',1,0)\n   9|                 '''.format(name))\n  10|             db.commit()\n  11|             logger.debug('Inserted into karmadb 1 karma for {}'.format(name))"
+ },
+ {
+  "eid": 829,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "cursor",
+  "n_models": 2,
+  "models": {
+   "gemma-4b-it": 0.296,
+   "gemma-12b-it": 10.011
+  },
+  "max_margin": 10.011,
+  "nearest_vuln_dist": 238,
+  "excerpt": "  12| \n  13|     if state is None:\n  14|          state = \"Active\"\n  15| \n  16|     \u00abcursor\u00bb.close()\n  17| \n  18|     return (players,size,state)"
+ },
+ {
+  "eid": 827,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "._",
+  "n_models": 2,
+  "models": {
+   "qwen-32b": 0.421,
+   "gemma-12b-pt": 9.921
+  },
+  "max_margin": 9.921,
+  "nearest_vuln_dist": 282,
+  "excerpt": "   1|     def extend_volume(self, volume, new_size):\n   2|         volume_name = self\u00ab._\u00bbget_3par_vol_name(volume['id'])\n   3|         old_size = volume.size\n   4|         growth_size = int(new_size) - old_size\n   5|         LOG.debug(\"Extending Volume %s from %s to %s, by %s GB.\" %\n   6|                   (volume_name, old_size, new_size, growth_size))"
+ },
+ {
+  "eid": 761,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "root",
+  "n_models": 2,
+  "models": {
+   "gemma-4b-it": 1.417,
+   "gemma-27b-it": 9.845
+  },
+  "max_margin": 9.845,
+  "nearest_vuln_dist": 110,
+  "excerpt": "   5|     fs is the path to the base of the filesystem into which to inject the key.\n   6|     \"\"\"\n   7|     sshdir = os.path.join(fs, 'root', '.ssh')\n   8|     utils.execute('mkdir', '-p', sshdir, run_as_root=True)\n   9|     utils.execute('chown', '\u00abroot\u00bb', sshdir, run_as_root=True)\n  10|     utils.execute('chmod', '700', sshdir, run_as_root=True)\n  11|     keyfile = os.path.join(sshdir, 'authorized_keys')\n  12|     key_data = [\n  13|         '\\n',"
+ },
+ {
+  "eid": 600,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "domain",
+  "n_models": 2,
+  "models": {
+   "gemma-27b-it": 9.841,
+   "gemma-12b-pt": 1.192
+  },
+  "max_margin": 9.841,
+  "nearest_vuln_dist": 120,
+  "excerpt": "   1|     def _get_3par_host(self, hostname):\n   2|         out = self._cli_run('showhost -verbose %s' % (hostname), None)\n   3|         LOG.debug(\"OUTPUT = \\n%s\" % (pprint.pformat(out)))\n   4|         host = {'id': None, 'name': None,\n   5|                 '\u00abdomain\u00bb': None,\n   6|                 'descriptors': {},\n   7|                 'iSCSIPaths': [],\n   8|                 'FCPaths': []}\n   9| "
+ },
+ {
+  "eid": 961,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " '''SELECT",
+  "n_models": 2,
+  "models": {
+   "gemma-4b-it": 9.78,
+   "gemma-12b-it": 7.031
+  },
+  "max_margin": 9.78,
+  "nearest_vuln_dist": 316,
+  "excerpt": "   3|         \"\"\"Unlock all tasks locked for longer than the auto-unlock delta\"\"\"\n   4|         expiry_delta = Task.auto_unlock_delta()\n   5|         lock_duration = (datetime.datetime.min + expiry_delta).time().isoformat()\n   6|         expiry_date = datetime.datetime.utcnow() - expiry_delta\n   7|         old_locks_query =\u00ab '''SELECT\u00bb t.id\n   8|             FROM tasks t, task_history th\n   9|             WHERE t.id = th.task_id\n  10|             AND t.project_id = th.project_id\n  11|             AND t.task_status IN (1,3)"
+ },
+ {
+  "eid": 310,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "self._",
+  "n_models": 2,
+  "models": {
+   "gemma-27b-it": 4.776,
+   "gemma-12b-pt": 9.188
+  },
+  "max_margin": 9.188,
+  "nearest_vuln_dist": 60,
+  "excerpt": "   4|         elif type(id) == unicode:\n   5|             id = id.encode('utf-8')\n   6|         else:\n   7|             id = str(id)\n   8|         \u00abself._\u00bbopenContainer(session)\n   9|         query = (\"UPDATE %s SET %s = %r WHERE identifier = '%s';\" %\n  10|                  (self.table, mType, value, id)\n  11|                  )\n  12|         try:"
+ },
+ {
+  "eid": 1080,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "SELECT",
+  "n_models": 2,
+  "models": {
+   "gemma-4b-it": 9.018,
+   "gemma-12b-it": 7.921
+  },
+  "max_margin": 9.018,
+  "nearest_vuln_dist": 76,
+  "excerpt": "   1|     def get_previous_yields(self, inverter_serial):\n   2|         query = '''\n   3|            \u00abSELECT\u00bb TimeStamp, EToday, ETotal\n   4|            FROM Inverters\n   5|            WHERE Serial = '%s'\n   6|         ''' % (inverter_serial)\n   7|         self.c.execute(query)"
+ },
+ {
+  "eid": 844,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "['",
+  "n_models": 2,
+  "models": {
+   "gemma-27b-it": 8.655,
+   "gemma-12b-pt": 4.286
+  },
+  "max_margin": 8.655,
+  "nearest_vuln_dist": 669,
+  "excerpt": "   5|         information.\n   6| \n   7|         \"\"\"\n   8| \n   9|         LOG.debug(_('enter: _create_host: host %s') % connector\u00ab['\u00bbhost'])\n  10| \n  11|         rand_id = str(random.randint(0, 99999999)).zfill(8)\n  12|         host_name = '%s-%s' % (self._connector_to_hostname_prefix(connector),\n  13|                                rand_id)"
+ },
+ {
+  "eid": 1313,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "order_by",
+  "n_models": 2,
+  "models": {
+   "gemma-1b-it": 0.214,
+   "gemma-12b-it": 8.639
+  },
+  "max_margin": 8.639,
+  "nearest_vuln_dist": 57,
+  "excerpt": "   1|     def get_queryset(self, **kwargs):\n   2|         queryset = Article.objects.\u00aborder_by\u00bb('-time')\n   3|         for i in queryset:\n   4|             i.md = markdown(i.content, extensions=[\n   5|                 'markdown.extensions.extra',\n   6|                 'markdown.extensions.codehilite',"
+ },
+ {
+  "eid": 22,
+  "cwe": "CWE-416",
+  "lang": "c",
+  "kind": "misplaced",
+  "token_text": "MPOL_F_",
+  "n_models": 2,
+  "models": {
+   "gemma-1b-it": 2.234,
+   "gemma-27b-it": 8.194
+  },
+  "max_margin": 8.194,
+  "nearest_vuln_dist": 1399,
+  "excerpt": "   6| \tstruct vm_area_struct *vma = NULL;\n   7| \tstruct mempolicy *pol = current->mempolicy;\n   8| \n   9| \tif (flags &\n  10| \t\t~(unsigned long)(\u00abMPOL_F_\u00bbNODE|MPOL_F_ADDR|MPOL_F_MEMS_ALLOWED))\n  11| \t\treturn -EINVAL;\n  12| \n  13| \tif (flags & MPOL_F_MEMS_ALLOWED) {\n  14| \t\tif (flags & (MPOL_F_NODE|MPOL_F_ADDR))"
+ },
+ {
+  "eid": 1203,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "insert into",
+  "n_models": 2,
+  "models": {
+   "qwen-32b": 1.194,
+   "gemma-12b-it": 7.911
+  },
+  "max_margin": 7.911,
+  "nearest_vuln_dist": 53,
+  "excerpt": "   1|     def insertData(self,userid,post):\n   2|         sqlText=\"\u00abinsert into\u00bb post(userid,date,comment) \\\n   3|                 values(%d,current_timestamp(0),'%s');\"%(userid,post);\n   4|         result=sql.insertDB(self.conn,sqlText)\n   5|         return result;"
+ },
+ {
+  "eid": 957,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "key",
+  "n_models": 2,
+  "models": {
+   "gemma-27b-it": 7.901,
+   "gemma-12b-pt": 2.114
+  },
+  "max_margin": 7.901,
+  "nearest_vuln_dist": 69,
+  "excerpt": "  11|         credentials = ''\n  12|         credentials += \"{}_TYPE='{}' \".format(prefix, data.type)\n  13| \n  14|         def _addCredential(credentials, env_key, data_key):\n  15|             value = getattr(data, data_\u00abkey\u00bb, None)\n  16|             if value is not None:\n  17|                 credentials += \"{}='{}' \".format(env_key, value)\n  18|             return credentials\n  19| "
+ },
+ {
+  "eid": 968,
+  "cwe": "CWE-022",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": ".",
+  "n_models": 2,
+  "models": {
+   "gemma-1b-it": 0.52,
+   "gemma-27b-it": 7.836
+  },
+  "max_margin": 7.836,
+  "nearest_vuln_dist": 145,
+  "excerpt": "  10|         shutil.move(item.abspath, settings.STORAGE_DIR + new_src)\n  11|         old_backup_abspath = item.backup_abspath\n  12|         item = Item(new_src)\n  13|         if os.path.isfile(old_backup_abspath):\n  14|             shutil\u00ab.\u00bbmove(old_backup_abspath, item.backup_abspath)\n  15| \n  16|     # Update meta\n  17|     for field in item.FORM:\n  18|         # TODO handle .repeatable (keywords)"
+ },
+ {
+  "eid": 957,
+  "cwe": "CWE-078",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "prefix",
+  "n_models": 2,
+  "models": {
+   "gemma-27b-it": 1.54,
+   "gemma-12b-pt": 7.669
+  },
+  "max_margin": 7.669,
+  "nearest_vuln_dist": 66,
+  "excerpt": "   5|             ^          ^        ^   ^\n   6|         [mandatory  ][name  ][key][value]\n   7|         \"\"\"\n   8| \n   9|         \u00abprefix\u00bb = \"RCLONE_CONFIG_{}\".format(name.upper())\n  10| \n  11|         credentials = ''\n  12|         credentials += \"{}_TYPE='{}' \".format(prefix, data.type)\n  13| "
+ },
+ {
+  "eid": 522,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": ".",
+  "n_models": 2,
+  "models": {
+   "gemma-12b-it": 7.256,
+   "gemma-27b-it": 1.419
+  },
+  "max_margin": 7.256,
+  "nearest_vuln_dist": 76,
+  "excerpt": "   2|         if self.column.render_function:\n   3|             # We don't want to escape our html\n   4|             return self.column.render_function(self.object)\n   5| \n   6|         field = getattr(self.object, self.column.field_name) if self.column\u00ab.\u00bbfield_name else None\n   7|         if type(self.object) == dict:\n   8|             value = self.object.get(self.column.field_name)\n   9|         elif callable(field):\n  10|             value = field() if getattr(field, 'do_not_call_in_templates', False) else field"
+ },
+ {
+  "eid": 81,
+  "cwe": "CWE-089",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": " kick",
+  "n_models": 2,
+  "models": {
+   "gemma-27b-it": 4.253,
+   "gemma-12b-pt": 7.195
+  },
+  "max_margin": 7.195,
+  "nearest_vuln_dist": 44,
+  "excerpt": "   1|     def can_user_pass_that_amount_of_money(self, user_id, money):\n   2|         self.cursor.execute(\"SELECT count(id) FROM\u00ab kick\u00bbstarter.users where id = %s and money >= %s\" % (user_id, money))\n   3|         return self.cursor.fetchall()[0][0]"
+ },
+ {
+  "eid": 1148,
+  "cwe": "CWE-079",
+  "lang": "python",
+  "kind": "misplaced",
+  "token_text": "cmd",
+  "n_models": 2,
+  "models": {
+   "gemma-27b-it": 6.868,
+   "gemma-12b-pt": 4.539
+  },
+  "max_margin": 6.868,
+  "nearest_vuln_dist": 179,
+  "excerpt": "  12|         self.last_alive[csessid] = (time.time(), False)\n  13|         sess = self.sessionhandler.sessions_from_csessid(csessid)\n  14|         if sess:\n  15|             sess = sess[0]\n  16|             \u00abcmd\u00bbarray = json.loads(request.args.get('data')[0])\n  17|             sess.sessionhandler.data_in(sess, **{cmdarray[0]: [cmdarray[1], cmdarray[2]]})\n  18|         return '\"\"'"
+ }
+]

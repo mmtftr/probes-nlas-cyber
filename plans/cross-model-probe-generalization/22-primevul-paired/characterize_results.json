@@ -1,0 +1,104 @@
+[
+  {
+    "split": "train",
+    "rows": 7578,
+    "pairs": 3789,
+    "langs": {
+      "c": 2251,
+      "?": 1276,
+      "cpp": 262
+    },
+    "top_cwe": {
+      "CWE-119": 522,
+      "CWE-125": 394,
+      "CWE-20": 349,
+      "CWE-787": 258,
+      "CWE-476": 218,
+      "CWE-200": 210,
+      "CWE-416": 177,
+      "CWE-399": 148,
+      "CWE-264": 141,
+      "CWE-190": 139,
+      "CWE-703": 128,
+      "CWE-189": 123
+    },
+    "n_distinct_cwe": 111,
+    "subtractive": 1904,
+    "additive": 1885,
+    "subtractive_frac": 0.503,
+    "sub_frac_by_lang": {
+      "?": 0.47,
+      "c": 0.53,
+      "cpp": 0.427
+    },
+    "no_grammar_pairs": 0
+  },
+  {
+    "split": "valid",
+    "rows": 960,
+    "pairs": 480,
+    "langs": {
+      "c": 301,
+      "cpp": 92,
+      "?": 87
+    },
+    "top_cwe": {
+      "CWE-787": 80,
+      "CWE-125": 61,
+      "CWE-476": 44,
+      "CWE-703": 35,
+      "CWE-369": 31,
+      "CWE-416": 25,
+      "CWE-190": 20,
+      "CWE-200": 15,
+      "CWE-119": 14,
+      "CWE-401": 13,
+      "CWE-120": 12,
+      "CWE-20": 10
+    },
+    "n_distinct_cwe": 63,
+    "subtractive": 234,
+    "additive": 246,
+    "subtractive_frac": 0.487,
+    "sub_frac_by_lang": {
+      "cpp": 0.446,
+      "c": 0.482,
+      "?": 0.552
+    },
+    "no_grammar_pairs": 0
+  },
+  {
+    "split": "test",
+    "rows": 870,
+    "pairs": 435,
+    "langs": {
+      "c": 269,
+      "cpp": 87,
+      "?": 79
+    },
+    "top_cwe": {
+      "CWE-787": 72,
+      "CWE-125": 47,
+      "CWE-703": 47,
+      "CWE-476": 39,
+      "CWE-416": 29,
+      "CWE-200": 16,
+      "CWE-369": 14,
+      "CWE-20": 14,
+      "CWE-119": 14,
+      "CWE-617": 12,
+      "CWE-190": 11,
+      "CWE-415": 10
+    },
+    "n_distinct_cwe": 62,
+    "subtractive": 197,
+    "additive": 238,
+    "subtractive_frac": 0.453,
+    "sub_frac_by_lang": {
+      "c": 0.465,
+      "cpp": 0.345,
+      "?": 0.532
+    },
+    "no_grammar_pairs": 0
+  }
+]

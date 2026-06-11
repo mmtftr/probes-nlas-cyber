@@ -1,0 +1,39 @@
+{
+  "all": {
+    "format/punctuation/quote": 1527,
+    "SQL keyword/clause": 929,
+    "identifier / column / value / placeholder": 3111,
+    "os-command / path / shell string": 97,
+    "DB/cursor/ORM API call": 455
+  },
+  "by_kind": {
+    "spread": {
+      "format/punctuation/quote": 319,
+      "SQL keyword/clause": 398,
+      "identifier / column / value / placeholder": 604,
+      "os-command / path / shell string": 36,
+      "DB/cursor/ORM API call": 116
+    },
+    "safe_alarm": {
+      "identifier / column / value / placeholder": 1608,
+      "format/punctuation/quote": 771,
+      "SQL keyword/clause": 460,
+      "DB/cursor/ORM API call": 236,
+      "os-command / path / shell string": 50
+    },
+    "misplaced": {
+      "identifier / column / value / placeholder": 899,
+      "format/punctuation/quote": 437,
+      "SQL keyword/clause": 71,
+      "DB/cursor/ORM API call": 103,
+      "os-command / path / shell string": 11
+    }
+  },
+  "shared_ge4": {
+    "format/punctuation/quote": 17,
+    "SQL keyword/clause": 12,
+    "identifier / column / value / placeholder": 18,
+    "os-command / path / shell string": 1
+  },
+  "total": 6119
+}
