@@ -1,0 +1,127 @@
+{
+  "analysis": "pv_matchedpair_unigram_addendum",
+  "metric": "tokens_code_auc",
+  "note": "token-unigram LR (exp-24 U block, train-vocab) under the SAME matched-patch pools/bootstrap as results/pv_matchedpair.json; added after exp-27's split verdict (unigram survives mp on 125 on SVEN). Same seeds as stage C -> CIs comparable.",
+  "table": {
+    "CWE-119": {
+      "family": "mem",
+      "n_test_pairs": 14,
+      "unigram_mp_auc": 0.620736786215021,
+      "ci": [
+        0.5192631395329677,
+        0.6716666913199022,
+        1000
+      ]
+    },
+    "CWE-125": {
+      "family": "mem",
+      "n_test_pairs": 47,
+      "unigram_mp_auc": 0.5534887966567846,
+      "ci": [
+        0.44874188915424207,
+        0.6397943856420237,
+        1000
+      ]
+    },
+    "CWE-190": {
+      "family": "mem",
+      "n_test_pairs": 11,
+      "unigram_mp_auc": 0.6022454990563137,
+      "ci": [
+        0.5010185457804626,
+        0.7535155837569111,
+        1000
+      ]
+    },
+    "CWE-415": {
+      "family": "mem",
+      "n_test_pairs": 10,
+      "unigram_mp_auc": 0.5727317924616033,
+      "ci": [
+        0.49182471477734263,
+        0.6719153705760439,
+        1000
+      ]
+    },
+    "CWE-416": {
+      "family": "mem",
+      "n_test_pairs": 29,
+      "unigram_mp_auc": 0.576614622454296,
+      "ci": [
+        0.5209679668464006,
+        0.6385422976056878,
+        1000
+      ]
+    },
+    "CWE-476": {
+      "family": "mem",
+      "n_test_pairs": 39,
+      "unigram_mp_auc": 0.4870176382724404,
+      "ci": [
+        0.40986203680381544,
+        0.5220637250250911,
+        1000
+      ]
+    },
+    "CWE-787": {
+      "family": "mem",
+      "n_test_pairs": 72,
+      "unigram_mp_auc": 0.4803353507850631,
+      "ci": [
+        0.4515959546933262,
+        0.5510383683506903,
+        1000
+      ]
+    },
+    "CWE-20": {
+      "family": "other",
+      "n_test_pairs": 14,
+      "unigram_mp_auc": 0.49234691889001186,
+      "ci": [
+        0.41165621945216496,
+        0.5370060070952352,
+        999
+      ]
+    },
+    "CWE-200": {
+      "family": "other",
+      "n_test_pairs": 16,
+      "unigram_mp_auc": 0.7288476344369618,
+      "ci": [
+        0.4180897497441413,
+        0.7612028335505708,
+        1000
+      ]
+    },
+    "CWE-369": {
+      "family": "other",
+      "n_test_pairs": 14,
+      "unigram_mp_auc": 0.5249069674242858,
+      "ci": [
+        0.3613907021600342,
+        0.5863698054147748,
+        974
+      ]
+    },
+    "CWE-617": {
+      "family": "other",
+      "n_test_pairs": 12,
+      "unigram_mp_auc": 0.6172689616636704,
+      "ci": [
+        0.5839410710422812,
+        0.6414583117608866,
+        1000
+      ]
+    },
+    "CWE-703": {
+      "family": "other",
+      "n_test_pairs": 47,
+      "unigram_mp_auc": 0.5820956111202152,
+      "ci": [
+        0.5299194856292097,
+        0.6084326104533766,
+        1000
+      ]
+    }
+  }
+}

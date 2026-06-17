@@ -99,7 +99,11 @@ def boot_auc_ci(y, s, ex, rng, n=N_BOOT):
 
 def per_example_mean_auc(y, s, ex):
     """Mean of within-example AUCs over examples that contain both classes
-    (i.e. vuln examples with >=1 positive and >=1 negative code token)."""
+    (i.e. vuln examples with >=1 positive and >=1 negative code token).
+
+    Glossary name: within_example_macro_auc (docs/project-log.md §3). NOT the
+    same as exp-24's example_mean_auc, which is example-LEVEL (mean-pooled
+    score per example, AUC over example labels)."""
     y = np.asarray(y); s = np.asarray(s); ex = np.asarray(ex)
     vals = []
     for e in np.unique(ex):
@@ -246,6 +250,30 @@ def main():
                 "untrusted": n_pos_ex < 10,
             }
 
+        # ---------- Task 5b: TRUE pooled family-vs-rest AUC (for FIG-H) ----------
+        # Design-(b) generalisation of b_probe_auc to a CWE SET: rank the union of a
+        # family's trusted-CWE positive code tokens against every other live-code
+        # test token. This is the honest pooled number; FIG-H formerly approximated
+        # it with a positive-token-weighted mean of the per-CWE b_probe_auc, which
+        # under-reports injection by ~0.008 (sibling-family positives, scoring high,
+        # contaminate each per-CWE negative pool). Trusted set = the SAME explicit
+        # family lists FIG-H uses, intersected with the per-CWE untrusted flag, so
+        # the figure and this number are constructed from identical positives.
+        FAM_FIG = {"injection": ["CWE-089", "CWE-078", "CWE-022", "CWE-079"],
+                   "memory": ["CWE-125", "CWE-416", "CWE-476"]}
+        family_pooled = {}
+        for fam_name, fam_cwes in FAM_FIG.items():
+            keep = [c for c in fam_cwes if c in percwe and not percwe[c]["untrusted"]]
+            in_fam = np.isin(cwe_tok.astype(str), keep)
+            fam_pos = base & (label_tok == 1) & (y_line == 1) & in_fam
+            yf = fam_pos[base].astype(int)
+            family_pooled[fam_name] = {
+                "pooled_auc": auc(yf, prob[base]),
+                "trusted_cwes": keep,
+                "n_pos_tokens": int(fam_pos.sum()),
+                "n_tokens": int(base.sum()),
+            }
+
         # ---------- Task 6 (secondary): within-pair before/after max-logit pairAcc ----------
         # per family per language; pair = (vuln eid, safe eid). max code-token logit.
         def max_code_logit(e):
@@ -275,6 +303,7 @@ def main():
             "family_x_language": cells,
             "language_null": nulltab,
             "per_cwe": percwe,
+            "family_pooled": family_pooled,
             "pair_acc_secondary": pairacc,
         }
         (OUT / f"{model}.json").write_text(json.dumps(result, indent=2))
@@ -283,6 +312,8 @@ def main():
             "within_py_line": within["py_line"]["pooled_auc"],
             "within_c_line": within["c_line"]["pooled_auc"],
             "general_lang_null_cPos_line": nulltab["general_line"]["lang_null_auc_cPos"],
+            "inj_pooled_line": family_pooled["injection"]["pooled_auc"],
+            "mem_pooled_line": family_pooled["memory"]["pooled_auc"],
         }
         print(f"{model:28s} L{L:>2} gate={gate:.4f}(Δ{gate-anchor:+.4f},{'OK' if gate_pass else 'FAIL'}) "
               f"py={within['py_line']['pooled_auc']:.3f} c={within['c_line']['pooled_auc']:.3f} "

@@ -1,0 +1,212 @@
+{
+  "Qwen2.5-Coder-32B-Instruct": {
+    "layer": 25,
+    "anchor_tokens_code_auc": 0.776,
+    "gate_line_code_auc": 0.7758113450212012,
+    "gate_delta": -0.00018865497879883009,
+    "gate_pass": true,
+    "family_pooled": {
+      "injection": {
+        "pooled_auc": 0.8774099063117885,
+        "trusted_cwes": [
+          "CWE-089",
+          "CWE-078",
+          "CWE-022",
+          "CWE-079"
+        ],
+        "n_pos_tokens": 2833,
+        "n_tokens": 76489
+      },
+      "memory": {
+        "pooled_auc": 0.5364410521152839,
+        "trusted_cwes": [
+          "CWE-125",
+          "CWE-416",
+          "CWE-476"
+        ],
+        "n_pos_tokens": 1039,
+        "n_tokens": 76489
+      }
+    }
+  },
+  "Qwen2.5-Coder-7B-Instruct": {
+    "layer": 16,
+    "anchor_tokens_code_auc": 0.813,
+    "gate_line_code_auc": 0.8131931052631299,
+    "gate_delta": 0.000193105263129989,
+    "gate_pass": true,
+    "family_pooled": {
+      "injection": {
+        "pooled_auc": 0.9113937718737999,
+        "trusted_cwes": [
+          "CWE-089",
+          "CWE-078",
+          "CWE-022",
+          "CWE-079"
+        ],
+        "n_pos_tokens": 2833,
+        "n_tokens": 76489
+      },
+      "memory": {
+        "pooled_auc": 0.5726062935827448,
+        "trusted_cwes": [
+          "CWE-125",
+          "CWE-416",
+          "CWE-476"
+        ],
+        "n_pos_tokens": 1039,
+        "n_tokens": 76489
+      }
+    }
+  },
+  "gemma-3-1b-it": {
+    "layer": 25,
+    "anchor_tokens_code_auc": 0.744,
+    "gate_line_code_auc": 0.744073531338726,
+    "gate_delta": 7.353133872600726e-05,
+    "gate_pass": true,
+    "family_pooled": {
+      "injection": {
+        "pooled_auc": 0.8509107029547288,
+        "trusted_cwes": [
+          "CWE-089",
+          "CWE-078",
+          "CWE-022",
+          "CWE-079"
+        ],
+        "n_pos_tokens": 3235,
+        "n_tokens": 87679
+      },
+      "memory": {
+        "pooled_auc": 0.49355256719460283,
+        "trusted_cwes": [
+          "CWE-125",
+          "CWE-416",
+          "CWE-476"
+        ],
+        "n_pos_tokens": 1197,
+        "n_tokens": 87679
+      }
+    }
+  },
+  "gemma-3-4b-it": {
+    "layer": 7,
+    "anchor_tokens_code_auc": 0.775,
+    "gate_line_code_auc": 0.7747886705595963,
+    "gate_delta": -0.00021132944040369583,
+    "gate_pass": true,
+    "family_pooled": {
+      "injection": {
+        "pooled_auc": 0.875526187590038,
+        "trusted_cwes": [
+          "CWE-089",
+          "CWE-078",
+          "CWE-022",
+          "CWE-079"
+        ],
+        "n_pos_tokens": 3235,
+        "n_tokens": 87679
+      },
+      "memory": {
+        "pooled_auc": 0.5157972761200813,
+        "trusted_cwes": [
+          "CWE-125",
+          "CWE-416",
+          "CWE-476"
+        ],
+        "n_pos_tokens": 1197,
+        "n_tokens": 87679
+      }
+    }
+  },
+  "gemma-3-12b-it": {
+    "layer": 15,
+    "anchor_tokens_code_auc": 0.763,
+    "gate_line_code_auc": 0.762693668255276,
+    "gate_delta": -0.0003063317447240532,
+    "gate_pass": true,
+    "family_pooled": {
+      "injection": {
+        "pooled_auc": 0.8624812877279197,
+        "trusted_cwes": [
+          "CWE-089",
+          "CWE-078",
+          "CWE-022",
+          "CWE-079"
+        ],
+        "n_pos_tokens": 3235,
+        "n_tokens": 87679
+      },
+      "memory": {
+        "pooled_auc": 0.5180034228321124,
+        "trusted_cwes": [
+          "CWE-125",
+          "CWE-416",
+          "CWE-476"
+        ],
+        "n_pos_tokens": 1197,
+        "n_tokens": 87679
+      }
+    }
+  },
+  "gemma-3-27b-it": {
+    "layer": 19,
+    "anchor_tokens_code_auc": 0.759,
+    "gate_line_code_auc": 0.7586692972586652,
+    "gate_delta": -0.0003307027413348429,
+    "gate_pass": true,
+    "family_pooled": {
+      "injection": {
+        "pooled_auc": 0.860805209191982,
+        "trusted_cwes": [
+          "CWE-089",
+          "CWE-078",
+          "CWE-022",
+          "CWE-079"
+        ],
+        "n_pos_tokens": 3235,
+        "n_tokens": 87679
+      },
+      "memory": {
+        "pooled_auc": 0.5635332685065577,
+        "trusted_cwes": [
+          "CWE-125",
+          "CWE-416",
+          "CWE-476"
+        ],
+        "n_pos_tokens": 1197,
+        "n_tokens": 87679
+      }
+    }
+  },
+  "gemma-3-12b-pt": {
+    "layer": 13,
+    "anchor_tokens_code_auc": 0.782,
+    "gate_line_code_auc": 0.7817887769848052,
+    "gate_delta": -0.000211223015194828,
+    "gate_pass": true,
+    "family_pooled": {
+      "injection": {
+        "pooled_auc": 0.8957411209184515,
+        "trusted_cwes": [
+          "CWE-089",
+          "CWE-078",
+          "CWE-022",
+          "CWE-079"
+        ],
+        "n_pos_tokens": 3235,
+        "n_tokens": 87679
+      },
+      "memory": {
+        "pooled_auc": 0.520057582884773,
+        "trusted_cwes": [
+          "CWE-125",
+          "CWE-416",
+          "CWE-476"
+        ],
+        "n_pos_tokens": 1197,
+        "n_tokens": 87679
+      }
+    }
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "gates": {
+    "pv_n_clean_test": {
+      "got": 435,
+      "want": 435,
+      "pass": true
+    },
+    "pv_n_neg_test_tokens": {
+      "got": 287864,
+      "want": 287864,
+      "pass": true
+    },
+    "pv_feasible_cwes": {
+      "got": [
+        "CWE-119",
+        "CWE-125",
+        "CWE-190",
+        "CWE-415",
+        "CWE-416",
+        "CWE-476",
+        "CWE-787",
+        "CWE-20",
+        "CWE-200",
+        "CWE-369",
+        "CWE-617",
+        "CWE-703"
+      ],
+      "want": [
+        "CWE-119",
+        "CWE-125",
+        "CWE-190",
+        "CWE-415",
+        "CWE-416",
+        "CWE-476",
+        "CWE-787",
+        "CWE-20",
+        "CWE-200",
+        "CWE-369",
+        "CWE-617",
+        "CWE-703"
+      ],
+      "pass": true
+    },
+    "pv_npos_tok_CWE-119": {
+      "got": 177,
+      "want": 177,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-125": {
+      "got": 609,
+      "want": 609,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-190": {
+      "got": 202,
+      "want": 202,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-415": {
+      "got": 51,
+      "want": 51,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-416": {
+      "got": 285,
+      "want": 285,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-476": {
+      "got": 236,
+      "want": 236,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-787": {
+      "got": 928,
+      "want": 928,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-20": {
+      "got": 233,
+      "want": 233,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-200": {
+      "got": 173,
+      "want": 173,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-369": {
+      "got": 10,
+      "want": 10,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-617": {
+      "got": 165,
+      "want": 165,
+      "pass": true
+    },
+    "pv_npos_tok_CWE-703": {
+      "got": 392,
+      "want": 392,
+      "pass": true
+    },
+    "pv_diag_CWE-119": {
+      "got": 0.875259,
+      "want": 0.875259,
+      "pass": true
+    },
+    "pv_diag_CWE-125": {
+      "got": 0.611448,
+      "want": 0.611448,
+      "pass": true
+    },
+    "pv_diag_CWE-190": {
+      "got": 0.729885,
+      "want": 0.729885,
+      "pass": true
+    },
+    "pv_diag_CWE-415": {
+      "got": 0.63521,
+      "want": 0.63521,
+      "pass": true
+    },
+    "pv_diag_CWE-416": {
+      "got": 0.65705,
+      "want": 0.65705,
+      "pass": true
+    },
+    "pv_diag_CWE-476": {
+      "got": 0.692206,
+      "want": 0.692206,
+      "pass": true
+    },
+    "pv_diag_CWE-787": {
+      "got": 0.561721,
+      "want": 0.561721,
+      "pass": true
+    },
+    "pv_diag_CWE-20": {
+      "got": 0.514145,
+      "want": 0.514145,
+      "pass": true
+    },
+    "pv_diag_CWE-200": {
+      "got": 0.940416,
+      "want": 0.940416,
+      "pass": true
+    },
+    "pv_diag_CWE-369": {
+      "got": 0.766686,
+      "want": 0.766686,
+      "pass": true
+    },
+    "pv_diag_CWE-617": {
+      "got": 0.804111,
+      "want": 0.804111,
+      "pass": true
+    },
+    "pv_diag_CWE-703": {
+      "got": 0.560972,
+      "want": 0.560972,
+      "pass": true
+    },
+    "sven_n_clean_test_c": {
+      "got": 63,
+      "want": 63,
+      "pass": true
+    },
+    "x_SVEN->PV_CWE-125": {
+      "got": 0.668326,
+      "want": 0.668326,
+      "pass": true
+    },
+    "x_PV->PV_CWE-125": {
+      "got": 0.611448,
+      "want": 0.611448,
+      "pass": true
+    },
+    "x_PV->SVEN_C_CWE-125": {
+      "got": 0.616569,
+      "want": 0.616569,
+      "pass": true
+    },
+    "x_SVEN->SVEN_C_CWE-125": {
+      "got": 0.746145,
+      "want": 0.746145,
+      "pass": true
+    },
+    "x_SVEN->PV_CWE-416": {
+      "got": 0.706278,
+      "want": 0.706278,
+      "pass": true
+    },
+    "x_PV->PV_CWE-416": {
+      "got": 0.65705,
+      "want": 0.65705,
+      "pass": true
+    },
+    "x_PV->SVEN_C_CWE-416": {
+      "got": 0.856769,
+      "want": 0.856769,
+      "pass": true
+    },
+    "x_SVEN->SVEN_C_CWE-416": {
+      "got": 0.70867,
+      "want": 0.70867,
+      "pass": true
+    },
+    "x_SVEN->PV_CWE-476": {
+      "got": 0.493997,
+      "want": 0.493997,
+      "pass": true
+    },
+    "x_PV->PV_CWE-476": {
+      "got": 0.692206,
+      "want": 0.692206,
+      "pass": true
+    },
+    "x_PV->SVEN_C_CWE-476": {
+      "got": 0.609388,
+      "want": 0.609388,
+      "pass": true
+    },
+    "x_SVEN->SVEN_C_CWE-476": {
+      "got": 0.573159,
+      "want": 0.573159,
+      "pass": true
+    },
+    "x_SVEN->PV_CWE-787": {
+      "got": 0.63473,
+      "want": 0.63473,
+      "pass": true
+    },
+    "x_PV->PV_CWE-787": {
+      "got": 0.561721,
+      "want": 0.561721,
+      "pass": true
+    },
+    "x_PV->SVEN_C_CWE-787": {
+      "got": 0.443152,
+      "want": 0.443152,
+      "pass": true
+    },
+    "x_SVEN->SVEN_C_CWE-787": {
+      "got": 0.657787,
+      "want": 0.657787,
+      "pass": true
+    },
+    "x_SVEN->PV_CWE-190": {
+      "got": 0.754721,
+      "want": 0.754721,
+      "pass": true
+    },
+    "x_PV->PV_CWE-190": {
+      "got": 0.729885,
+      "want": 0.729885,
+      "pass": true
+    },
+    "x_PV->SVEN_C_CWE-190": {
+      "got": 0.904271,
+      "want": 0.904271,
+      "pass": true
+    },
+    "x_SVEN->SVEN_C_CWE-190": {
+      "got": 0.821528,
+      "want": 0.821528,
+      "pass": true
+    }
+  },
+  "all_pass": true
+}

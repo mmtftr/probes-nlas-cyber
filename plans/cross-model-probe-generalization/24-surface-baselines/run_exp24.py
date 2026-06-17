@@ -113,6 +113,9 @@ def pool_eval(score, pos_eids, neg_eids, n_boot=1000, rng=None, restrict_lang=No
     ci_ex = [float(np.percentile(bex, 2.5)), float(np.percentile(bex, 97.5))] if bex else [float("nan")] * 2
     return {
         "tokens_code_auc": a, "ci": ci,
+        # example-LEVEL AUC, mean-pooled score per example (glossary: "example
+        # AUC (mean-pool)", docs/project-log.md §3). NOT exp-23's
+        # per_example_mean_auc, which is within-example macro token AUC.
         "example_mean_auc": ex_auc, "ci_example": ci_ex,
         "n_tok": int(allt.size), "n_pos_tok": int((y == 1).sum()),
         "n_pos_ex": int(sum(ex_y)), "n_ex": len(ex_y),

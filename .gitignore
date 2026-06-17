@@ -40,7 +40,12 @@ docs/project-log.pdf
 plans/**/report.pdf
 docs/presentations/**/slides.pdf
 docs/presentations/**/slides.html
+docs/blog/*.pdf
 
 # vLLM / extra deps installed off-tree
 .deps_vllm/
 .python_deps*/
+
+# Local agent notes (publish-hygiene pointers) — never publish
+CLAUDE.local.md
+AGENTS.local.md

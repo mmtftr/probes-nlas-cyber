@@ -76,6 +76,15 @@ assumptions worth stating). Mark them with `## For agents` inside an
 otherwise-concise doc. Plans illustrate this: `Goal` and `Steps` are tight
 for the human; optional `## For agents` holds the detailed playbook.
 
+## Figure & metric reporting
+
+- **MLP probe AUC is ALWAYS reported at the MLP's OWN val-selected best layer**
+  (exp-18 own-best-layer numbers), never pinned to the linear probe's operating
+  layer. Non-negotiable (user, 2026-06-14). The operating-layer MLP fit is a
+  layer-policy artifact (see the blog's `#fig-scaling`); it must not appear as a
+  reported MLP number in any figure/table. Every figure that shows an MLP value
+  uses the same own-best-layer source so cross-figure numbers always match.
+
 ## Marking AI-generated content
 
 Disclose AI authorship inline. Conventions:

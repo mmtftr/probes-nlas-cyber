@@ -1,0 +1,49 @@
+[exp24] building feature blocks…
+[exp24] feature blocks built in 27.1s; vocab=9352, H=(561266, 262144)
+[exp27] qwen stage A CWE-022: design-2 repro OK
+[exp27] qwen stage A CWE-078: design-2 repro OK
+[exp27] qwen stage A CWE-079: design-2 repro OK
+[exp27] qwen stage A CWE-089: design-2 repro OK
+[exp27] qwen stage A CWE-125: design-2 repro OK
+[exp27] qwen stage A CWE-190: design-2 repro OK
+[exp27] qwen stage A CWE-416: design-2 repro OK
+[exp27] qwen stage A CWE-476: design-2 repro OK
+[exp27] qwen stage A CWE-787: design-2 repro OK
+[exp27] qwen GATE1 PASS (design-2 bit-repro, max dev 0.00e+00)
+[exp27] qwen conly-trained refits done
+[exp27] qwen32b GATE2 PASS (36 cells, counts == exp-25 exactly)
+[exp27] qwen32b CWE-022 done (26s): mp char=0.753 vs probe25=0.771
+[exp27] qwen32b CWE-078 done (53s): mp char=0.872 vs probe25=0.833
+[exp27] qwen32b CWE-079 done (78s): mp char=0.578 vs probe25=0.532
+[exp27] qwen32b CWE-089 done (109s): mp char=0.975 vs probe25=0.933
+[exp27] qwen32b CWE-125 done (150s): mp char=0.545 vs probe25=0.633
+[exp27] qwen32b CWE-190 done (177s): mp char=0.805 vs probe25=0.724
+[exp27] qwen32b CWE-416 done (208s): mp char=0.542 vs probe25=0.610
+[exp27] qwen32b CWE-476 done (243s): mp char=0.506 vs probe25=0.544
+[exp27] qwen32b CWE-787 done (271s): mp char=0.672 vs probe25=0.509
+[exp27] qwen32b GATE3 PASS (lang_null == exp-25 to 1e-09)
+[exp27] qwen32b written -> /Users/mmtf/p/probes-nlas-cyber-clean/plans/cross-model-probe-generalization/27-matchedpatch-surface/results/exp27_qwen32b_axis.json
+[exp27] gemma substrate loaded; building feature blocks…
+[exp27] gemma blocks built in 37s (vocab=6514)
+[exp27] gemma trained CWE-022 (n_pos_tok=1123)
+[exp27] gemma trained CWE-078 (n_pos_tok=3359)
+[exp27] gemma trained CWE-079 (n_pos_tok=976)
+[exp27] gemma trained CWE-089 (n_pos_tok=5686)
+[exp27] gemma trained CWE-125 (n_pos_tok=2067)
+[exp27] gemma trained CWE-190 (n_pos_tok=1063)
+[exp27] gemma trained CWE-416 (n_pos_tok=851)
+[exp27] gemma trained CWE-476 (n_pos_tok=1083)
+[exp27] gemma trained CWE-787 (n_pos_tok=852)
+[exp27] gemma1b GATE2 PASS (36 cells, counts == exp-25 exactly)
+[exp27] gemma1b CWE-022 done (31s): mp char=0.765 vs probe25=0.718
+[exp27] gemma1b CWE-078 done (67s): mp char=0.876 vs probe25=0.771
+[exp27] gemma1b CWE-079 done (97s): mp char=0.578 vs probe25=0.611
+[exp27] gemma1b CWE-089 done (135s): mp char=0.975 vs probe25=0.886
+[exp27] gemma1b CWE-125 done (181s): mp char=0.596 vs probe25=0.657
+[exp27] gemma1b CWE-190 done (210s): mp char=0.829 vs probe25=0.713
+[exp27] gemma1b CWE-416 done (243s): mp char=0.506 vs probe25=0.603
+[exp27] gemma1b CWE-476 done (280s): mp char=0.434 vs probe25=0.507
+[exp27] gemma1b CWE-787 done (309s): mp char=0.791 vs probe25=0.537
+[exp27] gemma1b GATE3 PASS (lang_null == exp-25 to 1e-09)
+[exp27] gemma1b written -> /Users/mmtf/p/probes-nlas-cyber-clean/plans/cross-model-probe-generalization/27-matchedpatch-surface/results/exp27_gemma1b_axis.json
+[exp27] ALL DONE

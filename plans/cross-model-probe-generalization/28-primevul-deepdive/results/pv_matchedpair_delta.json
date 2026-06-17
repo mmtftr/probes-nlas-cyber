@@ -1,0 +1,331 @@
+{
+  "analysis": "pv_matchedpair_paired_delta",
+  "metric": "tokens_code_auc",
+  "note": "paired bootstrap over PAIRS (1000 reps, same resample scores all models per rep); delta = probe_auc - lexical_auc; CI excluding 0 = CI-separated margin. probe = SVEN-trained for shared CWEs (125/416/476/787/190), PV-trained otherwise.",
+  "table": {
+    "CWE-119": {
+      "family": "mem",
+      "n_test_pairs": 14,
+      "probe_source": "pv",
+      "point": {
+        "probe": 0.7974830490696988,
+        "char": 0.7119962572251082,
+        "uni": 0.620736786215021
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.08548679184459063,
+        "ci": [
+          -0.14376261714858024,
+          0.3687890358386168
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.17674626285467776,
+        "ci": [
+          -5.951085993238271e-06,
+          0.2473707710398218
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-125": {
+      "family": "mem",
+      "n_test_pairs": 47,
+      "probe_source": "sven",
+      "point": {
+        "probe": 0.6602626112908629,
+        "char": 0.6234328737382913,
+        "uni": 0.5534887966567846
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.036829737552571684,
+        "ci": [
+          -0.04775945036611259,
+          0.1442821579894025
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.10677381463407831,
+        "ci": [
+          0.03145741295246376,
+          0.19314522278416568
+        ],
+        "ci_excludes_0": true
+      }
+    },
+    "CWE-190": {
+      "family": "mem",
+      "n_test_pairs": 11,
+      "probe_source": "sven",
+      "point": {
+        "probe": 0.7356586541924024,
+        "char": 0.6866649862076613,
+        "uni": 0.6022454990563137
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.04899366798474114,
+        "ci": [
+          -0.1465156414174045,
+          0.28428468768890397
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.13341315513608865,
+        "ci": [
+          0.04595901853532218,
+          0.18117391808235725
+        ],
+        "ci_excludes_0": true
+      }
+    },
+    "CWE-415": {
+      "family": "mem",
+      "n_test_pairs": 10,
+      "probe_source": "pv",
+      "point": {
+        "probe": 0.6479494388050733,
+        "char": 0.48982051777296104,
+        "uni": 0.5727317924616033
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.15812892103211224,
+        "ci": [
+          -0.12417077160023243,
+          0.34789762072591024
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.07521764634346995,
+        "ci": [
+          -0.06453083118893503,
+          0.28929701572934635
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-416": {
+      "family": "mem",
+      "n_test_pairs": 29,
+      "probe_source": "sven",
+      "point": {
+        "probe": 0.6496908676348088,
+        "char": 0.5427441697510953,
+        "uni": 0.576614622454296
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.10694669788371347,
+        "ci": [
+          -0.08083452333202264,
+          0.30489610098113035
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.07307624518051281,
+        "ci": [
+          -0.004422527773152566,
+          0.1916529972078672
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-476": {
+      "family": "mem",
+      "n_test_pairs": 39,
+      "probe_source": "sven",
+      "point": {
+        "probe": 0.40927452369915296,
+        "char": 0.4928766226731103,
+        "uni": 0.4870176382724404
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": -0.08360209897395732,
+        "ci": [
+          -0.20145253659362208,
+          0.3313746808650749
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": -0.07774311457328742,
+        "ci": [
+          -0.22314255482035406,
+          0.27945785593344663
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-787": {
+      "family": "mem",
+      "n_test_pairs": 72,
+      "probe_source": "sven",
+      "point": {
+        "probe": 0.6447623187382505,
+        "char": 0.5369947508009496,
+        "uni": 0.4803353507850631
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.10776756793730091,
+        "ci": [
+          0.035882429210441,
+          0.2225198872502656
+        ],
+        "ci_excludes_0": true
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.1644269679531874,
+        "ci": [
+          0.12074622435776115,
+          0.22225934837781747
+        ],
+        "ci_excludes_0": true
+      }
+    },
+    "CWE-20": {
+      "family": "other",
+      "n_test_pairs": 14,
+      "probe_source": "pv",
+      "point": {
+        "probe": 0.48793977820177564,
+        "char": 0.549268573448568,
+        "uni": 0.49234691889001186
+      },
+      "n_reps": 999,
+      "delta_probe_minus_char": {
+        "point": -0.06132879524679241,
+        "ci": [
+          -0.15324145186553362,
+          0.22350343687517588
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": -0.004407140688236222,
+        "ci": [
+          -0.11581818282700762,
+          0.2306569855348066
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-200": {
+      "family": "other",
+      "n_test_pairs": 16,
+      "probe_source": "pv",
+      "point": {
+        "probe": 0.892506591841827,
+        "char": 0.889157530979346,
+        "uni": 0.7288476344369618
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.0033490608624809903,
+        "ci": [
+          -0.06878804721066634,
+          0.23264689619652268
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.16365895740486525,
+        "ci": [
+          -0.022743828837324908,
+          0.29967926781178783
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-369": {
+      "family": "other",
+      "n_test_pairs": 14,
+      "probe_source": "pv",
+      "point": {
+        "probe": 0.6188297933245548,
+        "char": 0.5669147535352379,
+        "uni": 0.5249069674242858
+      },
+      "n_reps": 974,
+      "delta_probe_minus_char": {
+        "point": 0.051915039789316886,
+        "ci": [
+          -0.07753944874375845,
+          0.23676046758072103
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.09392282590026901,
+        "ci": [
+          -0.13676771474075367,
+          0.349104295026165
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-617": {
+      "family": "other",
+      "n_test_pairs": 12,
+      "probe_source": "pv",
+      "point": {
+        "probe": 0.7426837860162285,
+        "char": 0.6404971008859305,
+        "uni": 0.6172689616636704
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.10218668513029805,
+        "ci": [
+          -0.1804952051000798,
+          0.2662265913456385
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": 0.12541482435255813,
+        "ci": [
+          -0.1477278969240798,
+          0.205203980101141
+        ],
+        "ci_excludes_0": false
+      }
+    },
+    "CWE-703": {
+      "family": "other",
+      "n_test_pairs": 47,
+      "probe_source": "pv",
+      "point": {
+        "probe": 0.5660994327050272,
+        "char": 0.4883302090414525,
+        "uni": 0.5820956111202152
+      },
+      "n_reps": 1000,
+      "delta_probe_minus_char": {
+        "point": 0.07776922366357464,
+        "ci": [
+          -0.14104536602510995,
+          0.23820976400390642
+        ],
+        "ci_excludes_0": false
+      },
+      "delta_probe_minus_uni": {
+        "point": -0.015996178415188078,
+        "ci": [
+          -0.1167925014315041,
+          0.10046680158858469
+        ],
+        "ci_excludes_0": false
+      }
+    }
+  }
+}

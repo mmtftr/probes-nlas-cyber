@@ -280,6 +280,29 @@
       "untrusted": true
     }
   },
+  "family_pooled": {
+    "injection": {
+      "pooled_auc": 0.9113937718737999,
+      "trusted_cwes": [
+        "CWE-089",
+        "CWE-078",
+        "CWE-022",
+        "CWE-079"
+      ],
+      "n_pos_tokens": 2833,
+      "n_tokens": 76489
+    },
+    "memory": {
+      "pooled_auc": 0.5726062935827448,
+      "trusted_cwes": [
+        "CWE-125",
+        "CWE-416",
+        "CWE-476"
+      ],
+      "n_pos_tokens": 1039,
+      "n_tokens": 76489
+    }
+  },
   "pair_acc_secondary": {
     "inj_py": {
       "pair_acc": 0.7831325301204819,

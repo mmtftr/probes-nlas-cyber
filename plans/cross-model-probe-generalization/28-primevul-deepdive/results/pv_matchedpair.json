@@ -1,0 +1,413 @@
+{
+  "analysis": "pv_matchedpair",
+  "metric": "tokens_code_auc",
+  "regime": "matched-patch: negatives = the CWE's OWN test-pair fixes (exp-25 construction); positives identical to all-clean cells",
+  "pair_acc_note": "SECONDARY metric (exp-19): P(max code-token score vuln > its fix) + 0.5 ties, over test pairs",
+  "table": {
+    "CWE-119": {
+      "family": "mem",
+      "n_test_pairs": 14,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.7974830490696988,
+        "ci": [
+          0.5180182581096496,
+          0.9101103281318165,
+          1000
+        ],
+        "pair_acc": 0.39285714285714285
+      },
+      "surface_char_ngram": {
+        "auc": 0.7119962572251082,
+        "ci": [
+          0.3556251818107652,
+          0.956299106100691,
+          1000
+        ],
+        "pair_acc": 0.35714285714285715
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 6,
+        "probe_pv_auc_sub": 0.6163047653576069,
+        "probe_pv_pair_acc_sub": 0.5,
+        "surface_auc_sub": 0.6514558057429443,
+        "surface_pair_acc_sub": 0.4166666666666667
+      }
+    },
+    "CWE-125": {
+      "family": "mem",
+      "n_test_pairs": 47,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.5698828254107708,
+        "ci": [
+          0.44618112541031857,
+          0.712127081193236,
+          1000
+        ],
+        "pair_acc": 0.5212765957446809
+      },
+      "probe_sven": {
+        "auc": 0.6602626112908629,
+        "ci": [
+          0.5677225127809828,
+          0.7568088650750053,
+          1000
+        ],
+        "pair_acc": 0.5319148936170213
+      },
+      "surface_char_ngram": {
+        "auc": 0.6234328737382913,
+        "ci": [
+          0.5005569344096952,
+          0.7532644290891638,
+          1000
+        ],
+        "pair_acc": 0.44680851063829785
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 20,
+        "probe_pv_auc_sub": 0.5757633181021904,
+        "probe_pv_pair_acc_sub": 0.525,
+        "surface_auc_sub": 0.6052350078442672,
+        "surface_pair_acc_sub": 0.375
+      }
+    },
+    "CWE-190": {
+      "family": "mem",
+      "n_test_pairs": 11,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.7308936383766538,
+        "ci": [
+          0.5489126302711397,
+          0.9266979068732313,
+          1000
+        ],
+        "pair_acc": 0.36363636363636365
+      },
+      "probe_sven": {
+        "auc": 0.7356586541924024,
+        "ci": [
+          0.62889538579455,
+          0.8425887417019119,
+          1000
+        ],
+        "pair_acc": 0.36363636363636365
+      },
+      "surface_char_ngram": {
+        "auc": 0.6866649862076613,
+        "ci": [
+          0.3844695171702142,
+          0.9748367943267168,
+          1000
+        ],
+        "pair_acc": 0.5909090909090909
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 9,
+        "probe_pv_auc_sub": 0.7308961840989743,
+        "probe_pv_pair_acc_sub": 0.3888888888888889,
+        "surface_auc_sub": 0.720235396758655,
+        "surface_pair_acc_sub": 0.6666666666666666
+      }
+    },
+    "CWE-415": {
+      "family": "mem",
+      "n_test_pairs": 10,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.6479494388050733,
+        "ci": [
+          0.5100077822771324,
+          0.8653133591811846,
+          1000
+        ],
+        "pair_acc": 0.6
+      },
+      "surface_char_ngram": {
+        "auc": 0.48982051777296104,
+        "ci": [
+          0.2671815484054758,
+          0.8493810967112596,
+          1000
+        ],
+        "pair_acc": 0.55
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 8,
+        "probe_pv_auc_sub": 0.6520143328577497,
+        "probe_pv_pair_acc_sub": 0.625,
+        "surface_auc_sub": 0.4925050190414992,
+        "surface_pair_acc_sub": 0.6875
+      }
+    },
+    "CWE-416": {
+      "family": "mem",
+      "n_test_pairs": 29,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.6165925240257923,
+        "ci": [
+          0.4489172751266165,
+          0.7660247211255027,
+          1000
+        ],
+        "pair_acc": 0.5344827586206896
+      },
+      "probe_sven": {
+        "auc": 0.6496908676348088,
+        "ci": [
+          0.5646900611724414,
+          0.7936516419011788,
+          1000
+        ],
+        "pair_acc": 0.5689655172413793
+      },
+      "surface_char_ngram": {
+        "auc": 0.5427441697510953,
+        "ci": [
+          0.36612734872097424,
+          0.7095132640681339,
+          1000
+        ],
+        "pair_acc": 0.5
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 17,
+        "probe_pv_auc_sub": 0.6192352054314976,
+        "probe_pv_pair_acc_sub": 0.5294117647058824,
+        "surface_auc_sub": 0.5188002700128171,
+        "surface_pair_acc_sub": 0.5294117647058824
+      }
+    },
+    "CWE-476": {
+      "family": "mem",
+      "n_test_pairs": 39,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.6123291630923011,
+        "ci": [
+          0.431283583482602,
+          0.7224938591550343,
+          1000
+        ],
+        "pair_acc": 0.5384615384615384
+      },
+      "probe_sven": {
+        "auc": 0.40927452369915296,
+        "ci": [
+          0.28901679084596155,
+          0.703777652615402,
+          1000
+        ],
+        "pair_acc": 0.6025641025641025
+      },
+      "surface_char_ngram": {
+        "auc": 0.4928766226731103,
+        "ci": [
+          0.34134374594092043,
+          0.6770675622805797,
+          1000
+        ],
+        "pair_acc": 0.48717948717948717
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 14,
+        "probe_pv_auc_sub": 0.6121255060728745,
+        "probe_pv_pair_acc_sub": 0.5714285714285714,
+        "surface_auc_sub": 0.5487319014616071,
+        "surface_pair_acc_sub": 0.5714285714285714
+      }
+    },
+    "CWE-787": {
+      "family": "mem",
+      "n_test_pairs": 72,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.5445840246948448,
+        "ci": [
+          0.4672917225910823,
+          0.6939994365769977,
+          1000
+        ],
+        "pair_acc": 0.3819444444444444
+      },
+      "probe_sven": {
+        "auc": 0.6447623187382505,
+        "ci": [
+          0.6015537393734897,
+          0.7332307875606531,
+          1000
+        ],
+        "pair_acc": 0.5416666666666666
+      },
+      "surface_char_ngram": {
+        "auc": 0.5369947508009496,
+        "ci": [
+          0.4667784108306323,
+          0.6376035082198382,
+          1000
+        ],
+        "pair_acc": 0.4513888888888889
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 37,
+        "probe_pv_auc_sub": 0.5399365685580313,
+        "probe_pv_pair_acc_sub": 0.40540540540540543,
+        "surface_auc_sub": 0.5425106883770068,
+        "surface_pair_acc_sub": 0.47297297297297297
+      }
+    },
+    "CWE-20": {
+      "family": "other",
+      "n_test_pairs": 14,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.48793977820177564,
+        "ci": [
+          0.36966172566827576,
+          0.7042920968113152,
+          999
+        ],
+        "pair_acc": 0.6428571428571429
+      },
+      "surface_char_ngram": {
+        "auc": 0.549268573448568,
+        "ci": [
+          0.38062650811062293,
+          0.6184357569601986,
+          999
+        ],
+        "pair_acc": 0.42857142857142855
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 6,
+        "probe_pv_auc_sub": 0.474989123405256,
+        "probe_pv_pair_acc_sub": 0.6666666666666666,
+        "surface_auc_sub": 0.5693235933917338,
+        "surface_pair_acc_sub": 0.4166666666666667
+      }
+    },
+    "CWE-200": {
+      "family": "other",
+      "n_test_pairs": 16,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.892506591841827,
+        "ci": [
+          0.5359699259055192,
+          0.9360417217520458,
+          1000
+        ],
+        "pair_acc": 0.6875
+      },
+      "surface_char_ngram": {
+        "auc": 0.889157530979346,
+        "ci": [
+          0.38457569740645264,
+          0.9419449988281995,
+          1000
+        ],
+        "pair_acc": 0.625
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 6,
+        "probe_pv_auc_sub": 0.7821177036153231,
+        "probe_pv_pair_acc_sub": 0.9166666666666666,
+        "surface_auc_sub": 0.7986174661461651,
+        "surface_pair_acc_sub": 0.75
+      }
+    },
+    "CWE-369": {
+      "family": "other",
+      "n_test_pairs": 14,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.6188297933245548,
+        "ci": [
+          0.429175650196286,
+          0.7819820419094689,
+          974
+        ],
+        "pair_acc": 0.35714285714285715
+      },
+      "surface_char_ngram": {
+        "auc": 0.5669147535352379,
+        "ci": [
+          0.28146761212862487,
+          0.7313767071423168,
+          974
+        ],
+        "pair_acc": 0.42857142857142855
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 3,
+        "probe_pv_auc_sub": 0.7428769017980636,
+        "probe_pv_pair_acc_sub": 0.3333333333333333,
+        "surface_auc_sub": 0.7293222683264177,
+        "surface_pair_acc_sub": 0.16666666666666666
+      }
+    },
+    "CWE-617": {
+      "family": "other",
+      "n_test_pairs": 12,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.7426837860162285,
+        "ci": [
+          0.4428946544156817,
+          0.8248054465205261,
+          1000
+        ],
+        "pair_acc": 0.5416666666666666
+      },
+      "surface_char_ngram": {
+        "auc": 0.6404971008859305,
+        "ci": [
+          0.5076267803329533,
+          0.7258774388751772,
+          1000
+        ],
+        "pair_acc": 0.4583333333333333
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 8,
+        "probe_pv_auc_sub": 0.7169784177241377,
+        "probe_pv_pair_acc_sub": 0.6875,
+        "surface_auc_sub": 0.6245756589102877,
+        "surface_pair_acc_sub": 0.4375
+      }
+    },
+    "CWE-703": {
+      "family": "other",
+      "n_test_pairs": 47,
+      "trust": true,
+      "probe_pv": {
+        "auc": 0.5660994327050272,
+        "ci": [
+          0.4590298182872358,
+          0.6548196708364376,
+          1000
+        ],
+        "pair_acc": 0.574468085106383
+      },
+      "surface_char_ngram": {
+        "auc": 0.4883302090414525,
+        "ci": [
+          0.3802423607961374,
+          0.6572762610819158,
+          1000
+        ],
+        "pair_acc": 0.5319148936170213
+      },
+      "subtractive_slice": {
+        "n_sub_pairs": 18,
+        "probe_pv_auc_sub": 0.6035107083018508,
+        "probe_pv_pair_acc_sub": 0.6111111111111112,
+        "surface_auc_sub": 0.4912144128948318,
+        "surface_pair_acc_sub": 0.6111111111111112
+      }
+    }
+  }
+}
