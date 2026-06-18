@@ -1,59 +1,81 @@
-[ai-generated]
-
 # probes-nlas-cyber
 
-Mech-interp research on linear probes and natural-language activations (NLAs)
-for cyber-vulnerability classification.
+**Blog post → [Measuring Probe Performance in Cybersecurity](https://mmtf.dev/posts/vulnerability-probes-lexical-ceiling/)** (mmtf.dev) — the full writeup of what this repo found.
+
+Mech-interp research: can a linear probe on a code model's activations detect the
+*tokens* that cause a vulnerability? Probes are trained on Gemma-3 (1B–27B) and
+Qwen2.5-Coder (7B, 32B) activations and stress-tested against strong lexical
+baselines and a stack of deconfounding controls.
+
+The *North Star* is cheap inference-time monitoring for model sabotage; the
+*proxy task* here is detecting vulnerabilities in existing code.
+
+> Done as part of Bluedot Impact's Technical AI Safety Project course.
+
+## What it found
+
+Token-level probes reach 0.75–0.82 AUC, but under stricter controls and stronger
+baselines the signal is largely **lexical**, not an understanding of
+vulnerability:
+
+- A character n-gram baseline **beats** the probe (0.803 vs 0.776 token AUC).
+- A language-only baseline (Python→1, C→0) recovers ~64% of the probe's
+  margin over chance, carrying zero vulnerability information.
+- Probes catch injection-class bugs (SQL, command; 0.85–0.91) but sit near
+  chance on memory-safety bugs.
+- Naive example-level readouts (max-over-tokens, final-token) are near chance;
+  specific prompts plus probing the assistant turn recover some of it.
+- Inspecting predictions, the probe paints whole SQL/command sink strings in
+  both the vulnerable and the patched version — it matches code patterns, not
+  the edit that fixes the bug.
+
+**Takeaway:** linear probing should not be used to detect vulnerabilities in
+isolated pieces of code — lexical baselines are cheaper and stronger. Whether
+LLMs encode "I'm writing vulnerable code" remains open; the proper test is on
+model-generated code, not a fixed dataset.
+
+## Method (short)
+
+- **Data** — SVEN paired vulnerable/patched functions, turned into token-level
+  labels (tokens the fix removed = positive); PrimeVul (C/C++) for cross-dataset
+  checks.
+- **Probe** — linear token probe on the residual stream, span-max annealed loss
+  (hallucination-probes), best layer chosen on validation AUC. Also MLP heads and
+  K-ensembles of linear probes.
+- **Metric** — ROC-AUC over live-code tokens only (comments/trivia filtered out).
+- **Baselines** — character n-gram, token-unigram, language-only.
+- **Controls** — per-CWE, per-language, subtractive-vs-additive pairs,
+  matched-patch, cross-dataset transfer, causal steering.
+
+Full framing is in `docs/research-framing.md`; the experiment ledger and
+consolidated current understanding live in `docs/project-log.md` (read it first).
 
 ## Conventions
 
 | Aspect | Choice |
 |---|---|
-| Base model | **Gemma 3** |
-| Approach | **Probes + NLAs** (natural-language activations) |
+| Models | **Gemma 3** (1B–27B) + **Qwen2.5-Coder** (7B, 32B) |
+| Approach | linear / MLP / ensemble **probes** on cached activations |
+| Hidden states | **vLLM** `extract_hidden_states` (HF fallback) |
 | Experiment tracking | **Weights & Biases** runs + artifacts |
 | Artifact store | **Hugging Face Hub** (datasets + probe models) |
-| Provenance | **wandb artifact lineage** for every input/output |
 | Scope | research-only — no product / demo surfaces here |
 
 ## Layout
 
 ```
 src/
-  data/
-    extract_activations.py       # example-level hidden states → .npz
-    extract_token_activations.py # token-level hidden states + offsets + spans
-  probes/
-    calibration.py               # post-hoc Platt / temperature fitting
-  training/
-    train_probe.py               # baseline linear probe (last-token)
-    train_probe_spanmax.py       # span-max loss (Obeso/Arditi 2025) — primary
-  eval/                          # split definitions, metrics, protocols, AST mask
-scripts/
-  build_dataset_sven.py        # SVEN dataset builder (primary)
-  build_dataset_v2.py          # earlier dataset variant (kept for reference)
-  derive_rich_labels.py        # rich label derivation
-  validate_dataset.py          # dataset validators
-  validate_rich_labels.py
-  build_repo_benchmark.py      # heldout-repo benchmark assembly
-  extract_token_probs.py       # producer for token-level probs npz
-  retrain_spanmax_sven_split.py# canonical retrain command
-  calibrate_probe.py
-  eval_probe.py
-  eval_splits.py
-  run_token_eval.py
-  eval_repo_leads.py
-  apply_calibration_eval.py
-notebooks/
-  training/colab_train_gemma4_probe.ipynb   # will be ported to Gemma 3
-  remote/colab_train_probe_31b.ipynb
-  remote/kaggle_train_probe_sven_weak.ipynb
-tests/
-configs/                       # wandb sweep / run configs (empty for now)
-plans/                         # goal-directed experiment groups (see CLAUDE.md)
-decisions/                     # ADRs for cross-experiment choices
-docs/guides/                   # accumulated mech-interp lessons
-data/                          # local scratch (datasets/ models/ probes/ plots/) — payloads .gitignored
+  data/     extract_activations.py / extract_token_activations.py  # hidden states → npz (+ offsets, spans)
+  eval/     splits, metrics, protocols, live-code (AST) mask, lexical baselines
+  probes/   calibration.py          # post-hoc Platt / temperature fitting
+  remotes/  train_eval.py           # shared SVEN split / grouping / scoring helper
+  training/ train_probe.py          # baseline last-token linear probe
+            train_probe_spanmax.py  # span-max annealed loss (primary)
+scripts/    dataset builders, probe training/eval CLIs, calibration
+plans/cross-model-probe-generalization/   # experiments 02–33 (see PLAN.md, CLAUDE.md)
+decisions/  # ADRs for cross-experiment choices
+docs/       # project-log.md, research-framing.md, guides/, papers/, blog/
+data/       # local scratch (datasets/ models/ probes/ plots/) — payloads .gitignored
 ```
 
 ## Setup
@@ -64,20 +86,3 @@ uv pip install -e ".[dev]"
 wandb login
 huggingface-cli login
 ```
-
-## Known TODOs
-
-- The 3 carry-over notebooks still reference the old project (paths, pip
-  URLs, model IDs). They're staged here as a starting point — full rewrite
-  needed for Gemma 3 + wandb logging.
-- `train_probe*.py` and `extract_*_activations.py` still hardcode `gemma-4`
-  model IDs. Switch to `google/gemma-3-*` and verify activation shapes.
-- All artifact I/O still writes to local `data/`. Rewrite to push/pull
-  `wandb.Artifact` objects backed by HF Hub. (The old `publish_to_hub.py`
-  was deleted in the carry-over — the new flow is wandb-linked, not a
-  standalone publisher.)
-- The eval framework writes JSON cards next to artifacts. Log everything as
-  wandb tables + summary metrics instead.
-- A scan abstraction was intentionally left out of the carry-over (it was
-  entangled with downstream demo glue). Reintroduce a clean one if needed.
-- NLAs: scope TBD.
